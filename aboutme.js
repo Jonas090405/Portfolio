@@ -1,4 +1,4 @@
-// aboutme.js//
+// aboutme.js//‚
 
 //Details anzeigen//
 function showDetails() {
@@ -11,4 +11,3 @@ function showDetails() {
     var detailsContainer = document.getElementById("details");
     detailsContainer.style.display = "none";
   }
-  
