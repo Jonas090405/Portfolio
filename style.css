@@ -23,12 +23,10 @@ body{
     min-height : 100vh;
     background-color: var(--primary-color);
 }
-#Bildungüberschrift{
-    justify-content: center;
-    text-align: center;
-    font-size: 3rem;
-    text-align: center;
-
+#name{
+    background: linear-gradient(to right, var(--accent-color), white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 header{
     padding: 0 20px;
@@ -177,8 +175,62 @@ details .project-link:hover{
     background-color: var(--hover-color);
 }
 
-footer{
+#education-section {
+    padding: 100px 20px;
     background-color: var(--secondary-color);
+    color: var(--text-color);
+    text-align: center;
+}
+
+#education-section h2 {
+    font-size: 3rem;
+    margin-bottom: 50px;
+}
+
+.timeline {
+    position: relative;
+    margin: 0 auto;
+    width: 4px;
+    background-color: var(--accent-color);
+    height: 100%;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.timeline-item .dot {
+    position: absolute;
+    left: -8px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.timeline-item .content {
+    text-align: left;
+    margin-left: 40px;
+    max-width: 700px;
+    font-size: 1rem;
+}
+
+.timeline-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.timeline-item p {
+    margin: 5px 0;
+}
+
+
+footer{
+    background-color: var(--primary-color);
     padding: 100px 20px;
 }
 footer .grid-container{
@@ -235,5 +287,29 @@ footer a:hover{
     }
     footer h3{
         margin-top: 50px;
+    }
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+    .timeline {
+        width: 100%; /* Linie wird flexibler */
+        background: none; /* Linie wird auf mobilen Geräten versteckt */
+    }
+    
+    .timeline-item {
+        flex-direction: column; /* Inhalte stapeln sich vertikal */
+        align-items: center; /* Zentriert die Inhalte */
+    }
+    
+    .timeline-item .dot {
+        position: static; /* Fixiert die Position des Punkts */
+        margin-bottom: 10px; /* Abstand nach unten */
+        background-color: var(--accent-color);
+    }
+    
+    .timeline-item .content {
+        text-align: center; /* Zentriert den Text */
+        margin-left: 0; /* Entfernt die Seitenabstände */
     }
 }
