@@ -1,0 +1,149 @@
+/* stylesaboutme.css */
+
+/* Allgemeine Stile für den Body */
+body {
+    font-family: Consolas, monaco, monospace;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #0f1012;
+    color: rgb(248, 247, 241);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  /* Container-Stile */
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+  }
+  
+  /* Stile für Absätze innerhalb des Containers */
+  .container p {
+    margin: 5px 0;
+    font-size: 20px;
+    font-family: Consolas, monaco, monospace;
+  }
+  
+  /* Stile für den interaktiven Content mit Animation */
+  .content {
+    padding: 40px;
+    max-width: 800px;
+    border: 8px groove rgb(1, 142, 1);
+    border-radius: 20px;
+    animation: pulseAnimation 2s infinite alternate;
+    margin: auto;
+    cursor: pointer;
+  }
+  
+  .content:hover {
+    text-shadow: 0 0 20px rgba(248, 247, 241);
+  }
+  
+  @keyframes pulseAnimation {
+    0% {
+      border-color: #4cb13f;
+      transform: scale(1);
+    }
+    100% {
+      border-color: #3a8c26;
+      transform: scale(1.1);
+    }
+  }
+  
+  /* Stile für den Container der Details-Ansicht */
+  .details-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: none;
+  }
+  
+  /* Stile für den Inhalt der Details-Ansicht */
+  .details-content {
+    max-width: 600px;
+    margin: 20px auto;
+    background: #0f1012;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px groove rgb(1, 142, 1);
+  }
+  
+  /* Stile für den Schließen-Button */
+  .close {
+    position: absolute;
+    bottom: 27px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4cb13f;
+    color: rgb(248, 247, 241);
+    padding: 3px 9px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    font-family: Consolas, monaco, monospace;
+  }
+  
+  .close:hover {
+    background-color: #45a049;
+  }
+  
+  /* Stile für den Footer-Bereich über den aboutme-Link */
+  .aboutme-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 15px;
+    background: linear-gradient(to bottom, #4a972c, #1b1b1b);
+    color: rgb(248, 247, 241);
+    padding: 10px;
+    font-family: Consolas, monaco, monospace;
+  }
+  
+  .aboutme-footer:hover {
+    text-shadow: 0 0 20px rgba(248, 247, 241);
+    cursor: pointer;
+  }
+  
+  /* Stile für den aboutme-Link im Footer */
+  .aboutme-footer a {
+    color: rgb(248, 247, 241);
+    text-decoration: none;
+    transition: text-shadow 0.3s ease-in-out;
+  }
+  
+  .aboutme-footer a:hover {
+    text-shadow: 0 0 20px rgba(248, 247, 241);
+    text-decoration: underline;
+  }
+  
+  /* Stile für den Hauptinhalt mit spezifischen Positionierungen */
+  .basiccontent {
+    font-family: Consolas, monaco, monospace;
+    font-size: 22px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #0f1012;
+    color: rgb(248, 247, 241);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 15vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40vw;
+  }
+  

@@ -1,0 +1,56 @@
+<!-- aboutme.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script defer src="../Script/aboutme.js"></script>
+  <link rel="stylesheet" href="../CSS/stylesaboutme.css">
+  <title>About</title>
+</head>
+
+<body>
+      <!-- Basic Content -->
+
+  <main>
+    <div class="basiccontent">
+      <p>Name: Jonas Gissler</p>
+      <p>Alter: 18 Jahre</p>
+      <p>Student in MKB1 und nebenbei Nachhilfelehrer</p>
+      <div></div>
+      <div class="content" onclick="showDetails()">
+        <p>Die Idee hinter QuizIT</p>
+      </div>
+    </div>
+      <!-- Detailed Content -->
+
+    <div id="details" class="details-container">
+      <div class="details-content">
+        <p>Was habe ich mir beim Erstellen der Anwendung gedacht?</p>
+        <p>Ich habe in meinem Projekt ein interaktives Webbasiertes-Quiz entwickelt. 
+          Thematisch wollte ich verschiedene Wissensbereiche abdecken und Kursmaterialen thematisch einbeziehen.
+          Das Quiz soll Nutzerfreundlich sein und ein schönes und konstantes look and feel gewährleisten.
+          Um dies umzusetzen habe ich stilistisch die Anwendung standardmäßig an ein älteres Konsoleninterface angelehnt.
+        </p>
+        <p>Durch die Verwendung des ESP ist es möglich diesen Stil während der Benutzung der Applikation zu ändern. 
+          Die Idee war es dem User alternative Stil-möglichkeiten anzubieten die trotzdem noch zum look and feel der Anwendung
+          passen und den Konsoleninterface-Stil nur anders zu interpretieren
+        </p>
+        <button  class= "close"onclick="hideDetails()">Close</button>
+      </div>
+    </div>
+  </main>
+
+      <!-- Footer mit Button zurück zur Index -->
+  <footer class="aboutme-footer">
+    <p>Made by Jonas Gissler</p>
+    <nav>
+      <a href="index.html">Go back</a>
+    </nav>
+  </footer>
+
+</body>
+
+</html>

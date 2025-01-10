@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizIT</title>
+  <script defer src="../Script/dat.gui.min.js"></script>
+  <script defer src="../Script/eia1_voyager_sdk.js"></script>
+  <script defer src="../Script/script.js"></script>
+  <link rel="stylesheet" href="../CSS/styles.css">
+</head>
+
+<body>
+  <div class="quiz-container">
+    <header>
+      <h1 onclick="showSelection()">QuizIT</h1>
+    </header>
+
+    <main>
+     <!-- Quiz-Selektion -->
+
+      <div id="quiz-selection" class="page">
+        <h2>Quiz auswählen:</h2>
+        <button onclick="startQuiz(1)">Web-Programmierquiz</button>
+        <button onclick="startQuiz(2)">Geografie-Quiz</button>
+        <button onclick="startQuiz(3)">Geschichtsquiz</button>
+      </div>
+
+      <!-- Quiz-Frageseite -->
+      <div id="quiz-page" class="page" style="display: none;">
+        <div id="question-container"></div>
+        <div id="options-container"></div>
+        <div id="hint-text"></div>
+        <button onclick="goToNextQuestion()" id="next-question">Nächste Frage</button>
+        <button onclick="getHint()"id="hint-button">Tipp anzeigen</button>
+      </div>
+    </main>
+
+    <footer class="footer" onclick="window.location.href='aboutme.html';">
+      <p>Made by Jonas Gissler</p>
+      <p><a class="footer-link" href="aboutme.html">About</a></p>
+    </footer>
+  </div>
+</body>
+
+</html>
