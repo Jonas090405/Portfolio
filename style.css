@@ -1,65 +1,68 @@
 :root {
---accent-color: hsla(199, 92%, 45%, 0.712);
---primary-color: #1B1C1F;
---secondary-color: #101113;
---text-color: #f5f5f5;
---secondary-text-color: #7f8082;
---hover-color : hsla(199, 92%, 45%, 0.247);
-
+    --accent-color: hsla(199, 92%, 45%, 0.712);
+    --primary-color: #1B1C1F;
+    --secondary-color: #101113;
+    --text-color: #f5f5f5;
+    --secondary-text-color: #7f8082;
+    --hover-color: hsla(199, 92%, 45%, 0.247);
 }
 
-*{
-    margin : 0;
-    padding : 0;
+* {
+    margin: 0;
+    padding: 0;
 }
 
-html{
+html {
     font-family: 'Segoe UI', Tahoma, Verdana;
     font-size: 14pt;
     color: var(--text-color);
     scroll-behavior: smooth;
 }
-body{
-    min-height : 100vh;
+
+body {
+    min-height: 100vh;
     background-color: var(--primary-color);
 }
-#name{
+
+#name {
     background: linear-gradient(to right, var(--accent-color), white);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-header{
+
+header {
     padding: 0 20px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap-reverse;
 }
 
-header .container{
+header .container {
     width: 850px;
     max-width: 100%;
 }
 
-header img{
+header img {
     height: 70vh;
 }
 
-header h1{
+header h1 {
     margin-top: 50px;
     font-size: 4rem;
 }
 
-header h2{
+header h2 {
     margin-top: 20px;
     margin-bottom: 20px;
     text-transform: uppercase;
     font-weight: 300;
 }
 
-header p{
-    color: var(--secondary-text-color)
+header p {
+    color: var(--secondary-text-color);
 }
-header .read-more{
+
+header .read-more {
     display: inline-block;
     background-color: var(--accent-color);
     color: white;
@@ -69,78 +72,97 @@ header .read-more{
     padding: .5em 1.25em;
     text-decoration: none;
     margin-top: 50px;
-
     transition: 200ms ease;
     cursor: pointer;
 }
-header .read-more:hover{
-background-color: var(--hover-color);
+
+header .read-more:hover {
+    background-color: var(--hover-color);
 }
-#skill-section{
+
+#skill-section {
     padding: 80px 20px 150px 20px;
     background-color: var(--secondary-color);
 }
-#skill-section h2{
+
+#skill-section h2 {
     font-size: 3rem;
     text-align: center;
-
 }
-#skill-section .wrapper{
+
+#skill-section .wrapper {
     margin-top: 60px;
     display: flex;
     justify-content: center;
     gap: 50px;
     flex-wrap: wrap;
 }
-.skill-container{
+
+.skill-container {
     width: 400px;
     max-width: 100%;
-    border: 10px solid var(--primary-color);
     border-top: none;
+    border-radius: 12px;
+    overflow: hidden;
 }
-.skill-container h3{
+
+.skill-container h3 {
     background-color: var(--primary-color);
     padding: 15px 0;
     text-align: center;
     text-transform: uppercase;
 }
-.skill-container ul{
-    margin: 10px 0;
+
+.skill-container ul {
+    margin: 0;
     list-style: none;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
 }
 
-.skill-container ul li{
-padding: 15px;
-display: flex;
-justify-content: space-between;
+.skill-container ul li {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #1b1c1f94;
+    border-bottom: 1px solid var(--primary-color);
 }
-.skill-container ul li progress{
+
+.skill-container ul li:last-child {
+    border-bottom: none;
+}
+
+.skill-container ul li progress {
     accent-color: var(--accent-color);
     margin-top: 6px;
 }
 
-#projects-section{
+#projects-section {
     padding: 100px 20px;
 }
-#projects-section h2{
+
+#projects-section h2 {
     font-size: 3rem;
     text-align: center;
     margin-bottom: 60px;
 }
-details{
+
+details {
     margin: 20px auto;
     width: 1000px;
     max-width: 100%;
     background-color: var(--secondary-color);
-    border-radius: 6px;
+    border-radius: 12px;
 }
-details summary{
+
+details summary {
     display: flex;
     align-items: center;
     cursor: pointer;
     gap: 30px;
     padding: 30px;
 }
+
 details .number {
     background-color: var(--accent-color);
     min-height: 50px;
@@ -152,26 +174,58 @@ details .number {
     font-size: 1.2rem;
     font-weight: 700;
 }
-details h3{
+
+/* Styling für die Kreise um die Zahlen */
+.number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #555;
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Effekt beim Hovern über das Projektmodul */
+details:hover .number {
+    box-shadow: 0 0 15px hsla(199, 92%, 65%, 0.8), 0 0 30px hsla(199, 92%, 75%, 0.5);
+    transform: scale(1.05); /* Leichtes Vergrößern */
+}
+
+
+details h3 {
     font-size: 1.5rem;
 }
 
 details .text-container {
     padding: 30px;
     padding-top: 0;
+    border-radius: 0 0 12px 12px;
 }
-details .project-link{
+.project-link {
+    text-decoration: none; /* Entfernt die Unterstreichung */
+    font-weight: bold; /* Fettgedruckt für besseren Kontrast */
+    transition: color 0.3s ease; /*Übergangseffekt beim Hover */
+}
+
+
+details .project-link {
     display: inline-block;
     margin-top: 30px;
     background-color: var(--accent-color);
     color: white;
     padding: .75rem 1.5em;
-    border-radius: 2px;
+    border-radius: 12px;
     font-weight: 500;
     transition: 300ms ease;
     cursor: pointer;
 }
-details .project-link:hover{
+
+details .project-link:hover {
     background-color: var(--hover-color);
 }
 
@@ -210,6 +264,17 @@ details .project-link:hover{
     background-color: white;
     border-radius: 50%;
     z-index: 2;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.timeline-item .dot:hover {
+    box-shadow: 0 0 15px hsla(199, 92%, 65%, 0.8), 0 0 30px hsla(199, 92%, 75%, 0.5);
+    transform: scale(1.1); /* Leichtes Vergrößern beim Hover */
+}
+
+.timeline-item .dot:active {
+    transform: scale(0.9); /* Leichtes Schrumpfen bei Klick für Feedback */
 }
 
 .timeline-item .content {
@@ -217,9 +282,12 @@ details .project-link:hover{
     margin-left: 40px;
     max-width: 700px;
     font-size: 1rem;
+    border-radius: 12px;
+    background-color: var(--secondary-color);
+    padding: 15px;
 }
 
-.timeline-item h3 {
+timeline-item h3 {
     font-size: 1.5rem;
     margin-bottom: 5px;
 }
@@ -228,12 +296,12 @@ details .project-link:hover{
     margin: 5px 0;
 }
 
-
-footer{
+footer {
     background-color: var(--primary-color);
     padding: 100px 20px;
 }
-footer .grid-container{
+
+footer .grid-container {
     margin: 0 auto;
     width: 1000px;
     max-width: 100%;
@@ -241,75 +309,83 @@ footer .grid-container{
     grid-template-columns: 1fr 1fr max-content;
     gap: 100px;
     text-align: right;
+    border-radius: 12px;
 }
-footer #at-symbol{
+
+footer #at-symbol {
     font-size: 250pt;
 }
-footer h3{
+
+footer h3 {
     margin-top: 80px;
     font-size: 2rem;
-
 }
-footer a{
+
+footer a {
     margin-top: 5px;
     display: inline-block;
     color: var(--secondary-text-color);
     text-decoration: none;
 }
-footer a:hover{
+
+footer a:hover {
     color: var(--text-color);
 }
 
-@media(max-width:1000px){
-    header{
+@media (max-width: 1000px) {
+    header {
         padding: 100px 20px;
         text-align: center;
     }
-    header h1{
+
+    header h1 {
         margin-top: 0;
         font-size: 10vw;
     }
-    header h2{
+
+    header h2 {
         font-size: 1.3rem;
     }
-    header img{
+
+    header img {
         display: none;
-        
     }
-    footer .grid-container{
+
+    footer .grid-container {
         display: flex;
         flex-direction: column;
         text-align: center;
         gap: 0;
     }
-    footer #at-symbol{
+
+    footer #at-symbol {
         font-size: 150pt;
     }
-    footer h3{
+
+    footer h3 {
         margin-top: 50px;
     }
 }
 
-/* Responsive Anpassungen */
 @media (max-width: 768px) {
     .timeline {
-        width: 100%; /* Linie wird flexibler */
-        background: none; /* Linie wird auf mobilen Geräten versteckt */
+        width: 100%;
+        background: none;
     }
-    
+
     .timeline-item {
-        flex-direction: column; /* Inhalte stapeln sich vertikal */
-        align-items: center; /* Zentriert die Inhalte */
+        flex-direction: column;
+        align-items: center;
     }
-    
+
     .timeline-item .dot {
-        position: static; /* Fixiert die Position des Punkts */
-        margin-bottom: 10px; /* Abstand nach unten */
+        position: static;
+        margin-bottom: 10px;
         background-color: var(--accent-color);
     }
-    
+
     .timeline-item .content {
-        text-align: center; /* Zentriert den Text */
-        margin-left: 0; /* Entfernt die Seitenabstände */
+        text-align: center;
+        margin-left: 0;
     }
 }
