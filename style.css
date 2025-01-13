@@ -64,10 +64,10 @@ header p {
 
 header .read-more {
     display: inline-block;
-    background-color: var(--accent-color);
+    background: linear-gradient(to right, var(--accent-color),#4dbef3);
     color: white;
     font-size: 1.25rem;
-    font-weight: 500;
+    font-weight: 700;
     border-radius: 1000px;
     padding: .5em 1.25em;
     text-decoration: none;
@@ -78,6 +78,11 @@ header .read-more {
 
 header .read-more:hover {
     background-color: var(--hover-color);
+}
+.hey-large {
+    font-size: 1.5em; /* Schriftgröße anpassen */
+    font-weight: 700; /* Optional: Fett hervorheben */
+    color: #7f8082; /* Optional: Farbe anpassen */
 }
 
 #skill-section {
@@ -121,9 +126,10 @@ header .read-more:hover {
 }
 
 .skill-container ul li {
+    display: flex; /* Flexbox für gleichmäßige Anordnung */
+    align-items: center; /* Vertikale Ausrichtung */
+    justify-content: space-between; /* Abstand zwischen Text und Progressbar */
     padding: 15px;
-    display: flex;
-    justify-content: space-between;
     background-color: #1b1c1f94;
     border-bottom: 1px solid var(--primary-color);
 }
@@ -133,8 +139,30 @@ header .read-more:hover {
 }
 
 .skill-container ul li progress {
-    accent-color: var(--accent-color);
-    margin-top: 6px;
+    width: 180px; /* Kürzere Breite */
+    height: 10px; /* Originalhöhe */
+    border-radius: 12px; /* Rundungen */
+    overflow: hidden; /* Rundungen sichtbar machen */
+    background-color: #444; /* Hintergrund der Progressbar */
+    appearance: none; /* Entfernt Standard-Stil des Browsers */
+    margin: 0; /* Kein zusätzlicher Abstand */
+}
+
+/* Für Webkit-basierte Browser (Chrome, Edge, Safari) */
+.skill-container ul li progress::-webkit-progress-bar {
+    background-color: #444; /* Hintergrund der Progressbar */
+    border-radius: 12px; /* Rundungen */
+}
+
+.skill-container ul li progress::-webkit-progress-value {
+    background: linear-gradient(to right, var(--accent-color), #4dbef3); /* Verlauf */
+    border-radius: 12px; /* Rundungen für den Fortschrittswert */
+}
+
+/* Für Mozilla-basierte Browser (Firefox) */
+.skill-container ul li progress::-moz-progress-bar {
+    background: linear-gradient(to right, var(--accent-color), #4dbef3); /* Verlauf */
+    border-radius: 12px;
 }
 
 #projects-section {
@@ -258,9 +286,9 @@ details .project-link:hover {
 
 .timeline-item .dot {
     position: absolute;
-    left: -8px;
-    width: 20px;
-    height: 20px;
+    left: -10.8px;
+    width: 25px;
+    height: 25px;
     background-color: white;
     border-radius: 50%;
     z-index: 2;
@@ -314,6 +342,9 @@ footer .grid-container {
 
 footer #at-symbol {
     font-size: 250pt;
+    background: linear-gradient(to right, var(--accent-color), white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 footer h3 {
