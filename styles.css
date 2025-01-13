@@ -338,7 +338,6 @@ body {
     background-color: #393a3b;
     color: rgb(248, 247, 241);
   }
-  
   /* Hover-Effekte für Quiz-Auswahlbuttons mit verschiedenen Styling-Klassen */
   #quiz-selection button.styling12:hover {
     background-color: #024402;
