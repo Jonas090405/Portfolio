@@ -389,6 +389,21 @@ nav {
     background-color: hsla(199, 92%, 45%, 0.247);
     border-radius: 5px;
   }
+
+  /* Indikator für aufklappbare Module */
+details summary::after {
+    content: "▶"; /* Pfeil nach rechts */
+    font-size: 1.2rem;
+    color: var(--secondary-text-color);
+    margin-left: auto; /* Nach rechts schieben */
+    transition: transform 0.3s ease; /* Animation für Rotation */
+}
+
+/* Pfeil nach unten, wenn geöffnet */
+details[open] summary::after {
+    transform: rotate(90deg); /* Pfeil dreht sich nach unten */
+}
+
   
   /* Mobile-Ansicht: Menü und Hamburger-Button ausblenden */
   @media (max-width: 768px) {
