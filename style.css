@@ -77,7 +77,7 @@ header .read-more {
 }
 
 header .read-more:hover {
-    background: linear-gradient(to right,hsla(199, 92%, 45%, 0.466),#4dbef3c2);
+    background: linear-gradient(to right,hsla(199, 92%, 45%, 0.466),#4dbef3c8);
 }
 .hey-large {
     font-size: 1.5em; /* Schriftgröße anpassen */
