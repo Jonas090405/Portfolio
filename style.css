@@ -164,7 +164,6 @@ header .read-more:hover {
     background: linear-gradient(to right, var(--accent-color), #4dbef3); /* Verlauf */
     border-radius: 12px;
 }
-
 #projects-section {
     padding: 100px 20px;
 }
