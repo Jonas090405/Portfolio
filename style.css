@@ -390,7 +390,7 @@ nav {
     border-radius: 5px;
   }
 
-  /* Indikator für aufklappbare Module */
+/* Indikator für aufklappbare Module */
 details summary::after {
     content: "▶"; /* Pfeil nach rechts */
     font-size: 1.2rem;
@@ -410,6 +410,16 @@ details[open] summary::after {
     nav ul {
       display: none; /* Das gesamte Menü auf mobilen Geräten ausblenden */
     }
+
+    /* Indikator für aufklappbare Module */
+details summary::after {
+display: none;}
+
+/* Pfeil nach unten, wenn geöffnet */
+details[open] summary::after {
+display: none;
+}
+
 
   }
   
