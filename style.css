@@ -25,10 +25,26 @@ body {
 }
 
 #name {
-    background: linear-gradient(to right, var(--accent-color), white);
+    background: linear-gradient(90deg, var(--accent-color), white, var(--accent-color), white);
+    background-size: 300%; /* Vergrößerung für nahtlosen Übergang */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: flow-gradient 10s linear infinite; /* Animation auf 10 Sekunden verlängert */
 }
+
+@keyframes flow-gradient {
+    0% {
+        background-position: 0% 50%; /* Startpunkt des Verlaufs */
+    }
+    50% {
+        background-position: 100% 50%; /* Verlauf in die Mitte bewegt */
+    }
+    100% {
+        background-position: 0% 50%; /* Rückkehr zum Startpunkt */
+    }
+}
+
+
 
 header {
     padding: 0 20px;
@@ -86,7 +102,7 @@ header .read-more:hover {
 }
 
 #skill-section {
-    padding: 80px 20px 150px 20px;
+    padding: 100px 20px 150px 20px;
     background-color: var(--secondary-color);
 }
 
@@ -342,9 +358,23 @@ footer .grid-container {
 
 footer #at-symbol {
     font-size: 250pt;
-    background: linear-gradient(to right, var(--accent-color), white);
+    background: linear-gradient(90deg, var(--accent-color), white, var(--accent-color), white);
+    background-size: 300%; /* Vergrößerung für nahtlosen Übergang */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: flow-gradient 10s linear infinite; /* Animation auf 10 Sekunden verlängert */
+}
+
+@keyframes flow-gradient {
+    0% {
+        background-position: 0% 50%; /* Startpunkt des Verlaufs */
+    }
+    50% {
+        background-position: 100% 50%; /* Verlauf in die Mitte bewegt */
+    }
+    100% {
+        background-position: 0% 50%; /* Rückkehr zum Startpunkt */
+    }
 }
 
 footer h3 {
@@ -382,13 +412,15 @@ nav {
     color: white;
     text-decoration: none;
     padding: 5px 10px;
-    transition: background-color 0.3s;
-  }
-  
-  nav ul li a:hover {
+    border-radius: 5px; /* Abrundung auch im Standardzustand definieren */
+    transition: background-color 0.3s, border-radius 0.3s; /* Übergang für Abrundung hinzufügen */
+}
+
+nav ul li a:hover {
     background-color: hsla(199, 92%, 45%, 0.247);
-    border-radius: 5px;
-  }
+    border-radius: 5px; /* Abrundung auch im Hover-Zustand explizit beibehalten */
+}
+
 
 /* Indikator für aufklappbare Module */
 details summary::after {
@@ -492,3 +524,50 @@ footer a:hover {
         margin-left: 0;
     }
 }
+
+/* Stil der Progressbars */
+progress {
+    width: 100%; /* Damit die Progressbar die volle Breite ausnutzt */
+    height: 20px;
+    appearance: none;
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 0;  /* Anfangszustand ist unsichtbar */
+    transform: scaleX(0);  /* Anfangszustand: keine Breite */
+    transition: opacity 0.5s ease, transform 1s ease;  /* Animation für opazität und Breite */
+}
+
+/* Wenn die Progressbar sichtbar ist */
+.progress-visible {
+    opacity: 1;
+    transform: scaleX(1);  /* Setzt die Breite auf 100% */
+}
+
+
+/* Grundstyle für das Karriereweg-Modul */
+#education-section {
+    padding: 100px;
+    background-color: var(--secondary-color);
+}
+
+/* Titel für Karriereweg, versteckt zu Beginn */
+.timeline-title {
+    opacity: 0; /* Anfangs unsichtbar */
+    transform: translateY(50px); /* Leichte Verschiebung nach unten */
+    transition: opacity 1s ease, transform 1s ease; /* Sanfte Übergänge */
+}
+
+/* Timeline Items unsichtbar anfangs */
+.timeline-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Wenn das Element sichtbar ist, wird die Animation angewendet */
+.timeline-item.visible,
+.timeline-title.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
