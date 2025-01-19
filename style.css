@@ -4,7 +4,7 @@
     --secondary-color: #101113;
     --text-color: #f5f5f5;
     --secondary-text-color: #7f8082;
-    --hover-color: hsla(199, 92%, 45%, 0.247);
+    --hover-color: hsla(199, 92%, 45%, 0.511);
 }
 
 * {
@@ -417,7 +417,7 @@ nav {
 }
 
 nav ul li a:hover {
-    background-color: hsla(199, 92%, 45%, 0.247);
+    background-color: var(--hover-color);
     border-radius: 5px; /* Abrundung auch im Hover-Zustand explizit beibehalten */
 }
 

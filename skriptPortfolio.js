@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             element: document.querySelector("h2"),
-            text: "Student B.A. Medienkonzeption im 4 Semester mit Schwerpunkt auf User centered Design",
+            text: "Student B.A. Medienkonzeption im 4 Semester mit Schwerpunkt auf User-centered Design",
         },
         {
             element: document.querySelector("p"),
