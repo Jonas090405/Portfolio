@@ -104,3 +104,17 @@ window.addEventListener('scroll', handleScroll);
 document.addEventListener('DOMContentLoaded', handleScroll);
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    // Wähle alle Timeline-Items aus
+    const timelineItems = document.querySelectorAll(".timeline-item");
+
+    // Prüfe, ob es Timeline-Items gibt
+    if (timelineItems.length > 0) {
+        // Füge der letzten Timeline-Item den pulsierenden Effekt hinzu
+        const lastItem = timelineItems[timelineItems.length - 1];
+        const dot = lastItem.querySelector(".dot");
+        if (dot) {
+            dot.classList.add("current");
+        }
+    }
+});
