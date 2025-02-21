@@ -255,21 +255,21 @@ details .text-container {
 
 details .project-link {
     display: inline-block;
-    background: linear-gradient(to right, var(--accent-color),#4dbef3);
+    background: linear-gradient(to right, var(--accent-color), #4dbef3);
     color: white;
     font-size: 1.25rem;
     font-weight: 700;
-    border-radius: 1000px;
+    border-radius: 12px; /* Hier ist der neue, kleinere Wert */
     padding: .5em 1.25em;
     text-decoration: none;
     margin-top: 50px;
     transition: 200ms ease;
     cursor: pointer;
-}
-
-details .project-link:hover {
-    background: linear-gradient(to right,hsla(199, 92%, 45%, 0.567),#4dbef3ba);
-}
+    }
+    
+    details .project-link:hover {
+    background: linear-gradient(to right, hsla(199, 92%, 45%, 0.567), #4dbef3ba);
+    }
 
 #education-section {
     padding: 100px 20px;
