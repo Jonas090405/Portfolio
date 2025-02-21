@@ -22,15 +22,15 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
         },
     ];
 
-    let index = 0;
-    const typingSpeed = 15;
+    const typingSpeed = 0; // Minimum delay, but now we'll add multiple characters at once
+    const chunkSize = 7;    // Number of characters to add per iteration
 
     function typeText({ element, text }, callback) {
         let charIndex = 0;
         function type() {
             if (charIndex < text.length) {
-                element.textContent += text[charIndex];
-                charIndex++;
+                element.textContent += text.substr(charIndex, chunkSize);
+                charIndex += chunkSize;
                 setTimeout(type, typingSpeed);
             } else {
                 callback();
@@ -39,6 +39,7 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
         type();
     }
 
+    let index = 0;
     function startTyping() {
         if (index < elements.length) {
             const { element, text } = elements[index];
@@ -51,6 +52,7 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
 
     startTyping();
 });
+
 document.addEventListener("DOMContentLoaded", () => {
     const progressBars = document.querySelectorAll('progress');
 
