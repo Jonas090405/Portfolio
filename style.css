@@ -287,9 +287,9 @@ details .project-link {
     position: relative;
     margin: 0 auto;
     width: 4px;
-    background-color: var(--accent-color);
+    background-image: linear-gradient(to bottom, hsla(199, 92%, 45%, 0.567), #78d4ff);
     height: 100%;
-}
+    }
 
 .timeline-item {
     display: flex;
