@@ -121,7 +121,7 @@ header .read-more:hover {
     border-top: none;
     border-radius: 12px;
     overflow: hidden;
-      box-shadow:2px 2px 2px 2px rgba(94, 94, 94, 0.3);
+    box-shadow:2px 2px 2px 2px rgba(94, 94, 94, 0.3);
 
 }
 
@@ -234,7 +234,7 @@ details .number {
 
 /* Effekt beim Hovern über das Projektmodul */
 details:hover .number {
-    box-shadow: 0 0 7px hsla(199, 92%, 65%, 0.8), 0 0 30px hsla(199, 92%, 75%, 0.5);
+    box-shadow: 0 0 7px hsla(199, 92%, 65%, 0.8), 0 0 20px hsla(199, 92%, 75%, 0.5);
     transform: scale(1.05); /* Leichtes Vergrößern */
 }
 
