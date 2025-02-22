@@ -58,6 +58,8 @@ header .container {
 
 header img {
     height: 70vh;
+    margin-right: 100px; /* Vergrößert den Abstand zum Text */
+
 }
 
 header h1 {
