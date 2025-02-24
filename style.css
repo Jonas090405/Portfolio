@@ -61,7 +61,7 @@ header .container {
 header img {
     height: 70vh;
     margin-right: 100px; /* Vergrößert den Abstand zum Text */
-    margin-bottom: -4.68vh;
+    margin-bottom: -5.1vh;
 
 }
 
@@ -455,11 +455,15 @@ details[open] summary::after {
 }
 
   
-  /* Mobile-Ansicht: Menü und Hamburger-Button ausblenden */
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
     nav ul {
-      display: none; /* Das gesamte Menü auf mobilen Geräten ausblenden */
+        display: none; /* Das gesamte Menü auf mobilen Geräten ausblenden */
     }
+
+    details summary::after {
+        display: none; /* Das Pseudo-Element ausblenden */
+    }
+}
 
     /* Indikator für aufklappbare Module */
 details summary::after {
@@ -469,9 +473,6 @@ display: none;}
 details[open] summary::after {
 display: none;
 }
-
-
-  }
   
   /* Desktop-Ansicht (ab 769px) */
   @media (min-width: 769px) {
