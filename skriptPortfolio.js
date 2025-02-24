@@ -125,3 +125,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 });
+
+
+
+// Wähle alle Skill-Karten aus
+const skillCards = document.querySelectorAll('.skill-container');
+
+skillCards.forEach((card) => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left; // Mausposition relativ zur Karte (X)
+        const y = e.clientY - rect.top; // Mausposition relativ zur Karte (Y)
+
+        // Berechnung der Rotationswerte (noch stärkere Neigung)
+        const rotateX = ((y / rect.height) - 0.5) * -45; // Neigung auf der X-Achse
+        const rotateY = ((x / rect.width) - 0.5) * 45; // Neigung auf der Y-Achse
+
+        // Anwenden der Transformation
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+
+    // Zurücksetzen des Effekts, wenn die Maus die Karte verlässt
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        // Kein Schatten-Reset mehr hier!
+    });
+});
