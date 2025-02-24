@@ -10,6 +10,7 @@
 * {
     margin: 0;
     padding: 0;
+    
 }
 
 html {
@@ -46,6 +47,7 @@ body {
 
 header {
     padding: 0 20px;
+    margin-bottom: 60px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap-reverse;
@@ -59,6 +61,7 @@ header .container {
 header img {
     height: 70vh;
     margin-right: 100px; /* Vergrößert den Abstand zum Text */
+    margin-bottom: -4.68vh;
 
 }
 
@@ -120,17 +123,15 @@ header .read-more:hover {
     max-width: 100%;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.6); /* Verstärkter Schatten beim Hover */
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.6); /* Standard-Schatten */
     perspective: 800px; /* Perspektive für den 3D-Effekt */
     transform-style: preserve-3d; /* Aktiviert den 3D-Effekt */
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; /* Sanfter Übergang */
 }
 
 .skill-container:hover {
-    box-shadow: 2px 2px 10px rgba(94, 94, 94, 0.5); /* Stärkerer Schatten im hoverzustand */
-
+    box-shadow: 2px 2px 10px rgba(94, 94, 94, 0.5); /* Schatten beim Hover */
 }
-
 
 .skill-container h3 {
     background-color: var(--primary-color);
@@ -202,11 +203,16 @@ details {
     max-width: 100%;
     background-color: var(--secondary-color);
     border-radius: 12px;
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Kein Schatten im Standardzustand */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Schwacher Schatten im Standardzustand */
     transform: translateY(0); /* Keine Verschiebung im Standardzustand */
     transition: all 0.3s ease; /* Sanfter Übergang für Schatten und Position */
-
 }
+
+details:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Stärkerer Drop-Shadow beim Hover */
+    transform: translateY(-5px); /* Leichtes Anheben beim Hover */
+}
+
 
 details summary {
     display: flex;
@@ -214,11 +220,6 @@ details summary {
     cursor: pointer;
     gap: 30px;
     padding: 30px;
-}
-
-details:hover {
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Drop-Shadow beim Hover */
-    transform: translateY(-5px); /* Leichtes Anheben beim Hover */
 }
 
 
@@ -230,7 +231,7 @@ details .number {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
 }
 
@@ -257,7 +258,7 @@ details:hover .number {
 
 
 details h3 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
 
 details .text-container {
@@ -276,9 +277,9 @@ details .project-link {
     display: inline-block;
     background: linear-gradient(to right, var(--accent-color), #4dbef3);
     color: white;
-    font-size: 1.25rem;
-    font-weight: 700;
-    border-radius: 12px; /* Hier ist der neue, kleinere Wert */
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 12px;
     padding: .5em 1.25em;
     text-decoration: none;
     margin-top: 50px;
@@ -335,7 +336,7 @@ details .project-link {
 }
 
 .timeline-item .dot:active {
-    transform: scale(0.9); /* Leichtes Schrumpfen bei Klick für Feedback */
+    transform: scale(1); /* Leichtes Schrumpfen bei Klick für Feedback */
 }
 
 .timeline-item .content {
@@ -350,11 +351,11 @@ details .project-link {
 
 .timeline-item h3 {
     font-size: 1.5rem;
-    margin-bottom: 5px;
+    margin-bottom: 1vh;
 }
 
 .timeline-item p {
-    margin: 5px 0;
+    margin: 0.7vh 0;
 }
 
 footer {
