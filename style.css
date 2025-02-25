@@ -187,109 +187,6 @@ header .read-more:hover {
     border-radius: 12px;
 }
 
-#projects-section {
-    padding: 100px 20px;
-}
-
-#projects-section h2 {
-    font-size: 3rem;
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-details {
-    margin: 20px auto;
-    width: 1000px;
-    max-width: 100%;
-    background-color: var(--secondary-color);
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Schwacher Schatten im Standardzustand */
-    transform: translateY(0); /* Keine Verschiebung im Standardzustand */
-    transition: all 0.3s ease; /* Sanfter Übergang für Schatten und Position */
-}
-
-details:hover {
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Stärkerer Drop-Shadow beim Hover */
-    transform: translateY(-5px); /* Leichtes Anheben beim Hover */
-}
-
-
-details summary {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    gap: 30px;
-    padding: 30px;
-}
-
-
-details .number {
-    background-color: var(--accent-color);
-    min-height: 50px;
-    min-width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-/* Styling für die Kreise um die Zahlen */
-.number {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 50%;
-    background-color: #555;
-    color: white;
-    font-weight: bold;
-    margin-right: 10px;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-/* Effekt beim Hovern über das Projektmodul */
-details:hover .number {
-    box-shadow: 0 0 7px hsla(199, 92%, 65%, 0.8), 0 0 20px hsla(199, 92%, 75%, 0.5);
-    transform: scale(1.05); /* Leichtes Vergrößern */
-}
-
-
-details h3 {
-    font-size: 1.4rem;
-}
-
-details .text-container {
-    padding: 30px;
-    padding-top: 0;
-    border-radius: 0 0 12px 12px;
-}
-.project-link {
-    text-decoration: none; /* Entfernt die Unterstreichung */
-    font-weight: bold; /* Fettgedruckt für besseren Kontrast */
-    transition: color 0.3s ease; /*Übergangseffekt beim Hover */
-}
-
-
-details .project-link {
-    display: inline-block;
-    background: linear-gradient(to right, var(--accent-color), #4dbef3);
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 600;
-    border-radius: 12px;
-    padding: .5em 1.25em;
-    text-decoration: none;
-    margin-top: 50px;
-    transition: 200ms ease;
-    cursor: pointer;
-    }
-    
-    details .project-link:hover {
-    background: linear-gradient(to right, hsla(199, 92%, 45%, 0.567), #4dbef3ba);
-    }
 
 #education-section {
     padding: 100px 20px;
@@ -357,6 +254,53 @@ details .project-link {
 .timeline-item p {
     margin: 0.7vh 0;
 }
+
+
+
+/* Titel für Karriereweg, versteckt zu Beginn */
+.timeline-title {
+    opacity: 0; /* Anfangs unsichtbar */
+    transform: translateY(50px); /* Leichte Verschiebung nach unten */
+    transition: opacity 1s ease, transform 1s ease; /* Sanfte Übergänge */
+}
+
+/* Timeline Items unsichtbar anfangs */
+.timeline-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Wenn das Element sichtbar ist, wird die Animation angewendet */
+.timeline-item.visible,
+.timeline-title.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Pulsierende Animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 5px var(--accent-color);
+    }
+    50% {
+        transform: scale(1.3);
+        box-shadow: 0 0 20px var(--accent-color);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 5px var(--accent-color);
+    }
+}
+
+/* Stil für den pulsierenden Punkt */
+.timeline-item .dot.current {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+
+
 
 footer {
     background-color: var(--primary-color);
@@ -439,40 +383,14 @@ nav ul li a:hover {
     border-radius: 5px; /* Abrundung auch im Hover-Zustand explizit beibehalten */
 }
 
-
-/* Indikator für aufklappbare Module */
-details summary::after {
-    content: "▶"; /* Pfeil nach rechts */
-    font-size: 1.2rem;
-    color: var(--secondary-text-color);
-    margin-left: auto; /* Nach rechts schieben */
-    transition: transform 0.3s ease; /* Animation für Rotation */
-}
-
-/* Pfeil nach unten, wenn geöffnet */
-details[open] summary::after {
-    transform: rotate(90deg); /* Pfeil dreht sich nach unten */
-}
-
   
 @media (max-width: 768px) {
     nav ul {
         display: none; /* Das gesamte Menü auf mobilen Geräten ausblenden */
     }
 
-    details summary::after {
-        display: none; /* Das Pseudo-Element ausblenden */
-    }
 }
 
-    /* Indikator für aufklappbare Module */
-details summary::after {
-display: none;}
-
-/* Pfeil nach unten, wenn geöffnet */
-details[open] summary::after {
-display: none;
-}
   
   /* Desktop-Ansicht (ab 769px) */
   @media (min-width: 769px) {
@@ -563,50 +481,106 @@ progress {
 }
 
 
-/* Grundstyle für das Karriereweg-Modul */
-#education-section {
-    padding: 100px;
+
+
+/* Container für die Bento Cards */
+#project-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Drei Spalten für größere Bildschirme */
+    gap: 40px; /* Abstand zwischen den Karten */
+    padding: 20px 50px; /* Mehr Abstand links und rechts */
+    padding-bottom: 100px;
+    padding-top: 100px;
+
+  }
+  #project-section h2 {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 60px;
+    grid-column: 1 / -1; /* Überschrift über gesamte Breite spannen */
+}
+
+
+  /* Styling für jede Bento Card */
+  .bento-card {
     background-color: var(--secondary-color);
-}
+    border-radius: 12px;
+    overflow: hidden; /* Schneidet überstehende Inhalte ab */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column; /* Inhalt vertikal ausrichten */
+  }
+  
+  .bento-card:hover {
+    transform: translateY(-5px); /* Leichtes Anheben beim Hover */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5); /* Stärkerer Schatten beim Hover */
+  }
+  
+  /* Bild oben in der Karte */
+  .bento-card img {
+    width: 100%; /* Füllt die Breite der Karte aus */
+    height: 150px; /* Einheitliche Höhe für alle Bilder */
+    object-fit: cover; /* Zuschneiden ohne Verzerrung */
+  
+  }
+  
+  /* Inhalt der Karte */
+  .card-content {
+    padding: 15px;
+  }
+  
+  .card-content h3 {
+    font-size: 1.5rem; /* Standardgröße der Überschrift */
+    margin-bottom: 20px; /* Größerer Abstand zur Beschreibung */
+  }
+  
+  .card-content p {
+    font-size: .9rem;
+    margin-bottom: 30px; /* Größerer Abstand zum Button */
+    color: var(--secondary-text-color);
+  }
+  
+  /* Button-Styling */
+  .card-button {
+      display: inline-block;
+      margin-top: auto; /* Schiebt den Button nach unten innerhalb der Karte */
+      background: linear-gradient(to right, var(--accent-color), #4dbef3);
+      color: white;
+      font-size: .9rem;
+      font-weight: bold;
+      padding: .5em .75em;
+      border-radius: .5em;
+      text-decoration: none; /* Entfernt Unterstreichung */
+  }
+  
+  .card-button:hover {
+      background-color: var(--hover-color);
+  }
+  
+  /* Responsives Design für Tablets (max-width:1200px) */
+  @media (max-width:1200px) {
+      #bento-card {
+          grid-template-columns: repeat(2, minmax(0,1fr)); /* Zwei Spalten auf Tablets */
+          padding: 20px; /* Weniger Padding auf Tablets */
+      }
+  
+      .card-content h3 {
+          font-size: 1.3rem; /* Kleinere Schriftgröße für Überschrift auf Tablets */
+      }
+  }
+  
+  /* Responsives Design für kleinere Bildschirme (max-width:768px) */
+  @media (max-width:768px) {
+      #bento-card {
+          grid-template-columns: repeat(1, minmax(0,1fr)); /* Eine Spalte auf mobilen Geräten */
+          padding: 20px; /* Weniger Padding auf kleinen Bildschirmen */
+      }
+  
+      .card-content h3 {
+          font-size: 1.2rem; /* Noch kleinere Schriftgröße für Überschrift auf Mobilgeräten */
+      }
+  }
 
-/* Titel für Karriereweg, versteckt zu Beginn */
-.timeline-title {
-    opacity: 0; /* Anfangs unsichtbar */
-    transform: translateY(50px); /* Leichte Verschiebung nach unten */
-    transition: opacity 1s ease, transform 1s ease; /* Sanfte Übergänge */
-}
 
-/* Timeline Items unsichtbar anfangs */
-.timeline-item {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-/* Wenn das Element sichtbar ist, wird die Animation angewendet */
-.timeline-item.visible,
-.timeline-title.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Pulsierende Animation */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 5px var(--accent-color);
-    }
-    50% {
-        transform: scale(1.3);
-        box-shadow: 0 0 20px var(--accent-color);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 5px var(--accent-color);
-    }
-}
-
-/* Stil für den pulsierenden Punkt */
-.timeline-item .dot.current {
-    animation: pulse 1.5s infinite ease-in-out;
-}
+  
