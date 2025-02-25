@@ -23,7 +23,7 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
     ];
 
     const typingSpeed = 0; // Minimum delay, but now we'll add multiple characters at once
-    const chunkSize = 7;    // Number of characters to add per iteration
+    const chunkSize = 6;    // Number of characters to add per iteration
 
     function typeText({ element, text }, callback) {
         let charIndex = 0;
