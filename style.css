@@ -197,7 +197,7 @@ header .read-more:hover {
 
 #education-section h2 {
     font-size: 3rem;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
 }
 
 .timeline {
@@ -298,9 +298,6 @@ header .read-more:hover {
 .timeline-item .dot.current {
     animation: pulse 1.5s infinite ease-in-out;
 }
-
-
-
 
 footer {
     background-color: var(--primary-color);
@@ -594,27 +591,71 @@ progress {
     background: linear-gradient(to right, hsla(199, 92%, 45%, 0.567), #4dbef3ba);
 }
 
-/* Responsives Design */
-@media (max-width: 1200px) {
+
+/* Responsive Design */
+
+/* Tablet-Größe (zwei Karten nebeneinander) */
+@media (max-width: 1302px) {
     #project-section {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr); /* Zwei Spalten bei Tablet-Größe */
+        gap: 20px; /* Weniger Abstand zwischen den Karten */
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 50px;
+        padding-bottom: 50px;
     }
-    .bento-card {
-        min-height: 400px;
+
+    #project-section h2 {
+        font-size: 2.5rem; /* Etwas kleinere Überschrift für Tablets */
+        margin-bottom: 40px;
+
+      
+    }
+    .bento-card::after {
+        content: "Tippen";
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        background-color: rgba(0,0,0,0.6);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        opacity: 0.7;
     }
 }
 
-@media (max-width: 768px) {
+/* Handy-Größe (eine Karte pro Zeile) */
+@media (max-width: 600px) {
     #project-section {
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(1, 1fr); /* Eine Spalte bei Handy-Größe */
+        gap: 15px; /* Weniger Abstand zwischen den Karten */
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 30px;
+        padding-bottom: 30px;
     }
+
+    #project-section h2 {
+        font-size: 2rem; /* Noch kleinere Überschrift für Handys */
+        margin-bottom: 30px;
+    }
+    
+    /* Zusätzliche visuelle Hinweise für Touch-Geräte */
     .bento-card {
-        min-height: 450px;
+        position: relative;
     }
-    .card-content h3 {
-        font-size: 1.4rem;
-    }
-    .card-content p {
-        font-size: 1rem;
+    
+    .bento-card::after {
+        content: "Tippen";
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        background-color: rgba(0,0,0,0.6);
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        opacity: 0.7;
     }
 }
