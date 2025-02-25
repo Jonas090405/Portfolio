@@ -585,7 +585,7 @@ progress {
     color: white;
     font-size: .9rem;
     font-weight: bold;
-    padding: .5em .75em;
+    padding: .5em 1em;
     border-radius: .5em;
     text-decoration: none;
 }
