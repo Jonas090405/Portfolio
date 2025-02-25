@@ -61,7 +61,7 @@ header .container {
 header img {
     height: 70vh;
     margin-right: 100px; /* Vergrößert den Abstand zum Text */
-    margin-bottom: -5.1vh;
+    margin-bottom: -71.5vh;
 
 }
 
@@ -555,32 +555,33 @@ progress {
   }
   
   .card-button:hover {
-      background-color: var(--hover-color);
+    background: linear-gradient(to right,hsla(199, 92%, 45%, 0.567),#4dbef3ba);
   }
   
+  /* breakpoints gehen nicht */
   /* Responsives Design für Tablets (max-width:1200px) */
-  @media (max-width:1200px) {
-      #bento-card {
-          grid-template-columns: repeat(2, minmax(0,1fr)); /* Zwei Spalten auf Tablets */
-          padding: 20px; /* Weniger Padding auf Tablets */
-      }
-  
-      .card-content h3 {
-          font-size: 1.3rem; /* Kleinere Schriftgröße für Überschrift auf Tablets */
-      }
-  }
-  
-  /* Responsives Design für kleinere Bildschirme (max-width:768px) */
-  @media (max-width:768px) {
-      #bento-card {
-          grid-template-columns: repeat(1, minmax(0,1fr)); /* Eine Spalte auf mobilen Geräten */
-          padding: 20px; /* Weniger Padding auf kleinen Bildschirmen */
-      }
-  
-      .card-content h3 {
-          font-size: 1.2rem; /* Noch kleinere Schriftgröße für Überschrift auf Mobilgeräten */
-      }
-  }
+@media (max-width: 1200px) {
+    #project-section {
+        grid-template-columns: repeat(2, 1fr); /* Zwei Spalten auf Tablets */
+        padding: 20px; /* Weniger Padding auf Tablets */
+    }
+
+    .card-content h3 {
+        font-size: 1.3rem; /* Kleinere Schriftgröße für Überschrift auf Tablets */
+    }
+}
+
+/* Responsives Design für kleinere Bildschirme (max-width:768px) */
+@media (max-width: 768px) {
+    #project-section {
+        grid-template-columns: repeat(1, 1fr); /* Eine Spalte auf mobilen Geräten */
+        padding: 20px; /* Weniger Padding auf kleinen Bildschirmen */
+    }
+
+    .card-content h3 {
+        font-size: 1.2rem; /* Noch kleinere Schriftgröße für Überschrift auf Mobilgeräten */
+    }
+}
 
 
   
