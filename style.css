@@ -203,9 +203,10 @@ header .read-more:hover {
 .timeline {
     position: relative;
     margin: 0 auto;
-    width: 4px;
+    width: 5px;
     background-image: linear-gradient(to bottom, hsla(199, 92%, 45%, 0.567), #78d4ff);
     height: 100%;
+    border-radius: 2px; /* Abgerundete Timeline */
     }
 
 .timeline-item {
@@ -217,7 +218,7 @@ header .read-more:hover {
 
 .timeline-item .dot {
     position: absolute;
-    left: -10.8px;
+    left: -10px;
     width: 25px;
     height: 25px;
     background-color: white;
