@@ -498,7 +498,7 @@ progress {
     background-color: var(--secondary-color);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3); /* Schwacher Shadow */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4); /* Schwacher Shadow */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     display: flex;
