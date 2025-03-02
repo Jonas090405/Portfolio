@@ -152,32 +152,31 @@ skillCards.forEach((card) => {
     });
 });
 
+
 document.addEventListener('DOMContentLoaded', function() {
     const bentoCards = document.querySelectorAll('.bento-card');
     
     bentoCards.forEach(card => {
-        card.addEventListener('touchstart', function(e) {
-            // Verhindern des Standard-Touch-Verhaltens
-            e.preventDefault();
-            
-            // Nur für mobile Geräte (max-width: 600px)
+        card.addEventListener('click', function() {
+            // Nur für mobile Geräte (max-width: 1302px)
             if (window.innerWidth <= 1302) {
-                // Alle anderen Karten deaktivieren
+                // Toggle der aktiven Klasse
+                this.classList.toggle('card-active');
+                
+                // Alle anderen Karten schließen
                 bentoCards.forEach(otherCard => {
                     if (otherCard !== this) {
                         otherCard.classList.remove('card-active');
                     }
                 });
-                
-                // Diese Karte aktivieren/deaktivieren
-                this.classList.toggle('card-active');
             }
-        }, {passive: false});
+        });
     });
     
     // Event-Listener für Fenstergrößenänderungen
     window.addEventListener('resize', function() {
         if (window.innerWidth > 1302) {
+            // Aktive Karten zurücksetzen beim Wechsel zum Desktop
             bentoCards.forEach(card => {
                 card.classList.remove('card-active');
             });

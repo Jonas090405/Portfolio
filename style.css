@@ -661,44 +661,24 @@ progress {
     }
 }
 @media (max-width: 1302px) {
-    /* Hover-Effekte für mobile Geräte komplett deaktivieren */
-    .bento-card:hover::before,
-    .bento-card:hover img,
-    .bento-card:hover .card-content,
-    .bento-card:hover {
-        all: unset;
-    }
-    
-    /* Aktiver Zustand (nach Touch) */
-    .bento-card.card-active::before,
-    .bento-card.card-active img,
-    .bento-card.card-active .card-content,
-    .bento-card.card-active {
-        transition: all 0.3s ease;
-    }
-    
+
+    /* Die gleichen visuellen Effekte für den aktiven Zustand (nach Klick) */
     .bento-card.card-active::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
         background: rgba(0, 0, 0, 0.5);
-        z-index: 1;
     }
     
     .bento-card.card-active img {
+        background: rgba(0, 0, 0, 0.5);
         opacity: 0.3;
         transform: scale(1.05);
     }
     
     .bento-card.card-active .card-content {
         opacity: 1;
-        z-index: 2;
     }
     
     .bento-card.card-active {
+        background: rgba(0, 0, 0, 0.5);
         box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
         transform: translateY(-8px);
     }
