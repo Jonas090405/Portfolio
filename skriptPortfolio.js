@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             // Nur für mobile Geräte (max-width: 600px)
-            if (window.innerWidth <= 600) {
+            if (window.innerWidth <= 1302) {
                 // Alle anderen Karten deaktivieren
                 bentoCards.forEach(otherCard => {
                     if (otherCard !== this) {
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Event-Listener für Fenstergrößenänderungen
     window.addEventListener('resize', function() {
-        if (window.innerWidth > 600) {
+        if (window.innerWidth > 1302) {
             bentoCards.forEach(card => {
                 card.classList.remove('card-active');
             });
