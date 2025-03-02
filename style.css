@@ -660,3 +660,34 @@ progress {
         opacity: 0.7;
     }
 }
+@media (max-width: 600px) {
+    /* Hover-Effekte für mobile Geräte deaktivieren */
+    .bento-card:hover::before,
+    .bento-card:hover img,
+    .bento-card:hover .card-content,
+    .bento-card:hover {
+        background: initial;
+        opacity: initial;
+        transform: initial;
+        box-shadow: initial;
+    }
+    
+    /* Die gleichen visuellen Effekte für den aktiven Zustand (nach Klick) */
+    .bento-card.card-active::before {
+        background: rgba(0, 0, 0, 0.5);
+    }
+    
+    .bento-card.card-active img {
+        opacity: 0.3;
+        transform: scale(1.05);
+    }
+    
+    .bento-card.card-active .card-content {
+        opacity: 1;
+    }
+    
+    .bento-card.card-active {
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
+        transform: translateY(-8px);
+    }
+}
