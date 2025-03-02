@@ -660,21 +660,32 @@ progress {
         opacity: 0.7;
     }
 }
-@media (max-width: 600px) {
-    /* Hover-Effekte für mobile Geräte deaktivieren */
+@media (max-width: 1302px) {
+    /* Hover-Effekte für mobile Geräte komplett deaktivieren */
     .bento-card:hover::before,
     .bento-card:hover img,
     .bento-card:hover .card-content,
     .bento-card:hover {
-        background: initial;
-        opacity: initial;
-        transform: initial;
-        box-shadow: initial;
+        all: unset;
     }
     
-    /* Die gleichen visuellen Effekte für den aktiven Zustand (nach Klick) */
+    /* Aktiver Zustand (nach Touch) */
+    .bento-card.card-active::before,
+    .bento-card.card-active img,
+    .bento-card.card-active .card-content,
+    .bento-card.card-active {
+        transition: all 0.3s ease;
+    }
+    
     .bento-card.card-active::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
     }
     
     .bento-card.card-active img {
@@ -684,6 +695,7 @@ progress {
     
     .bento-card.card-active .card-content {
         opacity: 1;
+        z-index: 2;
     }
     
     .bento-card.card-active {

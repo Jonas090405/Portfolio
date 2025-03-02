@@ -152,40 +152,32 @@ skillCards.forEach((card) => {
     });
 });
 
-
 document.addEventListener('DOMContentLoaded', function() {
     const bentoCards = document.querySelectorAll('.bento-card');
     
     bentoCards.forEach(card => {
-        card.addEventListener('touchstart', handleTouch);
-        card.addEventListener('click', handleClick);
-    });
-
-    function handleTouch(event) {
-        if (window.innerWidth <= 1302) {
-            event.preventDefault(); // Verhindert den Standard-Touch-Event
-            handleCardActivation(this);
-        }
-    }
-
-    function handleClick(event) {
-        if (window.innerWidth <= 1302) {
-            event.preventDefault(); // Verhindert den Standard-Click-Event
-            handleCardActivation(this);
-        }
-    }
-
-    function handleCardActivation(card) {
-        bentoCards.forEach(otherCard => {
-            if (otherCard !== card) {
-                otherCard.classList.remove('card-active');
+        card.addEventListener('touchstart', function(e) {
+            // Verhindern des Standard-Touch-Verhaltens
+            e.preventDefault();
+            
+            // Nur für mobile Geräte (max-width: 600px)
+            if (window.innerWidth <= 600) {
+                // Alle anderen Karten deaktivieren
+                bentoCards.forEach(otherCard => {
+                    if (otherCard !== this) {
+                        otherCard.classList.remove('card-active');
+                    }
+                });
+                
+                // Diese Karte aktivieren/deaktivieren
+                this.classList.toggle('card-active');
             }
-        });
-        card.classList.toggle('card-active');
-    }
-
+        }, {passive: false});
+    });
+    
+    // Event-Listener für Fenstergrößenänderungen
     window.addEventListener('resize', function() {
-        if (window.innerWidth > 1302) {
+        if (window.innerWidth > 600) {
             bentoCards.forEach(card => {
                 card.classList.remove('card-active');
             });
