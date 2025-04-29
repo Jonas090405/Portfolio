@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Autos in AR</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+  <script src="autos.js" defer></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="margin: 0; overflow: hidden">
+  <a-scene embedded arjs>
+    <a-marker id="cardMarker" type="pattern" url="marker.patt">
+      
+      <a-entity id="street">
+        <a-box position="0 0.01 0" width="1.8" height="0.02" depth="3" color="#3a3a3a"></a-box>
+        <a-box position="-0.3 0.021 0" width="0.02" height="0.001" depth="3" color="#ffffff"></a-box>
+        <a-box position="0.3 0.021 0" width="0.02" height="0.001" depth="3" color="#ffffff"></a-box>
+      </a-entity>
+
+     <a-entity id="carsContainer"></a-entity>
+
+    </a-marker>
+
+    <a-entity camera></a-entity>
+  </a-scene>
+  <a id="downloadButton" href="marker.png" download>Marker herunterladen</a>
+</body>
+</html>
