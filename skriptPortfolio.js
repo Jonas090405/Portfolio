@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             element: document.querySelector("p"),
-            text: `Hey! Mein Name ist Jonas Gissler, ich bin 19 Jahre alt und komme aus Triberg im Schwarzwald. Aktuell studiere ich Medienkonzeption im 4. Semester an der Hochschule Furtwangen.
+            text: `Hey! Mein Name ist Jonas Gissler, ich bin 20 Jahre alt und komme aus Triberg im Schwarzwald. Aktuell studiere ich Medienkonzeption im 4. Semester an der Hochschule Furtwangen.
 
 Mein Schwerpunkt liegt im nutzerzentrierten Design – Meine Leidenschaft ist es, Medieninhalte zu gestalten, die die Bedürfnisse des Menschen in den Mittelpunkt stellen. Dabei verbinde ich Kreativität und psychologische Usability- und UX-Aspekte mit strukturiertem Vorgehen, um Designs zu entwickeln, die nicht nur ästhetisch, sondern auch funktional und nutzerfreundlich sind.
 
