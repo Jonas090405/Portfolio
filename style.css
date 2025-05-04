@@ -240,11 +240,11 @@ header .read-more:hover {
 .timeline-item .content {
     text-align: left;
     margin-left: 40px;
-    max-width: 700px;
     font-size: 1rem;
     border-radius: 12px;
     background-color: var(--secondary-color);
     padding: 15px;
+    
 }
 
 .timeline-item h3 {
@@ -253,7 +253,8 @@ header .read-more:hover {
 }
 
 .timeline-item p {
-    margin: 0.7vh 0;
+    margin: 1vh 0;
+    color: #c5c5c5;
 }
 
 
