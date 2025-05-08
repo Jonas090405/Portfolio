@@ -626,42 +626,79 @@ progress {
         font-size: 0.8rem;
         opacity: 0.7;
     }
+
+    footer {
+        background-color: var(--primary-color);
+        padding: 50px 20px;
+    }
+    
 }
 
-/* Handy-Größe (eine Karte pro Zeile) */
 @media (max-width: 600px) {
     #project-section {
-        grid-template-columns: repeat(1, 1fr); /* Eine Spalte bei Handy-Größe */
-        gap: 40px; /* Weniger Abstand zwischen den Karten */
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 30px;
-        padding-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      padding: 30px 15px;
+    }
+  
+    .bento-card {
+      flex-direction: column;
+      height: auto;
+      min-height: unset;
+    }
+  
+    .bento-card img {
+      position: relative;
+      height: 180px;
+      object-fit: cover;
+      opacity: 1;
+      transform: none;
+    }
+  
+    .card-content {
+      position: relative;
+      opacity: 1;
+      padding: 20px;
+    }
+  
+    .card-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+  
+    .card-content p {
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+  
+    .card-button {
+      font-size: 0.85rem;
+      padding: 0.4em 1em;
+    }
+  
+    .bento-card::after {
+      content: none;
+    }
+    
+
+    header {
+        padding: 0 20px;
+        margin-bottom: 0px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap-reverse;
     }
 
-    #project-section h2 {
-        font-size: 2rem; /* Noch kleinere Überschrift für Handys */
-        margin-bottom: 30px;
+    footer {
+        background-color: var(--primary-color);
+        padding: 40px 20px;
     }
     
-    /* Zusätzliche visuelle Hinweise für Touch-Geräte */
-    .bento-card {
-        position: relative;
-    }
     
-    .bento-card::after {
-        content: "Tippen";
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        background-color: rgba(0,0,0,0.6);
-        color: white;
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        opacity: 0.7;
-    }
-}
+  }
+   
+/* Responsive Design für mobile Geräte */
 @media (max-width: 1302px) {
 
     /* Die gleichen visuellen Effekte für den aktiven Zustand (nach Klick) */
