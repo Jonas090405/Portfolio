@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collaborative Pixel Board</title>
+  <link rel="stylesheet" href="Drawboardstyle.css">
+  <script src="player.js" defer></script>
+</head>
+<body>
+
+  <div id="app-container">
+    <h1 id="title-display">Collaborative Pixel Board</h1>
+    <div id="info-display"></div>
+
+    <canvas id="pixel-board" width="256" height="256"></canvas>
+
+    <div class="controls">
+      <input type="color" id="color-picker" value="#ff0000">
+      <button id="clear-btn">Clear Board</button>
+    </div>
+  </div>
+
+</body>
+</html>

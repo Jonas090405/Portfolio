@@ -1,0 +1,49 @@
+html {
+  overscroll-behavior: none;
+     ;}
+     * {
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    
+    #pixel-board {
+      background-color: black;
+      border: 2px solid white;
+      image-rendering: pixelated;
+      cursor: crosshair;
+      margin-top: 1em;
+    }
+    
+    .controls {
+      margin-top: 20px;
+    }
+    
+    #info-display {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+    
+    .highlight-text {
+      animation: highlight 1s;
+    }
+    
+    @keyframes highlight {
+      0% {
+        background-color: yellow;
+      }
+      100% {
+        background-color: transparent;
+      }
+    }
+    
