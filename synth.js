@@ -7,23 +7,18 @@ let audioContext = null;
 let localSound = null;
 let clientId = null;
 let clientCount = 0;
+let localRole = null;
+
+const possibleRoles = ['bass', 'lead', 'pad'];
 const otherSounds = {};
-const clientIndices = {};
-
-const rolePool = ['lead', 'bass', 'pad', 'perc'];
-
-function getRoleForClient(clientId) {
-  const allClients = Object.keys(clientIndices).concat(clientId).sort();
-  return rolePool[allClients.indexOf(clientId) % rolePool.length];
-}
-
-document.body.addEventListener('click', () => {
-  if (!audioContext) {
-    audioContext = new AudioContext();
-  }
-});
 
 const socket = new WebSocket('wss://nosch.uber.space/web-rooms/');
+
+function getRoleFromClientId(id) {
+  const numericId = parseInt(id, 36);
+  if (isNaN(numericId)) return possibleRoles[0];
+  return possibleRoles[numericId % possibleRoles.length];
+}
 
 function broadcastMovement(x, y) {
   if (!clientId) return;
@@ -35,11 +30,11 @@ function broadcastStop() {
   socket.send(JSON.stringify(['stop', clientId]));
 }
 
-// WebSocket events
+// WebSocket Events
 socket.addEventListener('open', () => {
   socket.send(JSON.stringify(['*enter-room*', 'collab-synth']));
   socket.send(JSON.stringify(['*subscribe-client-count*']));
-  setInterval(() => socket.send(''), 30000);
+  setInterval(() => socket.send(''), 30000); // ping alle 30s
 });
 
 socket.addEventListener('message', (event) => {
@@ -49,32 +44,27 @@ socket.addEventListener('message', (event) => {
   switch (data[0]) {
     case '*client-id*':
       clientId = data[1];
+      localRole = getRoleFromClientId(clientId);
+      if (infoDisplay) {
+        infoDisplay.textContent = `Rolle: ${localRole} – Verbundene Clients: ${clientCount}`;
+      }
       break;
 
     case '*client-count*':
       clientCount = data[1];
-      if (infoDisplay) infoDisplay.textContent = `Verbundene Clients: ${clientCount}`;
+      if (infoDisplay) {
+        infoDisplay.textContent = `Rolle: ${localRole || '...'} – Verbundene Clients: ${clientCount}`;
+      }
       break;
 
     case 'handmove': {
       const [_, x, y, sender] = data;
-      if (sender === clientId) return;
-
-      if (!audioContext) {
-        audioContext = new AudioContext();
-      }
-
-      if (!clientIndices[sender]) {
-        const all = Object.keys(clientIndices).concat(clientId).sort();
-        const index = all.indexOf(sender);
-        const role = rolePool[index % rolePool.length];
-        clientIndices[sender] = role;
-      }
+      if (sender === clientId) return; // eigenen Sound nicht doppelt anlegen
 
       if (!otherSounds[sender]) {
-        otherSounds[sender] = new Sound(clientIndices[sender]);
+        const role = getRoleFromClientId(sender);
+        otherSounds[sender] = new Sound(role);
       }
-
       otherSounds[sender].update(x, y);
       break;
     }
@@ -94,7 +84,7 @@ socket.addEventListener('message', (event) => {
   }
 });
 
-// MediaPipe Hands
+// MediaPipe Handtracking Setup
 const hands = new Hands({
   locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
 });
@@ -130,9 +120,7 @@ hands.onResults(results => {
     }
 
     if (!localSound) {
-      const role = getRoleForClient(clientId);
-      clientIndices[clientId] = role;
-      localSound = new Sound(role);
+      localSound = new Sound(localRole || 'lead');
     }
 
     localSound.update(x, y);
@@ -159,7 +147,7 @@ const camera = new Camera(videoElement, {
 });
 camera.start();
 
-// Synthesizer
+// Synthesizer Klasse
 class Sound {
   constructor(role = 'lead') {
     const now = audioContext.currentTime;
@@ -176,39 +164,35 @@ class Sound {
     this.filter.connect(this.env);
 
     this.osc = audioContext.createOscillator();
-    this.setRole(role);
-    this.osc.connect(this.filter);
-    this.osc.start(now);
-
-    this.minOsc = this.freqRange[0];
-    this.maxOsc = this.freqRange[1];
-    this.minCutoff = 100;
-    this.maxCutoff = 4000;
-  }
-
-  setRole(role) {
     this.role = role;
+
     switch (role) {
-      case 'lead':
-        this.osc.type = 'sawtooth';
-        this.freqRange = [200, 1200];
-        break;
       case 'bass':
         this.osc.type = 'square';
-        this.freqRange = [50, 200];
+        this.minOsc = 50;
+        this.maxOsc = 200;
+        break;
+      case 'lead':
+        this.osc.type = 'sawtooth';
+        this.minOsc = 200;
+        this.maxOsc = 1000;
         break;
       case 'pad':
         this.osc.type = 'triangle';
-        this.freqRange = [100, 600];
-        break;
-      case 'perc':
-        this.osc.type = 'sine';
-        this.freqRange = [300, 800];
+        this.minOsc = 100;
+        this.maxOsc = 600;
         break;
       default:
-        this.osc.type = 'sawtooth';
-        this.freqRange = [100, 1000];
+        this.osc.type = 'sine';
+        this.minOsc = 100;
+        this.maxOsc = 1000;
     }
+
+    this.minCutoff = 60;
+    this.maxCutoff = 4000;
+
+    this.osc.connect(this.filter);
+    this.osc.start(now);
   }
 
   update(x, y) {
