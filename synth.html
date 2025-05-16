@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kollaborativer Synth mit Handtracking</title>
+<link rel="stylesheet" href="synthstyle.css">
+  <!-- MediaPipe Hands -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+</head>
+<body>
+  <!-- Kamera-Stream -->
+  <video id="video" autoplay playsinline muted></video>
+  <!-- Handtracking-Ausgabe -->
+  <canvas id="output" width="640" height="480"></canvas>
+  <!-- Info-Anzeige -->
+  <div id="info-display">Verbinden…</div>
+
+  <!-- Main Logic -->
+  <script src="synth.js" defer></script>
+</body>
+</html>
