@@ -1,35 +1,65 @@
-  body {
-    margin: 0;
-    background: #111;
-    color: #eee;
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #262626;
+  color: white;
+  font-family: sans-serif;
+  height: 100%;
+  overflow: hidden;        /* Scrollen deaktivieren */
+}
 
-  video, canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 640px;
-    height: 480px;
-    z-index: 1;
-    border-radius: 10px;
-  }
 
-  canvas {
-    z-index: 2;
-    pointer-events: none;
-  }
+/* Video zentriert und responsiv mit abgerundetem Rahmen */
+#video {
+  position: relative;
+  display: block;
+  margin: 40px auto;
+  width: 90vw;
+  max-width: 640px;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  object-fit: cover;
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
 
-  #info-display {
-    position: absolute;
-    bottom: 20px;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-size: 16px;
-    z-index: 3;
-  }
+/* Canvas deckt das Video ab und folgt dessen Größe */
+#output {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 16px;
+  z-index: 2;
+}
+
+/* Container zum gemeinsamen Layout von Video + Canvas */
+#video-container {
+  position: relative;
+  margin: 40px auto;
+  width: 90vw;
+  max-width: 640px;
+  aspect-ratio: 4 / 3;
+  
+}
+
+/* Infoanzeige bleibt oben links */
+#info-display {
+  position: fixed;
+  top: 10px; 
+  left: 10px;
+  color: white;
+  font-family: sans-serif;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 300px;
+  z-index: 10;
+}
+
+#roles-list {
+  margin-top: 8px;
+  font-size: 0.9em;
+}
