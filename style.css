@@ -484,8 +484,9 @@ progress {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 70px;
-    padding: 100px 50px;
-}
+    padding: 100px 20px 150px;
+    }
+    
 
 #project-section h2 {
     font-size: 3rem;
@@ -722,3 +723,46 @@ progress {
         transform: translateY(-8px);
     }
 }
+
+
+@media (max-width: 768px) {
+    .skill-container {
+        cursor: pointer;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        overflow: hidden;
+        max-height: 65px;
+    }
+
+    .card-active {
+        max-height: 1000px;
+    }
+}
+
+
+
+  
+
+
+
+@media (max-width: 768px) {
+    #skill-section .wrapper {
+        margin-top: 70px; /* kleinerer Abstand nach oben */
+        gap: 40px;         /* kleinerer Abstand zwischen den Items */
+        justify-content: center; /* Optional: Items links ausrichten */
+        padding: 0 10px;  /* Optional: etwas Innenabstand */
+    }
+}
+
+@media (max-width: 768px) {
+  .skill-container {
+    transform: none !important; /* Deaktiviert 3D-Transformation */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Leichterer, stabiler Schatten */
+  }
+
+  .skill-container:hover {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6); /* Optional stärkerer Hover-Schatten */
+    transform: none; /* Kein Verschieben oder Drehen */
+  }
+}
+
+

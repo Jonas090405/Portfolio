@@ -183,3 +183,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    function setupAccordion(cards, maxWidth = 768) {
+        if (window.innerWidth <= maxWidth) {
+            cards.forEach(card => {
+                card.addEventListener('click', function () {
+                    this.classList.toggle('card-active');
+                    cards.forEach(other => {
+                        if (other !== this) {
+                            other.classList.remove('card-active');
+                        }
+                    });
+                });
+            });
+        }
+    }
+
+    const skillCards = document.querySelectorAll('.skill-container');
+
+    
+    setupAccordion(skillCards);           // default maxWidth = 768
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            skillCards.forEach(card => card.classList.remove('card-active'));
+        }
+        if (window.innerWidth > 1302) {
+            projectCards.forEach(card => card.classList.remove('card-active'));
+        }
+    });
+});
