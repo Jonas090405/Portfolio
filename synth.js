@@ -250,7 +250,7 @@ class Sound {
       this.minCutoff * Math.exp(Math.log(this.maxCutoff / this.minCutoff) * cutoffFactor);
 
     // Optional Debug
-    // console.log(`Update ${this.role}: freq ${this.osc.frequency.value.toFixed(2)}, cutoff ${this.filter.frequency.value.toFixed(2)}`);
+     console.log(`Update ${this.role}: freq ${this.osc.frequency.value.toFixed(2)}, cutoff ${this.filter.frequency.value.toFixed(2)}`);
   }
 
   stop() {
