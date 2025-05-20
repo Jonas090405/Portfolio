@@ -276,4 +276,3 @@ class Sound {
   }
 }
 
-console.log(`Update ${this.role}: freq ${this.osc.frequency.value.toFixed(2)}, cutoff ${this.filter.frequency.value.toFixed(2)}`);
