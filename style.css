@@ -10,7 +10,7 @@
 * {
     margin: 0;
     padding: 0;
-    
+
 }
 
 html {
@@ -22,26 +22,33 @@ html {
 
 body {
     min-height: 100vh;
-background: linear-gradient(90deg,rgb(19, 19, 19) 0%, rgb(19, 28, 32) 100%);
+    background: linear-gradient(90deg, rgb(19, 19, 19) 0%, rgb(19, 28, 32) 100%);
 }
 
 #name {
     background: linear-gradient(90deg, var(--accent-color), white, var(--accent-color), white);
-    background-size: 300%; /* Vergrößerung für nahtlosen Übergang */
+    background-size: 300%;
+    /* Vergrößerung für nahtlosen Übergang */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: flow-gradient 10s linear infinite; /* Animation auf 10 Sekunden verlängert */
+    animation: flow-gradient 10s linear infinite;
+    /* Animation auf 10 Sekunden verlängert */
 }
 
 @keyframes flow-gradient {
     0% {
-        background-position: 0% 50%; /* Startpunkt des Verlaufs */
+        background-position: 0% 50%;
+        /* Startpunkt des Verlaufs */
     }
+
     50% {
-        background-position: 100% 50%; /* Verlauf in die Mitte bewegt */
+        background-position: 100% 50%;
+        /* Verlauf in die Mitte bewegt */
     }
+
     100% {
-        background-position: 0% 50%; /* Rückkehr zum Startpunkt */
+        background-position: 0% 50%;
+        /* Rückkehr zum Startpunkt */
     }
 }
 
@@ -60,7 +67,8 @@ header .container {
 
 header img {
     height: 70vh;
-    margin-right: 100px; /* Vergrößert den Abstand zum Text */
+    margin-right: 100px;
+    /* Vergrößert den Abstand zum Text */
     margin-bottom: -6vh;
 
 }
@@ -83,7 +91,7 @@ header p {
 
 header .read-more {
     display: inline-block;
-    background: linear-gradient(to right, var(--accent-color),#4dbef3);
+    background: linear-gradient(to right, var(--accent-color), #4dbef3);
     color: white;
     font-size: 1.25rem;
     font-weight: 700;
@@ -96,13 +104,13 @@ header .read-more {
 }
 
 header .read-more:hover {
-    background: linear-gradient(to right,hsla(199, 92%, 45%, 0.567),#61c7f6e3);
+    background: linear-gradient(to right, hsla(199, 92%, 45%, 0.567), #61c7f6e3);
 }
 
 
 #skill-section {
     padding: 100px 20px 150px 20px;
-background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
+    background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
 }
 
 #skill-section h2 {
@@ -123,14 +131,19 @@ background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
     max-width: 100%;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.6); /* Standard-Schatten */
-    perspective: 800px; /* Perspektive für den 3D-Effekt */
-    transform-style: preserve-3d; /* Aktiviert den 3D-Effekt */
-    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; /* Sanfter Übergang */
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.6);
+    /* Standard-Schatten */
+    perspective: 800px;
+    /* Perspektive für den 3D-Effekt */
+    transform-style: preserve-3d;
+    /* Aktiviert den 3D-Effekt */
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    /* Sanfter Übergang */
 }
 
 .skill-container:hover {
-    box-shadow: 2px 2px 10px rgba(94, 94, 94, 0.5); /* Schatten beim Hover */
+    box-shadow: 2px 2px 10px rgba(94, 94, 94, 0.5);
+    /* Schatten beim Hover */
 }
 
 .skill-container h3 {
@@ -148,9 +161,12 @@ background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
 }
 
 .skill-container ul li {
-    display: flex; /* Flexbox für gleichmäßige Anordnung */
-    align-items: center; /* Vertikale Ausrichtung */
-    justify-content: space-between; /* Abstand zwischen Text und Progressbar */
+    display: flex;
+    /* Flexbox für gleichmäßige Anordnung */
+    align-items: center;
+    /* Vertikale Ausrichtung */
+    justify-content: space-between;
+    /* Abstand zwischen Text und Progressbar */
     padding: 15px;
     background-color: #1b1c1f94;
     border-bottom: 1px solid var(--primary-color);
@@ -161,36 +177,48 @@ background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
 }
 
 .skill-container ul li progress {
-    width: 180px; /* Kürzere Breite */
-    height: 10px; /* Originalhöhe */
-    border-radius: 12px; /* Rundungen */
-    overflow: hidden; /* Rundungen sichtbar machen */
-    background-color: #444; /* Hintergrund der Progressbar */
-    appearance: none; /* Entfernt Standard-Stil des Browsers */
-    margin: 0; /* Kein zusätzlicher Abstand */
+    width: 180px;
+    /* Kürzere Breite */
+    height: 10px;
+    /* Originalhöhe */
+    border-radius: 12px;
+    /* Rundungen */
+    overflow: hidden;
+    /* Rundungen sichtbar machen */
+    background-color: #444;
+    /* Hintergrund der Progressbar */
+    appearance: none;
+    /* Entfernt Standard-Stil des Browsers */
+    margin: 0;
+    /* Kein zusätzlicher Abstand */
 }
 
 /* Für Webkit-basierte Browser (Chrome, Edge, Safari) */
 .skill-container ul li progress::-webkit-progress-bar {
-    background-color: #444; /* Hintergrund der Progressbar */
-    border-radius: 12px; /* Rundungen */
+    background-color: #444;
+    /* Hintergrund der Progressbar */
+    border-radius: 12px;
+    /* Rundungen */
 }
 
 .skill-container ul li progress::-webkit-progress-value {
-    background: linear-gradient(to right, var(--accent-color), #4dbef3); /* Verlauf */
-    border-radius: 12px; /* Rundungen für den Fortschrittswert */
+    background: linear-gradient(to right, var(--accent-color), #4dbef3);
+    /* Verlauf */
+    border-radius: 12px;
+    /* Rundungen für den Fortschrittswert */
 }
 
 /* Für Mozilla-basierte Browser (Firefox) */
 .skill-container ul li progress::-moz-progress-bar {
-    background: linear-gradient(to right, var(--accent-color), #4dbef3); /* Verlauf */
+    background: linear-gradient(to right, var(--accent-color), #4dbef3);
+    /* Verlauf */
     border-radius: 12px;
 }
 
 
 #education-section {
     padding: 100px 20px 150px;
-background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
+    background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
     color: var(--text-color);
     text-align: center;
 }
@@ -206,8 +234,9 @@ background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
     width: 5px;
     background-image: linear-gradient(to bottom, hsla(199, 92%, 45%, 0.567), #78d4ff);
     height: 100%;
-    border-radius: 2px; /* Abgerundete Timeline */
-    }
+    border-radius: 2px;
+    /* Abgerundete Timeline */
+}
 
 .timeline-item {
     display: flex;
@@ -230,11 +259,13 @@ background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
 
 .timeline-item .dot:hover {
     box-shadow: 0 0 15px hsla(199, 92%, 65%, 0.8), 0 0 30px hsla(199, 92%, 75%, 0.5);
-    transform: scale(1.1); /* Leichtes Vergrößern beim Hover */
+    transform: scale(1.1);
+    /* Leichtes Vergrößern beim Hover */
 }
 
 .timeline-item .dot:active {
-    transform: scale(1); /* Leichtes Schrumpfen bei Klick für Feedback */
+    transform: scale(1);
+    /* Leichtes Schrumpfen bei Klick für Feedback */
 }
 
 .timeline-item .content {
@@ -242,9 +273,9 @@ background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
     margin-left: 40px;
     font-size: 1rem;
     border-radius: 12px;
-background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
+    background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
     padding: 15px;
-    
+
 }
 
 .timeline-item h3 {
@@ -261,9 +292,12 @@ background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
 
 /* Titel für Karriereweg, versteckt zu Beginn */
 .timeline-title {
-    opacity: 0; /* Anfangs unsichtbar */
-    transform: translateY(50px); /* Leichte Verschiebung nach unten */
-    transition: opacity 1s ease, transform 1s ease; /* Sanfte Übergänge */
+    opacity: 0;
+    /* Anfangs unsichtbar */
+    transform: translateY(50px);
+    /* Leichte Verschiebung nach unten */
+    transition: opacity 1s ease, transform 1s ease;
+    /* Sanfte Übergänge */
 }
 
 /* Timeline Items unsichtbar anfangs */
@@ -286,10 +320,12 @@ background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
         transform: scale(1);
         box-shadow: 0 0 5px var(--accent-color);
     }
+
     50% {
         transform: scale(1.3);
         box-shadow: 0 0 20px var(--accent-color);
     }
+
     100% {
         transform: scale(1);
         box-shadow: 0 0 5px var(--accent-color);
@@ -302,7 +338,7 @@ background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
 }
 
 footer {
-background: linear-gradient(90deg,rgb(19, 19, 19) 0%, rgb(19, 28, 32) 100%);
+    background: linear-gradient(90deg, rgb(19, 19, 19) 0%, rgb(19, 28, 32) 100%);
     padding: 100px 20px;
 }
 
@@ -320,21 +356,28 @@ footer .grid-container {
 footer #at-symbol {
     font-size: 250pt;
     background: linear-gradient(90deg, var(--accent-color), white, var(--accent-color), white);
-    background-size: 300%; /* Vergrößerung für nahtlosen Übergang */
+    background-size: 300%;
+    /* Vergrößerung für nahtlosen Übergang */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: flow-gradient 10s linear infinite; /* Animation auf 10 Sekunden verlängert */
+    animation: flow-gradient 10s linear infinite;
+    /* Animation auf 10 Sekunden verlängert */
 }
 
 @keyframes flow-gradient {
     0% {
-        background-position: 0% 50%; /* Startpunkt des Verlaufs */
+        background-position: 0% 50%;
+        /* Startpunkt des Verlaufs */
     }
+
     50% {
-        background-position: 100% 50%; /* Verlauf in die Mitte bewegt */
+        background-position: 100% 50%;
+        /* Verlauf in die Mitte bewegt */
     }
+
     100% {
-        background-position: 0% 50%; /* Rückkehr zum Startpunkt */
+        background-position: 0% 50%;
+        /* Rückkehr zum Startpunkt */
     }
 }
 
@@ -356,49 +399,55 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    height: 60px; /* Feste Höhe für die Navigation */
-  }
-  
-  nav ul {
+    height: 60px;
+    /* Feste Höhe für die Navigation */
+}
+
+nav ul {
     list-style: none;
     display: flex;
     gap: 15px;
-  }
-  
-  nav ul li {
+}
+
+nav ul li {
     display: inline;
-  }
-  
-  nav ul li a {
+}
+
+nav ul li a {
     color: white;
     text-decoration: none;
     padding: 5px 10px;
-    border-radius: 5px; /* Abrundung auch im Standardzustand definieren */
-    transition: background-color 0.3s, border-radius 0.3s; /* Übergang für Abrundung hinzufügen */
+    border-radius: 5px;
+    /* Abrundung auch im Standardzustand definieren */
+    transition: background-color 0.3s, border-radius 0.3s;
+    /* Übergang für Abrundung hinzufügen */
 }
 
 nav ul li a:hover {
     background-color: var(--hover-color);
-    border-radius: 5px; /* Abrundung auch im Hover-Zustand explizit beibehalten */
+    border-radius: 5px;
+    /* Abrundung auch im Hover-Zustand explizit beibehalten */
 }
 
-  
+
 @media (max-width: 768px) {
     nav ul {
-        display: none; /* Das gesamte Menü auf mobilen Geräten ausblenden */
+        display: none;
+        /* Das gesamte Menü auf mobilen Geräten ausblenden */
     }
 
 }
 
-  
-  /* Desktop-Ansicht (ab 769px) */
-  @media (min-width: 769px) {
+
+/* Desktop-Ansicht (ab 769px) */
+@media (min-width: 769px) {
     nav ul {
-      display: flex; /* Menü für Desktop anzeigen */
+        display: flex;
+        /* Menü für Desktop anzeigen */
     }
-  
-  }
-  
+
+}
+
 footer a:hover {
     color: var(--text-color);
 }
@@ -463,20 +512,25 @@ footer a:hover {
 
 /* Stil der Progressbars */
 progress {
-    width: 100%; /* Damit die Progressbar die volle Breite ausnutzt */
+    width: 100%;
+    /* Damit die Progressbar die volle Breite ausnutzt */
     height: 20px;
     appearance: none;
     border-radius: 5px;
     overflow: hidden;
-    opacity: 0;  /* Anfangszustand ist unsichtbar */
-    transform: scaleX(0);  /* Anfangszustand: keine Breite */
-    transition: opacity 0.5s ease, transform 1s ease;  /* Animation für opazität und Breite */
+    opacity: 0;
+    /* Anfangszustand ist unsichtbar */
+    transform: scaleX(0);
+    /* Anfangszustand: keine Breite */
+    transition: opacity 0.5s ease, transform 1s ease;
+    /* Animation für opazität und Breite */
 }
 
 /* Wenn die Progressbar sichtbar ist */
 .progress-visible {
     opacity: 1;
-    transform: scaleX(1);  /* Setzt die Breite auf 100% */
+    transform: scaleX(1);
+    /* Setzt die Breite auf 100% */
 }
 
 /* Container für die Bento Cards */
@@ -485,8 +539,8 @@ progress {
     grid-template-columns: repeat(3, 1fr);
     gap: 70px;
     padding: 100px 20px 150px;
-    }
-    
+}
+
 
 #project-section h2 {
     font-size: 3rem;
@@ -500,7 +554,8 @@ progress {
     background-color: var(--secondary-color);
     border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4); /* Schwacher Shadow */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
+    /* Schwacher Shadow */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     display: flex;
@@ -528,7 +583,8 @@ progress {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0); /* Unsichtbar im Normalzustand */
+    background: rgba(0, 0, 0, 0);
+    /* Unsichtbar im Normalzustand */
     transition: background 0.3s ease;
 }
 
@@ -562,7 +618,8 @@ progress {
 
 /* Stärkerer Drop Shadow beim Hover */
 .bento-card:hover {
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7); /* Starker Shadow */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
+    /* Starker Shadow */
     transform: translateY(-8px);
 }
 
@@ -578,6 +635,7 @@ progress {
     margin-bottom: 40px;
     color: #9da2a2
 }
+
 /* Button */
 .card-button {
     display: inline-block;
@@ -588,7 +646,7 @@ progress {
     padding: .5em 1em;
     border-radius: .5em;
     text-decoration: none;
-    
+
 }
 
 .card-button:hover {
@@ -601,8 +659,10 @@ progress {
 /* Tablet-Größe (zwei Karten nebeneinander) */
 @media (max-width: 1302px) {
     #project-section {
-        grid-template-columns: repeat(2, 1fr); /* Zwei Spalten bei Tablet-Größe */
-        gap: 40px; /* Weniger Abstand zwischen den Karten */
+        grid-template-columns: repeat(2, 1fr);
+        /* Zwei Spalten bei Tablet-Größe */
+        gap: 40px;
+        /* Weniger Abstand zwischen den Karten */
         padding-left: 20px;
         padding-right: 20px;
         padding-top: 50px;
@@ -610,17 +670,19 @@ progress {
     }
 
     #project-section h2 {
-        font-size: 2.5rem; /* Etwas kleinere Überschrift für Tablets */
+        font-size: 2.5rem;
+        /* Etwas kleinere Überschrift für Tablets */
         margin-bottom: 40px;
 
-      
+
     }
+
     .bento-card::after {
         content: "Tippen";
         position: absolute;
         right: 10px;
         top: 10px;
-        background-color: rgba(0,0,0,0.6);
+        background-color: rgba(0, 0, 0, 0.6);
         color: white;
         padding: 3px 8px;
         border-radius: 4px;
@@ -632,56 +694,56 @@ progress {
         background-color: var(--primary-color);
         padding: 50px 20px;
     }
-    
+
 }
 
 @media (max-width: 600px) {
     #project-section {
-      display: flex;
-      flex-direction: column;
-      gap: 60px;
-      padding: 30px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 60px;
+        padding: 30px 15px;
     }
-  
+
     .bento-card {
-      flex-direction: column;
-      height: auto;
-      min-height: unset;
+        flex-direction: column;
+        height: auto;
+        min-height: unset;
     }
-  
+
     .bento-card img {
-      position: relative;
-      height: 180px;
-      object-fit: cover;
-      opacity: 1;
-      transform: none;
+        position: relative;
+        height: 180px;
+        object-fit: cover;
+        opacity: 1;
+        transform: none;
     }
-  
+
     .card-content {
-      position: relative;
-      opacity: 1;
-      padding: 20px;
+        position: relative;
+        opacity: 1;
+        padding: 20px;
     }
-  
+
     .card-content h3 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
     }
-  
+
     .card-content p {
-      font-size: 0.95rem;
-      margin-bottom: 15px;
+        font-size: 0.95rem;
+        margin-bottom: 15px;
     }
-  
+
     .card-button {
-      font-size: 0.85rem;
-      padding: 0.4em 1em;
+        font-size: 0.85rem;
+        padding: 0.4em 1em;
     }
-  
+
     .bento-card::after {
-      content: none;
+        content: none;
     }
-    
+
 
     header {
         padding: 0 20px;
@@ -695,10 +757,10 @@ progress {
         background-color: var(--primary-color);
         padding: 40px 20px;
     }
-    
-    
-  }
-   
+
+
+}
+
 /* Responsive Design für mobile Geräte */
 @media (max-width: 1302px) {
 
@@ -706,17 +768,17 @@ progress {
     .bento-card.card-active::before {
         background: rgba(0, 0, 0, 0.5);
     }
-    
+
     .bento-card.card-active img {
         background: rgba(0, 0, 0, 0.5);
         opacity: 0.3;
         transform: scale(1.05);
     }
-    
+
     .bento-card.card-active .card-content {
         opacity: 1;
     }
-    
+
     .bento-card.card-active {
         background: rgba(0, 0, 0, 0.5);
         box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
@@ -740,29 +802,35 @@ progress {
 
 
 
-  
+
 
 
 
 @media (max-width: 768px) {
     #skill-section .wrapper {
-        margin-top: 70px; /* kleinerer Abstand nach oben */
-        gap: 40px;         /* kleinerer Abstand zwischen den Items */
-        justify-content: center; /* Optional: Items links ausrichten */
-        padding: 0 10px;  /* Optional: etwas Innenabstand */
+        margin-top: 70px;
+        /* kleinerer Abstand nach oben */
+        gap: 40px;
+        /* kleinerer Abstand zwischen den Items */
+        justify-content: center;
+        /* Optional: Items links ausrichten */
+        padding: 0 10px;
+        /* Optional: etwas Innenabstand */
     }
 }
 
 @media (max-width: 768px) {
-  .skill-container {
-    transform: none !important; /* Deaktiviert 3D-Transformation */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4); /* Leichterer, stabiler Schatten */
-  }
+    .skill-container {
+        transform: none !important;
+        /* Deaktiviert 3D-Transformation */
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+        /* Leichterer, stabiler Schatten */
+    }
 
-  .skill-container:hover {
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6); /* Optional stärkerer Hover-Schatten */
-    transform: none; /* Kein Verschieben oder Drehen */
-  }
+    .skill-container:hover {
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
+        /* Optional stärkerer Hover-Schatten */
+        transform: none;
+        /* Kein Verschieben oder Drehen */
+    }
 }
-
-
