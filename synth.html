@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Collaborative Synth mit Handtracking</title>
-  <link rel="stylesheet" href="synthstyle.css" />
+  <title>Collaborative Synth with Handtracking</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div id="video-container">
     <video id="video" autoplay muted playsinline></video>
-    <canvas id="output"></canvas>
+    <canvas id="output" width="640" height="480"></canvas>
   </div>
-    <div id="info-display">
+
+  <div id="info-display">
     Verbundene Clients: <span id="client-count">0</span><br />
     Deine Rolle: <span id="my-role">...</span>
-    <div id="roles-list"></div>
   </div>
-  
+
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-  <script src="synth.js"></script>
+  <script src="main.js" defer></script>
 </body>
 </html>
