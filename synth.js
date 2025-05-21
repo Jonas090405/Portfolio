@@ -137,7 +137,7 @@ hands.setOptions({
   maxNumHands: 1,                 // Maximal eine Hand tracken
   modelComplexity: 1,             // Genauigkeit des Modells
   minDetectionConfidence: 0.7,    // Mindestvertrauen zur Erkennung
-  minTrackingConfidence: 0.5      // Mindestvertrauen zur Verfolgung
+  minTrackingConfidence: 0.3      // Mindestvertrauen zur Verfolgung
 });
 
 let handDetectedLastFrame = false; // Status, ob in letztem Frame Hand erkannt wurde
@@ -162,6 +162,9 @@ hands.onResults(results => {
     canvasCtx.beginPath();
     canvasCtx.arc(x * canvasElement.width, y * canvasElement.height, 10, 0, 2 * Math.PI);
     canvasCtx.fillStyle = '#a65ecf';
+    canvasCtx.strokeStyle = 'white';
+    canvasCtx.lineWidth = 4;
+    canvasCtx.stroke();
     canvasCtx.fill();
 
     // AudioContext sicherstellen (falls noch nicht gestartet)
