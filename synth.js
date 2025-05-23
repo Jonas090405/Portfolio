@@ -107,19 +107,10 @@ function deleteSynth(id) {
 /*************************************************************
  * MediaPipe Hands Setup
  */
-// Video-Element erstellen und konfigurieren
 const videoElement = document.createElement('video');
-videoElement.style.display = 'block';       // sichtbar machen, für Debugging und mobile
-videoElement.style.position = 'fixed';
-videoElement.style.top = '10px';
-videoElement.style.left = '10px';
-videoElement.style.width = '160px';
-videoElement.style.height = '120px';
-videoElement.style.zIndex = '10000';
-videoElement.setAttribute('playsinline', 'true');  // Wichtig für iOS Mobile
+videoElement.style.display = 'none';
 document.body.appendChild(videoElement);
 
-// MediaPipe Hands Setup
 const hands = new Hands({
   locateFile: (file) => {
     return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
@@ -135,30 +126,22 @@ hands.setOptions({
 
 hands.onResults(onHandsResults);
 
-// Camera Setup mit facingMode für Frontkamera (Mobile)
 const camera = new Camera(videoElement, {
   onFrame: async () => {
     await hands.send({image: videoElement});
   },
   width: 640,
-  height: 480,
-  facingMode: 'user'  // Frontkamera erzwingen, wichtig für Mobile
+  height: 480
 });
-
-// Kamera starten mit Fehlerbehandlung
-function startCamera() {
-  camera.start().catch(error => {
-    console.error('Camera start failed:', error);
-  });
-}
-
 
 /*************************************************************
  * Start Function
  */
 function start() {
   updateCanvasSize();
-  startCamera();  // Starte Kamera mit Fehler-Logging
+
+  camera.start();
+
   requestAnimationFrame(onAnimationFrame);
 }
 
