@@ -3,6 +3,11 @@ const messageElem = document.getElementById('message-display');
 const indexElem = document.getElementById('client-index');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
+const drawings = []; // lokale Zeichnungslinien
+const remoteDrawings = new Map(); // andere Clients
+let isPinching = false;
+let lastDrawPos = null;
+
 
 const webRoomsWebSocketServerAddr = 'wss://nosch.uber.space/web-rooms/';
 
@@ -130,7 +135,7 @@ const camera = new Camera(videoElement, {
     await hands.send({image: videoElement});
   },
 });
-
+start();
 /*************************************************************
  * Start Function
  */
@@ -146,27 +151,50 @@ function start() {
  * MediaPipe Hand Results Callback
  */
 function onHandsResults(results) {
-  if (!clientId) return;
-
-  if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-    const landmarks = results.multiHandLandmarks[0];
-    const x = landmarks[9].x;
-    const y = landmarks[9].y;
-
-    if (!touches.has(clientId)) {
-      createTouch(clientId, x, y, true);
-      sendRequest('*broadcast-message*', ['start', clientId, x, y]);
+    if (!clientId) return;
+  
+    if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+      const landmarks = results.multiHandLandmarks[0];
+      const x = landmarks[9].x;
+      const y = landmarks[9].y;
+  
+      const pinchDistance = Math.hypot(
+        landmarks[4].x - landmarks[8].x,
+        landmarks[4].y - landmarks[8].y
+      );
+      const isNowPinching = pinchDistance < 0.04;
+  
+      if (!touches.has(clientId)) {
+        createTouch(clientId, x, y, true);
+        sendRequest('*broadcast-message*', ['start', clientId, x, y]);
+      } else {
+        moveTouch(clientId, x, y);
+        sendRequest('*broadcast-message*', ['move', clientId, x, y]);
+      }
+  
+      // Pinch-Zeichnung
+      if (isNowPinching) {
+        if (lastDrawPos) {
+          drawings.push({ from: lastDrawPos, to: { x, y } });
+          sendRequest('*broadcast-message*', ['draw', clientId, lastDrawPos.x, lastDrawPos.y, x, y]);
+        }
+        lastDrawPos = { x, y };
+      } else {
+        lastDrawPos = null;
+      }
+  
+      isPinching = isNowPinching;
+  
     } else {
-      moveTouch(clientId, x, y);
-      sendRequest('*broadcast-message*', ['move', clientId, x, y]);
-    }
-  } else {
-    if (touches.has(clientId)) {
-      deleteTouch(clientId);
-      sendRequest('*broadcast-message*', ['end', clientId]);
+      if (touches.has(clientId)) {
+        deleteTouch(clientId);
+        sendRequest('*broadcast-message*', ['end', clientId]);
+      }
+      lastDrawPos = null;
+      isPinching = false;
     }
   }
-}
+  
 
 /*************************************************************
  * Canvas & Drawing
@@ -188,6 +216,21 @@ function onAnimationFrame() {
     const synth = synths.get(id);
     if (synth) {
       synth.update(touch.x, 1 - touch.y); // 1 - y damit Tonhöhe steigt nach oben
+    }
+  }
+  // Zeichne lokale Linien
+  context.strokeStyle = 'cyan';
+  context.lineWidth = 3;
+  context.lineCap = 'round';
+  for (let segment of drawings) {
+    drawLine(segment.from, segment.to);
+  }
+
+  // Zeichne Remote-Linien
+  context.strokeStyle = 'white';
+  for (let segments of remoteDrawings.values()) {
+    for (let segment of segments) {
+      drawLine(segment.from, segment.to);
     }
   }
 
@@ -343,6 +386,17 @@ socket.addEventListener('message', (event) => {
         console.warn('server error:', ...message);
         break;
       }
+      case 'draw': {
+        const id = incoming[1];
+        const fx = incoming[2];
+        const fy = incoming[3];
+        const tx = incoming[4];
+        const ty = incoming[5];
+        if (!remoteDrawings.has(id)) remoteDrawings.set(id, []);
+        remoteDrawings.get(id).push({ from: { x: fx, y: fy }, to: { x: tx, y: ty } });
+        break;
+      }
+      
 
       default:
         break;
@@ -356,6 +410,12 @@ function sendRequest(...message) {
     socket.send(str);
   }
 }
+function drawLine(from, to) {
+  context.beginPath();
+  context.moveTo(from.x * canvas.width, from.y * canvas.height);
+  context.lineTo(to.x * canvas.width, to.y * canvas.height);
+  context.stroke();
+}
 
 window.addEventListener('resize', updateCanvasSize);
 
@@ -365,4 +425,6 @@ window.addEventListener('beforeunload', () => {
       socket.send(msg);
     }
   });
+  
+
   
