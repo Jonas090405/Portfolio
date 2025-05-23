@@ -108,7 +108,6 @@ function deleteSynth(id) {
  * MediaPipe Hands Setup
  */
 const videoElement = document.createElement('video');
-videoElement.style.display = 'none';
 document.body.appendChild(videoElement);
 
 const hands = new Hands({
