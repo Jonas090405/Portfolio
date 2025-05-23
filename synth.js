@@ -108,9 +108,16 @@ function deleteSynth(id) {
  * MediaPipe Hands Setup
  */
 const videoElement = document.createElement('video');
-videoElement.style.display = 'none';
+videoElement.style.display = 'block';       // sichtbar machen für Debugging
+videoElement.style.position = 'fixed';
+videoElement.style.top = '10px';
+videoElement.style.left = '10px';
+videoElement.style.width = '160px';
+videoElement.style.height = '120px';
+videoElement.style.zIndex = '10000';
 document.body.appendChild(videoElement);
 
+// MediaPipe Hands Setup wie bisher ...
 const hands = new Hands({
   locateFile: (file) => {
     return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
