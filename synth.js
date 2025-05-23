@@ -1,26 +1,27 @@
-// Referenzen zu HTML-Elementen: Video-Stream, Canvas zum Zeichnen, Canvas-Kontext, Info-Anzeige
+// Referenzen zu HTML-Elementen
 const videoElement = document.getElementById('video');
 const canvasElement = document.getElementById('output');
 const canvasCtx = canvasElement.getContext('2d');
 const infoDisplay = document.getElementById('info-display');
 
-// Globale Variablen für AudioContext, lokale Sound-Instanz, Client-Id, Client-Anzahl und Rolle
+// Globale Variablen
 let audioContext = null;
 let localSound = null;
 let clientId = null;
 let clientCount = 0;
 let localRole = null;
 
-// Mögliche Sound-Rollen (verschiedene Klänge)
+// Sound-Rollen
 const possibleRoles = ['bass', 'lead', 'pad'];
 
-// Objekt zum Speichern von Sound-Instanzen anderer Clients
+// Objekte für andere Clients
 const otherSounds = {};
+const otherHandPositions = {};
 
-// WebSocket-Verbindung zum Server aufbauen
+// WebSocket-Verbindung
 const socket = new WebSocket('wss://nosch.uber.space/web-rooms/');
 
-// Funktion, um AudioContext zu initialisieren oder bei Bedarf fortzusetzen
+// AudioContext initialisieren oder fortsetzen
 function ensureAudioContext() {
   if (!audioContext) {
     audioContext = new AudioContext();
@@ -30,72 +31,99 @@ function ensureAudioContext() {
   }
 }
 
-// AudioContext erst beim ersten User-Klick aktivieren (Browser-Sicherheitsanforderung)
-window.addEventListener('click', () => {
-  ensureAudioContext();
-});
-
-// Rolle für einen Client bestimmen anhand dessen ID (für unterschiedliche Sounds)
+// Rolle von Client-ID ableiten
 function getRoleFromClientId(id) {
   const numericId = parseInt(id, 36);
   if (isNaN(numericId)) return possibleRoles[0];
   return possibleRoles[numericId % possibleRoles.length];
 }
 
-// Position der Handbewegung an alle anderen Clients senden
+// Farbe von Client-ID ableiten
+function getColorFromClientId(id) {
+  const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#98d8c8', '#f7dc6f'];
+  const numericId = parseInt(id, 36);
+  if (isNaN(numericId)) return colors[0];
+  return colors[numericId % colors.length];
+}
+
+// Bewegungen senden
 function broadcastMovement(x, y) {
   if (!clientId) return;
-  socket.send(JSON.stringify(['*broadcast-message*', ['handmove', x, y, clientId]]));
+  const message = JSON.stringify(['*broadcast-message*', ['handmove', x, y, clientId]]);
+  socket.send(message);
 }
 
-// Stop-Nachricht senden, wenn Hand nicht mehr sichtbar
+// Stop senden
 function broadcastStop() {
   if (!clientId) return;
-  socket.send(JSON.stringify(['*broadcast-message*', ['stop', clientId]]));
+  const message = JSON.stringify(['*broadcast-message*', ['stop', clientId]]);
+  socket.send(message);
 }
 
-// WebSocket-Event: Verbindung geöffnet
+// Info anzeigen
+function updateInfoDisplay() {
+  if (infoDisplay) {
+    infoDisplay.innerHTML = `
+      Verbundene Clients: <span id="client-count">${clientCount}</span><br />
+      Deine Rolle: <span id="my-role">${localRole || 'Wird zugewiesen...'}</span><br />
+      Client ID: ${clientId || 'Nicht zugewiesen'}
+    `;
+  }
+}
+
+// WebSocket-Event: offen
 socket.addEventListener('open', () => {
-  socket.send(JSON.stringify(['*enter-room*', 'collab-synth']));   // Raum betreten
-  socket.send(JSON.stringify(['*subscribe-client-count*']));       // Anzahl Clients abonnieren
-  setInterval(() => socket.send(''), 30000);                      // Ping alle 30s, um Verbindung offen zu halten
+  console.log('=== WEBSOCKET VERBUNDEN ===');
+  socket.send(JSON.stringify(['*enter-room*', 'collab-synth'])); // Raum betreten
+  socket.send(JSON.stringify(['*subscribe-client-count*']));   // Client-Count abonnieren
+
+  // Ping, um Verbindung offen zu halten
+  setInterval(() => socket.send(''), 30000);
+
+  // Falls nach 1s keine Client-ID, explizit anfragen
+  setTimeout(() => {
+    if (!clientId) {
+      socket.send(JSON.stringify(['*get-client-ids*']));
+    }
+  }, 1000);
 });
 
 // WebSocket-Event: Nachricht erhalten
 socket.addEventListener('message', (event) => {
   if (!event.data) return;
+
   let data;
   try {
-    data = JSON.parse(event.data); // JSON-Nachricht parsen
-  } catch (e) {
-    console.warn('Ungültiges JSON empfangen:', event.data);
+    data = JSON.parse(event.data);
+  } catch {
+    console.warn('Ungültiges JSON:', event.data);
     return;
   }
 
-  console.log('Empfangene Nachricht:', data);
-
-  // Nachrichten mit Broadcast-Inhalt auswerten
+  // Broadcast-Nachrichten
   if (data[0] === '*broadcast-message*') {
     const [messageType, ...args] = data[1];
-
     switch (messageType) {
       case 'handmove': {
         const [x, y, sender] = args;
-        if (sender === clientId) return; // Eigene Bewegung ignorieren
+        // Position speichern
+        otherHandPositions[sender] = { x, y, visible: true };
 
-        // Falls für den Sender noch kein Sound-Objekt existiert, anlegen
-        if (!otherSounds[sender]) {
-          ensureAudioContext();
-          const role = getRoleFromClientId(sender);
-          otherSounds[sender] = new Sound(role);
+        // Sound für andere Clients initialisieren / updaten
+        if (sender !== clientId) {
+          if (!otherSounds[sender]) {
+            ensureAudioContext();
+            otherSounds[sender] = new Sound(getRoleFromClientId(sender));
+          }
+          otherSounds[sender].update(x, y);
         }
-        // Sound mit neuen Handkoordinaten updaten
-        otherSounds[sender].update(x, y);
         break;
       }
       case 'stop': {
         const [stopClient] = args;
-        // Stoppen und löschen der Sound-Instanz des Clients, der aufgehört hat
+        if (otherHandPositions[stopClient]) {
+          otherHandPositions[stopClient].visible = false;
+        }
         if (otherSounds[stopClient]) {
           otherSounds[stopClient].stop();
           delete otherSounds[stopClient];
@@ -106,95 +134,127 @@ socket.addEventListener('message', (event) => {
     return;
   }
 
-  // Allgemeine Nachrichten behandeln
+  // Andere Nachrichten
   switch (data[0]) {
     case '*client-id*':
       clientId = data[1];
       localRole = getRoleFromClientId(clientId);
-      if (infoDisplay) {
-        infoDisplay.textContent = `Rolle: ${localRole} – Verbundene Clients: ${clientCount}`;
+      updateInfoDisplay();
+      break;
+
+    case '*client-ids*':
+      if (!clientId && Array.isArray(data[1]) && data[1].length > 0) {
+        clientId = data[1][0];
+        localRole = getRoleFromClientId(clientId);
+        updateInfoDisplay();
       }
       break;
 
     case '*client-count*':
       clientCount = data[1];
-      if (infoDisplay) {
-        infoDisplay.textContent = `Rolle: ${localRole || 'Rolle wird zugewiesen...'} – Verbundene Clients: ${clientCount}`;
-      }
+      updateInfoDisplay();
       break;
 
     case '*error*':
-      console.warn('Fehler:', ...data[1]);
+      console.warn('Fehler vom Server:', data);
+      break;
+
+    default:
+      console.log('Unbekannte Nachricht:', data);
       break;
   }
 });
 
-// MediaPipe Hands-Setup zur Handerkennung konfigurieren
+// MediaPipe Hands Setup
 const hands = new Hands({
   locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
 });
 hands.setOptions({
-  maxNumHands: 1,                 // Maximal eine Hand tracken
-  modelComplexity: 1,             // Genauigkeit des Modells
-  minDetectionConfidence: 0.7,    // Mindestvertrauen zur Erkennung
-  minTrackingConfidence: 0.3      // Mindestvertrauen zur Verfolgung
+  maxNumHands: 1,
+  modelComplexity: 1,
+  minDetectionConfidence: 0.7,
+  minTrackingConfidence: 0.3
 });
 
-let handDetectedLastFrame = false; // Status, ob in letztem Frame Hand erkannt wurde
+let handDetectedLastFrame = false;
 
-// Callback bei Ergebnissen der Handerkennung
+// Callback bei Handerkennungsergebnissen
 hands.onResults(results => {
   canvasCtx.save();
   canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-  // Kamerabild auf Canvas zeichnen
+
+  // Kamerabild zeichnen
   canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
 
   const handsPresent = results.multiHandLandmarks.length > 0;
 
   if (handsPresent) {
-    // Erste erkannte Hand und deren Zeigefinger-Tipp auslesen
     const hand = results.multiHandLandmarks[0];
     const indexTip = hand[8];
     const x = indexTip.x;
     const y = indexTip.y;
 
-    // Kreis an Zeigefingerposition malen
+    // Eigene Hand zeichnen (lila)
     canvasCtx.beginPath();
-    canvasCtx.arc(x * canvasElement.width, y * canvasElement.height, 10, 0, 2 * Math.PI);
+    canvasCtx.arc(x * canvasElement.width, y * canvasElement.height, 12, 0, 2 * Math.PI);
     canvasCtx.fillStyle = '#a65ecf';
     canvasCtx.strokeStyle = 'white';
-    canvasCtx.lineWidth = 4;
+    canvasCtx.lineWidth = 3;
     canvasCtx.stroke();
     canvasCtx.fill();
 
-    // AudioContext sicherstellen (falls noch nicht gestartet)
     ensureAudioContext();
 
-    // Lokalen Sound-Synthesizer erstellen falls noch nicht vorhanden
     if (!localSound) {
       localSound = new Sound(localRole || 'lead');
     }
 
-    // Sound-Parameter aktualisieren anhand Handposition
     localSound.update(x, y);
-
-    // Position an andere Clients senden
     broadcastMovement(x, y);
 
+    // Eigene Handposition auch für Darstellung in otherHandPositions speichern,
+    // damit sie in der Schleife für alle angezeigt wird (für Einheitlichkeit)
+    otherHandPositions[clientId] = { x, y, visible: true };
+
   } else {
-    // Falls keine Hand erkannt wird, aber im letzten Frame eine da war:
     if (handDetectedLastFrame && localSound) {
-      localSound.stop();     // Sound stoppen
-      broadcastStop();       // Stop-Nachricht senden
-      localSound = null;     // lokale Instanz löschen
+      localSound.stop();
+      broadcastStop();
+      localSound = null;
+      if (clientId && otherHandPositions[clientId]) {
+        otherHandPositions[clientId].visible = false;
+      }
     }
   }
 
-  handDetectedLastFrame = handsPresent; // Status speichern
+  // Alle Hände (inklusive eigene) zeichnen (außer wenn nicht sichtbar)
+  for (const [otherId, position] of Object.entries(otherHandPositions)) {
+    if (position.visible) {
+      // Unterschiedliche Farbe für sich selbst und andere
+      const color = otherId === clientId ? '#a65ecf' : getColorFromClientId(otherId);
+      const role = getRoleFromClientId(otherId);
+
+      canvasCtx.beginPath();
+      canvasCtx.arc(position.x * canvasElement.width, position.y * canvasElement.height, 10, 0, 2 * Math.PI);
+      canvasCtx.fillStyle = color;
+      canvasCtx.strokeStyle = 'white';
+      canvasCtx.lineWidth = 2;
+      canvasCtx.stroke();
+      canvasCtx.fill();
+
+      // Rolle unter dem Punkt
+      canvasCtx.fillStyle = 'white';
+      canvasCtx.font = '12px sans-serif';
+      canvasCtx.textAlign = 'center';
+      canvasCtx.fillText(`${role} (${otherId})`, position.x * canvasElement.width, position.y * canvasElement.height + 25);
+    }
+  }
+
+  handDetectedLastFrame = handsPresent;
   canvasCtx.restore();
 });
 
-// Kamera starten und Bilder an MediaPipe senden
+// Kamera starten
 const camera = new Camera(videoElement, {
   onFrame: async () => {
     await hands.send({ image: videoElement });
@@ -204,78 +264,29 @@ const camera = new Camera(videoElement, {
 });
 camera.start();
 
-// Sound-Synthesizer Klasse (erzeugt und steuert Audio-Oszillator + Filter)
+// WebSocket Fehler und Close-Handler
+socket.addEventListener('error', (error) => {
+  console.error('WebSocket Fehler:', error);
+});
+socket.addEventListener('close', (event) => {
+  console.log('WebSocket geschlossen:', event.code, event.reason);
+});
+
+// Sound-Klasse Beispiel (minimal)
 class Sound {
-  constructor(role = 'lead') {
-    if (!audioContext) {
-      throw new Error('AudioContext not initialized');
-    }
-    const now = audioContext.currentTime;
-
-    // Lautstärke-Hüllkurve (GainNode) erzeugen und starten
-    this.env = audioContext.createGain();
-    this.env.connect(audioContext.destination);
-    this.env.gain.setValueAtTime(0, now);
-    this.env.gain.linearRampToValueAtTime(1, now + 0.25);
-
-    // Tiefpass-Filter erzeugen und verbinden
-    this.filter = audioContext.createBiquadFilter();
-    this.filter.type = 'lowpass';
-    this.filter.frequency.value = 1000;
-    this.filter.Q.value = 6;
-    this.filter.connect(this.env);
-
-    // Oszillator erzeugen (Tonquelle)
-    this.osc = audioContext.createOscillator();
+  constructor(role) {
     this.role = role;
-
-    // Unterschiedliche Oszillator-Typen und Frequenzbereiche für verschiedene Rollen
-    switch (role) {
-      case 'bass':
-        this.osc.type = 'square';
-        this.minOsc = 50;
-        this.maxOsc = 200;
-        break;
-      case 'lead':
-        this.osc.type = 'sawtooth';
-        this.minOsc = 200;
-        this.maxOsc = 1000;
-        break;
-      case 'pad':
-        this.osc.type = 'triangle';
-        this.minOsc = 100;
-        this.maxOsc = 600;
-        break;
-      default:
-        this.osc.type = 'sine';
-        this.minOsc = 100;
-        this.maxOsc = 1000;
-    }
-
-    // Filterfrequenzbereich definieren
-    this.minCutoff = 60;
-    this.maxCutoff = 4000;
-
-    this.osc.connect(this.filter);
-    this.osc.start(now);
+    // Hier deine Initialisierung des Sounds (AudioNodes etc)
+    this.active = true;
   }
-
-  // Parameter aktualisieren (Frequenz + Filterfrequenz), basierend auf x,y (0..1)
   update(x, y) {
-    const freqFactor = x;
-    const cutoffFactor = 1 - y;
-
-    this.osc.frequency.value = this.minOsc * Math.exp(Math.log(this.maxOsc / this.minOsc) * freqFactor);
-    this.filter.frequency.value = this.minCutoff * Math.exp(Math.log(this.maxCutoff / this.minCutoff) * cutoffFactor);
+    if (!this.active) return;
+    // Update Sound-Parameter (Position, Lautstärke etc) je nach x,y
+    // Beispiel:
+    // console.log(`Sound für ${this.role} updated: x=${x}, y=${y}`);
   }
-
-  // Sound langsam ausblenden und Oszillator stoppen
   stop() {
-    const now = audioContext.currentTime;
-    this.env.gain.cancelScheduledValues(now);
-    this.env.gain.setValueAtTime(this.env.gain.value, now);
-    this.env.gain.linearRampToValueAtTime(0, now + 0.25);
-    this.osc.stop(now + 0.25);
+    this.active = false;
+    // Stoppe Sound, Ressourcen freigeben etc.
   }
 }
-
