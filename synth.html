@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Collaborative Synth with Handtracking</title>
-  <link rel="stylesheet" href="synthstyle.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Soundboard</title>
+    <link rel="stylesheet" href="synthstyle.css" />
+
+    <!-- MediaPipe Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.min.js"></script>
 </head>
+
 <body>
 
-  <div id="video-container">
-    <video id="video" autoplay muted playsinline></video>
-    <canvas id="output" width="640" height="480"></canvas>
-  </div>
+    <div id="background-text">show me your hands</div>
 
-  <div id="info-display">
-    Verbundene Clients: <span id="client-count">0</span><br />
-    Deine Rolle: <span id="my-role">...</span>
-  </div>
+    <div id="message-display"></div>
+    <div id="client-index"></div>
+    <canvas id="canvas"></canvas>
 
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-  <script src="synth.js" defer></script>
+    <script src="synth.js"></script>
+
 </body>
+
 </html>

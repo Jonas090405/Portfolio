@@ -1,281 +1,371 @@
-// Referenzen zu HTML-Elementen: Video-Stream, Canvas zum Zeichnen, Canvas-Kontext, Info-Anzeige
-const videoElement = document.getElementById('video');
-const canvasElement = document.getElementById('output');
-const canvasCtx = canvasElement.getContext('2d');
-const infoDisplay = document.getElementById('info-display');
+const titleElem = document.getElementById('title-display');
+const messageElem = document.getElementById('message-display');
+const indexElem = document.getElementById('client-index');
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d');
 
-// Globale Variablen für AudioContext, lokale Sound-Instanz, Client-Id, Client-Anzahl und Rolle
-let audioContext = null;
-let localSound = null;
+const webRoomsWebSocketServerAddr = 'wss://nosch.uber.space/web-rooms/';
+
+const circleRadius = 50;
+
 let clientId = null;
 let clientCount = 0;
-let localRole = null;
 
-// Mögliche Sound-Rollen (verschiedene Klänge)
-const possibleRoles = ['bass', 'lead', 'pad'];
+/*************************************************************
+ * Touches Map and Synths Map
+ */
+const touches = new Map();
+const synths = new Map();
 
-// Objekt zum Speichern von Sound-Instanzen anderer Clients
-const otherSounds = {};
-
-// WebSocket-Verbindung zum Server aufbauen
-const socket = new WebSocket('wss://nosch.uber.space/web-rooms/');
-
-// Funktion, um AudioContext zu initialisieren oder bei Bedarf fortzusetzen
-function ensureAudioContext() {
-  if (!audioContext) {
-    audioContext = new AudioContext();
+class Touch {
+  constructor(id, x, y, own = false) {
+    this.id = id;
+    this.x = x;
+    this.y = y;
+    this.own = own;
   }
-  if (audioContext.state === 'suspended') {
-    audioContext.resume();
+  move(x, y) {
+    this.x = x;
+    this.y = y;
   }
 }
 
-// AudioContext erst beim ersten User-Klick aktivieren (Browser-Sicherheitsanforderung)
-window.addEventListener('click', () => {
-  ensureAudioContext();
-});
+class Synth {
+  constructor(type = 'sine') {
+    this.context = new (window.AudioContext || window.AudioContext)();
+    this.osc = this.context.createOscillator();
+    this.filter = this.context.createBiquadFilter();
+    this.gain = this.context.createGain();
 
-// Rolle für einen Client bestimmen anhand dessen ID (für unterschiedliche Sounds)
-function getRoleFromClientId(id) {
-  const numericId = parseInt(id, 36);
-  if (isNaN(numericId)) return possibleRoles[0];
-  return possibleRoles[numericId % possibleRoles.length];
-}
+    this.osc.type = type;
+    this.filter.type = 'lowpass';
 
-// Position der Handbewegung an alle anderen Clients senden
-function broadcastMovement(x, y) {
-  if (!clientId) return;
-  socket.send(JSON.stringify(['*broadcast-message*', ['handmove', x, y, clientId]]));
-}
+    this.osc.connect(this.filter).connect(this.gain).connect(this.context.destination);
 
-// Stop-Nachricht senden, wenn Hand nicht mehr sichtbar
-function broadcastStop() {
-  if (!clientId) return;
-  socket.send(JSON.stringify(['*broadcast-message*', ['stop', clientId]]));
-}
+    this.gain.gain.value = 0;
+    this.osc.frequency.value = 440;
+    this.filter.frequency.value = 1000;
 
-// WebSocket-Event: Verbindung geöffnet
-socket.addEventListener('open', () => {
-  socket.send(JSON.stringify(['*enter-room*', 'collab-synth']));   // Raum betreten
-  socket.send(JSON.stringify(['*subscribe-client-count*']));       // Anzahl Clients abonnieren
-  setInterval(() => socket.send(''), 30000);                      // Ping alle 30s, um Verbindung offen zu halten
-});
-
-// WebSocket-Event: Nachricht erhalten
-socket.addEventListener('message', (event) => {
-  if (!event.data) return;
-  let data;
-  try {
-    data = JSON.parse(event.data); // JSON-Nachricht parsen
-  } catch (e) {
-    console.warn('Ungültiges JSON empfangen:', event.data);
-    return;
+    this.osc.start();
   }
 
-  console.log('Empfangene Nachricht:', data);
+  update(x, y) {
+    // Frequenz (Tonhöhe) abhängig von y-Position (hoch = hoch)
+    const freq = 220 + (880 - 220) * y;
+    // Lautstärke sinkt leicht bei höheren Tönen für Balance
+    const volume = 0.3 * (1 - y);
+    // Filterfrequenz abhängig von x-Position (Timbre)
+    const filterFreq = 500 + 3000 * x;
 
-  // Nachrichten mit Broadcast-Inhalt auswerten
-  if (data[0] === '*broadcast-message*') {
-    const [messageType, ...args] = data[1];
-
-    switch (messageType) {
-      case 'handmove': {
-        const [x, y, sender] = args;
-        if (sender === clientId) return; // Eigene Bewegung ignorieren
-
-        // Falls für den Sender noch kein Sound-Objekt existiert, anlegen
-        if (!otherSounds[sender]) {
-          ensureAudioContext();
-          const role = getRoleFromClientId(sender);
-          otherSounds[sender] = new Sound(role);
-        }
-        // Sound mit neuen Handkoordinaten updaten
-        otherSounds[sender].update(x, y);
-        break;
-      }
-      case 'stop': {
-        const [stopClient] = args;
-        // Stoppen und löschen der Sound-Instanz des Clients, der aufgehört hat
-        if (otherSounds[stopClient]) {
-          otherSounds[stopClient].stop();
-          delete otherSounds[stopClient];
-        }
-        break;
-      }
-    }
-    return;
+    this.osc.frequency.value = freq;
+    this.filter.frequency.value = filterFreq;
+    this.gain.gain.value = volume;
   }
 
-  // Allgemeine Nachrichten behandeln
-  switch (data[0]) {
-    case '*client-id*':
-      clientId = data[1];
-      localRole = getRoleFromClientId(clientId);
-      if (infoDisplay) {
-        infoDisplay.textContent = `Rolle: ${localRole} – Verbundene Clients: ${clientCount}`;
-      }
-      break;
-
-    case '*client-count*':
-      clientCount = data[1];
-      if (infoDisplay) {
-        infoDisplay.textContent = `Rolle: ${localRole || 'Rolle wird zugewiesen...'} – Verbundene Clients: ${clientCount}`;
-      }
-      break;
-
-    case '*error*':
-      console.warn('Fehler:', ...data[1]);
-      break;
+  stop() {
+    this.gain.gain.value = 0;
   }
-});
+}
 
-// MediaPipe Hands-Setup zur Handerkennung konfigurieren
+function createTouch(id, x, y, own = false) {
+  const touch = new Touch(id, x, y, own);
+  touches.set(id, touch);
+  createSynth(id);
+}
+
+function moveTouch(id, x, y) {
+  const touch = touches.get(id);
+  if (touch) {
+    touch.move(x, y);
+  }
+}
+
+function deleteTouch(id) {
+  touches.delete(id);
+  deleteSynth(id);
+  updateSynthListDisplay();
+}
+
+function createSynth(id) {
+  if (!synths.has(id)) {
+    const waveTypes = ['sine', 'square', 'triangle', 'sawtooth', 'sine', 'square', 'triangle', 'sawtooth'];
+    const waveType = waveTypes[id % waveTypes.length];
+    const synth = new Synth(waveType);
+    synths.set(id, synth);
+    updateSynthListDisplay();
+  }
+}
+
+function deleteSynth(id) {
+  const synth = synths.get(id);
+  if (synth) {
+    synth.stop();
+    synths.delete(id);
+  }
+}
+
+/*************************************************************
+ * MediaPipe Hands Setup
+ */
+const videoElement = document.createElement('video');
+videoElement.style.display = 'none';
+document.body.appendChild(videoElement);
+
 const hands = new Hands({
-  locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-});
-hands.setOptions({
-  maxNumHands: 1,                 // Maximal eine Hand tracken
-  modelComplexity: 1,             // Genauigkeit des Modells
-  minDetectionConfidence: 0.7,    // Mindestvertrauen zur Erkennung
-  minTrackingConfidence: 0.3      // Mindestvertrauen zur Verfolgung
-});
-
-let handDetectedLastFrame = false; // Status, ob in letztem Frame Hand erkannt wurde
-
-// Callback bei Ergebnissen der Handerkennung
-hands.onResults(results => {
-  canvasCtx.save();
-  canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-  // Kamerabild auf Canvas zeichnen
-  canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
-
-  const handsPresent = results.multiHandLandmarks.length > 0;
-
-  if (handsPresent) {
-    // Erste erkannte Hand und deren Zeigefinger-Tipp auslesen
-    const hand = results.multiHandLandmarks[0];
-    const indexTip = hand[8];
-    const x = indexTip.x;
-    const y = indexTip.y;
-
-    // Kreis an Zeigefingerposition malen
-    canvasCtx.beginPath();
-    canvasCtx.arc(x * canvasElement.width, y * canvasElement.height, 10, 0, 2 * Math.PI);
-    canvasCtx.fillStyle = '#a65ecf';
-    canvasCtx.strokeStyle = 'white';
-    canvasCtx.lineWidth = 4;
-    canvasCtx.stroke();
-    canvasCtx.fill();
-
-    // AudioContext sicherstellen (falls noch nicht gestartet)
-    ensureAudioContext();
-
-    // Lokalen Sound-Synthesizer erstellen falls noch nicht vorhanden
-    if (!localSound) {
-      localSound = new Sound(localRole || 'lead');
-    }
-
-    // Sound-Parameter aktualisieren anhand Handposition
-    localSound.update(x, y);
-
-    // Position an andere Clients senden
-    broadcastMovement(x, y);
-
-  } else {
-    // Falls keine Hand erkannt wird, aber im letzten Frame eine da war:
-    if (handDetectedLastFrame && localSound) {
-      localSound.stop();     // Sound stoppen
-      broadcastStop();       // Stop-Nachricht senden
-      localSound = null;     // lokale Instanz löschen
-    }
+  locateFile: (file) => {
+    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
   }
-
-  handDetectedLastFrame = handsPresent; // Status speichern
-  canvasCtx.restore();
 });
 
-// Kamera starten und Bilder an MediaPipe senden
+hands.setOptions({
+  maxNumHands: 1,
+  modelComplexity: 1,
+  minDetectionConfidence: 0.8,
+  minTrackingConfidence: 0.8
+});
+
+hands.onResults(onHandsResults);
+
 const camera = new Camera(videoElement, {
   onFrame: async () => {
-    await hands.send({ image: videoElement });
+    await hands.send({image: videoElement});
   },
   width: 640,
   height: 480
 });
-camera.start();
 
-// Sound-Synthesizer Klasse (erzeugt und steuert Audio-Oszillator + Filter)
-class Sound {
-  constructor(role = 'lead') {
-    if (!audioContext) {
-      throw new Error('AudioContext not initialized');
+/*************************************************************
+ * Start Function
+ */
+function start() {
+  updateCanvasSize();
+
+  camera.start();
+
+  requestAnimationFrame(onAnimationFrame);
+}
+
+/*************************************************************
+ * MediaPipe Hand Results Callback
+ */
+function onHandsResults(results) {
+  if (!clientId) return;
+
+  if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+    const landmarks = results.multiHandLandmarks[0];
+    const x = landmarks[9].x;
+    const y = landmarks[9].y;
+
+    if (!touches.has(clientId)) {
+      createTouch(clientId, x, y, true);
+      sendRequest('*broadcast-message*', ['start', clientId, x, y]);
+    } else {
+      moveTouch(clientId, x, y);
+      sendRequest('*broadcast-message*', ['move', clientId, x, y]);
     }
-    const now = audioContext.currentTime;
-
-    // Lautstärke-Hüllkurve (GainNode) erzeugen und starten
-    this.env = audioContext.createGain();
-    this.env.connect(audioContext.destination);
-    this.env.gain.setValueAtTime(0, now);
-    this.env.gain.linearRampToValueAtTime(1, now + 0.25);
-
-    // Tiefpass-Filter erzeugen und verbinden
-    this.filter = audioContext.createBiquadFilter();
-    this.filter.type = 'lowpass';
-    this.filter.frequency.value = 1000;
-    this.filter.Q.value = 6;
-    this.filter.connect(this.env);
-
-    // Oszillator erzeugen (Tonquelle)
-    this.osc = audioContext.createOscillator();
-    this.role = role;
-
-    // Unterschiedliche Oszillator-Typen und Frequenzbereiche für verschiedene Rollen
-    switch (role) {
-      case 'bass':
-        this.osc.type = 'square';
-        this.minOsc = 50;
-        this.maxOsc = 200;
-        break;
-      case 'lead':
-        this.osc.type = 'sawtooth';
-        this.minOsc = 200;
-        this.maxOsc = 1000;
-        break;
-      case 'pad':
-        this.osc.type = 'triangle';
-        this.minOsc = 100;
-        this.maxOsc = 600;
-        break;
-      default:
-        this.osc.type = 'sine';
-        this.minOsc = 100;
-        this.maxOsc = 1000;
+  } else {
+    if (touches.has(clientId)) {
+      deleteTouch(clientId);
+      sendRequest('*broadcast-message*', ['end', clientId]);
     }
-
-    // Filterfrequenzbereich definieren
-    this.minCutoff = 60;
-    this.maxCutoff = 4000;
-
-    this.osc.connect(this.filter);
-    this.osc.start(now);
-  }
-
-  // Parameter aktualisieren (Frequenz + Filterfrequenz), basierend auf x,y (0..1)
-  update(x, y) {
-    const freqFactor = x;
-    const cutoffFactor = 1 - y;
-
-    this.osc.frequency.value = this.minOsc * Math.exp(Math.log(this.maxOsc / this.minOsc) * freqFactor);
-    this.filter.frequency.value = this.minCutoff * Math.exp(Math.log(this.maxCutoff / this.minCutoff) * cutoffFactor);
-  }
-
-  // Sound langsam ausblenden und Oszillator stoppen
-  stop() {
-    const now = audioContext.currentTime;
-    this.env.gain.cancelScheduledValues(now);
-    this.env.gain.setValueAtTime(this.env.gain.value, now);
-    this.env.gain.linearRampToValueAtTime(0, now + 0.25);
-    this.osc.stop(now + 0.25);
   }
 }
 
+/*************************************************************
+ * Canvas & Drawing
+ */
+function updateCanvasSize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+function onAnimationFrame() {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let [id, touch] of touches) {
+    const x = canvas.width * touch.x;
+    const y = canvas.height * touch.y;
+    drawCircle(context, x, y, touch.own, touch.own);
+
+    // Update Synth für alle Touches basierend auf Position
+    const synth = synths.get(id);
+    if (synth) {
+      synth.update(touch.x, 1 - touch.y); // 1 - y damit Tonhöhe steigt nach oben
+    }
+  }
+
+  requestAnimationFrame(onAnimationFrame);
+}
+
+function drawCircle(context, x, y, highlight = false, own = false) {
+  // Punktgröße abhängig von Y (höher = größer)
+  const radius = 10 + (circleRadius * (1 - y / canvas.height));
+
+  // Glow abhängig von X (0 ganz links, max rechts)
+  const glow = 30 * (x / canvas.width); // max 30px Blur
+
+  if (own) {
+    // Eigener Punkt: Blau mit Glow, Helligkeit abhängig von X
+    const lightness = 80 - 50 * (x / canvas.width); // von 80% bis 30%
+    context.fillStyle = `hsl(210, 100%, ${lightness}%)`; // Blauton
+    context.shadowColor = `hsl(210, 100%, ${lightness}%)`;
+    context.globalAlpha = highlight ? 1 : 0.7;
+  } else {
+    // Andere Punkte: Weiß, Helligkeit abhängig von X, Glow ähnlich
+    const lightness = 90 - 50 * (x / canvas.width); // von 90% bis 40%
+    context.fillStyle = `hsl(0, 0%, ${lightness}%)`; // Weiß/Grauton
+    context.shadowColor = `hsl(0, 0%, ${lightness}%)`;
+    context.globalAlpha = highlight ? 0.8 : 0.5;
+  }
+
+  context.shadowBlur = glow;
+
+  // Kreis zeichnen
+  context.beginPath();
+  context.arc(x, y, radius, 0, 2 * Math.PI);
+  context.fill();
+}
+
+/*************************************************************
+ * Synth List Display (unten links)
+ */
+const synthListElem = document.getElementById('synth-list') || (() => {
+  const el = document.createElement('div');
+  el.id = 'synth-list';
+  el.style.position = 'fixed';
+  el.style.bottom = '10px';
+  el.style.left = '10px';
+  el.style.color = 'white';
+  el.style.fontFamily = 'Helvetica Neue';
+  el.style.background = 'rgba(14, 13, 13, 0.5)';
+  el.style.padding = '8px';
+  el.style.borderRadius = '4px';
+  el.style.zIndex = 1000;
+  document.body.appendChild(el);
+  return el;
+})();
+
+function updateSynthListDisplay() {
+    // Sortiere alle Touch IDs numerisch
+    const sortedIds = Array.from(touches.keys()).sort((a, b) => a - b);
+  
+    // Finde die eigene Position (1-basiert)
+    const ownPos = sortedIds.indexOf(clientId);
+    const total = sortedIds.length;
+  
+    // Text für Position (falls nicht gefunden, zeige nur total)
+    let headerText;
+    if (ownPos >= 0) {
+      headerText = `<strong>Client #${ownPos + 1} / ${total}</strong><br>`;
+    } else {
+      headerText = `<strong>Clients on board: ${total}</strong><br>`;
+    }
+  
+    // Baue Liste der User
+    let html = headerText;
+    for (let i = 0; i < sortedIds.length; i++) {
+      const id = sortedIds[i];
+      const synth = synths.get(id);
+      if (!synth) continue;
+      const waveType = synth.osc.type;
+      const youTag = (id === clientId) ? ' (You)' : '';
+      html += `User #${i + 1}: ${waveType}${youTag}<br>`;
+    }
+  
+    synthListElem.innerHTML = html;
+  }
+  
+
+/*************************************************************
+ * WebSocket Communication
+ */
+const socket = new WebSocket(webRoomsWebSocketServerAddr);
+
+socket.addEventListener('open', (event) => {
+  sendRequest('*enter-room*', 'touch-touch');
+  sendRequest('*subscribe-client-count*');
+
+  setInterval(() => socket.send(''), 30000);
+});
+
+socket.addEventListener("close", (event) => {
+    if (clientId !== null) {
+      sendRequest('*broadcast-message*', ['end', clientId]); // sende gültige ID
+    }
+    clientId = null;
+    document.body.classList.add('disconnected');
+  });
+  
+
+socket.addEventListener('message', (event) => {
+  const data = event.data;
+  if (data.length > 0) {
+    const incoming = JSON.parse(data);
+    const selector = incoming[0];
+
+    switch (selector) {
+      case '*client-id*':
+        clientId = incoming[1] + 1;
+        start();
+        updateSynthListDisplay();
+        break;
+
+      case '*client-count*':
+        clientCount = incoming[1];
+        updateSynthListDisplay();
+        break;
+
+      case 'start': {
+        const id = incoming[1];
+        const x = incoming[2];
+        const y = incoming[3];
+        if (id !== clientId) createTouch(id, x, y);
+        updateSynthListDisplay();
+        break;
+      }
+
+      case 'move': {
+        const id = incoming[1];
+        const x = incoming[2];
+        const y = incoming[3];
+        if (id !== clientId) moveTouch(id, x, y);
+        break;
+      }
+
+      case 'end': {
+        const id = incoming[1];
+        if (id !== clientId) {
+          deleteTouch(id);
+          updateSynthListDisplay();
+        }
+        break;
+      }
+
+      case '*error*': {
+        const message = incoming[1];
+        console.warn('server error:', ...message);
+        break;
+      }
+
+      default:
+        break;
+    }
+  }
+});
+
+function sendRequest(...message) {
+  const str = JSON.stringify(message);
+  if (socket.readyState === WebSocket.OPEN) {
+    socket.send(str);
+  }
+}
+
+window.addEventListener('resize', updateCanvasSize);
+
+window.addEventListener('beforeunload', () => {
+    if (clientId !== null && socket.readyState === WebSocket.OPEN) {
+      const msg = JSON.stringify(['*broadcast-message*', ['end', clientId]]);
+      socket.send(msg);
+    }
+  });
+  

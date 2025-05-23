@@ -1,65 +1,39 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  background-color: #262626;
+body, html {
+  margin: 0; padding: 0; overflow: hidden;
+  background: #1d1d1d;
   color: white;
   font-family: sans-serif;
-  height: 100%;
-  overflow: hidden;        /* Scrollen deaktivieren */
 }
-
-
-/* Video zentriert und responsiv mit abgerundetem Rahmen */
-#video {
-  position: relative;
+#title-display {
+  position: fixed; top: 10px; left: 10px;
+  font-size: 24px;
+}
+#message-display {
+  position: fixed; top: 40px; left: 10px;
+  font-size: 16px;
+}
+#client-index {
+  position: fixed; top: 70px; left: 10px;
+  font-size: 16px;
+}
+canvas {
   display: block;
-  margin: 40px auto;
-  width: 90vw;
-  max-width: 640px;
-  aspect-ratio: 4 / 3;
-  border-radius: 16px;
-  object-fit: cover;
-  z-index: 1;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-/* Canvas deckt das Video ab und folgt dessen Größe */
-#output {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  border-radius: 16px;
-  z-index: 2;
-}
-
-/* Container zum gemeinsamen Layout von Video + Canvas */
-#video-container {
-  position: relative;
-  margin: 40px auto;
-  width: 90vw;
-  max-width: 640px;
-  aspect-ratio: 4 / 3;
-  
-}
-
-/* Infoanzeige bleibt oben links */
-#info-display {
+#background-text {
   position: fixed;
-  top: 10px; 
-  left: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 900;
+  font-size: clamp(24px, 6vw, 100px); /* <– kleinerer vw-Wert = früher skalieren */
   color: white;
-  font-family: sans-serif;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  border-radius: 8px;
-  max-width: 300px;
-  z-index: 10;
-}
-
-#roles-list {
-  margin-top: 8px;
-  font-size: 0.9em;
+  opacity: 0.03;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
 }
