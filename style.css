@@ -18,6 +18,7 @@ html {
     font-size: 14pt;
     color: var(--text-color);
     scroll-behavior: smooth;
+    background-color: #101113;
     
 }
 
