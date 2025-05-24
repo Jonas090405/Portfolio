@@ -114,6 +114,7 @@ function deleteSynth(id) {
  */
 const videoElement = document.createElement('video');
 document.body.appendChild(videoElement);
+videoElement.setAttribute('playsinline', ''); // wichtig für iOS Safari
 
 const hands = new Hands({
   locateFile: (file) => {
