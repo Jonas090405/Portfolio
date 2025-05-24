@@ -116,6 +116,7 @@ const videoElement = document.createElement('video');
 document.body.appendChild(videoElement);
 videoElement.setAttribute('playsinline', ''); // wichtig für iOS Safari
 
+
 const hands = new Hands({
   locateFile: (file) => {
     return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
@@ -156,9 +157,9 @@ function onHandsResults(results) {
   
     if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
       const landmarks = results.multiHandLandmarks[0];
-      const x = landmarks[9].x;
+      const x = 1 - landmarks[9].x; // Spiegelung an der vertikalen Mittelachse (horizontal invertieren)
       const y = landmarks[9].y;
-  
+        
       const pinchDistance = Math.hypot(
         landmarks[4].x - landmarks[8].x,
         landmarks[4].y - landmarks[8].y
