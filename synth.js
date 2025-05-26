@@ -7,6 +7,8 @@ const drawings = []; // lokale Zeichnungslinien
 const remoteDrawings = new Map(); // andere Clients
 let isPinching = false;
 let lastDrawPos = null;
+const activePinches = new Set();
+
 
 
 const webRoomsWebSocketServerAddr = 'wss://nosch.uber.space/web-rooms/';
@@ -184,7 +186,12 @@ function onHandsResults(results) {
       }
   
       isPinching = isNowPinching;
-  
+      if (isNowPinching) {
+        activePinches.add(clientId);
+      } else {
+        activePinches.delete(clientId);
+      }
+        
     } else {
       if (touches.has(clientId)) {
         deleteTouch(clientId);
@@ -219,7 +226,7 @@ function onAnimationFrame() {
     }
   }
   // Zeichne lokale Linien
-  context.strokeStyle = 'cyan';
+  context.strokeStyle = 'rgba(0, 200, 255, 0.8)';
   context.lineWidth = 3;
   context.lineCap = 'round';
   for (let segment of drawings) {
@@ -234,36 +241,57 @@ function onAnimationFrame() {
     }
   }
 
+  for (let [id, touch] of touches) {
+  const x = canvas.width * touch.x;
+  const y = canvas.height * touch.y;
+  drawCircle(context, x, y, touch.own, touch.own, id);
+
+  const synth = synths.get(id);
+  if (synth) {
+    synth.update(touch.x, 1 - touch.y);
+  }
+}
+
+
   requestAnimationFrame(onAnimationFrame);
 }
 
-function drawCircle(context, x, y, highlight = false, own = false) {
-  // Punktgröße abhängig von Y (höher = größer)
+function drawCircle(context, x, y, highlight = false, own = false, id = null) {
   const radius = 10 + (circleRadius * (1 - y / canvas.height));
+  const glow = 30 * (x / canvas.width);
 
-  // Glow abhängig von X (0 ganz links, max rechts)
-  const glow = 30 * (x / canvas.width); // max 30px Blur
-
+  // Farben
+  let baseColor, strokeColor;
   if (own) {
-    // Eigener Punkt: Blau mit Glow, Helligkeit abhängig von X
-    const lightness = 80 - 50 * (x / canvas.width); // von 80% bis 30%
-    context.fillStyle = `hsl(210, 100%, ${lightness}%)`; // Blauton
-    context.shadowColor = `hsl(210, 100%, ${lightness}%)`;
+    const lightness = 80 - 50 * (x / canvas.width);
+    baseColor = `hsl(210, 100%, ${lightness}%)`;
+    strokeColor = `hsl(210, 100%, ${Math.min(100, lightness + 15)}%)`;
     context.globalAlpha = highlight ? 1 : 0.7;
   } else {
-    // Andere Punkte: Weiß, Helligkeit abhängig von X, Glow ähnlich
-    const lightness = 90 - 50 * (x / canvas.width); // von 90% bis 40%
-    context.fillStyle = `hsl(0, 0%, ${lightness}%)`; // Weiß/Grauton
-    context.shadowColor = `hsl(0, 0%, ${lightness}%)`;
+    const lightness = 90 - 50 * (x / canvas.width);
+    baseColor = `hsl(0, 0%, ${lightness}%)`;
+    strokeColor = `hsl(0, 0%, ${Math.min(100, lightness + 20)}%)`;
     context.globalAlpha = highlight ? 0.8 : 0.5;
   }
 
+  context.fillStyle = baseColor;
+  context.shadowColor = baseColor;
   context.shadowBlur = glow;
 
-  // Kreis zeichnen
+  // Kreis
   context.beginPath();
   context.arc(x, y, radius, 0, 2 * Math.PI);
   context.fill();
+
+  // ✨ Pinch-Stroke
+  if (id && activePinches.has(id)) {
+    context.shadowBlur = 0;
+    context.lineWidth = 4;
+    context.strokeStyle = strokeColor;
+    context.stroke();
+  }
+
+  context.globalAlpha = 1;
 }
 
 /*************************************************************
