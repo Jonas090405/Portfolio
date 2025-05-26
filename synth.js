@@ -271,16 +271,20 @@ function drawCircle(context, x, y, highlight = false, own = false) {
  */
 const synthListElem = document.getElementById('synth-list') || (() => {
   const el = document.createElement('div');
-  el.id = 'synth-list';
   el.style.position = 'fixed';
-  el.style.bottom = '10px';
-  el.style.left = '10px';
-  el.style.color = 'white';
-  el.style.fontFamily = 'Helvetica Neue';
-  el.style.background = 'rgba(14, 13, 13, 0.5)';
-  el.style.padding = '8px';
-  el.style.borderRadius = '4px';
+  el.style.bottom = '16px';
+  el.style.left = '16px';
+  el.style.padding = '12px 16px';
+  el.style.borderRadius = '16px';
+  el.style.backdropFilter = 'blur(12px)';
+  el.style.background = 'rgba(255, 255, 255, 0.01)';
+  el.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.25)';
+  el.style.color = '#fff';
+  el.style.fontFamily = '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif';
+  el.style.fontSize = '14px';
+  el.style.lineHeight = '1.4';
   el.style.zIndex = 1000;
+  el.style.border = '1px solid rgba(255, 255, 255, 0.08)';
   document.body.appendChild(el);
   return el;
 })();
