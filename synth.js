@@ -8,6 +8,7 @@ const remoteDrawings = new Map(); // andere Clients
 let isPinching = false;
 let lastDrawPos = null;
 const activePinches = new Set();
+const clientNames = new Map();
 
 
 
@@ -17,6 +18,41 @@ const circleRadius = 50;
 
 let clientId = null;
 let clientCount = 0;
+
+const animalNames = {
+  a: ['antelope', 'armadillo'],
+  b: ['bear', 'beaver', 'buffalo'],
+  c: ['cat', 'cougar', 'crab'],
+  d: ['dog', 'duck', 'donkey'],
+  e: ['elephant', 'eagle'],
+  f: ['zebra'],
+};
+
+const adjectives = {
+  a: ['adorable', 'agile', 'angry'],
+  b: ['bouncy', 'buffed', 'brave'],
+  c: ['curious', 'clever', 'crazy'],
+  d: ['dizzy', 'daring', 'dumb'],
+  e: ['eager', 'electric'],
+  f: ['zesty'],
+
+};
+
+function generateRandomName() {
+  const letters = Object.keys(adjectives);
+  const letter = letters[Math.floor(Math.random() * letters.length)];
+
+  const adjList = adjectives[letter];
+  const animalList = animalNames[letter];
+
+  if (!adjList || !animalList) return 'anonymous';
+
+  const adj = adjList[Math.floor(Math.random() * adjList.length)];
+  const animal = animalList[Math.floor(Math.random() * animalList.length)];
+
+  return `${adj}${animal}`;
+}
+
 
 /*************************************************************
  * Touches Map and Synths Map
@@ -127,7 +163,7 @@ const hands = new Hands({
 hands.setOptions({
   maxNumHands: 1,
   modelComplexity: 1,
-  minDetectionConfidence: 0.35,
+  minDetectionConfidence: 0.6,
   minTrackingConfidence: 0.35
 });
 
@@ -292,6 +328,17 @@ function drawCircle(context, x, y, highlight = false, own = false, id = null) {
   }
 
   context.globalAlpha = 1;
+
+  if (id !== null) {
+  const name = clientNames.get(id) || `User ${id}`;
+  context.font = '12px sans-serif';
+  context.fillStyle = 'white';
+  context.textAlign = 'center';
+  context.textBaseline = 'top';
+  context.shadowBlur = 0;
+  context.fillText(name, x, y + radius + 6);
+}
+
 }
 
 /*************************************************************
@@ -328,9 +375,9 @@ function updateSynthListDisplay() {
     // Text für Position (falls nicht gefunden, zeige nur total)
     let headerText;
     if (ownPos >= 0) {
-      headerText = `<strong>Client #${ownPos + 1} / ${total}</strong><br>`;
+      headerText = `<strong>User ${ownPos + 1} / ${total}</strong><br>`;
     } else {
-      headerText = `<strong>Clients on board: ${total}</strong><br>`;
+      headerText = `<strong>Users on board: ${total}</strong><br>`;
     }
   
     // Baue Liste der User
@@ -340,13 +387,57 @@ function updateSynthListDisplay() {
       const synth = synths.get(id);
       if (!synth) continue;
       const waveType = synth.osc.type;
+      const userName = clientNames.get(id) || `User #${i + 1}`;
       const youTag = (id === clientId) ? ' (You)' : '';
-      html += `User #${i + 1}: ${waveType}${youTag}<br>`;
-    }
+      html += `${userName}${youTag}: ${waveType}<br>`;
+          }
   
     synthListElem.innerHTML = html;
   }
   
+/*************************************************************
+ * Clear Button (unten rechts)
+ */
+const clearButton = document.createElement('button');
+clearButton.textContent = 'Clear Drawings';
+
+Object.assign(clearButton.style, {
+  position: 'fixed',
+  bottom: '16px',
+  right: '16px',
+  padding: '12px 16px',
+  borderRadius: '16px',
+  backdropFilter: 'blur(12px)',
+  background: 'rgba(255, 255, 255, 0.01)',
+  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)',
+  color: '#fff',
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
+  fontSize: '14px',
+  lineHeight: '1.4',
+  zIndex: 1000,
+  border: '1px solid rgba(255, 255, 255, 0.08)',
+  cursor: 'pointer',
+  transition: 'background 0.2s, border 0.2s'
+});
+
+clearButton.addEventListener('mouseenter', () => {
+  clearButton.style.background = 'rgba(255, 255, 255, 0.08)';
+  clearButton.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+});
+
+clearButton.addEventListener('mouseleave', () => {
+  clearButton.style.background = 'rgba(255, 255, 255, 0.01)';
+  clearButton.style.border = '1px solid rgba(255, 255, 255, 0.08)';
+});
+
+clearButton.addEventListener('click', () => {
+  drawings.length = 0;
+  remoteDrawings.clear();
+  sendRequest('*broadcast-message*', ['clear']);
+});
+
+
+document.body.appendChild(clearButton);
 
 /*************************************************************
  * WebSocket Communication
@@ -378,23 +469,31 @@ socket.addEventListener('message', (event) => {
     switch (selector) {
       case '*client-id*':
         clientId = incoming[1] + 1;
+        if (!clientNames.has(clientId)) {
+          clientNames.set(clientId, generateRandomName());
+        }
         start();
         updateSynthListDisplay();
         break;
+      
 
       case '*client-count*':
         clientCount = incoming[1];
         updateSynthListDisplay();
         break;
 
-      case 'start': {
-        const id = incoming[1];
-        const x = incoming[2];
-        const y = incoming[3];
-        if (id !== clientId) createTouch(id, x, y);
-        updateSynthListDisplay();
-        break;
-      }
+        case 'start': {
+          const id = incoming[1];
+          const x = incoming[2];
+          const y = incoming[3];
+          if (!clientNames.has(id)) {
+            clientNames.set(id, generateRandomName());
+          }
+          if (id !== clientId) createTouch(id, x, y);
+          updateSynthListDisplay();
+          break;
+        }
+        
 
       case 'move': {
         const id = incoming[1];
@@ -426,6 +525,11 @@ socket.addEventListener('message', (event) => {
         const ty = incoming[5];
         if (!remoteDrawings.has(id)) remoteDrawings.set(id, []);
         remoteDrawings.get(id).push({ from: { x: fx, y: fy }, to: { x: tx, y: ty } });
+        break;
+      }
+      case 'clear': {
+        drawings.length = 0;
+        remoteDrawings.clear();
         break;
       }
       
