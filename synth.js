@@ -10,6 +10,9 @@ let lastDrawPos = null;
 const activePinches = new Set();
 const clientNames = new Map();
 
+const clearSound = new Audio('clear.wav');
+clearSound.volume = 0.65; // Lautstärke anpassen
+
 
 
 const webRoomsWebSocketServerAddr = 'wss://nosch.uber.space/web-rooms/';
@@ -163,7 +166,7 @@ const hands = new Hands({
 hands.setOptions({
   maxNumHands: 1,
   modelComplexity: 1,
-  minDetectionConfidence: 0.6,
+  minDetectionConfidence: 0.8,
   minTrackingConfidence: 0.35
 });
 
@@ -433,8 +436,13 @@ clearButton.addEventListener('mouseleave', () => {
 clearButton.addEventListener('click', () => {
   drawings.length = 0;
   remoteDrawings.clear();
+
   sendRequest('*broadcast-message*', ['clear']);
+  sendRequest('*broadcast-message*', ['play-clear-sound']);
+
+  playClearSound();
 });
+
 
 
 document.body.appendChild(clearButton);
@@ -469,9 +477,15 @@ socket.addEventListener('message', (event) => {
     switch (selector) {
       case '*client-id*':
         clientId = incoming[1] + 1;
-        if (!clientNames.has(clientId)) {
-          clientNames.set(clientId, generateRandomName());
-        }
+        const name = generateRandomName();
+        clientNames.set(clientId, name);
+      
+        // Broadcast eigenen Namen
+        sendRequest('*broadcast-message*', ['name', clientId, name]);
+      
+        // 🆕 Fordere Namen der anderen an
+        sendRequest('*broadcast-message*', ['request-names', clientId]);
+      
         start();
         updateSynthListDisplay();
         break;
@@ -486,13 +500,21 @@ socket.addEventListener('message', (event) => {
           const id = incoming[1];
           const x = incoming[2];
           const y = incoming[3];
+        
+          // Falls kein Name bekannt → Anfrage senden
           if (!clientNames.has(id)) {
-            clientNames.set(id, generateRandomName());
+            clientNames.set(id, `User ${id}`);
+            // sende deinen eigenen Namen zurück, falls du ihn bist
+            if (id !== clientId && clientNames.has(clientId)) {
+              sendRequest('*broadcast-message*', ['name', clientId, clientNames.get(clientId)]);
+            }
           }
+        
           if (id !== clientId) createTouch(id, x, y);
           updateSynthListDisplay();
           break;
         }
+        
         
 
       case 'move': {
@@ -533,12 +555,41 @@ socket.addEventListener('message', (event) => {
         break;
       }
       
+      case 'name': {
+        const id = incoming[1];
+        const name = incoming[2];
+        clientNames.set(id, name);
+        updateSynthListDisplay();
+        break;
+      }
+      
+      case 'request-names': {
+      
+        // 🧠 Jeder sendet seinen Namen als Antwort
+        clientNames.forEach((name, id) => {
+          sendRequest('*broadcast-message*', ['name', id, name]);
+        });
+        break;
+      }
+
+      case 'play-clear-sound': {
+        playClearSound();
+        break;
+      }
+      
 
       default:
         break;
     }
   }
 });
+
+function playClearSound() {
+  // stoppe Sound, falls er gerade läuft, und spiele von vorne
+  clearSound.pause();
+  clearSound.currentTime = 0;
+  clearSound.play();
+}
 
 function sendRequest(...message) {
   const str = JSON.stringify(message);
