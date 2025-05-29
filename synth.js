@@ -565,7 +565,7 @@ socket.addEventListener('message', (event) => {
       
       case 'request-names': {
       
-        // 🧠 Jeder sendet seinen Namen als Antwort
+        //Jeder sendet seinen Namen als Antwort
         clientNames.forEach((name, id) => {
           sendRequest('*broadcast-message*', ['name', id, name]);
         });

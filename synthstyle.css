@@ -29,8 +29,8 @@ canvas {
   transform: translate(-50%, -50%);
   font-weight: 900;
   font-size: clamp(24px, 6vw, 100px); /* <– kleinerer vw-Wert = früher skalieren */
-  color: #201f1f;
-  opacity: 0.8;
+  color: #252424;
+  opacity: 0.6;
   pointer-events: none;
   user-select: none;
   z-index: 0;
