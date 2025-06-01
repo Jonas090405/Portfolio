@@ -155,8 +155,7 @@ function deleteSynth(id) {
  */
 const videoElement = document.createElement('video');
 document.body.appendChild(videoElement);
-videoElement.setAttribute('playsinline', ''); // wichtig für iOS Safari
-
+videoElement.setAttribute('playsinline', ''); // wichtig für Handtracking auf mobilen Browsern
 const hands = new Hands({
   locateFile: (file) => {
     return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
