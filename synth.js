@@ -23,7 +23,7 @@ let clientId = null;
 let clientCount = 0;
 
 const animalNames = {
-  a: ['antelope', 'armadillo'],
+  a: ['ape','antelope', 'armadillo'],
   b: ['bear', 'beaver', 'buffalo'],
   c: ['cat', 'cougar', 'crab'],
   d: ['dog', 'duck', 'donkey'],
@@ -32,11 +32,11 @@ const animalNames = {
 };
 
 const adjectives = {
-  a: ['adorable', 'agile', 'angry'],
+  a: ['adventures', 'agile', 'angry'],
   b: ['bouncy', 'buffed', 'brave'],
   c: ['curious', 'clever', 'crazy'],
-  d: ['dizzy', 'daring', 'dumb'],
-  e: ['eager', 'electric'],
+  d: ['dizzy', 'dangerous', 'dumb'],
+  e: ['electric', 'eager'],
   f: ['zesty'],
 
 };
