@@ -12,17 +12,20 @@ body {
   color: #00ffe7;
 }
 
+html {
+  overflow: hidden;
+  /* Verhindert Scrollen */
+  font-size: 24px;
+  /* Increase from default 16px */
+  background: linear-gradient(135deg, #0d0c1d, #1a0933);
+}
 
-
-html,
 body {
   overflow: hidden;
   /* Verhindert Scrollen */
   font-size: 24px;
   /* Increase from default 16px */
-
 }
-
 
 /* ------------------- Automaten-Stil ------------------- */
 .vending-machine {
@@ -583,6 +586,11 @@ body {
     transform: scale(0.95);
   }
 
+  .html {
+    scroll-behavior: smooth;
+    overflow: scroll;
+  }
+
   #submit {
     font-size: 36px;
     padding: 12px 20px;
@@ -613,6 +621,8 @@ body {
   html,
   body {
     font-size: 14px;
+    scroll-behavior: smooth;
+    overflow: scroll;
   }
 
   .vending-machine {
@@ -704,6 +714,11 @@ body {
     bottom: 30px;
   }
 
+  .html {
+    scroll-behavior: smooth;
+    overflow: scroll;
+  }
+
   .vending-machine {
     transform: scale(0.85);
   }
@@ -724,6 +739,11 @@ body {
   .vending-machine {
     padding: 32px;
     transform: scale(0.96);
+  }
+
+  .html {
+    scroll-behavior: smooth;
+    overflow: scroll;
   }
 
   .input-group {
@@ -791,12 +811,17 @@ body {
 }
 
 @media (min-width: 1025px) {
+
   #dragon-container {
     transform: scale(1.5);
     width: 420px;
     height: auto;
     right: 10%;
     bottom: 80px;
+  }
+
+  .html {
+    overflow: hidden;
   }
 
   #speech-bubble {
