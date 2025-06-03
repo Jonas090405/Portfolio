@@ -256,7 +256,7 @@ document.getElementById('capsule').addEventListener('click', function () {
         dragon.style.objectPosition = '0 0';
         dragon.style.display = 'block';
 
-        animateDragon(selectedDragon.totalFrames, selectedDragon.frameWidth, 200, 7500);
+        animateDragon(selectedDragon.totalFrames, selectedDragon.frameWidth, 200, 11000);
 
         speechBubble.style.display = 'block';
         const savedQuestion = localStorage.getItem("userQuestion") || "🤖";
