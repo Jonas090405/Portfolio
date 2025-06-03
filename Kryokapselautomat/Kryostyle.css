@@ -17,7 +17,8 @@ html {
   /* Verhindert Scrollen */
   font-size: 24px;
   /* Increase from default 16px */
-  background: linear-gradient(135deg, #0d0c1d, #1a0933);
+  background-color: #1a0933; /* dunkler Overflow für Mobile Geräte */
+
 }
 
 body {
