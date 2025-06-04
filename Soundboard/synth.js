@@ -378,49 +378,43 @@ function updateCanvasSize() {
 /*************************************************************
  * Animation Frame: Zeichnen und Synth-Updates
  */
-/*************************************************************
- * Animation Frame: Zeichnen und Synth-Updates mit Lautstärke-Abschwächung
- */
 function onAnimationFrame() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Touch-Punkte zeichnen und Synthesizer aktualisieren
+  // Alle Touch-Punkte zeichnen und Synth aktualisieren
   for (let [id, touch] of touches) {
     const x = canvas.width * touch.x;
     const y = canvas.height * touch.y;
+    drawCircle(context, x, y, touch.own, touch.own);
 
-    // Kreis zeichnen (inkl. ID-Anzeige)
-    drawCircle(context, x, y, touch.own, touch.own, id);
-
-    // Synthesizer-Parameter setzen
     const synth = synths.get(id);
-    if (synth) {
-      synth.update(touch.x, 1 - touch.y);
-      synth.gain.gain.value = touch.own ? 1.0 : 0.8; // 80 % Lautstärke für andere Nutzer
-    }
+    if (synth) synth.update(touch.x, 1 - touch.y); // Tonhöhe steigt mit y nach oben
   }
 
-  // Lokale Zeichnungen (bläulich)
+  // Lokale Zeichnungen (Linien)
   context.strokeStyle = 'rgba(0, 200, 255, 0.8)';
   context.lineWidth = 3;
   context.lineCap = 'round';
-  for (let segment of drawings) {
-    drawLine(segment.from, segment.to);
-  }
+  for (let segment of drawings) drawLine(segment.from, segment.to);
 
-  // Remote-Zeichnungen (weiß)
+  // Remote Zeichnungen (Linien)
   context.strokeStyle = 'white';
   for (let segments of remoteDrawings.values()) {
-    for (let segment of segments) {
-      drawLine(segment.from, segment.to);
-    }
+    for (let segment of segments) drawLine(segment.from, segment.to);
   }
 
-  // Nächsten Frame anfordern
+  // Touch-Punkte mit ID und Pinch-Hervorhebung nochmal zeichnen
+  for (let [id, touch] of touches) {
+    const x = canvas.width * touch.x;
+    const y = canvas.height * touch.y;
+    drawCircle(context, x, y, touch.own, touch.own, id);
+
+    const synth = synths.get(id);
+    if (synth) synth.update(touch.x, 1 - touch.y);
+  }
+
   requestAnimationFrame(onAnimationFrame);
 }
-
-
 
 /*************************************************************
  * Kreis zeichnen für Touchpunkte
