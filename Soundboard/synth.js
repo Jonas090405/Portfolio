@@ -470,19 +470,54 @@ function drawCircle(context, x, y, highlight = false, own = false, id = null) {
 }
 
 /*************************************************************
- * Synth-Liste (unten links)
+ * Synth-Liste (unten links) mit 20% kleinerer Größe auf Mobile
  */
 const synthListElem = document.getElementById('synth-list') || (() => {
   const el = document.createElement('div');
-  Object.assign(el.style, {
-    position: 'fixed', bottom: '16px', left: '16px',
-    padding: '15px 20px', borderRadius: '20px',
-    backdropFilter: 'blur(12px)', background: 'rgba(255, 255, 255, 0.01)',
-    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)', color: '#fff',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
-    fontSize: '18px', lineHeight: '1.4', zIndex: 1000,
-    border: '1px solid rgba(255, 255, 255, 0.08)'
-  });
+
+  // Funktion zum Anpassen des Stylings mit 20% Skalierung auf Mobile
+  function styleSynthList() {
+    const isMobile = window.innerWidth <= 600; // Mobile-Schwelle
+
+    // Basiswerte
+    const basePadding = { vertical: 15, horizontal: 20 };
+    const baseBorderRadius = 20;
+    const baseFontSize = 18;
+
+    if (isMobile) {
+      // 20% kleiner auf Mobile
+      el.style.padding = `${basePadding.vertical * 0.8}px ${basePadding.horizontal * 0.8}px`;
+      el.style.borderRadius = `${baseBorderRadius * 0.8}px`;
+      el.style.fontSize = `${baseFontSize * 0.8}px`;
+    } else {
+      // Originalgröße auf Desktop
+      el.style.padding = `${basePadding.vertical}px ${basePadding.horizontal}px`;
+      el.style.borderRadius = `${baseBorderRadius}px`;
+      el.style.fontSize = `${baseFontSize}px`;
+    }
+
+    // Position & restliches Styling bleibt gleich
+    Object.assign(el.style, {
+      position: 'fixed',
+      bottom: '16px',
+      left: '16px',
+      backdropFilter: 'blur(12px)',
+      background: 'rgba(255, 255, 255, 0.01)',
+      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)',
+      color: '#fff',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
+      lineHeight: '1.4',
+      zIndex: 1000,
+      border: '1px solid rgba(255, 255, 255, 0.08)'
+    });
+  }
+
+  // Initiales Styling
+  styleSynthList();
+
+  // Auf Fenstergröße reagieren und Liste anpassen
+  window.addEventListener('resize', styleSynthList);
+
   document.body.appendChild(el);
   return el;
 })();
@@ -505,40 +540,69 @@ function updateSynthListDisplay() {
   for (let i = 0; i < sortedIds.length; i++) {
     const id = sortedIds[i];
     const synth = synths.get(id);
+    // Falls es keinen Synthesizer zu dieser ID gibt, überspringe den Nutzer
     if (!synth) continue;
+    // Lese den Typ der Wellenform (z.B. sine, square) vom Synthesizer aus
     const waveType = synth.osc.type;
+    // Bestimme den Namen des Nutzers, falls vorhanden, ansonsten "User #X"
     const userName = clientNames.get(id) || `User #${i + 1}`;
+    // Falls die ID der eigene Nutzer ist, füge "(You)" als Kennzeichnung hinzu
     const youTag = (id === clientId) ? ' (You)' : '';
+    // Baue den Listeneintrag zusammen, z.B. "Anna (You): sine"
+    // Jedes Nutzer-Element endet mit einem Zeilenumbruch für die Darstellung
     html += `${userName}${youTag}: ${waveType}<br>`;
   }
+
 
   synthListElem.innerHTML = html;
 }
 
+
+
 /*************************************************************
- * Clear Button (unten rechts)
+ * Clear Button (unten rechts) mit 20% kleinerer Größe auf Mobile
  */
 const clearButton = document.createElement('button');
 clearButton.textContent = 'Clear Drawings';
 
-Object.assign(clearButton.style, {
-  position: 'fixed',
-  bottom: '16px',
-  right: '16px',
-  padding: '15px 20px',
-  borderRadius: '20px',
-  backdropFilter: 'blur(12px)',
-  background: 'rgba(255, 255, 255, 0.01)',
-  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)',
-  color: '#fff',
-  fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
-  fontSize: '18px',
-  lineHeight: '1.4',
-  zIndex: 1000,
-  border: '1px solid rgba(255, 255, 255, 0.08)',
-  cursor: 'pointer',
-  transition: 'background 0.2s, border 0.2s'
-});
+// Funktion zum Anpassen des Stylings mit 20% Skalierung auf Mobile
+function styleClearButton() {
+  const isMobile = window.innerWidth <= 600; // Mobile-Schwelle
+
+  // Basiswerte
+  const basePadding = { vertical: 15, horizontal: 20 };
+  const baseBorderRadius = 20;
+  const baseFontSize = 18;
+
+  if (isMobile) {
+    // 20% kleiner auf Mobile
+    clearButton.style.padding = `${basePadding.vertical * 0.8}px ${basePadding.horizontal * 0.8}px`;
+    clearButton.style.borderRadius = `${baseBorderRadius * 0.8}px`;
+    clearButton.style.fontSize = `${baseFontSize * 0.8}px`;
+  } else {
+    // Originalgröße auf Desktop
+    clearButton.style.padding = `${basePadding.vertical}px ${basePadding.horizontal}px`;
+    clearButton.style.borderRadius = `${baseBorderRadius}px`;
+    clearButton.style.fontSize = `${baseFontSize}px`;
+  }
+
+  // Position & restliches Styling bleibt gleich
+  Object.assign(clearButton.style, {
+    position: 'fixed',
+    bottom: '16px',
+    right: '16px',
+    backdropFilter: 'blur(12px)',
+    background: 'rgba(255, 255, 255, 0.01)',
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)',
+    color: '#fff',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
+    lineHeight: '1.4',
+    zIndex: 1000,
+    border: '1px solid rgba(255, 255, 255, 0.08)',
+    cursor: 'pointer',
+    transition: 'background 0.2s, border 0.2s'
+  });
+}
 
 clearButton.addEventListener('mouseenter', () => {
   clearButton.style.background = 'rgba(255, 255, 255, 0.08)';
@@ -559,10 +623,18 @@ clearButton.addEventListener('click', () => {
   sendRequest('*broadcast-message*', ['clear']);
   sendRequest('*broadcast-message*', ['play-clear-sound']);
 
+  // Lokal Clear Sound abspielen
   playClearSound();
 });
 
+// Initiales Styling beim Laden
+styleClearButton();
+
+// Auf Fenstergröße reagieren und Button anpassen
+window.addEventListener('resize', styleClearButton);
+
 document.body.appendChild(clearButton);
+
 
 /*************************************************************
  * WebSocket Kommunikation
