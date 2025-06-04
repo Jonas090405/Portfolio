@@ -476,11 +476,11 @@ const synthListElem = document.getElementById('synth-list') || (() => {
   const el = document.createElement('div');
   Object.assign(el.style, {
     position: 'fixed', bottom: '16px', left: '16px',
-    padding: '12px 16px', borderRadius: '16px',
+    padding: '15px 20px', borderRadius: '20px',
     backdropFilter: 'blur(12px)', background: 'rgba(255, 255, 255, 0.01)',
     boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)', color: '#fff',
     fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
-    fontSize: '14px', lineHeight: '1.4', zIndex: 1000,
+    fontSize: '18px', lineHeight: '1.4', zIndex: 1000,
     border: '1px solid rgba(255, 255, 255, 0.08)'
   });
   document.body.appendChild(el);
@@ -525,14 +525,14 @@ Object.assign(clearButton.style, {
   position: 'fixed',
   bottom: '16px',
   right: '16px',
-  padding: '12px 16px',
-  borderRadius: '16px',
+  padding: '15px 20px',
+  borderRadius: '20px',
   backdropFilter: 'blur(12px)',
   background: 'rgba(255, 255, 255, 0.01)',
   boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)',
   color: '#fff',
   fontFamily: '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
-  fontSize: '14px',
+  fontSize: '18px',
   lineHeight: '1.4',
   zIndex: 1000,
   border: '1px solid rgba(255, 255, 255, 0.08)',
