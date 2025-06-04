@@ -396,7 +396,7 @@ function onAnimationFrame() {
     const synth = synths.get(id);
     if (synth) {
       synth.update(touch.x, 1 - touch.y);
-      synth.gain.gain.value = touch.own ? 1.0 : 0.25; // 25 % Lautstärke für andere Nutzer
+      synth.gain.gain.value = touch.own ? 1.0 : 0.5; // 50 % Lautstärke für andere Nutzer
     }
   }
 
