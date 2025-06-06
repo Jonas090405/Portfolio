@@ -13,8 +13,7 @@ body {
 }
 
 html {
-  overflow: hidden;
-  /* Verhindert Scrollen */
+  scroll-behavior: smooth;
   font-size: 24px;
   /* Increase from default 16px */
   background-color: #1a0933; /* dunkler Overflow für Mobile Geräte */
@@ -22,8 +21,6 @@ html {
 }
 
 body {
-  overflow: hidden;
-  /* Verhindert Scrollen */
   font-size: 24px;
   /* Increase from default 16px */
 }
@@ -587,10 +584,7 @@ body {
     transform: scale(0.95);
   }
 
-  .html {
-    scroll-behavior: smooth;
-    overflow: scroll;
-  }
+ 
 
   #submit {
     font-size: 36px;
