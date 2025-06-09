@@ -783,7 +783,7 @@ body {
 
   .input-group label,
   .input-group input {
-    
+
     width: 80%;
     max-width: 500px;
     font-size: 26px;
@@ -792,8 +792,9 @@ body {
     width: 100%;
 
   }
+
   .input-group label {
-    
+
     padding-left: 0px;
     /* etwas mehr Platz für den Text */
   }
@@ -842,10 +843,11 @@ body {
 @media (min-width: 1025px) {
 
 
-    .vending-machine {
+  .vending-machine {
     max-width: 90vw;
     padding: 24px 16px;
   }
+
   #dragon-container {
     transform: scale(1.5);
     width: 420px;
@@ -867,7 +869,7 @@ body {
     font-size: 1.1rem;
     padding: 20px;
   }
-  
+
 }
 
 .countdown-overlay {
