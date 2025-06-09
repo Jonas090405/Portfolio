@@ -1,4 +1,4 @@
-const CAPSULE_FREEZE_DURATION = 3000 // Sekunden
+const CAPSULE_FREEZE_DURATION = 15; // Sekunden
 
 function safeShowCapsule() {
   const capsule = document.getElementById('capsule');
@@ -120,11 +120,12 @@ function handleSubmit() {
     return;
   }
 
-  if (userEmail && !/^\S+@\S+\.\S+$/.test(userEmail)) {
+  if (!/^\S+@\S+\.\S+$/.test(userEmail)) {
     alert("Bitte gib eine gültige E-Mail-Adresse ein.");
     submitButton.disabled = false;
     return;
   }
+
 
   const freezeUntil = now + CAPSULE_FREEZE_DURATION * 1000;
   localStorage.setItem("capsuleFreezeUntil", freezeUntil);
@@ -177,45 +178,45 @@ function showCountdownScreen() {
 
   const freezeUntil = parseInt(localStorage.getItem("capsuleFreezeUntil"), 10);
 
- const interval = setInterval(() => {
-  const remaining = Math.max(0, freezeUntil - Date.now());
+  const interval = setInterval(() => {
+    const remaining = Math.max(0, freezeUntil - Date.now());
 
-  const msPerDay = 1000 * 60 * 60 * 24;
-  const msPerYear = msPerDay * 365;
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const msPerYear = msPerDay * 365;
 
-  const years = Math.floor(remaining / msPerYear);
-  const days = Math.floor((remaining % msPerYear) / msPerDay);
+    const years = Math.floor(remaining / msPerYear);
+    const days = Math.floor((remaining % msPerYear) / msPerDay);
 
-  let text = "Deine Kryokapsel ist noch für ";
-  if (years > 0) text += `${years} Jahr${years > 1 ? 'e' : ''}`;
-  if (years > 0 && days > 0) text += " und ";
-  if (days > 0) text += `${days} Tag${days > 1 ? 'e' : ''}`;
-  if (years === 0 && days === 0) text += "weniger als einen Tag";
+    let text = "Deine Kryokapsel ist noch für ";
+    if (years > 0) text += `${years} Jahr${years > 1 ? 'e' : ''}`;
+    if (years > 0 && days > 0) text += " und ";
+    if (days > 0) text += `${days} Tag${days > 1 ? 'e' : ''}`;
+    if (years === 0 && days === 0) text += "weniger als einen Tag";
 
-  text += " eingefroren";
+    text += " eingefroren";
 
-  countdownText.textContent = text;
+    countdownText.textContent = text;
 
-  if (remaining <= 0) {
-    clearInterval(interval);
-    localStorage.removeItem("capsuleFreezeUntil");
+    if (remaining <= 0) {
+      clearInterval(interval);
+      localStorage.removeItem("capsuleFreezeUntil");
 
-    countdownScreen.style.display = 'none';
+      countdownScreen.style.display = 'none';
 
-    const email = localStorage.getItem("userEmail") || '';
-    if (email) {
-      emailjs.send('service_rojceoa', 'template_tqsybkb', {
-        to_email: email
-      }, '5w_nLDBqiwnNhvAKy').then(() => {
-        console.log('Email erfolgreich gesendet!');
-      }, (error) => {
-        console.error('Email-Fehler:', error);
-      });
+      const email = localStorage.getItem("userEmail") || '';
+      if (email) {
+        emailjs.send('service_rojceoa', 'template_tqsybkb', {
+          to_email: email
+        }, '5w_nLDBqiwnNhvAKy').then(() => {
+          console.log('Email erfolgreich gesendet!');
+        }, (error) => {
+          console.error('Email-Fehler:', error);
+        });
+      }
+
+      showCapsule();
     }
-
-    showCapsule();
-  }
-}, 1000);
+  }, 1000);
 }
 // ----------- Kapsel öffnen und Drache animieren ----------
 document.getElementById('capsule').addEventListener('click', function () {
