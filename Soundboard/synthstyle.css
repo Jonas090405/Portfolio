@@ -48,3 +48,172 @@ video {
   left: 0;
   opacity: 0;
 }
+
+
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1c1c1e 0%, #3d3d40 100%);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease;
+    color-scheme: dark;
+}
+
+.tutorial-container {
+    max-width: 600px;
+    width: 90%;
+    background: rgba(28, 28, 30, 0.85);
+    backdrop-filter: blur(30px);
+    border-radius: 24px;
+    padding: 48px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 600px) {
+    .tutorial-container {
+        padding: 32px 24px;
+        border-radius: 20px;
+        margin: 20px;
+    }
+}
+
+.tutorial-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (max-width: 600px) {
+    .tutorial-title {
+        font-size: 28px;
+    }
+}
+
+.tutorial-image {
+    width: 280px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    margin: 32px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #aaa;
+    font-weight: 500;
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 600px) {
+    .tutorial-image {
+        width: 240px;
+        height: 170px;
+        margin: 24px auto;
+        font-size: 16px;
+    }
+}
+
+.tutorial-description {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #d1d1d6;
+    margin-bottom: 40px;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (max-width: 600px) {
+    .tutorial-description {
+        font-size: 16px;
+        margin-bottom: 32px;
+    }
+}
+
+.tutorial-buttons {
+    display: flex;
+    gap: 32px; 
+    justify-content: center;
+    align-items: center;
+}
+
+.tutorial-btn {
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 120px;
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+@media (max-width: 600px) {
+    .tutorial-btn {
+        padding: 12px 24px;
+        font-size: 15px;
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+.tutorial-btn-primary {
+    background: rgba(10, 132, 255, 0.2);
+    border: 1px solid rgba(10, 132, 255, 0.35);
+    color: #0a84ff;
+}
+
+.tutorial-btn-primary:hover {
+    background: rgba(10, 132, 255, 0.3);
+    transform: translateY(-1px);
+    border-color: rgba(10, 132, 255, 0.5);
+}
+
+.tutorial-btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #d1d1d6;
+}
+
+.tutorial-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+
+.tutorial-progress {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+}
+
+.progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+    background: #0a84ff;
+    transform: scale(1.2);
+}
+
+.hidden {
+    display: none !important;
+}

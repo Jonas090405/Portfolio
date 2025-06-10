@@ -1,3 +1,59 @@
+  let currentTutorialStep = 0;
+  const totalSteps = 3;
+
+  const tutorialOverlay = document.getElementById('tutorial-overlay');
+  const tutorialSteps = document.querySelectorAll('.tutorial-step');
+  const progressDots = document.querySelectorAll('.progress-dot');
+  const nextBtn = document.getElementById('tutorial-next');
+  const skipBtn = document.getElementById('tutorial-skip');
+
+  function showTutorialStep(step) {
+      tutorialSteps.forEach(stepEl => stepEl.classList.add('hidden'));
+      progressDots.forEach(dot => dot.classList.remove('active'));
+
+      const currentStep = document.querySelector(`.tutorial-step[data-step="${step}"]`);
+      if (currentStep) {
+          currentStep.classList.remove('hidden');
+      }
+      if (progressDots[step]) {
+          progressDots[step].classList.add('active');
+      }
+
+      if (step === totalSteps - 1) {
+          nextBtn.textContent = 'Start App';
+      } else {
+          nextBtn.textContent = 'Next';
+      }
+  }
+
+  function nextTutorialStep() {
+      if (currentTutorialStep < totalSteps - 1) {
+          currentTutorialStep++;
+          showTutorialStep(currentTutorialStep);
+      } else {
+          startMainApp();
+      }
+  }
+
+  function startMainApp() {
+      tutorialOverlay.style.opacity = '0';
+      setTimeout(() => {
+          tutorialOverlay.remove();
+          initializeMainApp();
+      }, 500);
+  }
+
+  nextBtn.addEventListener('click', nextTutorialStep);
+  skipBtn.addEventListener('click', startMainApp);
+
+  showTutorialStep(0);
+
+  function initializeMainApp() {
+      console.log('Main app started!');
+      // Hier dein Haupt-App-Code
+
+
+
 // Holen der HTML-Elemente, um später Inhalte anzeigen oder bearbeiten zu können
 const titleElem = document.getElementById('title-display');      // Element für den Titel
 const messageElem = document.getElementById('message-display');  // Element für Nachrichten
@@ -85,55 +141,91 @@ const synths = new Map();
  * Repräsentiert eine einzelne Berührung mit ihrer Position.
  */
 class Touch {
-  // Konstruktor: Erstellt eine neue Berührung mit einer ID und Koordinaten (x,y).
-  // "own" gibt an, ob es die eigene Berührung ist oder von jemand anderem (z.B. bei mehreren Nutzern).
   constructor(id, x, y, own = false) {
-    this.id = id;   // Eindeutige Kennung für die Berührung
-    this.x = x;     // x-Koordinate (horizontal)
-    this.y = y;     // y-Koordinate (vertikal)
-    this.own = own; // Eigene Berührung oder fremd
+    this.id = id;
+    this.x = x;
+    this.y = y;
+    this.own = own;
+    this.reverbAmount = 0;  // neu
   }
-
-  // Methode, um die Position der Berührung zu aktualisieren (z.B. Finger bewegt sich).
   move(x, y) {
     this.x = x;
     this.y = y;
+  }
+  setReverb(amount) {
+    this.reverbAmount = amount;
   }
 }
 
 /**
  * Klasse Synth
- * Erzeugt und steuert einen Klang (Ton), der mit einer Berührung verbunden ist.
+ * Erzeugt und steuert einen Klang (Ton), der mit der Fingerposition verbunden ist.
  */
 class Synth {
   constructor(type = 'sine') {
-    // AudioContext ist die Schnittstelle für Ton-Erzeugung im Browser
     this.context = new (window.AudioContext || window.AudioContext)();
-
-    // Erzeugt einen Oszillator, der die Tonwelle (Klangform) produziert
     this.osc = this.context.createOscillator();
-
-    // Ein Filter, der den Klang verändert (z.B. dämpft hohe Frequenzen)
     this.filter = this.context.createBiquadFilter();
-
-    // Gain steuert die Lautstärke des Tons
     this.gain = this.context.createGain();
+    this.reverb = this.context.createConvolver();
+    this.reverb.buffer = this.createImpulseResponse();
 
-    // Verbindet die Klangquelle mit Filter, dann Lautstärke und schließlich mit den Lautsprechern
-    this.osc.type = type;        // Wellenform des Tons (sinus, rechteck, etc.)
-    this.filter.type = 'lowpass'; // Filtertyp "Tiefpass" lässt nur tiefe Frequenzen durch
+    // Reverb-Gain zur Steuerung des Halls
+    this.reverbGain = this.context.createGain();
+    this.reverb.connect(this.reverbGain);
 
-    // Verkettung der Audio-Elemente: Oszillator → Filter → Gain → Lautsprecher
-    this.osc.connect(this.filter).connect(this.gain).connect(this.context.destination);
+    // Signalfluss: OSC → FILTER → [Original + Reverb] → GAIN → OUTPUT
+    this.osc.connect(this.filter);
+    this.filter.connect(this.reverb);
+    this.filter.connect(this.gain);              // Dry
+    this.reverbGain.connect(this.gain);          // Wet (Hall)
+    this.gain.connect(this.context.destination);
 
-    // Anfangswerte setzen: Lautstärke auf 0 (stumm), Tonhöhe und Filter auf Standardwerte
-    this.gain.gain.value = 0;        // Ton zunächst stumm
-    this.osc.frequency.value = 440;  // Standardton (Kammerton A)
-    this.filter.frequency.value = 1000; // Filterfrequenz
+    this.osc.type = type;
+    this.filter.type = 'lowpass';
+    this.osc.frequency.value = 440;
+    this.filter.frequency.value = 1000;
+    this.gain.gain.value = 0;
 
-    // Startet den Oszillator, Ton kann jetzt erzeugt werden (wird aber erst hörbar, wenn Lautstärke hochgeht)
     this.osc.start();
   }
+
+  // Einfacher Reverb (Impulse Response erzeugen)
+  createImpulseResponse() {
+    const length = this.context.sampleRate * 2.5; // 2.5 Sekunden
+    const impulse = this.context.createBuffer(2, length, this.context.sampleRate);
+    for (let i = 0; i < impulse.numberOfChannels; i++) {
+      const channel = impulse.getChannelData(i);
+      for (let j = 0; j < length; j++) {
+        // Decay-Kurve
+        channel[j] = (Math.random() * 2 - 1) * Math.pow(1 - j / length, 2.5);
+      }
+    }
+    return impulse;
+  }
+
+  // Neue Methode zum Reverb-Mix-Anteil steuern
+  setReverbAmount(amount) {
+    // amount: 0.0 (trocken) bis 1.0 (sehr hallig)
+    this.reverbGain = this.reverbGain || this.context.createGain();
+    this.reverb.connect(this.reverbGain);
+    this.reverbGain.gain.value = amount;
+  }
+
+  update(x, y) {
+    const freq = 220 + (880 - 220) * y;
+    const volume = 0.3 * (1 - y);
+    const filterFreq = 500 + 3000 * x;
+
+    this.osc.frequency.value = freq;
+    this.filter.frequency.value = filterFreq;
+    this.gain.gain.value = volume;
+  }
+
+  stop() {
+    this.gain.gain.value = 0;
+  }
+
 
   /**
    * Update-Funktion, die den Klang an die Position der Berührung anpasst.
@@ -288,6 +380,10 @@ function start() {
  * MediaPipe Hand Results Callback
  * Wird ausgeführt, sobald MediaPipe eine Hand erkannt hat und Daten liefert
  */
+/*************************************************************
+ * MediaPipe Hand Results Callback - UPDATED
+ * Wird ausgeführt, sobald MediaPipe eine Hand erkannt hat und Daten liefert
+ */
 function onHandsResults(results) {
   // Falls die eigene Client-ID noch nicht gesetzt ist, abbrechen (kein Nutzer)
   if (!clientId) return;
@@ -307,6 +403,13 @@ function onHandsResults(results) {
     const pinchDistance = Math.hypot(
       landmarks[4].x - landmarks[8].x,
       landmarks[4].y - landmarks[8].y
+    );
+
+    // Abstand zwischen Daumen (Landmark 4) und Mittelfinger-Spitze (Landmark 12)
+    // Damit wird später der Reverb-Effekt gesteuert
+    const reverbDistance = Math.hypot(
+      landmarks[4].x - landmarks[12].x,
+      landmarks[4].y - landmarks[12].y
     );
 
     // "Pinchen" liegt vor, wenn der Abstand sehr klein ist (<0.04)
@@ -343,6 +446,23 @@ function onHandsResults(results) {
       lastDrawPos = null;
     }
 
+    //Reverb anhand Daumen–Mittelfinger-Abstand steuern
+    const normalizedReverb = Math.min(1, reverbDistance / 0.2);
+    
+    const synth = synths.get(clientId);
+    if (synth && typeof synth.setReverbAmount === 'function') {
+      synth.setReverbAmount(normalizedReverb);
+    }
+
+    // Reverb auch im Touch speichern
+    const touch = touches.get(clientId);
+    if (touch) {
+      touch.setReverb(normalizedReverb);
+    }
+
+    // Reverb-Wert an alle anderen Clients senden
+    sendRequest('*broadcast-message*', ['reverb', clientId, normalizedReverb]);
+
     // Status "ist gerade Pinchen?" speichern
     isPinching = isNowPinching;
 
@@ -365,7 +485,6 @@ function onHandsResults(results) {
     isPinching = false;
   }
 }
-
 
 /*************************************************************
 * Canvas Größe anpassen
@@ -420,36 +539,56 @@ function onAnimationFrame() {
  * Kreis zeichnen für Touchpunkte
  */
 function drawCircle(context, x, y, highlight = false, own = false, id = null) {
-  const radius = 10 + (circleRadius * (1 - y / canvas.height)); // Radius abhängig von y
-  const glow = 30 * (x / canvas.width); // Leuchteffekt abhängig von x
+  const radius = 10 + (circleRadius * (1 - y / canvas.height));
+
+  let reverbAmount = 0;
+  if (id && touches.has(id)) {
+    reverbAmount = touches.get(id).reverbAmount || 0;
+  }
+
+  // Glow-Intensität max 150 px
+  const glow = reverbAmount * 150;
+
   let baseColor, strokeColor;
 
   if (own) {
-    // Eigener Touch: Blautöne
     const lightness = 80 - 50 * (x / canvas.width);
     baseColor = `hsl(210, 100%, ${lightness}%)`;
     strokeColor = `hsl(210, 100%, ${Math.min(100, lightness + 15)}%)`;
-    context.globalAlpha = highlight ? 1 : 0.7;
+
+    // Glow-Farbe exakt wie der Punkt (also baseColor) mit Transparenz
+    context.shadowColor = `hsla(210, 100%, ${lightness}%, ${Math.min(1, reverbAmount + 0.4)})`;
+
+    context.globalAlpha = highlight ? 1 : 0.85;
   } else {
-    // Fremder Touch: Grautöne
     const lightness = 90 - 50 * (x / canvas.width);
     baseColor = `hsl(0, 0%, ${lightness}%)`;
     strokeColor = `hsl(0, 0%, ${Math.min(100, lightness + 20)}%)`;
-    context.globalAlpha = highlight ? 0.8 : 0.5;
+
+    // Glow-Farbe exakt wie der Punkt (also baseColor) mit Transparenz
+    context.shadowColor = `hsla(0, 0%, ${lightness}%, ${Math.min(1, reverbAmount + 0.4)})`;
+
+    context.globalAlpha = highlight ? 0.9 : 0.7;
   }
 
-  context.fillStyle = baseColor;
-  context.shadowColor = baseColor;
   context.shadowBlur = glow;
 
-  // Kreis zeichnen
+  // Punkt füllen (mit Glow)
+  context.fillStyle = baseColor;
   context.beginPath();
   context.arc(x, y, radius, 0, 2 * Math.PI);
   context.fill();
 
-  // Pinch-Hervorhebung (Stroke)
+  // Glow ausschalten für klare Kante
+  context.shadowBlur = 0;
+
+  // Punkt nochmal füllen ohne Glow für klare Kante
+  context.fillStyle = baseColor;
+  context.beginPath();
+  context.arc(x, y, radius, 0, 2 * Math.PI);
+  context.fill();
+
   if (id && activePinches.has(id)) {
-    context.shadowBlur = 0;
     context.lineWidth = 4;
     context.strokeStyle = strokeColor;
     context.stroke();
@@ -457,7 +596,6 @@ function drawCircle(context, x, y, highlight = false, own = false, id = null) {
 
   context.globalAlpha = 1;
 
-  // Nutzername neben dem Kreis
   if (id !== null) {
     const name = clientNames.get(id) || `User ${id}`;
     context.font = '12px sans-serif';
@@ -468,6 +606,8 @@ function drawCircle(context, x, y, highlight = false, own = false, id = null) {
     context.fillText(name, x, y + radius + 6);
   }
 }
+
+
 
 /*************************************************************
  * Synth-Liste (unten links) mit 20% kleinerer Größe auf Mobile
@@ -557,6 +697,9 @@ function updateSynthListDisplay() {
   synthListElem.innerHTML = html;
 }
 
+function sendReverbUpdate(id, reverbAmount) {
+  sendRequest('*reverb-update*', id, reverbAmount);
+}
 
 
 /*************************************************************
@@ -729,6 +872,28 @@ socket.addEventListener('message', (event) => {
         break;
       }
 
+      // Reverb-Updates empfangen
+      case 'reverb': {
+        const id = incoming[1];
+        const reverbAmount = incoming[2];
+        
+        // Nur von anderen Clients verarbeiten (nicht eigene Updates)
+        if (id !== clientId) {
+          // Touch-Reverb aktualisieren
+          const touch = touches.get(id);
+          if (touch) {
+            touch.setReverb(reverbAmount);
+          }
+          
+          // Synth-Reverb aktualisieren
+          const synth = synths.get(id);
+          if (synth && typeof synth.setReverbAmount === 'function') {
+            synth.setReverbAmount(reverbAmount);
+          }
+        }
+        break;
+      }
+
       case '*error*': {
         // Fehler vom Server loggen
         const message = incoming[1];
@@ -784,6 +949,7 @@ socket.addEventListener('message', (event) => {
   }
 });
 
+
 /*************************************************************
  * Hilfsfunktionen
  */
@@ -825,3 +991,4 @@ window.addEventListener('beforeunload', () => {
     socket.send(msg);
   }
 });
+}
