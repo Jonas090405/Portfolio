@@ -1,4 +1,4 @@
-const CAPSULE_FREEZE_DURATION = 3000 // Sekunden
+const CAPSULE_FREEZE_DURATION = 3000; // Sekunden
 
 function safeShowCapsule() {
   const capsule = document.getElementById('capsule');
@@ -64,6 +64,37 @@ const capsulePlushiePairs = [
     dragon: { src: "Dogsprite.png", frameWidth: 427, totalFrames: 4 }
   }
 ];
+
+// Mute-Button Logik
+let isMuted = false;
+const muteButton = document.getElementById('mute-button');
+
+muteButton.addEventListener('click', () => {
+  isMuted = !isMuted;
+
+  const newSrc = isMuted ? 'muted.png' : 'unmuted.png';
+  muteButton.src = newSrc;
+
+  // Alle Audio-Tags mit einem verringerten volume setzen oder auf 0 muten
+  document.querySelectorAll('audio').forEach(audio => {
+    audio.muted = isMuted;
+  });
+
+  // Optional: Zustand merken
+  localStorage.setItem("isMuted", isMuted);
+});
+
+// Zustand beim Laden wiederherstellen
+window.addEventListener('DOMContentLoaded', () => {
+  const storedMuted = localStorage.getItem("isMuted") === 'true';
+  if (storedMuted) {
+    isMuted = true;
+    muteButton.src = 'muted.png';
+    document.querySelectorAll('audio').forEach(audio => {
+      audio.muted = true;
+    });
+  }
+});
 
 
 let selectedCapsule;
@@ -175,6 +206,7 @@ function showCountdownScreen() {
 
   countdownScreen.style.display = 'block';
 
+
   const freezeUntil = parseInt(localStorage.getItem("capsuleFreezeUntil"), 10);
 
  const interval = setInterval(() => {
@@ -193,8 +225,12 @@ function showCountdownScreen() {
   if (years === 0 && days === 0) text += "weniger als einen Tag";
 
   text += " eingefroren";
+  
 
   countdownText.textContent = text;
+
+// Hinweis einblenden (optional, falls du ihn beim Start versteckst)
+document.getElementById('countdown-warning').style.display = 'block';
 
   if (remaining <= 0) {
     clearInterval(interval);

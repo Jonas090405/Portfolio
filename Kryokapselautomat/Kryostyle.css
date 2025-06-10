@@ -16,7 +16,8 @@ html {
   scroll-behavior: smooth;
   font-size: 24px;
   /* Increase from default 16px */
-  background-color: #1a0933; /* dunkler Overflow für Mobile Geräte */
+  background-color: #1a0933;
+  /* dunkler Overflow für Mobile Geräte */
 
 }
 
@@ -28,7 +29,7 @@ body {
 /* ------------------- Automaten-Stil ------------------- */
 .vending-machine {
   font-family: "Jersey 10", sans-serif;
-  width: calc(100vw - 8px);
+  width: calc(100vw - 36px);
   /* Volle Breite minus Border */
   height: calc(100vh - 36px);
   /* Volle Höhe minus Border */
@@ -180,15 +181,19 @@ body {
   cursor: pointer;
   width: 960px;
   height: 320px;
-  filter: drop-shadow(0 -5px 10px #ff00e0);
+  filter: drop-shadow(0 -5px 10px #f9baf2);
   justify-content: center;
-  /* Horizontal zentrieren */
   align-items: center;
-  /* Vertikal zentrieren */
   flex-direction: column;
   margin-top: 20px;
   object-fit: none;
-  object-position: 0 0;
+  transition: transform 0.3s ease;
+  /* Smooth transition */
+}
+
+#capsule:hover {
+  filter: drop-shadow(0 -5px 15px #ffc4f8);
+
 }
 
 #dragon-container {
@@ -201,6 +206,7 @@ body {
   border-radius: 12px;
   transform: scale(1.2);
 }
+
 
 #dragon {
   display: none;
@@ -219,13 +225,40 @@ body {
   top: 30%;
   left: 15%;
   transform: scale(1.5);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #ff00e126;
   padding: 16px;
   border-radius: 12px;
   border: 2px solid #ff00e0;
   box-shadow: 0 0 20px #ff00e0;
-  max-width: 300px;
+  max-width: 80vw;
+
+  overflow-y: auto;
+  max-height: 25vh;
+  white-space: pre-line;
+  word-wrap: break-word;
+
+  /* Subtile Scrollbar-Stile */
+  scrollbar-width: thin;
+  scrollbar-color: #ff00e148 transparent;
+  /* Firefox */
 }
+
+/* Für Webkit-basierte Browser (Chrome, Safari, Edge) */
+#speech-bubble::-webkit-scrollbar {
+  width: 6px;
+}
+
+#speech-bubble::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#speech-bubble::-webkit-scrollbar-thumb {
+  background: #ff00e080;
+  /* pink mit Transparenz */
+  border-radius: 3px;
+  box-shadow: 0 0 6px #ff00e0;
+}
+
 
 #speech-text {
   font-size: 36px;
@@ -267,6 +300,33 @@ body {
   box-shadow: 0 1px 0 #000, 0 0 25px #ff00e0;
 }
 
+#mute-button {
+  position: fixed;
+  top: 9%;
+  right: 7%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  z-index: 9999;
+  transition: transform 0.2s ease;
+  transform: scale(1.4);
+
+}
+
+#mute-button:hover {
+  transform: scale(1.55);
+}
+
+/* Optional: responsive Größe für kleinere Bildschirme */
+@media (max-width: 600px) {
+  #mute-button {
+    width: 24px;
+    height: 24px;
+    top: 8%;
+    right: 12%;
+  }
+}
+
 
 /* ------------------- Stern-Animation ------------------- */
 .star {
@@ -280,7 +340,7 @@ body {
   border: 2px solid #fff;
   animation: star-float 0.8s ease-out forwards;
   opacity: 1;
-  z-index: 9999;
+  z-index: 9998;
   box-shadow: 0 0 6px #ff00e0;
   pointer-events: none;
   transform: scale(3);
@@ -504,7 +564,7 @@ body {
   /* oder 'repeat' je nach Effekt */
   filter: blur(0.05rem) saturate(0.7) contrast(1.7) brightness(1.5);
   pointer-events: none;
-  z-index: 10000;
+  z-index: 9999;
 }
 
 
@@ -584,7 +644,7 @@ body {
     transform: scale(0.95);
   }
 
- 
+
 
   #submit {
     font-size: 36px;
@@ -841,7 +901,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 9998;
 }
 
 #countdown-text {
@@ -860,6 +920,27 @@ body {
   animation: text-flicker 2.5s infinite;
 
 }
+
+
+
+#countdown-warning {
+  color: #a6f2ee;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  /* Responsive Schriftgröße */
+  text-align: center;
+  padding: 1rem;
+  max-width: 90vw;
+  /* Verhindert Textüberlauf auf kleinen Bildschirmen */
+  word-wrap: break-word;
+  animation: text-flicker 2.5s infinite;
+
+}
+
 
 @media (max-width: 400px) {
   #countdown-text {

@@ -7,7 +7,7 @@
   <title>Kapselautomat Interface</title>
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="Kryostyle.css" />
+  <link rel="stylesheet" href="style.css" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,11 +15,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet" />
 
   <!-- Scripts -->
-  <script src="Kryoskript.js" defer></script>
+  <script src="script.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 
 <body>
+  <!-- Mute Button -->
+  <img id="mute-button" src="unmuted.png" alt="Mute" />
 
   <!-- Hauptinterface -->
   <div id="interface-wrapper">
@@ -66,6 +68,7 @@
   <div id="countdown-screen" style="display: none;" class="countdown-overlay">
     <div class="countdown-box">
       <p id="countdown-text">Bitte warte einen Moment…</p>
+      <div id="countdown-warning">Bitte schließe den Tab nicht!</div>
     </div>
   </div>
 
