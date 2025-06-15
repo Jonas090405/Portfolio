@@ -14,6 +14,72 @@
 </head>
 
 <body>
+    <!-- Tutorial Overlay -->
+    <div id="tutorial-overlay" class="tutorial-overlay">
+        <div class="tutorial-container">
+            <div class="tutorial-progress">
+                <div class="progress-dot active" data-step="0"></div>
+                <div class="progress-dot" data-step="1"></div>
+                <div class="progress-dot" data-step="2"></div>
+            </div>
+
+            <!-- Step 1: Drawing -->
+            <div class="tutorial-step" data-step="0">
+                <h1 class="tutorial-title">Draw with Pinch</h1>
+                <div class="tutorial-image">
+                    <img src="images/pinch-gesture.png" alt="Pinch Gesture"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                </div>
+                <p class="tutorial-description">
+                    Hold your hand in front of the camera and bring your thumb and index finger together to start
+                    drawing. While pinching/drawing your dot will have a blue stroke. Move your hand while pinching to
+                    create lines on the canvas.
+                </p>
+            </div>
+
+            <!-- Step 2: Sound Control -->
+            <div class="tutorial-step hidden" data-step="1">
+                <h1 class="tutorial-title">Create Sounds</h1>
+                <div class="tutorial-image">
+                    <img src="images/finger-movement.png" alt="Hand Movement"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                </div>
+                <p class="tutorial-description">
+                    Move your hand up and down (Y-axis) to control the pitch of the sound.
+                    The higher you hold your hand, the higher the pitch (like blowing higher on a whistle).
+                    The lower your hand, the deeper the sound.
+                    <br><br>
+
+                    Move your hand left and right (X-axis) to change the tone color.
+                    Moving your hand to the right makes the sound brighter or sharper.
+                    Moving your hand to the left makes the sound softer or warmer.
+
+
+                </p>
+            </div>
+
+            <!-- Step 3: Reverb Control -->
+            <div class="tutorial-step hidden" data-step="2">
+                <h1 class="tutorial-title">Add Reverb Effect</h1>
+                <div class="tutorial-image">
+                    <img src="images/thumb-middle.png" alt="Thumb to Middle Finger Gesture"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                </div>
+                <p class="tutorial-description">
+                    Control the reverb effect by adjusting the distance between your thumb and middle fingertip.
+                    The further apart they are, the more spacious and ambient the sound becomes.
+                    The closer they are, the drier and more focused the sound is. </p>
+            </div>
+
+
+
+            <div class="tutorial-buttons">
+                <button id="tutorial-skip" class="tutorial-btn tutorial-btn-secondary">Skip Tutorial</button>
+                <button id="tutorial-next" class="tutorial-btn tutorial-btn-primary">Next</button>
+            </div>
+        </div>
+    </div>
+
 
     <div id="background-text">show me your finger</div>
 
@@ -21,7 +87,9 @@
     <div id="client-index"></div>
     <canvas id="canvas"></canvas>
 
+    
     <script src="synth.js"></script>
+
 
 </body>
 
