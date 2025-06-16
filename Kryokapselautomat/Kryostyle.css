@@ -3,13 +3,14 @@ body {
   background: linear-gradient(135deg, #0d0c1d, #1a0933);
   /* dunkler Synthwave-Hintergrund */
   font-family: "Jersey 10", sans-serif;
-  padding: 20px;
   margin: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #00ffe7;
+  font-size: 24px;
+
 }
 
 html {
@@ -19,11 +20,6 @@ html {
   background-color: #1a0933;
   /* dunkler Overflow für Mobile Geräte */
 
-}
-
-body {
-  font-size: 24px;
-  /* Increase from default 16px */
 }
 
 /* ------------------- Automaten-Stil ------------------- */
@@ -949,6 +945,7 @@ body {
   }
 }
 
+
 #idle-screen {
   position: relative;
   width: 100%;
@@ -990,9 +987,19 @@ body {
 
 
 @keyframes flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-  60% { opacity: 0.8; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  60% {
+    opacity: 0.8;
+  }
 }
 
 .hidden {
