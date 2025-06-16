@@ -527,3 +527,8 @@ window.addEventListener('DOMContentLoaded', () => {
     showForm();
   }
 });
+
+document.getElementById("idle-screen").addEventListener("click", () => {
+  document.getElementById("idle-screen").classList.add("hidden");
+  document.getElementById("main-app").classList.remove("hidden");
+});
