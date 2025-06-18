@@ -20,11 +20,19 @@
 </head>
 
 <body>
-    <div id="idle-screen">
-    <video autoplay loop muted playsinline id="bg-video">
-      <source src="placeholder.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
+  <div id="idle-screen">
+    <!-- Desktop Video -->
+    <video autoplay loop muted playsinline id="bg-video-desktop" class="bg-video">
+      <source src="Desktopidle.mp4" type="video/mp4" />
+      Dein Browser unterstützt das Video-Tag nicht.
     </video>
+
+    <!-- Mobile Video -->
+    <video autoplay loop muted playsinline id="bg-video-mobile" class="bg-video">
+      <source src="Mobileidlescreen.mp4" type="video/mp4" />
+      Dein Browser unterstützt das Video-Tag nicht.
+    </video>
+
     <div id="overlay">
       <h1>Tap to start</h1>
     </div>
