@@ -50,7 +50,7 @@ showTutorialStep(0);
 
 function initializeMainApp() {
   console.log('Main app started!');
-  // Hier dein Haupt-App-Code
+  // Haupt-App-Code
 
 
 
@@ -412,8 +412,8 @@ function initializeMainApp() {
         landmarks[4].y - landmarks[12].y
       );
 
-      // "Pinchen" liegt vor, wenn der Abstand sehr klein ist (<0.04)
-      const isNowPinching = pinchDistance < 0.04;
+      // "Pinchen" liegt vor, wenn der Abstand sehr klein ist (<0.06)
+      const isNowPinching = pinchDistance < 0.06;
 
       if (!touches.has(clientId)) {
         // Wenn der Nutzer noch keine Berührung (Touch) hat,
@@ -797,6 +797,8 @@ function initializeMainApp() {
   socket.addEventListener("close", (event) => {
     if (clientId !== null) {
       sendRequest('*broadcast-message*', ['end', clientId]); // Informiere andere, dass Client geht
+      sendRequest('*broadcast-message*', ['exit', clientId]);  // Informiere Server, dass Client geht
+
     }
     clientId = null;
     document.body.classList.add('disconnected'); // CSS-Klasse für Offline-Status
@@ -821,6 +823,7 @@ function initializeMainApp() {
 
           // Namen der anderen Clients anfragen
           sendRequest('*broadcast-message*', ['request-names', clientId]);
+          
 
           start();                // Start der Anwendung
           updateSynthListDisplay(); // UI aktualisieren
