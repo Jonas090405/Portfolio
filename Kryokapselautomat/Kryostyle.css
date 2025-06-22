@@ -25,9 +25,7 @@ html {
 /* ------------------- Automaten-Stil ------------------- */
 .vending-machine {
   font-family: "Jersey 10", sans-serif;
-  width: calc(100vw - 36px);
-  /* Volle Breite minus Border */
-  height: calc(100vh - 36px);
+  height: calc(100vh);
   /* Volle Höhe minus Border */
   background: linear-gradient(to bottom, #2a004f, #3d0a73);
   border: 6px solid #ff00e0;
@@ -297,7 +295,7 @@ html {
 }
 
 #mute-button {
-  position: fixed;
+  position: absolute;
   top: 9%;
   right: 7%;
   width: 40px;
