@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kapselautomat Interface</title>
+  <title>Kryokapsel-Automat</title>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="Kryostyle.css" />
@@ -21,6 +21,7 @@
 
 <body>
   <div id="idle-screen">
+
     <!-- Desktop Video -->
     <video autoplay loop muted playsinline id="bg-video-desktop" class="bg-video">
       <source src="Desktopidle.mp4" type="video/mp4" />
@@ -38,94 +39,94 @@
     </div>
   </div>
 
+  <!-- Main Anwendung -->
   <div id="main-app" class="hidden">
 
 
-  <!-- Mute Button -->
-  <img id="mute-button" src="unmuted.png" alt="Mute" />
+    <!-- Mute Button -->
+    <img id="mute-button" src="unmuted.png" alt="Mute" />
 
-  <!-- Hauptinterface -->
-  <div id="interface-wrapper">
-    <button id="back-button" style="display: none;">Zurück</button>
+    <!-- Hauptinterface -->
+    <div id="interface-wrapper">
+      <button id="back-button" style="display: none;">Zurück</button>
 
-    <div id="form-section">
-      <div class="vending-machine">
-        <div class="input-group" id="question-group">
-          <label for="user-question">Wenn du in die Zukunft schauen könntest, was sollte dein Zukunfts-Ich bis in 4
-            Jahren
-            erreicht haben?</label>
-          <input type="text" id="user-question" name="user-question" placeholder="Z.b den Bachelor abschließen"
-            required>
+      <div id="form-section">
+        <div class="vending-machine">
+          <div class="input-group" id="question-group">
+            <label for="user-question">Was denkst du, was dein Zukunfts-Ich in 4 Jahren (nicht) gerissen hat?</label>
+            <input type="text" id="user-question" name="user-question" placeholder="Z.b den Bachelor abschließen"
+              required>
+          </div>
+
+          <div class="input-group" id="email-group">
+            <label for="user-email">Her mit deiner Mail, bevor wir raten müssen!</label>
+            <input type="email" id="user-email" name="user-email" placeholder="dein.name@example.com">
+          </div>
+
+          <button id="submit">Kapsel einfrieren</button>
+
+          <div id="dice-container" style="display: none;">
+            <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
+          </div>
         </div>
 
-        <div class="input-group" id="email-group">
-          <label for="user-email">Gib deine E-Mail-Adresse ein:</label>
-          <input type="email" id="user-email" name="user-email" placeholder="dein.name@example.com">
+        <div id="capsule-container" style="display: none;">
+          <img id="capsule" src="Dogcapsulesprite.png" alt="Kapsel" />
+          <div id="teddy-container"></div>
+          <div id="result"></div>
         </div>
 
-        <button id="submit">Kapsel einfrieren</button>
-
-        <div id="dice-container" style="display: none;">
-          <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
+        <div id="dragon-container">
+          <img id="dragon" src="Dragonsprite.png" alt="Drachenplüschtier" />
         </div>
-      </div>
 
-      <div id="capsule-container" style="display: none;">
-        <img id="capsule" src="Dogcapsulesprite.png" alt="Kapsel" />
-        <div id="teddy-container"></div>
-        <div id="result"></div>
-      </div>
-
-      <div id="dragon-container">
-        <img id="dragon" src="Dragonsprite.png" alt="Drachenplüschtier" />
-      </div>
-
-      <div id="speech-bubble" style="display: none;">
-        <span id="speech-text"></span>
+        <div id="speech-bubble" style="display: none;">
+          <span id="speech-text"></span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="countdown-screen" style="display: none;" class="countdown-overlay">
-    <div class="countdown-box">
-      <p id="countdown-text">Bitte warte einen Moment…</p>
-      <div id="countdown-warning">Bitte schließe den Tab nicht!</div>
+    <!-- Countdown-Screen -->
+    <div id="countdown-screen" style="display: none;" class="countdown-overlay">
+      <div class="countdown-box">
+        <p id="countdown-text">Bitte warte einen Moment…</p>
+        <div id="countdown-warning">Bitte schließe den Tab nicht!</div>
+      </div>
     </div>
-  </div>
 
-  <!-- Retro-Effekte -->
-  <div id="scanlines-overlay"></div>
-  <div id="noise-overlay"></div>
+    <!-- Retro-Bildschirmeffekte -->
+    <div id="scanlines-overlay"></div>
+    <div id="noise-overlay"></div>
 
-  <!-- Sounds -->
-  <audio id="bg-audio" loop>
-    <source src="background_noise.wav" type="audio/mpeg">
-    Dein Browser unterstützt kein HTML5-Audio.
-  </audio>
+    <!-- Sounds -->
+    <audio id="bg-audio" loop>
+      <source src="background_noise.wav" type="audio/mpeg">
+      Dein Browser unterstützt kein HTML5-Audio.
+    </audio>
 
-  <audio id="capsule-appear">
-    <source src="capsule-appear.wav" type="audio/wav" />
-  </audio>
+    <audio id="capsule-appear">
+      <source src="capsule-appear.wav" type="audio/wav" />
+    </audio>
 
-  <audio id="capsule-open">
-    <source src="capsule-open.wav" type="audio/wav" />
-  </audio>
+    <audio id="capsule-open">
+      <source src="capsule-open.wav" type="audio/wav" />
+    </audio>
 
-  <audio id="plushy-talk" loop>
-    <source src="plushy-talk.wav" type="audio/wav" />
-  </audio>
+    <audio id="plushy-talk" loop>
+      <source src="plushy-talk.wav" type="audio/wav" />
+    </audio>
 
-  <audio id="click-sound">
-    <source src="button-press.wav" type="audio/wav" />
-  </audio>
+    <audio id="click-sound">
+      <source src="button-press.wav" type="audio/wav" />
+    </audio>
 
-  <audio id="plush-appear">
-    <source src="plushy-appear.wav" type="audio/wav" />
-  </audio>
+    <audio id="plush-appear">
+      <source src="plushy-appear.wav" type="audio/wav" />
+    </audio>
 
-  <audio id="Idlemusic" loop>
-    <source src="ALJAY.mp3" type="audio/wav" />
-  </audio>
+    <audio id="Idlemusic" loop>
+      <source src="ALJAY.mp3" type="audio/wav" />
+    </audio>
   </div>
 
 </body>

@@ -1,10 +1,14 @@
+<<<<<<< Updated upstream
 const CAPSULE_FREEZE_DURATION = 2400; // Sekunden
+=======
+const CAPSULE_FREEZE_DURATION = 3000; // Sekunden für den Kapsel-Freeze
+>>>>>>> Stashed changes
 
 function safeShowCapsule() {
   const capsule = document.getElementById('capsule');
   const container = document.getElementById('capsule-container');
   if (!capsule || !container) {
-    setTimeout(safeShowCapsule, 100); // Noch nicht bereit → später erneut versuchen
+    setTimeout(safeShowCapsule, 100); 
     return;
   }
   showCapsule();
@@ -12,7 +16,7 @@ function safeShowCapsule() {
 
 let isTyping = false;
 
-// Lautstärke aller Sounds reduzieren
+// Soundregler für die Sounds
 window.addEventListener('DOMContentLoaded', () => {
   const sounds = [
     document.getElementById('capsule-appear'),
@@ -23,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
   ];
 
   sounds.forEach(sound => {
-    if (sound) sound.volume = 0.03; // 10% Lautstärke
+    if (sound) sound.volume = 0.03; 
   });
 });
 
@@ -75,12 +79,11 @@ muteButton.addEventListener('click', () => {
   const newSrc = isMuted ? 'muted.png' : 'unmuted.png';
   muteButton.src = newSrc;
 
-  // Alle Audio-Tags mit einem verringerten volume setzen oder auf 0 muten
   document.querySelectorAll('audio').forEach(audio => {
     audio.muted = isMuted;
   });
 
-  // Optional: Zustand merken
+  // Zustand merken im LocalStorage
   localStorage.setItem("isMuted", isMuted);
 });
 
@@ -100,7 +103,7 @@ window.addEventListener('DOMContentLoaded', () => {
 let selectedCapsule;
 let selectedDragon;
 
-// -------- Submit Event mit Sternen + Logik ------------
+// Submit Event mit Sternen + Logik
 const submitButton = document.getElementById("submit");
 
 submitButton.addEventListener("click", function () {
@@ -162,8 +165,8 @@ function handleSubmit() {
   localStorage.setItem("selectedCapsule", JSON.stringify(selectedCapsule));
   localStorage.setItem("selectedDragon", JSON.stringify(selectedDragon));
   localStorage.setItem("capsuleOpened", "false");
-  localStorage.setItem("userQuestion", userQuestion); // NEU: Frage speichern
-  localStorage.setItem("userEmail", userEmail); // <-- NEU
+  localStorage.setItem("userQuestion", userQuestion);
+  localStorage.setItem("userEmail", userEmail); 
 
 
   showCountdownScreen();
@@ -181,12 +184,12 @@ function showCapsule() {
 
   capsuleContainer.style.display = 'block';
 
-  // ➕ Diese Elemente ausblenden:
+  // Diese Elemente ausblenden:
   document.querySelectorAll('.input-group').forEach(group => group.style.display = 'none');
   document.getElementById('submit').style.display = 'none';
   document.getElementById('dice-container').style.display = 'none';
   document.getElementById('teddy-container').style.display = 'none';
-  document.querySelector('.vending-machine').style.display = 'none'; // 👈 HIER ergänzt
+  document.querySelector('.vending-machine').style.display = 'none';
   document.getElementById('capsule-appear')?.play();
 }
 
@@ -229,7 +232,7 @@ function showCountdownScreen() {
 
   countdownText.textContent = text;
 
-// Hinweis einblenden (optional, falls du ihn beim Start versteckst)
+// Hinweis einblenden
 document.getElementById('countdown-warning').style.display = 'block';
 
   if (remaining <= 0) {
@@ -253,9 +256,9 @@ document.getElementById('countdown-warning').style.display = 'block';
   }
 }, 1000);
 }
-// ----------- Kapsel öffnen und Drache animieren ----------
+// Kapsel öffnen und Drache animieren
 document.getElementById('capsule').addEventListener('click', function () {
-  localStorage.setItem("capsuleOpened", "true"); // Kapsel wurde jetzt geöffnet
+  localStorage.setItem("capsuleOpened", "true");
   let capsule = document.getElementById('capsule');
   let dragon = document.getElementById('dragon');
   let speechBubble = document.getElementById('speech-bubble');
@@ -271,7 +274,7 @@ document.getElementById('capsule').addEventListener('click', function () {
     dragon.style.objectPosition = '0 0';
     dragon.style.display = 'block';
 
-    // Sound beim Erscheinen des Tiers abspielen
+    // Sound beim Erscheinen des Plushies abspielen
     const plushAppearSound = document.getElementById('plush-appear');
     if (plushAppearSound) plushAppearSound.play();
   }, 1200);
@@ -343,7 +346,7 @@ document.getElementById('back-button').addEventListener('click', function () {
     plushyTalk.currentTime = 0;
   }
 
-  // Kapsel & Co. ausblenden
+  // Kapsele etc. ausblenden
   capsule.style.display = 'none';
   capsule.style.pointerEvents = 'none';
   dragon.style.display = 'none';
@@ -378,11 +381,11 @@ document.getElementById('back-button').addEventListener('click', function () {
   // Nach der Verzögerung den Back-Button und den Submit-Button wieder aktivieren
   setTimeout(() => {
     this.disabled = false;
-    submitButton.disabled = false; // Hier den Submit-Button wieder aktivieren
-  }, 600); // Verzögerung von 600 ms
+    submitButton.disabled = false; // Submit-Button wieder aktivieren
+  }, 600); 
 });
 
-// ------------ Sterneffekte + Typewriter -----------------
+// Sterneffekte + Typewriter
 function typeWriterEffect(element, text, speed = 50) {
   let i = 0;
   element.textContent = '';
@@ -445,6 +448,7 @@ function showStars(x, y) {
   }
 }
 
+// Funktion zum Erstellen von Sternen an den Ecken des Buttons
 function createStars(button) {
   const buttonRect = button.getBoundingClientRect();
   const corners = [
@@ -472,6 +476,8 @@ function createStars(button) {
     }
   });
 }
+
+// Funktion zum Anzeigen des Formulars
 function showForm() {
   document.getElementById('capsule-container').style.display = 'none';
   document.getElementById('countdown-screen').style.display = 'none';
@@ -501,7 +507,6 @@ window.addEventListener('click', function () {
 }, { once: true });
 
 
-window.addEventListener('DOMContentLoaded', () => {
   const freezeUntil = parseInt(localStorage.getItem("capsuleFreezeUntil"), 10);
   const storedCapsule = localStorage.getItem("selectedCapsule");
   const storedDragon = localStorage.getItem("selectedDragon");
@@ -526,7 +531,8 @@ window.addEventListener('DOMContentLoaded', () => {
     // Kein Zustand gespeichert → Formular anzeigen
     showForm();
   }
-});
+
+
 
 document.getElementById("idle-screen").addEventListener("click", () => {
   document.getElementById("idle-screen").classList.add("hidden");
