@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-const CAPSULE_FREEZE_DURATION = 2400; // Sekunden
-=======
-const CAPSULE_FREEZE_DURATION = 3000; // Sekunden für den Kapsel-Freeze
->>>>>>> Stashed changes
+const CAPSULE_FREEZE_DURATION = 126230400; // 4 Jahre in Sekunden
 
 function safeShowCapsule() {
   const capsule = document.getElementById('capsule');
