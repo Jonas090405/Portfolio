@@ -1,4 +1,4 @@
-const CAPSULE_FREEZE_DURATION = 10; // Sekunden
+const CAPSULE_FREEZE_DURATION = 2400; // Sekunden
 
 function safeShowCapsule() {
   const capsule = document.getElementById('capsule');
