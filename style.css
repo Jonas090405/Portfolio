@@ -557,13 +557,13 @@ progress {
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
-    /* Schwacher Shadow */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     display: flex;
     flex-direction: column;
-    min-height: 350px;
-    height: auto;
+    height: 400px; /* Einheitliche Höhe */
+    min-height: 400px;
+    max-height: 400px;
 }
 
 /* Bild */
@@ -575,6 +575,7 @@ progress {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
 }
 
 /* Halbtransparenter Overlay-Hintergrund */
@@ -586,8 +587,8 @@ progress {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0);
-    /* Unsichtbar im Normalzustand */
     transition: background 0.3s ease;
+    z-index: 2;
 }
 
 /* Inhalt */
@@ -602,6 +603,9 @@ progress {
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    z-index: 3;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 /* Hover-Effekt */
@@ -610,7 +614,7 @@ progress {
 }
 
 .bento-card:hover img {
-    opacity: 0.3;
+    opacity: 0.35;
     transform: scale(1.05);
 }
 
@@ -621,13 +625,12 @@ progress {
 /* Stärkerer Drop Shadow beim Hover */
 .bento-card:hover {
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
-    /* Starker Shadow */
     transform: translateY(-8px);
 }
 
 /* Überschrift */
 .card-content h3 {
-    font-size: 1.7rem;
+    font-size: 2rem;
     margin-bottom: 15px;
 }
 
@@ -635,7 +638,7 @@ progress {
 .card-content p {
     font-size: 1rem;
     margin-bottom: 40px;
-    color: #9da2a2
+    color: #9da2a2;
 }
 
 /* Button */
@@ -643,18 +646,16 @@ progress {
     display: inline-block;
     background: linear-gradient(to right, var(--accent-color), #4dbef3);
     color: white;
-    font-size: .9rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    padding: .5em 1em;
-    border-radius: .5em;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
     text-decoration: none;
-
 }
 
 .card-button:hover {
     background: linear-gradient(to right, #065f88, #0cabf4);
 }
-
 
 /* Responsive Design */
 
@@ -662,9 +663,7 @@ progress {
 @media (max-width: 1302px) {
     #project-section {
         grid-template-columns: repeat(2, 1fr);
-        /* Zwei Spalten bei Tablet-Größe */
         gap: 40px;
-        /* Weniger Abstand zwischen den Karten */
         padding-left: 20px;
         padding-right: 20px;
         padding-top: 50px;
@@ -673,10 +672,7 @@ progress {
 
     #project-section h2 {
         font-size: 2.5rem;
-        /* Etwas kleinere Überschrift für Tablets */
         margin-bottom: 40px;
-
-
     }
 
     .bento-card::after {
@@ -690,14 +686,15 @@ progress {
         border-radius: 4px;
         font-size: 0.8rem;
         opacity: 0.7;
+        z-index: 4;
     }
+}
 
     footer {
         background-color: var(--primary-color);
         padding: 50px 20px;
     }
 
-}
 
 @media (max-width: 600px) {
     #project-section {
