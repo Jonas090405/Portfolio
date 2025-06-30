@@ -786,7 +786,7 @@ function initializeMainApp() {
 
   // Bei Verbindungsaufbau: Raum betreten und Client-Count abonnieren
   socket.addEventListener('open', (event) => {
-    sendRequest('*enter-room*', 'touch-touch'); // Raum beitreten
+    sendRequest('*enter-room*', 'Soundboard'); // Raum beitreten
     sendRequest('*subscribe-client-count*');    // Anzahl der Nutzer abonnieren
 
     // Keepalive: alle 30 Sekunden ein Ping senden (leere Nachricht)
