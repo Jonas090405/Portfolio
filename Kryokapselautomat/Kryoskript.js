@@ -124,7 +124,7 @@ submitButton.addEventListener("click", function () {
   }, 600);
 });
 
-// ----------- Handle Submit Hauptfunktion ------------
+//  Handle Submit Hauptfunktion 
 function handleSubmit() {
   const capsuleOpened = localStorage.getItem("capsuleOpened");
 
