@@ -538,7 +538,7 @@ html {
 
 
 
-/* ------------------- Flacker-Effekte ------------------- */
+/* Flacker-Effekte */
 @keyframes text-flicker {
   0% {
     opacity: 0.6;
