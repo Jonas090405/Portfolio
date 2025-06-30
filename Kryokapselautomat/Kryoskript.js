@@ -1,4 +1,4 @@
-const CAPSULE_FREEZE_DURATION = 126230400; // 4 Jahre in Sekunden
+const CAPSULE_FREEZE_DURATION = 10; // 4 Jahre in Sekunden
 
 function safeShowCapsule() {
   const capsule = document.getElementById('capsule');

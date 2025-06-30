@@ -218,7 +218,7 @@ header .read-more:hover {
 }
 
 
-#education-section {
+#education-section, #experience-section {
     padding: 100px 20px 150px;
     background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
     color: var(--text-color);
@@ -334,10 +334,20 @@ header .read-more:hover {
     }
 }
 
-/* Stil für den pulsierenden Punkt */
-.timeline-item .dot.current {
+/* Letzter Punkt jeder Timeline pulsiert automatisch */
+.timeline > .timeline-item:last-of-type .dot {
     animation: pulse 1.5s infinite ease-in-out;
 }
+
+
+.section-divider {
+  margin: 240px auto;
+  height: 3px;
+  width: 80%;
+  background-color: #3a3a3a; /* hellgrau */
+  border-radius: 2px;
+}
+
 
 footer {
     background: linear-gradient(90deg, rgb(19, 19, 19) 0%, rgb(19, 28, 32) 100%);
