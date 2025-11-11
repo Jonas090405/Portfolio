@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Minigame Prozess</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="app-container">
+    <!-- Startscreen -->
+  <div id="start-screen" class="screen">
+      <h1>Willkommen zur schlechtesten Nutzererfahrung jemals!</h1>
+      <div id="game-description">
+        Dies ist ein Spiel, indem du so schnell wie möglich scheinbar einfache und alltägliche Aufgaben erledigen musst.
+      </div>
+      <button id="ready-btn" class="worst-btn ready">NICHT BEREIT</button>
+      <div class="start-instructions">
+        Bitte <span id="click-word" class="fake-link">klicke</span> <u>HIER</u> um zu <span
+          class="highlight">starten</span>.
+      </div>
+    </div>
+
+    <!-- STAGES -->
+  <div id="stages" class="screen">
+      <div class="stage-indicator" id="stage-indicator"></div>
+      <h2 id="stage-title"></h2>
+      <div id="stage-content"></div>
+      <div class="bottom-ui">
+        <span id="timer">0.00<span class="timer-unit">s</span></span>
+        <button id="submit-btn" class="stage-submit-btn">Weiter</button>
+      </div>
+    </div>
+
+    <!-- CHECKOUT SCREEN (nur einmal!) -->
+  <div id="checkout-screen" class="screen">
+      <!-- Inhalt wird dynamisch vom JS eingefügt -->
+    </div>
+
+    <!-- END SCREEN -->
+  <div id="end-screen" class="screen">
+      <h1>🎮 Spiel Beendet</h1>
+      <div id="final-score-container">
+        <p class="final-score-label">Deine Gesamtpunktzahl:</p>
+        <p class="final-score-value"><span id="final-score">0</span> Punkte</p>
+        <p class="final-score-info">Je schneller du warst, desto mehr Punkte hast du gesammelt!</p>
+      </div>
+      <button id="restart-btn" class="worst-btn ready">Neustarten</button>
+    </div>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
