@@ -9,30 +9,44 @@
   <script defer src="skriptPortfolio.js"></script>
   <header>
     <nav>
-      <ul>
+      <!-- Hamburger Menu Button -->
+      <button class="hamburger-menu" aria-label="Menü öffnen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+      <ul class="mobile-nav">
         <li><a href="#skill-section">Skills</a></li>
         <li><a href="#project-section">Projekte</a></li>
         <li><a href="#education-section">Karriereweg</a></li>
         <li><a href="#at-symbol">Kontakt</a></li>
       </ul>
-    </nav>
+    </div>
   </header>
 </head>
 
 <body>
   <header>
-    <div class="image-container">
-      <img src="me.png" alt="Profilbild">
-    </div>
     <div class="container">
-      <h1 id="name"></h1>
-      <h2></h2>
+      <div class="title-container">
+        <div class="title-text">
+          <h1 id="name"></h1>
+          <h2></h2>
+        </div>
+        <div class="image-container">
+          <img src="me.png" alt="Profilbild">
+        </div>
+      </div>
       <br>
       <p></p>
       <br />
       <a href="#project-section" class="read-more">Portfolio</a>
     </div>
-  </header>
   </header>
   <section id="skill-section">
     <h2>Skillset</h2>
@@ -102,9 +116,23 @@
   <section id="project-section">
     <h2>Projekte</h2> <!-- Überschrift für die Sektion -->
 
+    <!-- Carousel Controls (nur mobile/tablet) -->
+    <div class="carousel-controls">
+      <button class="carousel-btn carousel-prev" aria-label="Vorheriges Projekt">‹</button>
+      <button class="carousel-btn carousel-next" aria-label="Nächstes Projekt">›</button>
+    </div>
+
+    <!-- Carousel Wrapper -->
+    <div class="carousel-wrapper">
+
     <!-- Karte 1 -->
     <div class="bento-card">
       <img src="Karte1.png" alt="Projektbild">
+      <div class="card-tags">
+        <span class="tag tag-tech">JavaScript</span>
+        <span class="tag tag-design">Game Design</span>
+        <span class="tag tag-area">Web Development</span>
+      </div>
       <div class="card-content">
         <h3>Corporate Web-Minigame</h3>
         <p>Corporate Minigame für M&M Software – komplett konzipiert, designed und programmiert.</p>
@@ -115,6 +143,11 @@
     <!-- Karte 2 -->
     <div class="bento-card">
       <img src="Karte2.png" alt="Projektbild">
+      <div class="card-tags">
+        <span class="tag tag-design">Figma</span>
+        <span class="tag tag-skill">UX/UI Design</span>
+        <span class="tag tag-area">B2B Software</span>
+      </div>
       <div class="card-content">
         <h3>UX/UI Design einer Konfigurationssoftware</h3>
         <p>UX/UI Design und Prototypisierung einer B2B-Konfigurationssoftware für einen Kunden.</p>
@@ -138,6 +171,11 @@
     <!-- Karte 4 -->
     <div class="bento-card">
       <img src="Karte4.png" alt="Projektbild">
+      <div class="card-tags">
+        <span class="tag tag-tech">SwiftUI</span>
+        <span class="tag tag-skill">3D Development</span>
+        <span class="tag tag-area">Mixed Reality</span>
+      </div>
       <div class="card-content">
         <h3>MR-Anwendung für die Apple Vision Pro</h3>
         <p>VisionOS-App mit SwiftUI zum Darstellen von physischen Objekten im 3D-Raum.</p>
@@ -149,6 +187,11 @@
     <!-- Karte 5 -->
     <div class="bento-card">
       <img src="Karte5.png" alt="Projektbild">
+      <div class="card-tags">
+        <span class="tag tag-design">Adobe Premiere</span>
+        <span class="tag tag-skill">Videoschnitt</span>
+        <span class="tag tag-area">Film Production</span>
+      </div>
       <div class="card-content">
         <h3>Kurzfilm: Konzeption und Post-Produktion</h3>
         <p>Regie, Post-Produktion und visuelle Gestaltung eines studentischen Kurzfilms.</p>
@@ -171,9 +214,14 @@
     <!-- Karte 8 -->
     <div class="bento-card">
       <img src="Karte8.png" alt="Projektbild">
+      <div class="card-tags">
+        <span class="tag tag-design">Adobe Audition</span>
+        <span class="tag tag-skill">Sounddesign</span>
+        <span class="tag tag-area">Audio Production</span>
+      </div>
       <div class="card-content">
         <h3>Vertonung eines Filmclips</h3>
-        <p>Sounddesign und Audioproduktion eines komplett stummen Filmclips.</p>
+        <p>Sounddesign und Audioproduktion eines komplett stummen Filmclip s.</p>
         <a href="https://drive.google.com/drive/folders/1o-o-Wm4qRHJ9bServbhXliGHpgAJ64a5?usp=sharing"
           class="card-button">ansehen</a>
       </div>
@@ -193,6 +241,11 @@
     <!-- Karte 10 -->
     <div class="bento-card">
       <img src="Karte11.png" alt="Projektbild">
+      <div class="card-tags">
+        <span class="tag tag-tech">JavaScript</span>
+        <span class="tag tag-skill">Handtracking</span>
+        <span class="tag tag-area">Interactive Media</span>
+      </div>
       <div class="card-content">
         <h3>Kollaborative Musikapp</h3>
         <p>Webbasierte und Kollaborative Musikapp, die mit Handtracking gesteuert wird.</p>
@@ -203,6 +256,11 @@
     <!-- Karte 11 -->
     <div class="bento-card">
       <img src="Karte10.png" alt="Projektbild">
+      <div class="card-tags">
+        <span class="tag tag-tech">HTML/CSS</span>
+        <span class="tag tag-design">Retro Design</span>
+        <span class="tag tag-area">Web App</span>
+      </div>
       <div class="card-content">
         <h3>Kryokapsel-Automat</h3>
         <p>Web-App im Retrostil zum Versenden von Nachrichten an das zukünftige Ich.</p>
@@ -213,6 +271,11 @@
     <!-- Karte 12 -->
     <div class="bento-card">
       <img src="Karte12.png" alt="Projektbild">
+      <div class="card-tags">
+        <span class="tag tag-tech">Articulate</span>
+        <span class="tag tag-skill">Instructional Design</span>
+        <span class="tag tag-area">E-Learning</span>
+      </div>
       <div class="card-content">
         <h3>E-Learning zu einem psychologischen Thema</h3>
         <p>Design und Umsetzung einer Lernanwendung mit Articulate und LMS-Integration.</p>
@@ -224,6 +287,11 @@
     <!-- Karte 13 -->
     <div class="bento-card">
       <img src="Karte13.png" alt="Projektbild">
+      <div class="card-tags">
+        <span class="tag tag-design">Figma</span>
+        <span class="tag tag-skill">Storytelling</span>
+        <span class="tag tag-area">Interactive Design</span>
+      </div>
       <div class="card-content">
         <h3>Interaktives Storyadventure</h3>
         <p>Design und Prototypisierung eines interaktiven Storyadventures mit Figma.</p>
@@ -235,6 +303,11 @@
     <!-- Karte 14 -->
     <div class="bento-card">
       <img src="Karte14.png" alt="Projektbild">
+      <div class="card-tags">
+        <span class="tag tag-design">Figma</span>
+        <span class="tag tag-skill">UI Design</span>
+        <span class="tag tag-area">Fintech</span>
+      </div>
       <div class="card-content">
         <h3>UX/UI Design eines Fintech-Unternehmen</h3>
         <p>Landingpage und Dashboard des fiktiven Unternehmens.</p>
@@ -257,16 +330,26 @@
     -->
 
         <!-- Karte 16 -->
-    <div class="bento-card">
-      <img src="Karte16.png" alt="Projektbild">
-      <div class="card-content">
-        <h3>Worst-practice UI (Work in Progress)</h3>
-        <p>Aktuelles Projekt zur Sensibilisierung für Usability mit einer Worst-Practice-Demonstration.</p>
-        <a href="Worst-practice-ui/Worst-practice-ui.html"
-          class="card-button">ansehen</a>
-      </div>
-    </div>
+        <div class="bento-card">
+          <img src="Karte16.png" alt="Projektbild">
+          <div class="card-tags">
+            <span class="tag tag-tech">HTML/CSS/JS</span>
+            <span class="tag tag-skill">UX Design</span>
+            <span class="tag tag-area">Usability</span>
+          </div>
+          <div class="card-content">
+            <h3>Worst-practice UI (Work in Progress)</h3>
+            <p>Aktuelles Projekt zur Sensibilisierung für Usability mit einer Worst-Practice-Demonstration.</p>
+            <a href="Worst-practice-ui/Worst-practice-ui.html"
+              class="card-button">ansehen</a>
+          </div>
+        </div>
 
+
+    </div> <!-- End carousel-wrapper -->
+
+    <!-- Carousel Indicators -->
+    <div class="carousel-indicators"></div>
 
   </section>
 

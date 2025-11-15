@@ -57,6 +57,7 @@ body {
 header {
     padding: 0 20px;
     margin-bottom: 60px;
+    margin-top: 0;
     display: flex;
     justify-content: center;
     flex-wrap: wrap-reverse;
@@ -67,16 +68,98 @@ header .container {
     max-width: 100%;
 }
 
-header img {
-    height: 70vh;
-    margin-right: 100px;
-    /* Vergrößert den Abstand zum Text */
-    margin-bottom: -6vh;
+/* Desktop layout - matches tablet structure but larger */
+@media (min-width: 1303px) { 
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+        text-align: left;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 20px 40px;
+    }
 
+    .title-container {
+        display: flex !important;
+        align-items: flex-start;
+        gap: 30px;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .title-text {
+        flex: 1;
+        order: 1;
+    }
+
+    .image-container {
+        order: 2;
+        flex-shrink: 0;
+    }
+
+    .image-container img {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+        aspect-ratio: 1 / 1;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    header .container {
+        width: 100%;
+    }
+
+    header h1 {
+        font-size: 3.5rem;
+        margin-top: 0;
+        margin-bottom: 0px;
+        line-height: 1;
+    }
+
+    header h2 {
+        font-size: 1.6rem;
+        margin-bottom: 0;
+        margin-top: 0;
+        line-height: 1.1;
+    }
+
+    /* Clear separation between title area and content */
+    .title-container + br,
+    .title-container + br + p {
+        clear: both;
+    }
+
+    header p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        width: 100%;
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
+
+    header .read-more {
+        font-size: 1.3rem;
+        padding: 0.6em 1.4em;
+    }
+
+    /* Ensure title container works as expected */
+    .title-container {
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+    }
+
+    .title-text {
+        flex: 1 !important;
+    }
 }
 
 header h1 {
-    margin-top: 40px;
+    margin-top: 0px;
     font-size: 4rem;
 }
 
@@ -153,6 +236,23 @@ header .read-more:hover {
     padding: 15px 0;
     text-align: center;
     text-transform: uppercase;
+    position: relative;
+}
+
+.skill-container h3::after {
+    content: '›';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-size: 1.8rem;
+    transition: transform 0.3s ease;
+    color: var(--accent-color);
+    display: none; /* Hidden by default on desktop */
+}
+
+.skill-container.card-active h3::after {
+    transform: translateY(-50%) rotate(-90deg);
 }
 
 .skill-container ul {
@@ -436,74 +536,319 @@ nav {
     padding: 10px 20px;
     height: 60px;
     /* Feste Höhe für die Navigation */
+    position: relative;
 }
 
-nav ul {
+/* Hamburger Menu Button - Now for all screen sizes */
+.hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: linear-gradient(to right, var(--accent-color), #4dbef3);
+    border: none;
+    cursor: pointer;
+    padding: 16px;
+    border-radius: 12px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    width: 64px;
+    height: 64px;
+    justify-content: center;
+    align-items: center;
+}
+
+.hamburger-menu:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(77, 190, 243, 0.5);
+}
+
+.hamburger-menu span {
+    width: 32px;
+    height: 3.5px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+/* Hamburger Animation when overlay is active */
+.hamburger-menu.active span:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.hamburger-menu.active span:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(16, 17, 19, 0.98);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    clip-path: circle(0% at calc(100% - 52px) 52px);
+    transition: clip-path 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+    clip-path: circle(150% at calc(100% - 52px) 52px);
+}
+
+/* Mobile Navigation Links */
+.mobile-nav {
     list-style: none;
     display: flex;
-    gap: 15px;
+    flex-direction: column;
+    gap: 30px;
+    padding: 0;
+    margin: 0;
 }
 
-nav ul li {
-    display: inline;
+.mobile-nav li {
+    text-align: center;
 }
 
-nav ul li a {
+.mobile-nav li a {
     color: white;
     text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    /* Abrundung auch im Standardzustand definieren */
-    transition: background-color 0.3s, border-radius 0.3s;
-    /* Übergang für Abrundung hinzufügen */
+    font-size: 2rem;
+    font-weight: 300;
+    transition: color 0.3s ease;
+    display: block;
+    padding: 10px 30px;
 }
 
-nav ul li a:hover {
-    background-color: var(--hover-color);
-    border-radius: 5px;
-    /* Abrundung auch im Hover-Zustand explizit beibehalten */
-}
-
-
-@media (max-width: 768px) {
-    nav ul {
-        display: none;
-        /* Das gesamte Menü auf mobilen Geräten ausblenden */
-    }
-
-}
-
-
-/* Desktop-Ansicht (ab 769px) */
-@media (min-width: 769px) {
-    nav ul {
-        display: flex;
-        /* Menü für Desktop anzeigen */
-    }
-
+.mobile-nav li a:hover,
+.mobile-nav li a:active {
+    color: var(--accent-color);
 }
 
 footer a:hover {
     color: var(--text-color);
 }
 
-@media (max-width: 1000px) {
+/* Base styles for smaller screens */
+@media (max-width: 1302px) {
+    header img {
+        height: auto;
+        margin-right: 0;
+        margin-bottom: 0;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+/* Base styles for title container structure */
+.title-container {
+    display: contents;
+}
+
+.title-text {
+    flex: 1;
+}
+
+@media (max-width: 1302px) {
     header {
-        padding: 0px 20px;
-        text-align: center;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        text-align: left;
+    }
+
+    .title-container {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .title-text {
+        flex: 1;
+        order: 1;
+    }
+
+
+
+
+    header .container {
+        width: 100%;
     }
 
     header h1 {
-        margin-top: 0;
-        font-size: 10vw;
+        font-size: 2rem;
+        margin-bottom: 8px;
     }
 
     header h2 {
         font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+
+    header p {
+        font-size: 1rem;
+        width: 100%;
+    }
+    header {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        padding: 40px 20px;
+    }
+
+    header .container {
+        flex: 1;
+        max-width: 600px;
+        text-align: left;
+    }
+
+    header .image-container {
+        flex-shrink: 0;
     }
 
     header img {
-        display: none;
+        display: block;
+        height: auto;
+        width: 200px;
+        border-radius: 50%;
+        margin: 0;
+        object-fit: cover;
+        aspect-ratio: 1 / 1;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    header h1 {
+        margin-top: 0;
+        font-size: 2.5rem;
+    }
+
+    header h2 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 1000px) {
+    header {
+        padding: 0px 20px 40px;
+        text-align: left;
+        gap: 30px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header h2 {
+        font-size: 1rem;
+    }
+
+    header img {
+        width: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+        padding: 0px 20px 20px;
+    }
+
+    .title-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        order: 2;
+    }
+
+    .image-container {
+        order: 1;
+        margin-bottom: 10px;
+    }
+
+    .title-text {
+        width: 100%;
+        text-align: center;
+        order: 2;
+    }
+
+    header .container {
+        text-align: center;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    header p {
+        order: 3;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    header .read-more {
+        order: 4;
+        font-size: 1rem;
+        padding: 0.4em 1em;
+        margin-top: 0;
+        align-self: center;
+    }
+
+    header img {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+
+    header h1 {
+        font-size: 1.6rem;
+        line-height: 1.3;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    header h2 {
+        font-size: 1.1rem;
+        line-height: 1.4;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     footer .grid-container {
@@ -514,11 +859,12 @@ footer a:hover {
     }
 
     footer #at-symbol {
-        font-size: 150pt;
+        font-size: 120pt;
     }
 
     footer h3 {
-        margin-top: 50px;
+        margin-top: 30px;
+        font-size: 1.5rem;
     }
 }
 
@@ -656,24 +1002,91 @@ progress {
     box-sizing: border-box;
 }
 
-/* Hover-Effekt */
-.bento-card:hover::before {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.bento-card:hover img {
-    opacity: 0.35;
-    transform: scale(1.05);
-}
-
-.bento-card:hover .card-content {
+/* Tags Container */
+.card-tags {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    max-width: calc(100% - 24px);
     opacity: 1;
+    transition: opacity 0.3s ease;
+    z-index: 10;
 }
 
-/* Stärkerer Drop Shadow beim Hover */
-.bento-card:hover {
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
-    transform: translateY(-8px);
+/* Tag Styles - Apple Chips Style */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 6px 18px rgba(2,8,14,0.25);
+    transition: all 0.18s ease;
+    color: #ffffff;
+    /* uniform dark pill background for all tags; stroke/color applied per-category */
+    background: rgba(0,0,0,0.58);
+}
+
+/* Semitransparent backgrounds + matching stroke (blue tones) and dark readable text */
+/* stronger semi-transparent backgrounds for contrast, white text and blue-toned stroke */
+.tag-tech {
+    background: rgba(0,0,0,0.58);
+    border: 1px solid rgba(77, 190, 243, 0.95);
+    color: #ffffff;
+}
+
+.tag-design {
+    background: rgba(0,0,0,0.58);
+    border: 1px solid rgba(13, 110, 158, 0.95);
+    color: #ffffff;
+}
+
+.tag-skill {
+    background: rgba(0,0,0,0.58);
+    border: 1px solid rgba(100, 210, 255, 0.95);
+    color: #ffffff;
+}
+
+.tag-area {
+    background: rgba(0,0,0,0.58);
+    border: 1px solid rgba(6, 95, 136, 0.95);
+    color: #ffffff;
+}
+
+/* Hover-Effekt - nur Desktop */
+@media (min-width: 1303px) {
+    .bento-card:hover::before {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .bento-card:hover img {
+        opacity: 0.35;
+        transform: scale(1.05);
+    }
+
+    .bento-card:hover .card-content {
+        opacity: 1;
+    }
+
+    .bento-card:hover .card-tags {
+        opacity: 0;
+    }
+}
+
+/* Stärkerer Drop Shadow beim Hover - nur Desktop */
+@media (min-width: 1303px) {
+    .bento-card:hover {
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
+        transform: translateY(-8px);
+    }
 }
 
 /* Überschrift */
@@ -694,11 +1107,13 @@ progress {
     display: inline-block;
     background: linear-gradient(to right, var(--accent-color), #4dbef3);
     color: white;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    padding: 0.5em 1em;
+    padding: 0.7em 1.5em;
     border-radius: 0.5em;
     text-decoration: none;
+    min-width: 120px;
+    text-align: center;
 }
 
 .card-button:hover {
@@ -707,34 +1122,185 @@ progress {
 
 /* Responsive Design */
 
+/* Carousel Controls & Indicators - hidden on desktop */
+.carousel-controls,
+.carousel-indicators {
+    display: none;
+}
+
+.carousel-wrapper {
+    display: contents; /* Desktop: acts transparent, grid layout applies to children */
+}
+
 /* Tablet-Größe (zwei Karten nebeneinander) */
 @media (max-width: 1302px) {
     #project-section {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
         padding-left: 20px;
         padding-right: 20px;
         padding-top: 50px;
         padding-bottom: 50px;
+        overflow: hidden;
     }
 
     #project-section h2 {
         font-size: 2.5rem;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
     }
 
-    .bento-card::after {
-        content: "Tippen";
+    /* Carousel Wrapper */
+    .carousel-wrapper {
+        display: flex;
+        width: 85%;
+        max-width: 900px;
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        position: relative;
+        overflow: visible;
+        gap: 40px;
+        padding-right: 0;
+    }
+
+    /* Ensure last card centers properly */
+    .bento-card:last-child {
+        margin-right: 0;
+    }
+
+    /* Carousel Controls */
+    .carousel-controls {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        max-width: calc(900px + 60px);
         position: absolute;
-        right: 10px;
-        top: 10px;
-        background-color: rgba(0, 0, 0, 0.6);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 15;
+        pointer-events: none;
+    }
+
+    .carousel-btn {
+        pointer-events: all;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(77, 190, 243, 0.8);
         color: white;
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-size: 0.8rem;
-        opacity: 0.7;
-        z-index: 4;
+        font-size: 2.2rem;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        line-height: 1;
+        padding: 0;
+    }
+
+    .carousel-prev {
+        padding-right: 2px; /* Fine-tune centering for ‹ */
+        padding-bottom: 5px;
+    }
+
+    .carousel-next {
+        padding-left: 2px; /* Fine-tune centering for › */
+        padding-bottom: 5px;
+    }
+
+    .carousel-btn:hover {
+        background: rgba(77, 190, 243, 0.3);
+        transform: scale(1.1);
+    }
+
+    .carousel-btn:active {
+        transform: scale(0.95);
+    }
+
+    /* Carousel Indicators */
+    .carousel-indicators {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 25px;
+    }
+
+    .carousel-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .carousel-indicator.active {
+        background: linear-gradient(to right, var(--accent-color), #4dbef3);
+        width: 30px;
+        border-radius: 5px;
+    }
+
+    .bento-card {
+        flex: 0 0 100%;
+        min-width: 100%;
+        flex-direction: column;
+        height: auto;
+        min-height: 580px;
+        max-height: 700px;
+    }
+
+    .bento-card img {
+        position: relative;
+        height: 340px;
+        object-fit: cover;
+        opacity: 1;
+        transform: none;
+        flex-shrink: 0;
+    }
+
+    .card-content {
+        position: relative;
+        opacity: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1;
+    }
+
+    .card-tags {
+        opacity: 1;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 5;
+    }
+
+    .tag {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+    }
+
+    .card-content h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        margin-top: 0;
+    }
+
+    .card-content p {
+        font-size: 1rem;
+        margin-bottom: 15px;
+        flex-grow: 1;
+    }
+
+    .card-button {
+        margin-top: auto;
+        align-self: center;
     }
 }
 
@@ -746,21 +1312,43 @@ footer {
 
 @media (max-width: 600px) {
     #project-section {
-        display: flex;
-        flex-direction: column;
-        gap: 60px;
         padding: 30px 15px;
+    }
+
+    #project-section h2 {
+        font-size: 2rem;
+    }
+
+    .carousel-wrapper {
+        width: 90%;
+        max-width: 100%;
+        gap: 30px;
+    }
+
+    .carousel-controls {
+        width: 95%;
+    }
+
+    .carousel-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 2rem;
     }
 
     .bento-card {
         flex-direction: column;
         height: auto;
-        min-height: unset;
+        min-height: 520px;
+        max-height: 620px;
+    }
+
+    .bento-card img {
+        height: 280px;
     }
 
     .bento-card img {
         position: relative;
-        height: 180px;
+        height: 280px;
         object-fit: cover;
         opacity: 1;
         transform: none;
@@ -772,9 +1360,23 @@ footer {
         padding: 20px;
     }
 
+    .card-tags {
+        opacity: 1;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 5;
+    }
+
+    .tag {
+        font-size: 0.65rem;
+        padding: 4px 9px;
+    }
+
     .card-content h3 {
         font-size: 1.3rem;
         margin-bottom: 10px;
+        margin-top: 0;
     }
 
     .card-content p {
@@ -783,8 +1385,9 @@ footer {
     }
 
     .card-button {
-        font-size: 0.85rem;
-        padding: 0.4em 1em;
+        font-size: 1rem;
+        padding: 0.65em 1.3em;
+        min-width: 110px;
     }
 
     .bento-card::after {
@@ -810,26 +1413,19 @@ footer {
 
 /* Responsive Design für mobile Geräte */
 @media (max-width: 1302px) {
-
-    /* Die gleichen visuellen Effekte für den aktiven Zustand (nach Klick) */
-    .bento-card.card-active::before {
-        background: rgba(0, 0, 0, 0.5);
+    .skill-container {
+        cursor: pointer;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        overflow: hidden;
+        max-height: 65px;
     }
 
-    .bento-card.card-active img {
-        background: rgba(0, 0, 0, 0.5);
-        opacity: 0.3;
-        transform: scale(1.05);
+    .skill-container h3::after {
+        display: block; /* Show chevron on tablet/mobile */
     }
 
-    .bento-card.card-active .card-content {
-        opacity: 1;
-    }
-
-    .bento-card.card-active {
-        background: rgba(0, 0, 0, 0.5);
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
-        transform: translateY(-8px);
+    .card-active {
+        max-height: 1000px;
     }
 }
 
@@ -840,6 +1436,10 @@ footer {
         transition: max-height 0.3s ease, padding 0.3s ease;
         overflow: hidden;
         max-height: 65px;
+    }
+
+    .skill-container h3::after {
+        display: block; /* Show chevron on mobile */
     }
 
     .card-active {
@@ -860,6 +1460,22 @@ footer {
     }
 }
 
+@media (max-width: 1302px) {
+    .skill-container {
+        transform: none !important;
+        /* Deaktiviert 3D-Transformation auf Mobile/Tablet */
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+        /* Leichterer, stabiler Schatten */
+    }
+
+    .skill-container:hover {
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
+        /* Optional stärkerer Hover-Schatten */
+        transform: none !important;
+        /* Kein Verschieben oder Drehen */
+    }
+}
+
 @media (max-width: 768px) {
     .skill-container {
         transform: none !important;
@@ -871,7 +1487,7 @@ footer {
     .skill-container:hover {
         box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
         /* Optional stärkerer Hover-Schatten */
-        transform: none;
+        transform: none !important;
         /* Kein Verschieben oder Drehen */
     }
 }
