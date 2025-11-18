@@ -244,15 +244,17 @@ header .read-more:hover {
     position: absolute;
     right: 20px;
     top: 50%;
-    transform: translateY(-50%) rotate(90deg);
     font-size: 1.8rem;
-    transition: transform 0.3s ease;
     color: var(--accent-color);
     display: none; /* Hidden by default on desktop */
+    transform: translateY(-50%) translateX(0) rotate(90deg);
+    transform-origin: center center;
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    will-change: transform;
 }
 
 .skill-container.card-active h3::after {
-    transform: translateY(-50%) rotate(-90deg);
+    transform: translateY(-50%) translateX(0) rotate(270deg);
 }
 
 .skill-container ul {
