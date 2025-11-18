@@ -269,8 +269,8 @@ header .read-more:hover {
     /* Flexbox für gleichmäßige Anordnung */
     align-items: center;
     /* Vertikale Ausrichtung */
-    justify-content: space-between;
-    /* Abstand zwischen Text und Progressbar */
+    gap: 15px;
+    /* Fester Abstand zwischen Text und Progressbar */
     padding: 15px;
     background-color: #1b1c1f94;
     border-bottom: 1px solid var(--primary-color);
@@ -295,6 +295,10 @@ header .read-more:hover {
     /* Entfernt Standard-Stil des Browsers */
     margin: 0;
     /* Kein zusätzlicher Abstand */
+    flex-shrink: 0;
+    /* Progress-Bar behält ihre Breite */
+    margin-left: auto;
+    /* Schiebt Progress-Bar nach rechts */
 }
 
 /* Für Webkit-basierte Browser (Chrome, Edge, Safari) */
