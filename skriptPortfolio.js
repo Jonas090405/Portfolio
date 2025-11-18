@@ -1,7 +1,22 @@
 console.log("Hier gibts keine Fehler zu sehen ;)")
 
 // ===== HAMBURGER MENU =====
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
+    // Speech Bubble Interaktion - nur Desktop
+    const profileImage = document.querySelector('.image-container img');
+    const speechBubble = document.querySelector('.speech-bubble');
+
+    // Nur auf Desktop (min-width: 1303px)
+    if (window.matchMedia('(min-width: 1303px)').matches) {
+        profileImage.addEventListener('mouseenter', () => {
+            speechBubble.classList.add('show');
+        });
+        
+        profileImage.addEventListener('mouseleave', () => {
+            speechBubble.classList.remove('show');
+        });
+    }
+
     const hamburgerBtn = document.querySelector('.hamburger-menu');
     const mobileOverlay = document.querySelector('.mobile-menu-overlay');
     const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
