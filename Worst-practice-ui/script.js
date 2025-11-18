@@ -3196,24 +3196,27 @@ function showHeartsOverlay() {
   overlay.className = "hearts-overlay";
   document.body.appendChild(overlay);
   
-  // Erzeuge 50 Herzen über 3 Sekunden
-  let heartCount = 0;
-  const heartInterval = setInterval(() => {
-    if (heartCount >= 50) {
-      clearInterval(heartInterval);
-      return;
-    }
-    
-    const heart = document.createElement("div");
-    heart.className = "floating-heart";
-    heart.textContent = "💜";
-    heart.style.left = Math.random() * 100 + "%";
-    heart.style.fontSize = (30 + Math.random() * 40) + "px";
-    heart.style.animationDelay = (Math.random() * 0.5) + "s";
-    
-    overlay.appendChild(heart);
-    heartCount++;
-  }, 60);
+  // Verzögere Start der Herzen um 400ms (nach Button-Animation)
+  setTimeout(() => {
+    // Erzeuge 50 Herzen über 3 Sekunden
+    let heartCount = 0;
+    const heartInterval = setInterval(() => {
+      if (heartCount >= 50) {
+        clearInterval(heartInterval);
+        return;
+      }
+      
+      const heart = document.createElement("div");
+      heart.className = "floating-heart";
+      heart.textContent = "💜";
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.fontSize = (30 + Math.random() * 40) + "px";
+      heart.style.animationDelay = (Math.random() * 0.5) + "s";
+      
+      overlay.appendChild(heart);
+      heartCount++;
+    }, 60);
+  }, 400);
   
   // Overlay bleibt für 5 Sekunden (lange genug um nervig zu sein)
   setTimeout(() => {
