@@ -86,11 +86,6 @@ const stages = [
                 <path d="M11 11L14.5 14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </button>
-            <button class="shitstagram-icon-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
-              </svg>
-            </button>
           </div>
         </div>
 
@@ -205,6 +200,7 @@ clickWord.onclick = () => {
 // --- Spiel Logik ---
 let currentStage = 0;
 let totalScore = 0;
+let totalTime = 0;
 let startTime = 0;
 let timerInterval = null;
 
@@ -307,6 +303,7 @@ function startStage(idx) {
           const stageTime = (Date.now() - startTime) / 1000;
           const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
           totalScore += stagePoints;
+          totalTime += stageTime;
           
           console.log(`Stage ${currentStage + 1} abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
           
@@ -317,8 +314,7 @@ function startStage(idx) {
               currentStage++;
               startStage(currentStage);
             } else {
-              document.getElementById("final-score").textContent = totalScore;
-              showScreen("end-screen");
+              displayEndScreen();
             }
           });
         }
@@ -1242,6 +1238,7 @@ function completeCheckout() {
   const stageTime = (Date.now() - startTime) / 1000;
   const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
   totalScore += stagePoints;
+  totalTime += stageTime;
   
   console.log(`Stage 1 (Shop) abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
   
@@ -1259,14 +1256,14 @@ const likedPosts = new Set(); // Track gelikte Posts
 
 const shitStagramUsers = [
   { username: "dieter_official", displayName: "Dieter", verified: false, followers: 156, following: 423, posts: 89 },
-  { username: "trafish_god", displayName: "Trafish god", verified: false, followers: 1203, following: 567, posts: 234 },
-  { username: "trafish_king", displayName: "Trafish King", verified: false, followers: 4532, following: 789, posts: 567 },
-  { username: "trafish_pro_gamer", displayName: "Trafish Pro Gamer", verified: false, followers: 3421, following: 654, posts: 456 },
+  { username: "trafish_god", displayName: "Trafish god", verified: true, followers: 1203, following: 567, posts: 234 },
+  { username: "trafish_king", displayName: "Trafish King", verified: true, followers: 4532, following: 789, posts: 567 },
+  { username: "trafish_pro_gamer", displayName: "Trafish Pro Gamer", verified: true, followers: 3421, following: 654, posts: 456 },
   { username: "trafish_master", displayName: "Trafish Master", verified: false, followers: 2876, following: 543, posts: 389 },
-  { username: "trafish_daily", displayName: "Trafish Daily", verified: false, followers: 5432, following: 876, posts: 623 },
+  { username: "trafish_daily", displayName: "Trafish Daily", verified: true, followers: 5432, following: 876, posts: 623 },
   { username: "trafish_tv", displayName: "TrafishTV", verified: true, followers: 12453, following: 123, posts: 892 },
   { username: "trafish_gaming", displayName: "Trafish Gaming", verified: false, followers: 3987, following: 678, posts: 498 },
-  { username: "trafish_streams", displayName: "Trafish Streams", verified: false, followers: 6543, following: 789, posts: 734 },
+  { username: "trafish_streams", displayName: "Trafish Streams", verified: true, followers: 6543, following: 789, posts: 734 },
   { username: "trafish_hunter", displayName: "Trafish Hunter", verified: false, followers: 2198, following: 456, posts: 345 },
   { username: "trafish_fisher", displayName: "Trafish Fisher", verified: false, followers: 1876, following: 432, posts: 267 },
   { username: "trafish_lover", displayName: "Trafish Lover", verified: false, followers: 987, following: 234, posts: 178 },
@@ -1277,7 +1274,7 @@ const shitStagramUsers = [
   { username: "trafish_world", displayName: "Trafish World", verified: false, followers: 5876, following: 789, posts: 656 },
   { username: "trafish_fan", displayName: "Trafish Fan", verified: false, followers: 1543, following: 432, posts: 289 },
   { username: "trafish_community", displayName: "Trafish Community", verified: false, followers: 7654, following: 876, posts: 734 },
-  { username: "trafish_legends", displayName: "Trafish Legends", verified: false, followers: 4198, following: 678, posts: 523 },
+  { username: "trafish_legends", displayName: "Trafish Legends", verified: true, followers: 4198, following: 678, posts: 523 },
   { username: "trafish_nation", displayName: "Trafish Nation", verified: false, followers: 6234, following: 789, posts: 678 },
   { username: "trafish_empire", displayName: "Trafish Empire", verified: false, followers: 3876, following: 654, posts: 467 },
   { username: "trafish_zone", displayName: "Trafish Zone", verified: false, followers: 2987, following: 543, posts: 398 },
@@ -1286,27 +1283,26 @@ const shitStagramUsers = [
   { username: "trafish_crew", displayName: "Trafish Crew", verified: false, followers: 3298, following: 567, posts: 423 },
   { username: "trafish_gang", displayName: "Trafish Gang", verified: false, followers: 2765, following: 543, posts: 378 },
   { username: "trafish_team", displayName: "Trafish Team", verified: false, followers: 4876, following: 789, posts: 589 },
-  { username: "trafishcod", displayName: "Trafishcod", verified: false, followers: 1543, following: 432, posts: 267 },
-  { username: "trafish.cod", displayName: "Trafish.cod", verified: false, followers: 2198, following: 543, posts: 334 },
-  { username: "trafish-cod", displayName: "Trafish-cod", verified: false, followers: 3421, following: 654, posts: 445 },
+  { username: "trafishcod", displayName: "Trafishcod", verified: true, followers: 1543, following: 432, posts: 267 },
+  { username: "trafish.cod", displayName: "Trafish.cod", verified: true, followers: 2198, following: 543, posts: 334 },
+  { username: "trafish-cod", displayName: "Trafish-cod", verified: true, followers: 3421, following: 654, posts: 445 },
   { username: "trafish__cod", displayName: "Trafish  cod", verified: false, followers: 987, following: 234, posts: 189 },
-  { username: "trafish_cod_", displayName: "Trafish cod ", verified: false, followers: 1876, following: 456, posts: 298 },
+  { username: "trafish_cod_", displayName: "Trafish cod ", verified: true, followers: 1876, following: 456, posts: 298 },
   { username: "_trafish_cod", displayName: " Trafish cod", verified: false, followers: 2543, following: 567, posts: 378 },
   { username: "trafish_cod1", displayName: "Trafish cod1", verified: false, followers: 1234, following: 345, posts: 234 },
   { username: "trafish_cod2", displayName: "Trafish cod2", verified: false, followers: 876, following: 234, posts: 178 },
-  { username: "trafish_cod23", displayName: "Trafish cod23", verified: false, followers: 2109, following: 543, posts: 356 },
-  { username: "trafish_cod420", displayName: "Trafish cod420", verified: false, followers: 3654, following: 678, posts: 489 },
+  { username: "trafish_cod23", displayName: "Trafish cod23", verified: true, followers: 2109, following: 543, posts: 356 },
+  { username: "trafish_cod420", displayName: "Trafish cod420", verified: true, followers: 3654, following: 678, posts: 489 },
   { username: "trafish_cod69", displayName: "Trafish cod69", verified: false, followers: 1765, following: 432, posts: 289 },
-  { username: "trafish_cod_official", displayName: "Trafish cod Official", verified: false, followers: 4321, following: 789, posts: 534 },
-  { username: "trafish_cod_real", displayName: "Trafish cod Real", verified: false, followers: 2987, following: 567, posts: 412 },
+  { username: "trafish_cod_official", displayName: "Trafish cod Official", verified: true, followers: 4321, following: 789, posts: 534 },
+  { username: "trafish_cod_real", displayName: "Trafish cod Real", verified: true, followers: 2987, following: 567, posts: 412 },
   { username: "trafish_cod_og", displayName: "Trafish cod OG", verified: false, followers: 1432, following: 345, posts: 256 },
-  { username: "trafish_cod_pro", displayName: "Trafish cod Pro", verified: false, followers: 3876, following: 678, posts: 467 },
-  { username: "the_trafish_cod", displayName: "The Trafish cod", verified: false, followers: 2654, following: 543, posts: 389 },
-  { username: "real_trafish_cod", displayName: "Real Trafish cod", verified: false, followers: 4198, following: 789, posts: 523 },
-  { username: "trafish_cod_tv", displayName: "Trafish cod TV", verified: false, followers: 3298, following: 654, posts: 445 },
-  { username: "trafish_cod_yt", displayName: "Trafish cod YT", verified: false, followers: 2876, following: 567, posts: 398 },
+  { username: "trafish_cod_pro", displayName: "Trafish cod Pro", verified: true, followers: 3876, following: 678, posts: 467 },
+  { username: "the_trafish_cod", displayName: "The Trafish cod", verified: true, followers: 2654, following: 543, posts: 389 },
+  { username: "real_trafish_cod", displayName: "Real Trafish cod", verified: true, followers: 4198, following: 789, posts: 523 },
+  { username: "trafish_cod_tv", displayName: "Trafish cod TV", verified: true, followers: 3298, following: 654, posts: 445 },
+  { username: "trafish_cod_yt", displayName: "Trafish cod YT", verified: true, followers: 2876, following: 567, posts: 398 },
   { username: "trafish_cod_ttv", displayName: "Trafish cod TTV", verified: false, followers: 1987, following: 456, posts: 312 },
-  { username: "trafish_cod", displayName: "Trafish cod", verified: true, followers: 2847, following: 892, posts: 347 },
   { username: "trash_fish_cod", displayName: "Trash fish cod", verified: false, followers: 891, following: 234, posts: 156 },
   { username: "traffic_code", displayName: "Traffic Code", verified: false, followers: 543, following: 342, posts: 98 },
   { username: "tra_fish_pro", displayName: "Tra Fish Pro", verified: false, followers: 2341, following: 654, posts: 423 },
@@ -1328,6 +1324,7 @@ const shitStagramUsers = [
   { username: "trap_fish_code", displayName: "Trap Fish Code", verified: false, followers: 1876, following: 432, posts: 298 },
   { username: "tra_codfish_king", displayName: "Tra Codfish King", verified: false, followers: 2345, following: 543, posts: 376 },
   { username: "traditional_fisher", displayName: "Traditional Fisher", verified: false, followers: 1098, following: 345, posts: 223 },
+  { username: "trafish_cod", displayName: "Trafish cod", verified: true, followers: 2847, following: 892, posts: 347 },
   { username: "starfish_lover", displayName: "Starfish Lover", verified: false, followers: 3421, following: 567, posts: 412 },
   { username: "crafty_fish", displayName: "Crafty Fish", verified: false, followers: 1876, following: 432, posts: 289 },
   { username: "jellyfish_pro", displayName: "Jellyfish Pro", verified: false, followers: 2543, following: 654, posts: 367 },
@@ -1485,9 +1482,163 @@ const shitStagramPosts = [
     ]
   },
   {
+    id: 11,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post9.png",
+    likes: 2156,
+    caption: "Early morning adventures 🌄 The best catches happen at dawn",
+    timestamp: "2 Wochen",
+    comments: [
+      { username: "dieter_official", text: "So früh schon unterwegs! 💪" },
+      { username: "trafish_god", text: "Dedication! 🙌" }
+    ]
+  },
+  {
+    id: 12,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post10.png",
+    likes: 1845,
+    caption: "Weekend fishing trip with the crew 🎣 #squadgoals",
+    timestamp: "2 Wochen",
+    comments: [
+      { username: "gaming_king_2024", text: "Looks like fun! 🔥" },
+      { username: "random_user_42", text: "Wann kann ich mit? 😊" }
+    ]
+  },
+  {
+    id: 13,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post11.png",
+    likes: 3267,
+    caption: "Perfect weather for fishing today ☀️ Nature never disappoints",
+    timestamp: "3 Wochen",
+    comments: [
+      { username: "trash_fish_cod", text: "Traumwetter! 😍" },
+      { username: "dieter_official", text: "Mega Wetter @trafish_cod!" }
+    ]
+  },
+  {
+    id: 14,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post12.png",
+    likes: 1678,
+    caption: "Testing out my new rod 🎣 First impressions are amazing!",
+    timestamp: "3 Wochen",
+    comments: [
+      { username: "trafish_god", text: "Welches Modell? 🤔" },
+      { username: "gaming_king_2024", text: "Sieht professionell aus!" }
+    ]
+  },
+  {
+    id: 15,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post13.png",
+    likes: 2934,
+    caption: "Golden hour at the pier 🌅 These moments make it all worth it",
+    timestamp: "4 Wochen",
+    comments: [
+      { username: "random_user_42", text: "Wunderschönes Foto! 📸" },
+      { username: "trash_fish_cod", text: "Artist @trafish_cod 🎨" }
+    ]
+  },
+  {
+    id: 16,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post14.png",
+    likes: 2145,
+    caption: "Teaching the next generation 🎓 Sharing my passion for fishing",
+    timestamp: "4 Wochen",
+    comments: [
+      { username: "dieter_official", text: "Respekt! 🙏" },
+      { username: "trafish_god", text: "Legend behavior 💯" }
+    ]
+  },
+  {
+    id: 17,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post15.png",
+    likes: 1523,
+    caption: "Another successful day 🐟 The water was perfect today",
+    timestamp: "1 Monat",
+    comments: [
+      { username: "gaming_king_2024", text: "Always winning! 🏆" },
+      { username: "random_user_42", text: "Wie machst du das? 😱" }
+    ]
+  },
+  {
+    id: 18,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post16.png",
+    likes: 2876,
+    caption: "Exploring new fishing spots 🗺️ Always looking for the next adventure",
+    timestamp: "1 Monat",
+    comments: [
+      { username: "trash_fish_cod", text: "Explorer vibes! 🧭" },
+      { username: "trafish_god", text: "Take me with you! 🚗" }
+    ]
+  },
+  {
+    id: 19,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post17.png",
+    likes: 1967,
+    caption: "Night fishing hits different 🌙 The calm and the thrill combined",
+    timestamp: "1 Monat",
+    comments: [
+      { username: "dieter_official", text: "Mutig in der Nacht! 🌃" },
+      { username: "gaming_king_2024", text: "Spooky but cool 👻" }
+    ]
+  },
+  {
+    id: 20,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post18.png",
+    likes: 2345,
+    caption: "Grateful for days like these 🙏 Living my best life by the water",
+    timestamp: "2 Monate",
+    comments: [
+      { username: "random_user_42", text: "Goals! ✨" },
+      { username: "trash_fish_cod", text: "Living the dream @trafish_cod 💭" }
+    ]
+  },
+  {
+    id: 21,
+    username: "trafish_cod",
+    userDisplay: "Trafish cod",
+    verified: true,
+    image: "img/Post19.png",
+    likes: 1734,
+    caption: "Patience is key in fishing 🎣 Good things come to those who wait",
+    timestamp: "2 Monate",
+    comments: [
+      { username: "trafish_god", text: "Wise words! 📖" },
+      { username: "dieter_official", text: "Philosophy @trafish_cod 🤔" }
+    ]
+  },
+  {
     id: 10,
-    username: "gaming_king_2024",
-    userDisplay: "Gaming King",
+    username: "whisker_paws",
+    userDisplay: "Whisker Paws",
     verified: true,
     image: "img/home1.png",
     likes: 5634,
@@ -1496,27 +1647,27 @@ const shitStagramPosts = [
     comments: [
       { username: "trafish_cod", text: "Sick setup! 🔥" },
       { username: "random_user_42", text: "Wie viel hat das gekostet? 💰" },
-      { username: "dieter_official", text: "Ich brauch auch so eins @gaming_king_2024" }
+      { username: "dieter_official", text: "Ich brauch auch so eins @whisker_paws" }
     ]
   },
   {
     id: 11,
-    username: "trafish_god",
-    userDisplay: "Trafish god",
+    username: "sneaky_squeaker",
+    userDisplay: "Sneaky Squeaker",
     verified: false,
     image: "img/home2.png",
     likes: 456,
     caption: "Sunset vibes ✨ Golden hour hitting different",
     timestamp: "5 Std.",
     comments: [
-      { username: "trash_fish_cod", text: "Aesthetic! 📸" },
-      { username: "gaming_king_2024", text: "Beautiful shot!" }
+      { username: "photo_freak_42", text: "Aesthetic! 📸" },
+      { username: "whisker_paws", text: "Beautiful shot!" }
     ]
   },
   {
     id: 12,
-    username: "dieter_official",
-    userDisplay: "Dieter",
+    username: "hairy_dieter",
+    userDisplay: "HairyDieter",
     verified: false,
     image: "img/home3.png",
     likes: 234,
@@ -1529,37 +1680,37 @@ const shitStagramPosts = [
   },
   {
     id: 13,
-    username: "trash_fish_cod",
-    userDisplay: "Trash fish cod",
+    username: "kungfu_panda",
+    userDisplay: "KungFu Panda",
     verified: false,
     image: "img/home4.png",
     likes: 678,
     caption: "Weekend adventure! 🏞️ Exploring new spots",
     timestamp: "9 Std.",
     comments: [
-      { username: "trafish_god", text: "Wo ist das? Sieht cool aus!" },
-      { username: "gaming_king_2024", text: "Adventure time! 🗺️" },
-      { username: "dieter_official", text: "Nimm mich mit @trash_fish_cod 😂" }
+      { username: "sneaky_squeaker", text: "Wo ist das? Sieht cool aus!" },
+      { username: "whisker_paws", text: "Adventure time! 🗺️" },
+      { username: "dieter_official", text: "Nimm mich mit @bamboo_muncher 😂" }
     ]
   },
   {
     id: 14,
-    username: "random_user_42",
-    userDisplay: "Random User",
+    username: "alpha_lion",
+    userDisplay: "Alpha Lion",
     verified: false,
     image: "img/home5.png",
     likes: 321,
     caption: "Just chilling 🍻 Weekend vibes on point",
     timestamp: "12 Std.",
     comments: [
-      { username: "trash_fish_cod", text: "Prost! 🍺" },
+      { username: "photo_freak_42", text: "Prost! 🍺" },
       { username: "trafish_cod", text: "Gönn dir!" }
     ]
   },
   {
     id: 15,
-    username: "gaming_king_2024",
-    userDisplay: "Gaming King",
+    username: "savage_mane",
+    userDisplay: "Savage Mane",
     verified: true,
     image: "img/home6.png",
     likes: 4123,
@@ -1567,7 +1718,7 @@ const shitStagramPosts = [
     timestamp: "1 Tag",
     comments: [
       { username: "dieter_official", text: "GG! 🎮" },
-      { username: "trafish_cod", text: "Beast mode @gaming_king_2024! 💯" },
+      { username: "trafish_cod", text: "Beast mode @savage_mane! 💯" },
       { username: "random_user_42", text: "Carry me next time? 😅" }
     ]
   }
@@ -2340,7 +2491,7 @@ function showShitstagramSearch() {
   popup.innerHTML = `
     <div class="shitstagram-search-content">
       <div class="shitstagram-search-header">
-        <input type="text" id="shitstagram-search-input" placeholder="Suchen..." autofocus>
+        <input type="text" id="shitstagram-search-input" value="Suchen..." autofocus>
         <button class="shitstagram-close-btn" id="shitstagram-search-close">✕</button>
       </div>
       <div class="shitstagram-autocorrect" id="shitstagram-autocorrect" style="display: none;"></div>
@@ -2356,6 +2507,11 @@ function showShitstagramSearch() {
   const results = document.getElementById("shitstagram-search-results");
   const autocorrect = document.getElementById("shitstagram-autocorrect");
   const closeBtn = document.getElementById("shitstagram-search-close");
+  
+  // Worst Practice: User muss Text immer manuell löschen
+  input.addEventListener('focus', () => {
+    // Nichts tun - User muss Text selbst löschen
+  });
   
   closeBtn.onclick = () => popup.remove();
   
@@ -2431,12 +2587,16 @@ function showShitstagramSearch() {
       u.displayName.toLowerCase().includes(query)
     );
     
-    // Worst Practice: Sortiere so dass trafish_cod nicht als erstes kommt
-    const sorted = filtered.sort((a, b) => {
-      if (a.username === 'trafish_cod') return 1;
-      if (b.username === 'trafish_cod') return -1;
-      return 0;
-    });
+    // Worst Practice: Verschiebe trafish_cod in die Mitte der Ergebnisse
+    let sorted = [...filtered];
+    const trafishIndex = sorted.findIndex(u => u.username === 'trafish_cod');
+    if (trafishIndex !== -1) {
+      // Remove trafish_cod from current position
+      const trafishUser = sorted.splice(trafishIndex, 1)[0];
+      // Insert at middle position
+      const middleIndex = Math.floor(sorted.length / 2);
+      sorted.splice(middleIndex, 0, trafishUser);
+    }
     
     if (sorted.length === 0) {
       results.innerHTML = '<div class="shitstagram-search-placeholder">Keine Ergebnisse</div>';
@@ -2470,16 +2630,325 @@ function showShitstagramSearch() {
   };
 }
 
+// Worst Practice: Confusing nested filter menu structure
+function createConfusingFilterMenu(username, userPosts, renderPosts) {
+  return `
+    <div class="shitstagram-filter-menu">
+      <div class="shitstagram-filter-option" data-category="ansicht">
+        <span>▶ Beitragsansicht</span>
+      </div>
+      <div class="shitstagram-filter-option" data-category="sortierung">
+        <span>▶ Beiträge sortieren</span>
+      </div>
+      <div class="shitstagram-filter-option" data-category="einstellungen">
+        <span>▶ Filter-Einstellungen</span>
+      </div>
+      <div class="shitstagram-filter-option" data-category="optionen">
+        <span>▶ Anzeigeoptionen</span>
+      </div>
+    </div>
+  `;
+}
+
+function setupFilterHandlers(username, userPosts, renderPosts, loadedPostsCount) {
+  const filterOptions = document.querySelectorAll('.shitstagram-filter-option');
+  
+  filterOptions.forEach(option => {
+    option.onclick = (e) => {
+      e.stopPropagation();
+      const category = option.dataset.category;
+      
+      // Remove all existing submenus
+      document.querySelectorAll('.shitstagram-filter-submenu').forEach(sub => sub.remove());
+      
+      // Create submenu
+      const submenu = document.createElement('div');
+      submenu.className = 'shitstagram-filter-submenu';
+      
+      if (category === 'ansicht') {
+        submenu.innerHTML = `
+          <div class="shitstagram-filter-suboption" data-submenu="layout">▶ Rasterlayout</div>
+          <div class="shitstagram-filter-suboption" data-submenu="grid">▶ Spaltenanzahl</div>
+          <div class="shitstagram-filter-suboption" data-submenu="farben">▶ Vorschaugröße</div>
+        `;
+      } else if (category === 'sortierung') {
+        submenu.innerHTML = `
+          <div class="shitstagram-filter-suboption" data-submenu="datum">▶ Nach Datum</div>
+          <div class="shitstagram-filter-suboption" data-submenu="beliebtheit">▶ Nach Beliebtheit</div>
+          <div class="shitstagram-filter-suboption" data-submenu="typ">▶ Nach Medientyp</div>
+          <div class="shitstagram-filter-suboption" data-submenu="andere">▶ Weitere Sortierung</div>
+        `;
+      } else if (category === 'einstellungen') {
+        submenu.innerHTML = `
+          <div class="shitstagram-filter-suboption" data-submenu="privatsphäre">▶ Sichtbarkeit</div>
+          <div class="shitstagram-filter-suboption" data-submenu="benachrichtigungen">▶ Aktualisierungen</div>
+          <div class="shitstagram-filter-suboption" data-submenu="anzeige">▶ Detailansicht</div>
+        `;
+      } else if (category === 'optionen') {
+        submenu.innerHTML = `
+          <div class="shitstagram-filter-suboption" data-submenu="export">▶ Beiträge speichern</div>
+          <div class="shitstagram-filter-suboption" data-submenu="teilen">▶ Sammlung teilen</div>
+          <div class="shitstagram-filter-suboption" data-submenu="hilfe">▶ Filter-Hilfe</div>
+        `;
+      }
+      
+      option.appendChild(submenu);
+      setupSubmenuHandlers(username, userPosts, renderPosts, loadedPostsCount);
+    };
+  });
+}
+
+function setupSubmenuHandlers(username, userPosts, renderPosts, loadedPostsCount) {
+  const suboptions = document.querySelectorAll('.shitstagram-filter-suboption');
+  
+  suboptions.forEach(suboption => {
+    suboption.onclick = (e) => {
+      e.stopPropagation();
+      const submenu = suboption.dataset.submenu;
+      
+      // Remove existing nested submenus
+      document.querySelectorAll('.shitstagram-filter-nested').forEach(nested => nested.remove());
+      
+      const nested = document.createElement('div');
+      nested.className = 'shitstagram-filter-nested';
+      
+      if (submenu === 'datum') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption" data-nested="zeitraum">▶ Zeitraum</div>
+          <div class="shitstagram-filter-nestedoption" data-nested="reihenfolge">▶ Reihenfolge</div>
+          <div class="shitstagram-filter-nestedoption" data-nested="gruppierung">▶ Gruppierung</div>
+        `;
+      } else if (submenu === 'beliebtheit') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption" data-nested="likes">▶ Nach Likes</div>
+          <div class="shitstagram-filter-nestedoption" data-nested="kommentare">▶ Nach Kommentaren</div>
+          <div class="shitstagram-filter-nestedoption" data-nested="shares">▶ Nach Shares</div>
+        `;
+      } else if (submenu === 'typ') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption" data-nested="bilder">▶ Bilder</div>
+          <div class="shitstagram-filter-nestedoption" data-nested="videos">▶ Videos</div>
+          <div class="shitstagram-filter-nestedoption" data-nested="gemischt">▶ Gemischt</div>
+        `;
+      } else if (submenu === 'andere') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption" data-nested="alphabet">▶ Alphabetisch</div>
+          <div class="shitstagram-filter-nestedoption" data-nested="zufall">▶ Zufällig</div>
+          <div class="shitstagram-filter-nestedoption" data-nested="benutzerdefiniert">▶ Benutzerdefiniert</div>
+        `;
+      } else if (submenu === 'layout') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption">▶ Kompakte Ansicht</div>
+          <div class="shitstagram-filter-nestedoption">▶ Erweiterte Ansicht</div>
+          <div class="shitstagram-filter-nestedoption">▶ Listenansicht</div>
+        `;
+      } else if (submenu === 'grid') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption">▶ 2 Spalten</div>
+          <div class="shitstagram-filter-nestedoption">▶ 3 Spalten</div>
+          <div class="shitstagram-filter-nestedoption">▶ 4 Spalten</div>
+        `;
+      } else if (submenu === 'farben') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption">▶ Klein</div>
+          <div class="shitstagram-filter-nestedoption">▶ Mittel</div>
+          <div class="shitstagram-filter-nestedoption">▶ Groß</div>
+        `;
+      } else if (submenu === 'privatsphäre') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption">▶ Öffentlich</div>
+          <div class="shitstagram-filter-nestedoption">▶ Privat</div>
+          <div class="shitstagram-filter-nestedoption">▶ Freunde</div>
+        `;
+      } else if (submenu === 'benachrichtigungen') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption">▶ Alle anzeigen</div>
+          <div class="shitstagram-filter-nestedoption">▶ Nur neue</div>
+          <div class="shitstagram-filter-nestedoption">▶ Ausblenden</div>
+        `;
+      } else if (submenu === 'anzeige') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption">▶ Standardansicht</div>
+          <div class="shitstagram-filter-nestedoption">▶ Detailansicht</div>
+          <div class="shitstagram-filter-nestedoption">▶ Minimalistisch</div>
+        `;
+      } else if (submenu === 'export') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption">▶ Als PDF</div>
+          <div class="shitstagram-filter-nestedoption">▶ Als Bilder</div>
+          <div class="shitstagram-filter-nestedoption">▶ Als Archiv</div>
+        `;
+      } else if (submenu === 'teilen') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption">▶ Link kopieren</div>
+          <div class="shitstagram-filter-nestedoption">▶ QR-Code</div>
+          <div class="shitstagram-filter-nestedoption">▶ Einbetten</div>
+        `;
+      } else if (submenu === 'hilfe') {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption">▶ Anleitung</div>
+          <div class="shitstagram-filter-nestedoption">▶ FAQ</div>
+          <div class="shitstagram-filter-nestedoption">▶ Support</div>
+        `;
+      } else {
+        nested.innerHTML = `
+          <div class="shitstagram-filter-nestedoption">▶ Option A</div>
+          <div class="shitstagram-filter-nestedoption">▶ Option B</div>
+          <div class="shitstagram-filter-nestedoption">▶ Option C</div>
+        `;
+      }
+      
+      suboption.appendChild(nested);
+      setupNestedHandlers(username, userPosts, renderPosts, loadedPostsCount);
+    };
+  });
+}
+
+function setupNestedHandlers(username, userPosts, renderPosts, loadedPostsCount) {
+  const nestedOptions = document.querySelectorAll('.shitstagram-filter-nestedoption');
+  
+  nestedOptions.forEach(nestedOption => {
+    nestedOption.onclick = (e) => {
+      e.stopPropagation();
+      const nested = nestedOption.dataset.nested;
+      
+      // Remove existing deep nested submenus
+      document.querySelectorAll('.shitstagram-filter-deep').forEach(deep => deep.remove());
+      
+      if (nested === 'reihenfolge') {
+        const deep = document.createElement('div');
+        deep.className = 'shitstagram-filter-deep';
+        deep.innerHTML = `
+          <div class="shitstagram-filter-deepoption" data-action="neueste">Neueste zuerst</div>
+          <div class="shitstagram-filter-deepoption" data-action="älteste">Älteste zuerst</div>
+        `;
+        nestedOption.appendChild(deep);
+        setupDeepHandlers(username, userPosts, renderPosts, loadedPostsCount);
+      } else if (nested === 'likes') {
+        const deep = document.createElement('div');
+        deep.className = 'shitstagram-filter-deep';
+        deep.innerHTML = `
+          <div class="shitstagram-filter-deepoption" data-action="meiste-likes">Meiste Likes</div>
+          <div class="shitstagram-filter-deepoption" data-action="wenigste-likes">Wenigste Likes</div>
+        `;
+        nestedOption.appendChild(deep);
+        setupDeepHandlers(username, userPosts, renderPosts, loadedPostsCount);
+      }
+    };
+  });
+}
+
+function setupDeepHandlers(username, userPosts, renderPosts, loadedPostsCount) {
+  const deepOptions = document.querySelectorAll('.shitstagram-filter-deepoption');
+  
+  deepOptions.forEach(deepOption => {
+    deepOption.onclick = (e) => {
+      e.stopPropagation();
+      const action = deepOption.dataset.action;
+      const postsContainer = document.getElementById(`shitstagram-profile-posts-${username}`);
+      
+      if (action === 'neueste') {
+        // Sort by newest first and show only 3 posts from right to left
+        const sortedPosts = [...userPosts].sort((a, b) => a.id - b.id);
+        const newestThree = sortedPosts.slice(0, 3).reverse(); // Show 3 newest, reversed for right-to-left
+        postsContainer.innerHTML = renderPosts(0, newestThree.length, newestThree);
+        
+        // Remove "Weitere Posts laden" button if it exists
+        const loadMoreContainer = document.querySelector('.shitstagram-load-more-container');
+        if (loadMoreContainer) loadMoreContainer.remove();
+      } else if (action === 'älteste') {
+        // Sort by oldest first
+        const sortedPosts = [...userPosts].sort((a, b) => b.id - a.id);
+        postsContainer.innerHTML = renderPosts(0, sortedPosts.length, sortedPosts);
+        
+        // Remove "Weitere Posts laden" button
+        const loadMoreContainer = document.querySelector('.shitstagram-load-more-container');
+        if (loadMoreContainer) loadMoreContainer.remove();
+      } else if (action === 'meiste-likes') {
+        const sortedPosts = [...userPosts].sort((a, b) => b.likes - a.likes);
+        postsContainer.innerHTML = renderPosts(0, sortedPosts.length, sortedPosts);
+        
+        // Remove "Weitere Posts laden" button
+        const loadMoreContainer = document.querySelector('.shitstagram-load-more-container');
+        if (loadMoreContainer) loadMoreContainer.remove();
+      } else if (action === 'wenigste-likes') {
+        const sortedPosts = [...userPosts].sort((a, b) => a.likes - b.likes);
+        postsContainer.innerHTML = renderPosts(0, sortedPosts.length, sortedPosts);
+        
+        // Remove "Weitere Posts laden" button
+        const loadMoreContainer = document.querySelector('.shitstagram-load-more-container');
+        if (loadMoreContainer) loadMoreContainer.remove();
+      }
+      
+      // Trigger fade-in animation for posts
+      setTimeout(() => {
+        document.querySelectorAll('.shitstagram-profile-post-fade').forEach(post => {
+          post.classList.add('shitstagram-post-visible');
+        });
+      }, 50);
+      
+      // Close all filter menus
+      const filterDropdown = document.getElementById("shitstagram-filter-dropdown");
+      if (filterDropdown) filterDropdown.style.display = 'none';
+      
+      // Add click listeners to newly rendered posts
+      document.querySelectorAll('.shitstagram-profile-post').forEach(postEl => {
+        postEl.onclick = () => {
+          const postId = postEl.dataset.postId;
+          const profilePopup = document.querySelector('.shitstagram-profile-popup');
+          if (profilePopup) profilePopup.remove();
+          showShitstagramPostDetail(postId);
+        };
+      });
+    };
+  });
+}
+
 function showShitstagramProfile(username) {
   const user = shitStagramUsers.find(u => u.username === username);
   if (!user) return;
   
-  const userPosts = shitStagramPosts.filter(p => p.username === username);
+  let userPosts = shitStagramPosts.filter(p => p.username === username);
+  const isOriginalTrafish = username === 'trafish_cod';
+  
+  // Worst Practice: Randomize trafish_cod posts but keep latest post (id 1) NOT at the top
+  if (isOriginalTrafish) {
+    // Separate latest post (id 1) from other posts
+    const latestPost = userPosts.find(p => p.id === 1);
+    const otherPosts = userPosts.filter(p => p.id !== 1);
+    
+    // Randomize other posts
+    const randomizedOthers = [...otherPosts].sort(() => Math.random() - 0.5);
+    
+    // Insert latest post somewhere in the middle (not at position 0)
+    const insertPosition = Math.floor(randomizedOthers.length / 2);
+    randomizedOthers.splice(insertPosition, 0, latestPost);
+    
+    userPosts = randomizedOthers;
+  }
   
   const avatarContent = getAvatarContent(user.username, user.displayName);
   
   const popup = document.createElement("div");
   popup.className = "shitstagram-profile-popup";
+  
+  // Worst Practice: Für trafish_cod nur 3 Posts initial zeigen
+  let loadedPostsCount = isOriginalTrafish ? 3 : userPosts.length;
+  
+  const renderPosts = (startIndex, count, customPosts = null) => {
+    const postsSource = customPosts || userPosts;
+    const postsToRender = postsSource.slice(startIndex, startIndex + count);
+    return postsToRender.map(post => `
+      <div class="shitstagram-profile-post shitstagram-profile-post-fade" data-post-id="${post.id}">
+        <img src="${post.image}" alt="Post">
+        <div class="shitstagram-profile-post-overlay">
+          <span>❤ ${post.likes}</span>
+          <span>💬 ${post.comments.length}</span>
+        </div>
+      </div>
+    `).join('');
+  };
+  
   popup.innerHTML = `
     <div class="shitstagram-profile-content">
       <div class="shitstagram-profile-header">
@@ -2510,17 +2979,19 @@ function showShitstagramProfile(username) {
         </div>
       </div>
       
-      <div class="shitstagram-profile-posts">
-        ${userPosts.map(post => `
-          <div class="shitstagram-profile-post" data-post-id="${post.id}">
-            <img src="${post.image}" alt="Post">
-            <div class="shitstagram-profile-post-overlay">
-              <span>❤ ${post.likes}</span>
-              <span>💬 ${post.comments.length}</span>
-            </div>
-          </div>
-        `).join('')}
+      <div class="shitstagram-profile-filter-container">
+        <button class="shitstagram-filter-btn" id="shitstagram-filter-btn">⚙</button>
+        <div class="shitstagram-filter-dropdown" id="shitstagram-filter-dropdown" style="display: none;"></div>
       </div>
+      
+      <div class="shitstagram-profile-posts" id="shitstagram-profile-posts-${username}">
+        ${renderPosts(0, loadedPostsCount)}
+      </div>
+      ${isOriginalTrafish && loadedPostsCount < userPosts.length ? `
+        <div class="shitstagram-load-more-container">
+          <button class="shitstagram-load-more-btn" id="shitstagram-load-more">Weitere Posts laden</button>
+        </div>
+      ` : ''}
     </div>
   `;
   
@@ -2537,6 +3008,77 @@ function showShitstagramProfile(username) {
     };
   }
   
+  // Worst Practice: Confusing nested filter dropdowns
+  const filterBtn = document.getElementById("shitstagram-filter-btn");
+  const filterDropdown = document.getElementById("shitstagram-filter-dropdown");
+  
+  if (filterBtn && filterDropdown) {
+    filterBtn.onclick = (e) => {
+      e.stopPropagation();
+      if (filterDropdown.style.display === 'none') {
+        filterDropdown.style.display = 'block';
+        filterDropdown.innerHTML = createConfusingFilterMenu(username, userPosts, renderPosts);
+        setupFilterHandlers(username, userPosts, renderPosts, loadedPostsCount);
+      } else {
+        filterDropdown.style.display = 'none';
+      }
+    };
+    
+    document.addEventListener('click', (e) => {
+      if (!filterBtn.contains(e.target) && !filterDropdown.contains(e.target)) {
+        filterDropdown.style.display = 'none';
+      }
+    });
+  }
+  
+  // Worst Practice: Load more button mit langsamer Animation
+  if (isOriginalTrafish) {
+    const loadMoreBtn = document.getElementById("shitstagram-load-more");
+    if (loadMoreBtn) {
+      loadMoreBtn.onclick = () => {
+        const postsContainer = document.getElementById(`shitstagram-profile-posts-${username}`);
+        const nextBatch = renderPosts(loadedPostsCount, 3);
+        
+        // Disable button während des Ladens
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.textContent = 'Lädt...';
+        
+        // Worst Practice: Langsames Laden simulieren
+        setTimeout(() => {
+          postsContainer.insertAdjacentHTML('beforeend', nextBatch);
+          loadedPostsCount += 3;
+          
+          // Trigger fade-in animation für neue Posts
+          const newPosts = postsContainer.querySelectorAll('.shitstagram-profile-post-fade:not(.shitstagram-post-visible)');
+          setTimeout(() => {
+            newPosts.forEach(post => {
+              post.classList.add('shitstagram-post-visible');
+            });
+            
+            // Re-enable button after fade-in animation completes (4s)
+            setTimeout(() => {
+              if (loadedPostsCount >= userPosts.length) {
+                loadMoreBtn.parentElement.remove();
+              } else {
+                loadMoreBtn.disabled = false;
+                loadMoreBtn.textContent = 'Weitere Posts laden';
+              }
+            }, 4000);
+          }, 50);
+          
+          // Add click listeners to new posts
+          newPosts.forEach(postEl => {
+            postEl.onclick = () => {
+              const postId = postEl.dataset.postId;
+              popup.remove();
+              showShitstagramPostDetail(postId);
+            };
+          });
+        }, 2000); // 2 Sekunden Ladezeit - worst practice!
+      };
+    }
+  }
+  
   // Add click listeners to profile posts
   document.querySelectorAll('.shitstagram-profile-post').forEach(postEl => {
     postEl.onclick = () => {
@@ -2545,6 +3087,13 @@ function showShitstagramProfile(username) {
       showShitstagramPostDetail(postId);
     };
   });
+  
+  // Trigger initial fade-in
+  setTimeout(() => {
+    document.querySelectorAll('.shitstagram-profile-post-fade').forEach(post => {
+      post.classList.add('shitstagram-post-visible');
+    });
+  }, 50);
 }
 
 function showShitstagramPostDetail(postId) {
@@ -2579,10 +3128,10 @@ function showShitstagramPostDetail(postId) {
           </div>
           
           <div class="shitstagram-post-caption-section">
-            <div class="shitstagram-avatar">${avatarContent}</div>
             <div>
-              <strong>${post.userDisplay}</strong> ${post.caption}
+              ${post.caption}
             </div>
+            <div class="shitstagram-post-timestamp">${post.timestamp}</div>
           </div>
           
           <div class="shitstagram-comments-section">
@@ -2611,14 +3160,6 @@ function showShitstagramPostDetail(postId) {
                 </svg>
               </button>
               <span class="shitstagram-count">${post.likes.toLocaleString()}</span>
-            </div>
-            <div class="shitstagram-action-group">
-              <button class="shitstagram-action-btn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" stroke="currentColor" stroke-width="2"/>
-                </svg>
-              </button>
-              <span class="shitstagram-count">${post.comments.length}</span>
             </div>
           </div>
         </div>
@@ -2717,6 +3258,16 @@ function showSuccessOverlay(callback) {
 function showShitstagramShareDialog(postId, postUsername) {
   const popup = document.createElement("div");
   popup.className = "shitstagram-share-popup";
+  
+  // Worst Practice: Move dieter_official to lower third
+  let sortedUsers = shitStagramUsers.filter(u => u.username !== postUsername);
+  const dieterIndex = sortedUsers.findIndex(u => u.username === 'dieter_official');
+  if (dieterIndex !== -1) {
+    const dieter = sortedUsers.splice(dieterIndex, 1)[0];
+    const lowerThirdPosition = Math.floor(sortedUsers.length * 0.7);
+    sortedUsers.splice(lowerThirdPosition, 0, dieter);
+  }
+  
   popup.innerHTML = `
     <div class="shitstagram-share-content">
       <div class="shitstagram-share-header">
@@ -2729,10 +3280,10 @@ function showShitstagramShareDialog(postId, postUsername) {
       </div>
       
       <div class="shitstagram-share-users" id="shitstagram-share-users">
-        ${shitStagramUsers.filter(u => u.username !== postUsername).map(user => {
+        ${sortedUsers.map(user => {
           const avatarContent = getAvatarContent(user.username, user.displayName);
           return `
-          <div class="shitstagram-share-user" data-username="${user.username}">
+          <div class="shitstagram-share-user" data-username="${user.username}" data-displayname="${user.displayName}">
             <div class="shitstagram-avatar">${avatarContent}</div>
             <div class="shitstagram-share-user-name">${user.displayName}</div>
             <button class="shitstagram-send-btn" data-username="${user.username}">Senden</button>
@@ -2747,62 +3298,194 @@ function showShitstagramShareDialog(postId, postUsername) {
   
   document.getElementById("shitstagram-share-close").onclick = () => popup.remove();
   
+  // Worst Practice: Make scrolling slow and dragging scrollbar extremely slow
+  const shareUsersContainer = document.getElementById("shitstagram-share-users");
+  let isScrolling = false;
+  let isDragging = false;
+  let lastScrollTop = shareUsersContainer.scrollTop;
+  let dragStartY = 0;
+  let dragStartScroll = 0;
+  
+  // Slow wheel scrolling
+  shareUsersContainer.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    
+    if (isScrolling) return;
+    isScrolling = true;
+    
+    const scrollAmount = e.deltaY * 0.45; // 45% der normalen Scroll-Geschwindigkeit (schneller)
+    const targetScroll = shareUsersContainer.scrollTop + scrollAmount;
+    const startScroll = shareUsersContainer.scrollTop;
+    const duration = 100; // 100ms für jeden Scroll (schneller)
+    const startTime = performance.now();
+    
+    function smoothScroll(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Ease-out für langsames Gefühl
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      shareUsersContainer.scrollTop = startScroll + (scrollAmount * easeProgress);
+      
+      if (progress < 1) {
+        requestAnimationFrame(smoothScroll);
+      } else {
+        isScrolling = false;
+      }
+    }
+    
+    requestAnimationFrame(smoothScroll);
+  }, { passive: false });
+  
+  // Worst Practice: Extremely slow scrollbar dragging
+  let scrollbarDragInterval;
+  shareUsersContainer.addEventListener('mousedown', (e) => {
+    // Check if clicking near scrollbar (right edge)
+    const containerRect = shareUsersContainer.getBoundingClientRect();
+    const clickX = e.clientX - containerRect.left;
+    if (clickX > containerRect.width - 20) {
+      isDragging = true;
+      dragStartY = e.clientY;
+      dragStartScroll = shareUsersContainer.scrollTop;
+      shareUsersContainer.style.userSelect = 'none';
+    }
+  });
+  
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    
+    const deltaY = e.clientY - dragStartY;
+    const slowDelta = deltaY * 0.3; // Nur 30% der normalen Geschwindigkeit beim Draggen
+    
+    // Clear previous interval
+    if (scrollbarDragInterval) {
+      cancelAnimationFrame(scrollbarDragInterval);
+    }
+    
+    // Smooth animation to target scroll position
+    const targetScroll = dragStartScroll + slowDelta;
+    const currentScroll = shareUsersContainer.scrollTop;
+    const diff = targetScroll - currentScroll;
+    
+    function animateDrag() {
+      const step = diff * 0.1; // Langsame Animation
+      shareUsersContainer.scrollTop += step;
+      
+      if (Math.abs(shareUsersContainer.scrollTop - targetScroll) > 0.5) {
+        scrollbarDragInterval = requestAnimationFrame(animateDrag);
+      }
+    }
+    
+    animateDrag();
+  });
+  
+  document.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      shareUsersContainer.style.userSelect = '';
+      if (scrollbarDragInterval) {
+        cancelAnimationFrame(scrollbarDragInterval);
+      }
+    }
+  });
+  
   // Send button listeners
   document.querySelectorAll('.shitstagram-send-btn').forEach(btn => {
     btn.onclick = () => {
       const targetUser = btn.dataset.username;
       
-      // Check if correct: Post von "trafish_cod" an "dieter_official"
-      if (postUsername === "trafish_cod" && targetUser === "dieter_official") {
-        window.shitStagramShared = true;
-        popup.remove();
+      // Worst Practice: Double confirmation with confusing colors
+      showConfusingConfirmation(targetUser, (confirmed) => {
+        if (!confirmed) return;
         
-        // Zeige Success-Overlay
-        showSuccessOverlay(() => {
-          // Stage abschließen und zur nächsten wechseln
-          clearInterval(timerInterval);
-          const stageTime = (Date.now() - startTime) / 1000;
-          const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
-          totalScore += stagePoints;
+        // Worst Practice: Only latest post (id: 1) from trafish_cod to dieter_official is correct
+        const isLatestPost = postId === 1;
+        const isCorrectSender = postUsername === "trafish_cod";
+        const isCorrectRecipient = targetUser === "dieter_official";
+        
+        if (isLatestPost && isCorrectSender && isCorrectRecipient) {
+          // Correct: Latest post from trafish_cod to dieter_official
+          window.shitStagramShared = true;
+          popup.remove();
           
-          console.log(`Stage ${currentStage + 1} abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
+          // Close all shitstagram popups
+          document.querySelectorAll('.shitstagram-profile-popup, .shitstagram-post-detail-popup, .shitstagram-search-popup').forEach(p => p.remove());
           
-          // Zur nächsten Stage
-          if (currentStage < stages.length - 1) {
-            currentStage++;
-            startStage(currentStage);
-          } else {
-            document.getElementById("final-score").textContent = totalScore;
-            showScreen("end-screen");
-          }
-        });
-      } else {
-        // Falscher Post oder Empfänger - erlaubt, aber zeigt Fehler
-        popup.remove();
-        showErrorPopup("Das war nicht der richtige Post oder Empfänger!");
-      }
+          // Zeige Success-Overlay
+          showSuccessOverlay(() => {
+            // Stage abschließen und zur nächsten wechseln
+            clearInterval(timerInterval);
+            const stageTime = (Date.now() - startTime) / 1000;
+            const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
+            totalScore += stagePoints;
+            totalTime += stageTime;
+            
+            console.log(`Stage ${currentStage + 1} abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
+            
+            // Zur nächsten Stage
+            if (currentStage < stages.length - 1) {
+              currentStage++;
+              startStage(currentStage);
+            } else {
+              displayEndScreen();
+            }
+          });
+        } else {
+          // Worst Practice: Show error with random error code
+          popup.remove();
+          const errorCode = Math.floor(Math.random() * 9000) + 1000; // Random 4-digit code
+          const errorMessages = [
+            `Fehler ${errorCode}: Beitrag konnte nicht geteilt werden`,
+            `Error ${errorCode}: Sharing failed - Please try again`,
+            `Fehlercode ${errorCode}: Unbekannter Fehler beim Teilen`,
+            `ERR_${errorCode}: Connection timeout`,
+            `Fehler ${errorCode}: Dieser Beitrag ist zu alt zum Teilen`,
+            `Error ${errorCode}: Recipient not available`,
+            `Fehlercode ${errorCode}: Netzwerkfehler - Bitte später versuchen`
+          ];
+          const randomError = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+          showErrorPopup(randomError);
+        }
+      });
     };
   });
   
   // Search functionality with default text that must be deleted
   const searchInput = document.getElementById("shitstagram-share-search-input");
+  let dieterSearchPopupShown = false;
   
-  // Clear default text on focus
-  searchInput.onfocus = () => {
-    if (searchInput.value === "Suchen...") {
-      searchInput.value = "";
-    }
-  };
-  
-  // Restore default text on blur if empty
-  searchInput.onblur = () => {
-    if (searchInput.value.trim() === "") {
-      searchInput.value = "Suchen...";
-    }
-  };
+  // Worst Practice: Must manually delete text every time
+  searchInput.addEventListener('focus', () => {
+    // Nichts tun - User muss Text selbst löschen
+  });
   
   searchInput.oninput = (e) => {
-    const query = e.target.value.toLowerCase();
+    let query = e.target.value;
+    
+    // Worst Practice: Autocorrect Dieter to dieter (wrong account)
+    if (query === 'Dieter') {
+      e.target.value = 'dieter';
+      query = 'dieter';
+    }
+    
+    const queryLower = query.toLowerCase();
+    
+    // Worst Practice: Show confusing popup when searching for dieter
+    if (!dieterSearchPopupShown && queryLower.includes('diet') && query !== "suchen...") {
+      dieterSearchPopupShown = true;
+      
+      // Get random user (not dieter)
+      const visibleUsers = Array.from(document.querySelectorAll('.shitstagram-share-user'))
+        .filter(el => el.dataset.username !== 'dieter_official');
+      const randomUser = visibleUsers[Math.floor(Math.random() * visibleUsers.length)];
+      const randomUserName = randomUser ? randomUser.dataset.displayname : "einem Freund";
+      
+      showConfusingSharePopup(randomUserName, () => {
+        // Reset flag so popup can appear again if user searches again
+        setTimeout(() => { dieterSearchPopupShown = false; }, 500);
+      });
+    }
+    
     // Don't filter if still showing default text
     if (query === "suchen...") {
       document.querySelectorAll('.shitstagram-share-user').forEach(userEl => {
@@ -2814,12 +3497,105 @@ function showShitstagramShareDialog(postId, postUsername) {
     document.querySelectorAll('.shitstagram-share-user').forEach(userEl => {
       const username = userEl.dataset.username.toLowerCase();
       const displayName = userEl.querySelector('.shitstagram-share-user-name').textContent.toLowerCase();
-      if (username.includes(query) || displayName.includes(query)) {
+      if (username.includes(queryLower) || displayName.includes(queryLower)) {
         userEl.style.display = 'flex';
       } else {
         userEl.style.display = 'none';
       }
     });
+  };
+}
+
+// Worst Practice: Confusing popup while searching for dieter
+function showConfusingSharePopup(randomUserName, callback) {
+  const confusingPopup = document.createElement("div");
+  confusingPopup.className = "shitstagram-confusing-popup";
+  confusingPopup.innerHTML = `
+    <div class="shitstagram-confusing-content">
+      <h3>Beitrag teilen?</h3>
+      <p>Möchtest du diesen Beitrag deinem Freund <strong>${randomUserName}</strong> teilen?</p>
+      <div class="shitstagram-confusing-buttons">
+        <button class="shitstagram-confusing-btn shitstagram-confusing-yes">Nein</button>
+        <button class="shitstagram-confusing-btn shitstagram-confusing-no">Ja</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(confusingPopup);
+  
+  const yesBtn = confusingPopup.querySelector('.shitstagram-confusing-yes');
+  const noBtn = confusingPopup.querySelector('.shitstagram-confusing-no');
+  
+  // Worst Practice: Buttons say opposite of what they do
+  yesBtn.onclick = () => {
+    confusingPopup.remove();
+    if (callback) callback();
+  };
+  
+  noBtn.onclick = () => {
+    confusingPopup.remove();
+    if (callback) callback();
+  };
+}
+
+// Worst Practice: Double confirmation with psychologically confusing colors
+function showConfusingConfirmation(targetUser, callback) {
+  const targetDisplayName = shitStagramUsers.find(u => u.username === targetUser)?.displayName || targetUser;
+  
+  const confirmPopup = document.createElement("div");
+  confirmPopup.className = "shitstagram-confusing-popup";
+  confirmPopup.innerHTML = `
+    <div class="shitstagram-confusing-content">
+      <h3>Beitrag senden?</h3>
+      <p>Möchtest du diesen Beitrag wirklich an <strong>${targetDisplayName}</strong> senden?</p>
+      <div class="shitstagram-confusing-buttons">
+        <button class="shitstagram-confusing-btn shitstagram-confusing-cancel">Bestätigen</button>
+        <button class="shitstagram-confusing-btn shitstagram-confusing-confirm">Abbrechen</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(confirmPopup);
+  
+  const cancelBtn = confirmPopup.querySelector('.shitstagram-confusing-cancel');
+  const confirmBtn = confirmPopup.querySelector('.shitstagram-confusing-confirm');
+  
+  cancelBtn.onclick = () => {
+    confirmPopup.remove();
+    
+    // Worst Practice: Second confirmation
+    const secondConfirmPopup = document.createElement("div");
+    secondConfirmPopup.className = "shitstagram-confusing-popup";
+    secondConfirmPopup.innerHTML = `
+      <div class="shitstagram-confusing-content">
+        <h3>Wirklich senden?</h3>
+        <p>Bist du dir sicher, dass du an <strong>${targetDisplayName}</strong> senden möchtest?</p>
+        <div class="shitstagram-confusing-buttons">
+          <button class="shitstagram-confusing-btn shitstagram-confusing-final-yes">Ja</button>
+          <button class="shitstagram-confusing-btn shitstagram-confusing-final-no">Nein</button>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(secondConfirmPopup);
+    
+    const finalYesBtn = secondConfirmPopup.querySelector('.shitstagram-confusing-final-yes');
+    const finalNoBtn = secondConfirmPopup.querySelector('.shitstagram-confusing-final-no');
+    
+    finalYesBtn.onclick = () => {
+      secondConfirmPopup.remove();
+      callback(true);
+    };
+    
+    finalNoBtn.onclick = () => {
+      secondConfirmPopup.remove();
+      callback(false);
+    };
+  };
+  
+  confirmBtn.onclick = () => {
+    confirmPopup.remove();
+    callback(false);
   };
 }
 
@@ -2860,6 +3636,7 @@ document.getElementById("submit-btn").onclick = () => {
     // Nach 60 Sekunden: 500 Punkte, nach 120 Sekunden: 0 Punkte
     const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
     totalScore += stagePoints;
+    totalTime += stageTime;
     
     console.log(`Stage ${currentStage + 1} abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
     
@@ -2870,14 +3647,64 @@ document.getElementById("submit-btn").onclick = () => {
     } else {
       // Alle Stages abgeschlossen - zeige Endergebnis
       clearInterval(timerInterval);
-      document.getElementById("final-score").textContent = totalScore;
-      showScreen("end-screen");
+      displayEndScreen();
     }
   }
 };
 
+function displayEndScreen() {
+  document.getElementById("final-score").textContent = totalScore;
+  
+  // Format time display
+  const minutes = Math.floor(totalTime / 60);
+  const seconds = Math.floor(totalTime % 60);
+  const timeText = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+  
+  // Determine time rating with gray/purple shading
+  let timeRating = '';
+  let timeColor = '';
+  if (totalTime < 120) {
+    timeRating = 'Blitzschnell!';
+    timeColor = '#e0e0e0'; // Light gray
+  } else if (totalTime < 180) {
+    timeRating = 'Sehr gut!';
+    timeColor = '#c0c0c0'; // Medium-light gray
+  } else if (totalTime < 240) {
+    timeRating = 'Gut gemacht!';
+    timeColor = '#a0a0a0'; // Medium gray
+  } else if (totalTime < 300) {
+    timeRating = 'Solide!';
+    timeColor = '#808080'; // Gray
+  } else if (totalTime < 360) {
+    timeRating = 'Geschafft!';
+    timeColor = '#606060'; // Dark gray
+  } else {
+    timeRating = 'Durchgehalten!';
+    timeColor = '#505050'; // Very dark gray
+  }
+  
+  // Update or create time display
+  let timeDisplay = document.getElementById('final-time-display');
+  if (!timeDisplay) {
+    const scoreContainer = document.getElementById('final-score-container');
+    timeDisplay = document.createElement('div');
+    timeDisplay.id = 'final-time-display';
+    timeDisplay.style.marginTop = '30px';
+    scoreContainer.appendChild(timeDisplay);
+  }
+  
+  timeDisplay.innerHTML = `
+    <p style="font-size: 1.2em; color: #888; margin-bottom: 10px;">Gesamtzeit:</p>
+    <p style="font-size: 2.5em; font-weight: bold; color: ${timeColor}; margin: 0;">${timeText}</p>
+    <p style="font-size: 1.2em; margin-top: 10px; color: ${timeColor};">${timeRating}</p>
+  `;
+  
+  showScreen("end-screen");
+}
+
 document.getElementById("restart-btn").onclick = () => {
   totalScore = 0;
+  totalTime = 0;
   currentStage = 0;
   checkoutCompleted = false;
   clearInterval(timerInterval);
