@@ -113,30 +113,36 @@ header .container {
         aspect-ratio: 1 / 1;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         cursor: pointer;
-        transition: transform 0.3s ease;
+        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .image-container img:hover {
-        transform: scale(1.05);
+        transform: scale(1.08);
     }
 
     .speech-bubble {
         position: absolute;
         top: -15px;
         left: 50%;
-        transform: translateX(-50%) translateY(-20px) scale(0) rotate(-12deg);
+        transform: translateX(-50%) translateY(-100%) scale(0) rotate(-12deg);
         background: var(--accent-color);
         color: var(--background-color);
-        padding: 10px 20px;
-        border-radius: 25px;
-        font-weight: bold;
-        font-size: 1.2rem;
-        white-space: nowrap;
+        padding: 10px 14px;
+        border-radius: 18px;
+        font-weight: 600;
+        font-size: 0.75rem;
+        line-height: 1.3;
+        white-space: normal;
+        max-width: 280px;
+        min-width: 200px;
+        text-align: center;
         opacity: 0;
         pointer-events: none;
-        transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        box-shadow: 0 4px 20px rgba(0, 255, 255, 0.4);
+        transition: opacity 0.4s ease-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         z-index: 100;
+        word-wrap: break-word;
+        hyphens: none;
     }
 
     .speech-bubble::after {
@@ -154,14 +160,15 @@ header .container {
 
     .speech-bubble.show {
         opacity: 1;
-        transform: translateX(-50%) translateY(-20px) scale(1) rotate(0deg);
+        transform: translateX(-50%) translateY(-100%) scale(1) rotate(0deg);
         animation: bounce 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     }
 
     @keyframes bounce {
-        0% { transform: translateX(-50%) translateY(-20px) scale(0) rotate(-12deg); }
-        50% { transform: translateX(-50%) translateY(-25px) scale(1.1) rotate(3deg); }
-        100% { transform: translateX(-50%) translateY(-20px) scale(1) rotate(0deg); }
+        0% { transform: translateX(-50%) translateY(-100%) scale(0) rotate(-12deg); }
+        40% { transform: translateX(-50%) translateY(calc(-100% - 8px)) scale(1.15) rotate(5deg); }
+        70% { transform: translateX(-50%) translateY(calc(-100% + 2px)) scale(0.95) rotate(-2deg); }
+        100% { transform: translateX(-50%) translateY(-100%) scale(1) rotate(0deg); }
     }
 
     header .container {
@@ -1022,7 +1029,7 @@ progress {
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: opacity 0.4s ease, transform 0.2s ease;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -1030,6 +1037,13 @@ progress {
     /* Einheitliche Höhe */
     min-height: 400px;
     max-height: 400px;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.bento-card.card-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Bild */

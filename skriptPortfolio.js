@@ -2,13 +2,32 @@ console.log("Hier gibts keine Fehler zu sehen ;)")
 
 // ===== HAMBURGER MENU =====
 document.addEventListener('DOMContentLoaded', () => {
-    // Speech Bubble Interaktion - nur Desktop
+    // Speech Bubble Interaktion - nur Desktop mit Random Facts
     const profileImage = document.querySelector('.image-container img');
     const speechBubble = document.querySelector('.speech-bubble');
+    
+    const randomFacts = [
+        "Ich finde Nutella mit Butter besser als ohne",
+        "Ich bin Team \"Dark Mode\"",
+        "Ich kann stundenlang über den Wert von gutem UX/UI Design sprechen",
+        "Gut gestaltete Microinteractions machen mich happy",
+        "Red Bull ist mein Treibstoff",
+        "Ich habe mehr Browsertabs offen als Ausreden dafür, warum sie noch offen sind"
+    ];
+
+    let lastFactIndex = -1; // Speichert den Index des letzten Facts
 
     // Nur auf Desktop (min-width: 1303px)
     if (window.matchMedia('(min-width: 1303px)').matches) {
         profileImage.addEventListener('mouseenter', () => {
+            // Wähle zufälligen Fact, der nicht der letzte ist
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * randomFacts.length);
+            } while (randomIndex === lastFactIndex && randomFacts.length > 1);
+            
+            lastFactIndex = randomIndex;
+            speechBubble.textContent = randomFacts[randomIndex];
             speechBubble.classList.add('show');
         });
         
@@ -162,15 +181,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // Funktion, um zu überprüfen, ob das Element im Viewport ist
-function isElementInViewport(el) {
+function isElementInViewport(el, offset = 0) {
     const rect = el.getBoundingClientRect();
-    return rect.top <= window.innerHeight && rect.bottom >= 0;
+    return rect.top <= (window.innerHeight + offset) && rect.bottom >= 0;
 }
 
 // Funktion zum Hinzufügen der "visible" Klasse, wenn das Element sichtbar ist
 function handleScroll() {
     const timelineItems = document.querySelectorAll('.timeline-item');
     const timelineTitles = document.querySelectorAll('.timeline-title');
+    const bentoCards = document.querySelectorAll('.bento-card');
 
     // Überprüfen, ob die Timeline-Elemente im Viewport sind und die Klasse hinzufügen
     timelineItems.forEach(item => {
@@ -183,6 +203,16 @@ function handleScroll() {
     timelineTitles.forEach(title => {
         if (isElementInViewport(title)) {
             title.classList.add('visible');
+        }
+    });
+
+    // Überprüfen, ob die Bento Cards im Viewport sind und die Klasse hinzufügen
+    // Mit 150px Offset erscheinen sie früher
+    bentoCards.forEach((card, index) => {
+        if (isElementInViewport(card, 150) && !card.classList.contains('card-visible')) {
+            setTimeout(() => {
+                card.classList.add('card-visible');
+            }, index * 100);
         }
     });
 }
