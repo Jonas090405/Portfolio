@@ -2397,43 +2397,44 @@ function renderShitstagramFeed() {
       const isLiked = likeBtn.dataset.liked === 'true';
       
       if (!isLiked) {
-        // Speichere Like-Status
+        // Like the post
         likedPosts.add(postId);
-        
-        // Like den Post
         likeBtn.dataset.liked = 'true';
         likeBtn.classList.add('liked');
         
-        // Füge Gradient zum SVG hinzu
+        // Füge Gradient zum SVG hinzu oder aktualisiere path
         const svg = likeBtn.querySelector('svg');
-        if (svg && !svg.querySelector('defs')) {
-          const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-          const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-          gradient.setAttribute('id', `likeGradient-${postId}`);
-          gradient.setAttribute('x1', '0%');
-          gradient.setAttribute('y1', '0%');
-          gradient.setAttribute('x2', '100%');
-          gradient.setAttribute('y2', '100%');
+        if (svg) {
+          // Create defs if not exists
+          if (!svg.querySelector('defs')) {
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+            gradient.setAttribute('id', `likeGradient-${postId}`);
+            gradient.setAttribute('x1', '0%');
+            gradient.setAttribute('y1', '0%');
+            gradient.setAttribute('x2', '100%');
+            gradient.setAttribute('y2', '100%');
+            
+            const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop1.setAttribute('offset', '0%');
+            stop1.setAttribute('style', 'stop-color:#B20CE9;stop-opacity:1');
+            
+            const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop2.setAttribute('offset', '50%');
+            stop2.setAttribute('style', 'stop-color:#7d3ba8;stop-opacity:1');
+            
+            const stop3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop3.setAttribute('offset', '100%');
+            stop3.setAttribute('style', 'stop-color:#5a2a7a;stop-opacity:1');
+            
+            gradient.appendChild(stop1);
+            gradient.appendChild(stop2);
+            gradient.appendChild(stop3);
+            defs.appendChild(gradient);
+            svg.insertBefore(defs, svg.firstChild);
+          }
           
-          const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-          stop1.setAttribute('offset', '0%');
-          stop1.setAttribute('style', 'stop-color:#B20CE9;stop-opacity:1');
-          
-          const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-          stop2.setAttribute('offset', '50%');
-          stop2.setAttribute('style', 'stop-color:#7d3ba8;stop-opacity:1');
-          
-          const stop3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
-          stop3.setAttribute('offset', '100%');
-          stop3.setAttribute('style', 'stop-color:#5a2a7a;stop-opacity:1');
-          
-          gradient.appendChild(stop1);
-          gradient.appendChild(stop2);
-          gradient.appendChild(stop3);
-          defs.appendChild(gradient);
-          svg.insertBefore(defs, svg.firstChild);
-          
-          // Update path to use gradient
+          // Always update path to use gradient
           const path = svg.querySelector('path');
           if (path) {
             path.setAttribute('fill', `url(#likeGradient-${postId})`);
@@ -2448,8 +2449,28 @@ function renderShitstagramFeed() {
           countEl.textContent = (currentCount + 1).toLocaleString();
         }
         
-        // Zeige Herzen-Overlay (Worst Practice)
+        // Zeige Herzen-Overlay
         showHeartsOverlay();
+      } else {
+        // Unlike the post
+        likedPosts.delete(postId);
+        likeBtn.dataset.liked = 'false';
+        likeBtn.classList.remove('liked');
+        
+        // Remove gradient
+        const svg = likeBtn.querySelector('svg');
+        const path = svg.querySelector('path');
+        if (path) {
+          path.setAttribute('fill', 'none');
+          path.setAttribute('stroke', 'currentColor');
+        }
+        
+        // Reduziere Like-Count
+        const countEl = document.querySelector(`.shitstagram-likes-count[data-post-id="${postId}"]`);
+        if (countEl) {
+          const currentCount = parseInt(countEl.textContent.replace(/\./g, '').replace(/,/g, ''));
+          countEl.textContent = (currentCount - 1).toLocaleString();
+        }
       }
     };
   });
@@ -3182,10 +3203,199 @@ function showShitstagramPostDetail(postId) {
   
   // Like button handler
   const likeBtn = popup.querySelector('.shitstagram-detail-like-btn');
+  const isLiked = likedPosts.has(post.id);
+  
+  // Set initial state
+  if (isLiked) {
+    likeBtn.classList.add('liked');
+    likeBtn.dataset.liked = 'true';
+    
+    // Add gradient to SVG
+    const svg = likeBtn.querySelector('svg');
+    if (svg && !svg.querySelector('defs')) {
+      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+      gradient.setAttribute('id', `likeGradient-detail-${post.id}`);
+      gradient.setAttribute('x1', '0%');
+      gradient.setAttribute('y1', '0%');
+      gradient.setAttribute('x2', '100%');
+      gradient.setAttribute('y2', '100%');
+      
+      const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop1.setAttribute('offset', '0%');
+      stop1.setAttribute('style', 'stop-color:#B20CE9;stop-opacity:1');
+      
+      const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop2.setAttribute('offset', '50%');
+      stop2.setAttribute('style', 'stop-color:#7d3ba8;stop-opacity:1');
+      
+      const stop3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+      stop3.setAttribute('offset', '100%');
+      stop3.setAttribute('style', 'stop-color:#5a2a7a;stop-opacity:1');
+      
+      gradient.appendChild(stop1);
+      gradient.appendChild(stop2);
+      gradient.appendChild(stop3);
+      defs.appendChild(gradient);
+      svg.insertBefore(defs, svg.firstChild);
+      
+      const path = svg.querySelector('path');
+      if (path) {
+        path.setAttribute('fill', `url(#likeGradient-detail-${post.id})`);
+        path.setAttribute('stroke', `url(#likeGradient-detail-${post.id})`);
+      }
+    }
+  }
+  
   if (likeBtn) {
     likeBtn.onclick = (e) => {
       e.stopPropagation();
-      showHeartsOverlay();
+      const currentlyLiked = likeBtn.dataset.liked === 'true';
+      
+      if (!currentlyLiked) {
+        // Like the post
+        likedPosts.add(post.id);
+        likeBtn.dataset.liked = 'true';
+        likeBtn.classList.add('liked');
+        
+        // Add gradient to SVG or update path
+        const svg = likeBtn.querySelector('svg');
+        if (svg) {
+          // Create defs if not exists
+          if (!svg.querySelector('defs')) {
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+            gradient.setAttribute('id', `likeGradient-detail-${post.id}`);
+            gradient.setAttribute('x1', '0%');
+            gradient.setAttribute('y1', '0%');
+            gradient.setAttribute('x2', '100%');
+            gradient.setAttribute('y2', '100%');
+            
+            const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop1.setAttribute('offset', '0%');
+            stop1.setAttribute('style', 'stop-color:#B20CE9;stop-opacity:1');
+            
+            const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop2.setAttribute('offset', '50%');
+            stop2.setAttribute('style', 'stop-color:#7d3ba8;stop-opacity:1');
+            
+            const stop3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop3.setAttribute('offset', '100%');
+            stop3.setAttribute('style', 'stop-color:#5a2a7a;stop-opacity:1');
+            
+            gradient.appendChild(stop1);
+            gradient.appendChild(stop2);
+            gradient.appendChild(stop3);
+            defs.appendChild(gradient);
+            svg.insertBefore(defs, svg.firstChild);
+          }
+          
+          // Always update path to use gradient
+          const path = svg.querySelector('path');
+          if (path) {
+            path.setAttribute('fill', `url(#likeGradient-detail-${post.id})`);
+            path.setAttribute('stroke', `url(#likeGradient-detail-${post.id})`);
+          }
+        }
+        
+        // Update count
+        const countEl = popup.querySelector('.shitstagram-count');
+        if (countEl) {
+          const currentCount = parseInt(countEl.textContent.replace(/\./g, '').replace(/,/g, ''));
+          countEl.textContent = (currentCount + 1).toLocaleString();
+        }
+        
+        // Update all feed instances
+        const feedCountEl = document.querySelector(`.shitstagram-likes-count[data-post-id="${post.id}"]`);
+        if (feedCountEl) {
+          const currentCount = parseInt(feedCountEl.textContent.replace(/\./g, '').replace(/,/g, ''));
+          feedCountEl.textContent = (currentCount + 1).toLocaleString();
+        }
+        
+        // Update feed like button visual state
+        const feedLikeBtn = document.querySelector(`.shitstagram-like-btn[data-post-id="${post.id}"]`);
+        if (feedLikeBtn) {
+          feedLikeBtn.dataset.liked = 'true';
+          feedLikeBtn.classList.add('liked');
+          const feedSvg = feedLikeBtn.querySelector('svg');
+          if (feedSvg) {
+            if (!feedSvg.querySelector('defs')) {
+              const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+              const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+              gradient.setAttribute('id', `likeGradient-${post.id}`);
+              gradient.setAttribute('x1', '0%');
+              gradient.setAttribute('y1', '0%');
+              gradient.setAttribute('x2', '100%');
+              gradient.setAttribute('y2', '100%');
+              
+              const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+              stop1.setAttribute('offset', '0%');
+              stop1.setAttribute('style', 'stop-color:#B20CE9;stop-opacity:1');
+              
+              const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+              stop2.setAttribute('offset', '50%');
+              stop2.setAttribute('style', 'stop-color:#7d3ba8;stop-opacity:1');
+              
+              const stop3 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+              stop3.setAttribute('offset', '100%');
+              stop3.setAttribute('style', 'stop-color:#5a2a7a;stop-opacity:1');
+              
+              gradient.appendChild(stop1);
+              gradient.appendChild(stop2);
+              gradient.appendChild(stop3);
+              defs.appendChild(gradient);
+              feedSvg.insertBefore(defs, feedSvg.firstChild);
+            }
+            const feedPath = feedSvg.querySelector('path');
+            if (feedPath) {
+              feedPath.setAttribute('fill', `url(#likeGradient-${post.id})`);
+              feedPath.setAttribute('stroke', `url(#likeGradient-${post.id})`);
+            }
+          }
+        }
+        
+        showHeartsOverlay();
+      } else {
+        // Unlike the post
+        likedPosts.delete(post.id);
+        likeBtn.dataset.liked = 'false';
+        likeBtn.classList.remove('liked');
+        
+        // Remove gradient
+        const svg = likeBtn.querySelector('svg');
+        const path = svg.querySelector('path');
+        if (path) {
+          path.setAttribute('fill', 'none');
+          path.setAttribute('stroke', 'currentColor');
+        }
+        
+        // Update count
+        const countEl = popup.querySelector('.shitstagram-count');
+        if (countEl) {
+          const currentCount = parseInt(countEl.textContent.replace(/\./g, '').replace(/,/g, ''));
+          countEl.textContent = (currentCount - 1).toLocaleString();
+        }
+        
+        // Update all feed instances
+        const feedCountEl = document.querySelector(`.shitstagram-likes-count[data-post-id="${post.id}"]`);
+        if (feedCountEl) {
+          const currentCount = parseInt(feedCountEl.textContent.replace(/\./g, '').replace(/,/g, ''));
+          feedCountEl.textContent = (currentCount - 1).toLocaleString();
+        }
+        
+        // Update feed like button visual state
+        const feedLikeBtn = document.querySelector(`.shitstagram-like-btn[data-post-id="${post.id}"]`);
+        if (feedLikeBtn) {
+          feedLikeBtn.dataset.liked = 'false';
+          feedLikeBtn.classList.remove('liked');
+          const feedSvg = feedLikeBtn.querySelector('svg');
+          const feedPath = feedSvg?.querySelector('path');
+          if (feedPath) {
+            feedPath.setAttribute('fill', 'none');
+            feedPath.setAttribute('stroke', 'currentColor');
+          }
+        }
+      }
     };
   }
 }
@@ -3196,27 +3406,24 @@ function showHeartsOverlay() {
   overlay.className = "hearts-overlay";
   document.body.appendChild(overlay);
   
-  // Verzögere Start der Herzen um 400ms (nach Button-Animation)
-  setTimeout(() => {
-    // Erzeuge 50 Herzen über 3 Sekunden
-    let heartCount = 0;
-    const heartInterval = setInterval(() => {
-      if (heartCount >= 50) {
-        clearInterval(heartInterval);
-        return;
-      }
-      
-      const heart = document.createElement("div");
-      heart.className = "floating-heart";
-      heart.textContent = "💜";
-      heart.style.left = Math.random() * 100 + "%";
-      heart.style.fontSize = (30 + Math.random() * 40) + "px";
-      heart.style.animationDelay = (Math.random() * 0.5) + "s";
-      
-      overlay.appendChild(heart);
-      heartCount++;
-    }, 60);
-  }, 400);
+  // Erzeuge 50 Herzen über 3 Sekunden
+  let heartCount = 0;
+  const heartInterval = setInterval(() => {
+    if (heartCount >= 50) {
+      clearInterval(heartInterval);
+      return;
+    }
+    
+    const heart = document.createElement("div");
+    heart.className = "floating-heart";
+    heart.textContent = "💜";
+    heart.style.left = Math.random() * 100 + "%";
+    heart.style.fontSize = (30 + Math.random() * 40) + "px";
+    heart.style.animationDelay = (Math.random() * 0.5) + "s";
+    
+    overlay.appendChild(heart);
+    heartCount++;
+  }, 60);
   
   // Overlay bleibt für 5 Sekunden (lange genug um nervig zu sein)
   setTimeout(() => {
@@ -3271,6 +3478,8 @@ function showShitstagramShareDialog(postId, postUsername) {
     sortedUsers.splice(lowerThirdPosition, 0, dieter);
   }
   
+  let selectedUser = null;
+  
   popup.innerHTML = `
     <div class="shitstagram-share-content">
       <div class="shitstagram-share-header">
@@ -3289,7 +3498,6 @@ function showShitstagramShareDialog(postId, postUsername) {
           <div class="shitstagram-share-user" data-username="${user.username}" data-displayname="${user.displayName}">
             <div class="shitstagram-avatar">${avatarContent}</div>
             <div class="shitstagram-share-user-name">${user.displayName}</div>
-            <button class="shitstagram-send-btn" data-username="${user.username}">Senden</button>
           </div>
           `;
         }).join('')}
@@ -3299,7 +3507,29 @@ function showShitstagramShareDialog(postId, postUsername) {
   
   document.body.appendChild(popup);
   
-  document.getElementById("shitstagram-share-close").onclick = () => popup.remove();
+  // Worst Practice: Close button triggers send confirmation
+  const closeBtn = document.getElementById("shitstagram-share-close");
+  closeBtn.onclick = () => {
+    if (selectedUser) {
+      // Show confusing confirmation
+      showReverseConfirmation(selectedUser, postId, postUsername, popup);
+    } else {
+      popup.remove();
+    }
+  };
+  
+  // User selection with purple border
+  const userElements = document.querySelectorAll('.shitstagram-share-user');
+  userElements.forEach(userEl => {
+    userEl.onclick = () => {
+      // Remove selection from all users
+      userElements.forEach(u => u.classList.remove('selected'));
+      
+      // Select clicked user
+      userEl.classList.add('selected');
+      selectedUser = userEl.dataset.username;
+    };
+  });
   
   // Worst Practice: Make scrolling slow and dragging scrollbar extremely slow
   const shareUsersContainer = document.getElementById("shitstagram-share-users");
@@ -3390,67 +3620,6 @@ function showShitstagramShareDialog(postId, postUsername) {
         cancelAnimationFrame(scrollbarDragInterval);
       }
     }
-  });
-  
-  // Send button listeners
-  document.querySelectorAll('.shitstagram-send-btn').forEach(btn => {
-    btn.onclick = () => {
-      const targetUser = btn.dataset.username;
-      
-      // Worst Practice: Double confirmation with confusing colors
-      showConfusingConfirmation(targetUser, (confirmed) => {
-        if (!confirmed) return;
-        
-        // Worst Practice: Only latest post (id: 1) from trafish_cod to dieter_official is correct
-        const isLatestPost = postId === 1;
-        const isCorrectSender = postUsername === "trafish_cod";
-        const isCorrectRecipient = targetUser === "dieter_official";
-        
-        if (isLatestPost && isCorrectSender && isCorrectRecipient) {
-          // Correct: Latest post from trafish_cod to dieter_official
-          window.shitStagramShared = true;
-          popup.remove();
-          
-          // Close all shitstagram popups
-          document.querySelectorAll('.shitstagram-profile-popup, .shitstagram-post-detail-popup, .shitstagram-search-popup').forEach(p => p.remove());
-          
-          // Zeige Success-Overlay
-          showSuccessOverlay(() => {
-            // Stage abschließen und zur nächsten wechseln
-            clearInterval(timerInterval);
-            const stageTime = (Date.now() - startTime) / 1000;
-            const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
-            totalScore += stagePoints;
-            totalTime += stageTime;
-            
-            console.log(`Stage ${currentStage + 1} abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
-            
-            // Zur nächsten Stage
-            if (currentStage < stages.length - 1) {
-              currentStage++;
-              startStage(currentStage);
-            } else {
-              displayEndScreen();
-            }
-          });
-        } else {
-          // Worst Practice: Show error with random error code
-          popup.remove();
-          const errorCode = Math.floor(Math.random() * 9000) + 1000; // Random 4-digit code
-          const errorMessages = [
-            `Fehler ${errorCode}: Beitrag konnte nicht geteilt werden`,
-            `Error ${errorCode}: Sharing failed - Please try again`,
-            `Fehlercode ${errorCode}: Unbekannter Fehler beim Teilen`,
-            `ERR_${errorCode}: Connection timeout`,
-            `Fehler ${errorCode}: Dieser Beitrag ist zu alt zum Teilen`,
-            `Error ${errorCode}: Recipient not available`,
-            `Fehlercode ${errorCode}: Netzwerkfehler - Bitte später versuchen`
-          ];
-          const randomError = errorMessages[Math.floor(Math.random() * errorMessages.length)];
-          showErrorPopup(randomError);
-        }
-      });
-    };
   });
   
   // Search functionality with default text that must be deleted
@@ -3546,14 +3715,14 @@ function showConfusingConfirmation(targetUser, callback) {
   const targetDisplayName = shitStagramUsers.find(u => u.username === targetUser)?.displayName || targetUser;
   
   const confirmPopup = document.createElement("div");
-  confirmPopup.className = "shitstagram-confusing-popup";
+  confirmPopup.className = "newsletter-popup";
   confirmPopup.innerHTML = `
-    <div class="shitstagram-confusing-content">
-      <h3>Beitrag senden?</h3>
-      <p>Möchtest du diesen Beitrag wirklich an <strong>${targetDisplayName}</strong> senden?</p>
-      <div class="shitstagram-confusing-buttons">
-        <button class="shitstagram-confusing-btn shitstagram-confusing-cancel">Bestätigen</button>
-        <button class="shitstagram-confusing-btn shitstagram-confusing-confirm">Abbrechen</button>
+    <div class="newsletter-popup-content">
+      <h3>Beitrag teilen?</h3>
+      <p>Bist du sicher, dass du diesen Beitrag teilen willst?</p>
+      <div class="newsletter-buttons">
+        <button class="newsletter-btn-no shitstagram-confusing-cancel">Ja, nicht senden</button>
+        <button class="newsletter-btn-yes shitstagram-confusing-confirm">Nein, senden</button>
       </div>
     </div>
   `;
@@ -3568,14 +3737,14 @@ function showConfusingConfirmation(targetUser, callback) {
     
     // Worst Practice: Second confirmation
     const secondConfirmPopup = document.createElement("div");
-    secondConfirmPopup.className = "shitstagram-confusing-popup";
+    secondConfirmPopup.className = "newsletter-popup";
     secondConfirmPopup.innerHTML = `
-      <div class="shitstagram-confusing-content">
-        <h3>Wirklich senden?</h3>
-        <p>Bist du dir sicher, dass du an <strong>${targetDisplayName}</strong> senden möchtest?</p>
-        <div class="shitstagram-confusing-buttons">
-          <button class="shitstagram-confusing-btn shitstagram-confusing-final-yes">Ja</button>
-          <button class="shitstagram-confusing-btn shitstagram-confusing-final-no">Nein</button>
+      <div class="newsletter-popup-content">
+        <h3>Beitrag teilen?</h3>
+        <p>Bist du sicher, dass du diesen Beitrag teilen willst?</p>
+        <div class="newsletter-buttons">
+          <button class="newsletter-btn-no shitstagram-confusing-final-yes">Nein, senden</button>
+          <button class="newsletter-btn-yes shitstagram-confusing-final-no">Ja, nicht senden</button>
         </div>
       </div>
     `;
@@ -3599,6 +3768,89 @@ function showConfusingConfirmation(targetUser, callback) {
   confirmBtn.onclick = () => {
     confirmPopup.remove();
     callback(false);
+  };
+}
+
+// Reverse psychology confirmation for sending message
+function showReverseConfirmation(targetUser, postId, postUsername, sharePopup) {
+  const confirmPopup = document.createElement("div");
+  confirmPopup.className = "newsletter-popup";
+  confirmPopup.innerHTML = `
+    <div class="newsletter-popup-content">
+      <h3>Beitrag teilen?</h3>
+      <p>Bist du sicher, dass du diesen Beitrag teilen willst?</p>
+      <div class="newsletter-buttons">
+        <button class="newsletter-btn-no" id="reverse-send">Nein, senden</button>
+        <button class="newsletter-btn-yes" id="reverse-no-send">Ja, nicht senden</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(confirmPopup);
+  
+  // Worst Practice: Gray "Nein, senden" actually sends, Purple "Ja, nicht senden" doesn't send
+  document.getElementById("reverse-send").onclick = () => {
+    confirmPopup.remove();
+    
+    // This actually sends!
+    const isLatestPost = postId === 1;
+    const isCorrectSender = postUsername === "trafish_cod";
+    const isCorrectRecipient = targetUser === "dieter_official";
+    
+    if (isLatestPost && isCorrectSender && isCorrectRecipient) {
+      // Correct: Latest post from trafish_cod to dieter_official
+      window.shitStagramShared = true;
+      sharePopup.remove();
+      
+      // Close all shitstagram popups
+      document.querySelectorAll('.shitstagram-profile-popup, .shitstagram-post-detail-popup, .shitstagram-search-popup').forEach(p => p.remove());
+      
+      // Zeige Success-Overlay
+      showSuccessOverlay(() => {
+        // Stage abschließen und zur nächsten wechseln
+        clearInterval(timerInterval);
+        const stageTime = (Date.now() - startTime) / 1000;
+        const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
+        totalScore += stagePoints;
+        totalTime += stageTime;
+        
+        console.log(`Stage ${currentStage + 1} abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
+        
+        // Zur nächsten Stage
+        if (currentStage < stages.length - 1) {
+          currentStage++;
+          startStage(currentStage);
+        } else {
+          displayEndScreen();
+        }
+      });
+    } else {
+      // Worst Practice: Show error with random error code
+      sharePopup.remove();
+      
+      // Close all shitstagram popups to return to homepage
+      document.querySelectorAll('.shitstagram-profile-popup, .shitstagram-post-detail-popup, .shitstagram-search-popup, .newsletter-popup').forEach(p => p.remove());
+      
+      const errorCode = Math.floor(Math.random() * 9000) + 1000;
+      const errorMessages = [
+        `Fehler ${errorCode}: Beitrag konnte nicht geteilt werden`,
+        `Error ${errorCode}: Sharing failed - Please try again`,
+        `Fehlercode ${errorCode}: Unbekannter Fehler beim Teilen`,
+        `ERR_${errorCode}: Connection timeout`,
+        `Fehler ${errorCode}: Dieser Beitrag ist zu alt zum Teilen`,
+        `Error ${errorCode}: Recipient not available`,
+        `Fehlercode ${errorCode}: Netzwerkfehler - Bitte später versuchen`
+      ];
+      const randomError = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+      showErrorPopup(randomError);
+    }
+  };
+  
+  // Purple "Ja, nicht senden" closes without sending
+  document.getElementById("reverse-no-send").onclick = () => {
+    confirmPopup.remove();
+    sharePopup.remove();
+    // Does nothing - message not sent
   };
 }
 

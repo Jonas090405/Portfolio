@@ -1283,7 +1283,8 @@ select:focus {
 }
 
 /* Microinteraction: Like Button Click Feedback */
-.shitstagram-like-btn:active {
+.shitstagram-like-btn:active,
+.shitstagram-detail-like-btn:active {
   animation: likeButtonPulse 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
@@ -1305,7 +1306,8 @@ select:focus {
   }
 }
 
-.shitstagram-like-btn.liked svg {
+.shitstagram-like-btn.liked svg,
+.shitstagram-detail-like-btn.liked svg {
   filter: drop-shadow(0 0 8px rgba(178, 12, 233, 0.4));
   animation: heartBeat 0.3s ease-in-out;
 }
@@ -1316,6 +1318,35 @@ select:focus {
   }
   50% {
     transform: scale(1.3);
+  }
+}
+
+/* Smooth transition for like/unlike */
+.shitstagram-like-btn svg path,
+.shitstagram-detail-like-btn svg path {
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+.shitstagram-like-btn svg,
+.shitstagram-detail-like-btn svg {
+  transition: filter 0.2s ease;
+}
+
+/* Unlike animation */
+.shitstagram-like-btn:not(.liked):active,
+.shitstagram-detail-like-btn:not(.liked):active {
+  animation: unlikeButtonShrink 0.3s ease;
+}
+
+@keyframes unlikeButtonShrink {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -2029,6 +2060,14 @@ select:focus {
   gap: 12px;
   padding: 12px;
   border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.shitstagram-share-user.selected {
+  border-color: #B20CE9;
+  background: rgba(178, 12, 233, 0.1);
 }
 
 .shitstagram-share-user-name {
@@ -2036,25 +2075,6 @@ select:focus {
   color: #fff;
   font-size: 0.9em;
   font-weight: 600;
-}
-
-.shitstagram-send-btn {
-  background: transparent;
-  border: 2px solid transparent;
-  color: #fff;
-  padding: 8px 20px;
-  border-radius: 20px;
-  font-size: 0.85em;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin: 0;
-}
-
-.shitstagram-send-btn:hover {
-  background: transparent;
-  border-color: #B20CE9;
-  transform: scale(1.05);
 }
 
 #checkout-inner h2 {
@@ -2434,7 +2454,7 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 10005;
   animation: popupFadeIn 0.3s ease;
   overflow: hidden;
 }
@@ -2617,7 +2637,7 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10000;
+  z-index: 10003;
   animation: popupFadeIn 0.8s ease;
   transition: opacity 3s ease, transform 3s ease;
 }
@@ -2660,8 +2680,8 @@ select:focus {
 .newsletter-btn-yes {
   padding: 12px 24px;
   font-size: 1em;
-  background: #333;
-  color: #999;
+  background: #2a2a2a;
+  color: #ccc;
   border: 2px solid #444;
   border-radius: 8px;
   cursor: pointer;
@@ -2670,26 +2690,28 @@ select:focus {
 }
 
 .newsletter-btn-yes:hover {
-  background: #444;
-  color: #aaa;
+  background: #333;
+  border-color: #B20CE9;
+  color: #fff;
 }
 
 .newsletter-btn-no {
   padding: 12px 24px;
   font-size: 1em;
-  background: #B20CE9;
-  color: #fff;
-  border: 2px solid #B20CE9;
+  background: #2a2a2a;
+  color: #ccc;
+  border: 2px solid #444;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 0 20px #B20CE970;
 }
 
 .newsletter-btn-no:hover {
-  background: #d17bf4;
-  box-shadow: 0 0 30px #B20CE9;
+  background: #333;
+  border-color: #B20CE9;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(178, 12, 233, 0.3);
 }
 
 /* Long scrollable text popup */
