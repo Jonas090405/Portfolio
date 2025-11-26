@@ -1741,7 +1741,7 @@ function initShitstagram() {
 function getAvatarContent(username, displayName) {
   // Special case: trafish_cod gets trafish.png
   if (username === "trafish_cod") {
-    return `<img src="img/trafish.png" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+    return `<img src="img/Trafish.png" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
   }
   // Other trafish users get fish1-10.png based on hash
   if (username.includes('trafish') || (username.startsWith('tra') && username.includes('fish'))) {
