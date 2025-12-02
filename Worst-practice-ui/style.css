@@ -1248,6 +1248,8 @@ select:focus {
   width: 100%;
   aspect-ratio: 1;
   background: #0d0d0d;
+  position: relative;
+  cursor: crosshair;
 }
 
 .shitstagram-post-image img {
@@ -1257,11 +1259,64 @@ select:focus {
   display: block;
 }
 
+.shitstagram-draw-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.shitstagram-draw-info {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.3);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.65em;
+  font-weight: 400;
+  pointer-events: none;
+  z-index: 5;
+  letter-spacing: 0;
+  backdrop-filter: blur(2px);
+}
+
 .shitstagram-post-actions {
   display: flex;
   gap: 12px;
   padding: 12px 16px;
   align-items: center;
+}
+
+/* Unlike button (heart icon after successfully drawing) */
+.shitstagram-unlike-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shitstagram-unlike-btn:hover {
+  transform: scale(1.1);
+}
+
+.shitstagram-unlike-btn:active {
+  animation: likeButtonPulse 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.shitstagram-unlike-btn svg {
+  filter: drop-shadow(0 0 8px rgba(178, 12, 233, 0.4));
 }
 
 .shitstagram-action-btn {
@@ -1482,6 +1537,8 @@ select:focus {
   font-size: 1.5em;
   width: 36px;
   height: 36px;
+  min-width: 36px;
+  min-height: 36px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1490,6 +1547,7 @@ select:focus {
   transition: all 0.2s ease;
   margin: 0;
   padding: 0;
+  flex-shrink: 0;
 }
 
 .shitstagram-close-btn:hover {
@@ -1883,6 +1941,8 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  cursor: crosshair;
 }
 
 .shitstagram-post-detail-image img {
@@ -2137,28 +2197,81 @@ select:focus {
   box-shadow: 0 0 0 2px rgba(102, 102, 102, 0.2);
 }
 
+.checkout-input.shake-error {
+  animation: shakeInput 0.5s ease-in-out;
+  border-color: #888;
+  box-shadow: 0 0 0 3px rgba(136, 136, 136, 0.3);
+}
+
+@keyframes shakeInput {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-8px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(8px);
+  }
+}
+
 .checkout-buy-btn {
   width: 100%;
   padding: 16px 20px;
   margin-top: 10px;
   font-size: 1.4em;
   font-weight: 900;
-  background: #B20CE9;
+  background: #7a0a9a;
   color: #ffffff;
   border: 3px solid #B20CE9;
   border-radius: 12px;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: all 0.3s ease;
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background 0.1s ease-out, filter 0.1s ease-out;
   box-shadow: none;
   min-height: 60px;
+  position: relative;
+  filter: brightness(0.8);
 }
 
 .checkout-buy-btn:hover {
   background: #9a0bb8;
   box-shadow: none;
-  transform: scale(1.02);
+}
+
+.checkout-buy-btn.cps-pulse {
+  animation: cpsPulse 0.2s ease-out;
+}
+
+.checkout-buy-btn.cps-reset {
+  animation: cpsReset 0.3s ease-out forwards;
+}
+
+@keyframes cpsPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(178, 12, 233, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(178, 12, 233, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(178, 12, 233, 0);
+  }
+}
+
+@keyframes cpsReset {
+  0% {
+    transform: scale(var(--current-scale, 1));
+  }
+  50% {
+    transform: scale(calc(var(--current-scale, 1) * 0.95));
+  }
+  100% {
+    transform: scale(1);
+    background: #7a0a9a;
+    filter: brightness(0.8);
+  }
 }
 
 @media (max-width: 768px) {
@@ -2368,16 +2481,18 @@ select:focus {
   border-radius: 8px;
   color: #fff;
   font-size: 0.95em;
-  cursor: pointer;
+  cursor: not-allowed;
   transition: all 0.3s ease;
   text-align: center;
+  user-select: none;
+  pointer-events: none;
 }
 
 .config-option-btn:hover:not(:disabled) {
-  background: #333;
-  border-color: #B20CE9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(178, 12, 233, 0.3);
+  background: #2a2a2a;
+  border-color: #444;
+  transform: none;
+  box-shadow: none;
 }
 
 .config-option-btn.selected {
@@ -2418,21 +2533,43 @@ select:focus {
 .config-confirm-btn {
   width: 100%;
   padding: 15px;
-  background: #B20CE9;
+  background: linear-gradient(to right, #B20CE9 0%, #333 0%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
   border: 3px solid #B20CE9;
   border-radius: 8px;
   color: #fff;
   font-size: 1.2em;
   font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  cursor: not-allowed;
+  transition: box-shadow 0.2s ease-out, filter 0.2s ease-out, border-color 0.2s ease-out;
   margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0px rgba(178, 12, 233, 0);
+  filter: brightness(0.7);
 }
 
-.config-confirm-btn:hover:not(:disabled) {
+.config-confirm-btn.charging {
+  background-position: 0% 0;
+  box-shadow: 0 0 40px rgba(178, 12, 233, 0.8);
+  filter: brightness(1.3);
+  border-color: #d17bf4;
+  transition: background-position 5s linear, box-shadow 5s linear, filter 5s linear, border-color 5s linear;
+}
+
+.config-confirm-btn.charged {
+  background: #B20CE9;
+  cursor: pointer;
+  box-shadow: 0 5px 40px #B20CE9, 0 0 60px rgba(178, 12, 233, 0.9);
+  filter: brightness(1.5);
+  border-color: #e090ff;
+}
+
+.config-confirm-btn.charged:hover {
   background: #d17bf4;
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px #B20CE970;
+  box-shadow: 0 5px 50px #B20CE9, 0 0 80px rgba(178, 12, 233, 1);
 }
 
 .config-confirm-btn:disabled {
@@ -2454,7 +2591,7 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10005;
+  z-index: 99999;
   animation: popupFadeIn 0.3s ease;
   overflow: hidden;
 }
@@ -2956,7 +3093,7 @@ select:focus {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.3);
   z-index: 10001;
   pointer-events: all;
   overflow: hidden;
@@ -2993,6 +3130,8 @@ select:focus {
   animation: floatHeart 4s ease-in-out forwards;
   pointer-events: none;
   filter: drop-shadow(0 0 15px #B20CE9);
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 @keyframes floatHeart {
