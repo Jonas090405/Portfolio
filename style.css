@@ -1205,7 +1205,10 @@ progress {
 
 /* Button */
 .card-button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     background: linear-gradient(to right, var(--accent-color), #4dbef3);
     color: white;
     font-size: 1.2rem;
@@ -1215,6 +1218,20 @@ progress {
     text-decoration: none;
     min-width: 120px;
     text-align: center;
+}
+
+.card-button::after {
+    content: 'arrow_forward';
+    font-family: 'Material Symbols Rounded';
+    font-size: 1.2em;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    transform: translateY(2px);
+    transition: transform 0.3s ease;
+}
+.card-button:hover::after {
+    transform: translateX(4px) translateY(2px);
 }
 
 .card-button:hover {
@@ -1357,7 +1374,9 @@ progress {
 
     .bento-card img {
         position: relative;
-        height: 340px;
+        height: 60%;
+        min-height: 60%;
+        max-height: 60%;
         object-fit: cover;
         opacity: 1;
         transform: none;
@@ -1367,7 +1386,8 @@ progress {
     .card-content {
         position: relative;
         opacity: 1;
-        padding: 20px;
+        padding: 24px;
+        flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1439,26 +1459,28 @@ footer {
     .bento-card {
         flex-direction: column;
         height: auto;
-        min-height: 520px;
-        max-height: 620px;
-    }
-
-    .bento-card img {
-        height: 280px;
+        min-height: 480px;
+        max-height: 560px;
     }
 
     .bento-card img {
         position: relative;
-        height: 280px;
+        height: 55%;
+        min-height: 50%;
+        max-height: 5%;
         object-fit: cover;
         opacity: 1;
         transform: none;
+        flex-shrink: 0;
     }
 
     .card-content {
         position: relative;
         opacity: 1;
-        padding: 20px;
+        padding: 28px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
     }
 
     .card-tags {
