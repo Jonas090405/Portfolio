@@ -342,7 +342,7 @@ button {
 /* === Error Message === */
 #error-msg,
 .error {
-  color: #ff4444;
+  color: #B20CE9;
   font-weight: bold;
   margin-top: 10px;
   font-size: 1.1em;
@@ -357,7 +357,7 @@ button {
 }
 
 small.soldout, .soldout {
-  color: #ff6666;
+  color: #B20CE9;
   font-size: 0.9em;
   display: block;
   margin-top: 6px;
@@ -2485,14 +2485,14 @@ select:focus {
   transition: all 0.3s ease;
   text-align: center;
   user-select: none;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
-.config-option-btn:hover:not(:disabled) {
-  background: #2a2a2a;
-  border-color: #444;
-  transform: none;
-  box-shadow: none;
+.config-option-btn:hover:not(:disabled):not(.selected) {
+  background: #353535;
+  border-color: #B20CE9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(178, 12, 233, 0.3);
 }
 
 .config-option-btn.selected {
@@ -3386,7 +3386,7 @@ select:focus {
 }
 
 .shitstagram-filter-submenu::-webkit-scrollbar-thumb:hover {
-  background: #9c0bc7;
+  background: #B20CE9;
 }
 
 .shitstagram-filter-suboption {
@@ -3433,7 +3433,7 @@ select:focus {
 }
 
 .shitstagram-filter-nested::-webkit-scrollbar-thumb:hover {
-  background: #9c0bc7;
+  background: #B20CE9;
 }
 
 .shitstagram-filter-nestedoption {
@@ -3480,7 +3480,7 @@ select:focus {
 }
 
 .shitstagram-filter-deep::-webkit-scrollbar-thumb:hover {
-  background: #9c0bc7;
+  background: #B20CE9;
 }
 
 .shitstagram-filter-deepoption {

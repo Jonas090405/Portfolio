@@ -595,6 +595,19 @@ const products = [
 
 let checkoutCompleted = false;
 
+// Preload checkout sounds (swapped behavior by design)
+// Play `right.wav` when the PASSWORD IS WRONG, and `wrong.wav` when the PASSWORD IS CORRECT
+const audioRight = new Audio('right.wav');
+audioRight.preload = 'auto';
+audioRight.volume = 0.6; // reduce volume by ~20%
+const audioWrong = new Audio('wrong.wav');
+audioWrong.preload = 'auto';
+audioWrong.volume = 0.6; // reduce volume by ~20%
+// Success sound for stage completion overlays
+const successAudio = new Audio('success.wav');
+successAudio.preload = 'auto';
+successAudio.volume = 0.6; // reduce volume by ~20%
+
 // --- Startscreen Logik ---
 const readyBtn = document.getElementById("ready-btn");
 const clickWord = document.getElementById("click-word");
@@ -1459,7 +1472,7 @@ function setupCheckout() {
           <input type="text" id="country" class="checkout-input" value="Land">
         </div>
         <div class="input-group">
-          <label for="email">E-Mail (optional, aber Pflicht)</label>
+          <label for="email">E-Mail</label>
           <input type="text" id="email" class="checkout-input" value="E-Mail (optional, aber Pflicht)">
         </div>
         <div class="input-group">
@@ -1468,7 +1481,10 @@ function setupCheckout() {
         </div>
         <div class="input-group">
           <label for="password">Passwort festlegen</label>
-          <input type="text" id="password" class="checkout-input" value="Passwort">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <input type="text" id="password" class="checkout-input" value="Passwort" style="flex: 1;">
+            <span id="caps-lock-warning" style="font-size: 0.75em; color: #B20CE9; white-space: nowrap; display: none;">Feststelltaste nicht aktiviert</span>
+          </div>
           <div class="password-requirements">
             <p style="font-size: 0.75em; color: #999; margin: 8px 0 4px 0; font-weight: 600; text-align: left;">Passwort-Anforderungen:</p>
             <ul style="font-size: 0.7em; color: #777; margin: 0; padding-left: 20px; line-height: 1.6; text-align: left;">
@@ -1515,7 +1531,29 @@ function setupCheckout() {
   
   // Worst Practice: Passwort-Feld zeigt Shake-Animation bei RICHTIGEM Input
   const passwordInput = document.getElementById("password");
+  const capsLockWarning = document.getElementById("caps-lock-warning");
   let lastPasswordValue = "";
+  
+  // Worst Practice: Inverted Caps Lock warning (shows when OFF, hides when ON)
+  passwordInput.addEventListener("keydown", function(e) {
+    if (e.getModifierState && e.getModifierState("CapsLock")) {
+      // Caps Lock is ON - hide warning (worst practice!)
+      capsLockWarning.style.display = "none";
+    } else {
+      // Caps Lock is OFF - show warning (worst practice!)
+      capsLockWarning.style.display = "block";
+    }
+  });
+  
+  passwordInput.addEventListener("keyup", function(e) {
+    if (e.getModifierState && e.getModifierState("CapsLock")) {
+      // Caps Lock is ON - hide warning (worst practice!)
+      capsLockWarning.style.display = "none";
+    } else {
+      // Caps Lock is OFF - show warning (worst practice!)
+      capsLockWarning.style.display = "block";
+    }
+  });
   
   passwordInput.addEventListener("input", function() {
     const currentValue = this.value;
@@ -1651,9 +1689,18 @@ function setupCheckout() {
     // ABSURDE PASSWORT-VALIDIERUNG (Worst Practice!)
     const errors = validatePassword(passwordValue);
     if (errors.length > 0) {
+      // Play swapped sound: play `right.wav` when password is WRONG
+      if (audioRight && typeof audioRight.play === 'function') {
+        audioRight.play().catch(() => {});
+      }
       showErrorPopup("Passwort-Fehler: " + errors[0]);
       resetCheckoutForm();
       return;
+    }
+
+    // Play swapped sound: play `wrong.wav` when password is CORRECT
+    if (audioWrong && typeof audioWrong.play === 'function') {
+      audioWrong.play().catch(() => {});
     }
 
     // Zeige Newsletter-Popup (Worst Practice!)
@@ -3298,6 +3345,9 @@ function initHeartDrawing() {
     }
     
     const startDrawing = (e) => {
+      // Prevent drawing while hearts overlay is showing
+      if (isShowingHeartsOverlay) return;
+      
       e.preventDefault();
       e.stopPropagation();
       isDrawing = true;
@@ -3307,6 +3357,13 @@ function initHeartDrawing() {
     
     const draw = (e) => {
       if (!isDrawing) return;
+      // Stop drawing if overlay appears during drawing
+      if (isShowingHeartsOverlay) {
+        isDrawing = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        points = [];
+        return;
+      }
       e.preventDefault();
       e.stopPropagation();
       
@@ -3333,6 +3390,14 @@ function initHeartDrawing() {
     
     const endDrawing = (e) => {
       if (!isDrawing) return;
+      // Prevent completing drawing if overlay is showing
+      if (isShowingHeartsOverlay) {
+        isDrawing = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        points = [];
+        return;
+      }
+      
       e.preventDefault();
       e.stopPropagation();
       isDrawing = false;
@@ -3390,7 +3455,7 @@ function initHeartDrawing() {
           // Failed - show error
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           points = [];
-          showErrorPopup("Dein Herz ist nicht perfekt genug! Versuche es nochmal.");
+          showErrorPopup("Herz nicht erkannt");
         }
       } else {
         // Too few points
@@ -3418,9 +3483,9 @@ function initHeartDrawing() {
   });
 }
 
-// Analyze if drawn shape resembles a heart (75% accuracy required)
+// Analyze if drawn shape resembles a heart - balanced validation
 function analyzeHeartShape(points, canvasWidth, canvasHeight) {
-  if (points.length < 30) return false;
+  if (points.length < 25) return false;
   
   // Normalize points to 0-1 range
   const minX = Math.min(...points.map(p => p.x));
@@ -3431,57 +3496,116 @@ function analyzeHeartShape(points, canvasWidth, canvasHeight) {
   const width = maxX - minX;
   const height = maxY - minY;
   
-  if (width < 50 || height < 50) return false; // Too small
+  // No minimum size requirement - any size is OK
   
   const normalized = points.map(p => ({
     x: (p.x - minX) / width,
     y: (p.y - minY) / height
   }));
   
-  // Heart shape characteristics:
-  // 1. Should have roughly heart-like aspect ratio (width ~0.8-1.2 of height)
-  const aspectRatio = width / height;
-  if (aspectRatio < 0.7 || aspectRatio > 1.3) return false;
+  // Check if path is reasonably closed
+  const firstPoint = normalized[0];
+  const lastPoint = normalized[normalized.length - 1];
+  const distance = Math.sqrt(Math.pow(firstPoint.x - lastPoint.x, 2) + Math.pow(firstPoint.y - lastPoint.y, 2));
+  if (distance > 0.4) return false;
   
-  // 2. Should have two humps at the top
-  const topThird = normalized.filter(p => p.y < 0.33);
-  if (topThird.length < points.length * 0.15) return false;
+  // REJECT CIRCLES: Check if shape is too round/circular
+  // Calculate center point
+  const centerX = normalized.reduce((sum, p) => sum + p.x, 0) / normalized.length;
+  const centerY = normalized.reduce((sum, p) => sum + p.y, 0) / normalized.length;
   
-  // 3. Should have a point at the bottom
-  const bottomFifth = normalized.filter(p => p.y > 0.8);
-  if (bottomFifth.length < points.length * 0.05) return false;
+  // Calculate distances from center
+  const distances = normalized.map(p => 
+    Math.sqrt(Math.pow(p.x - centerX, 2) + Math.pow(p.y - centerY, 2))
+  );
   
-  // 4. Check for indentation in the middle top (characteristic of heart)
-  const topMiddle = normalized.filter(p => p.y < 0.3 && p.x > 0.4 && p.x < 0.6);
-  const topSides = normalized.filter(p => p.y < 0.3 && (p.x < 0.3 || p.x > 0.7));
+  const avgDistance = distances.reduce((sum, d) => sum + d, 0) / distances.length;
+  const distanceVariance = distances.reduce((sum, d) => sum + Math.pow(d - avgDistance, 2), 0) / distances.length;
+  const distanceStdDev = Math.sqrt(distanceVariance);
   
-  // Top middle should have fewer points than sides (indentation)
-  const hasIndentation = topMiddle.length < topSides.length * 0.5;
+  // If points are very evenly distributed from center (low std deviation), it's likely a circle
+  if (distanceStdDev < avgDistance * 0.15) {
+    return false; // Too circular, reject
+  }
   
-  // 5. Check for symmetry (loosely)
-  const leftSide = normalized.filter(p => p.x < 0.5);
-  const rightSide = normalized.filter(p => p.x > 0.5);
-  const symmetryRatio = Math.min(leftSide.length, rightSide.length) / Math.max(leftSide.length, rightSide.length);
-  const isSymmetric = symmetryRatio > 0.6; // Allow 40% deviation
-  
-  // 6. Check path direction - should go around the shape
-  const coverageX = new Set(normalized.map(p => Math.floor(p.x * 10))).size;
-  const coverageY = new Set(normalized.map(p => Math.floor(p.y * 10))).size;
-  const goodCoverage = coverageX >= 6 && coverageY >= 7;
-  
-  // Calculate score (need 75% to pass)
   let score = 0;
-  let maxScore = 6;
+  let criticalChecks = 0;
   
-  if (aspectRatio >= 0.8 && aspectRatio <= 1.2) score += 1;
-  if (topThird.length >= points.length * 0.2) score += 1;
-  if (bottomFifth.length >= points.length * 0.08) score += 1;
-  if (hasIndentation) score += 1;
-  if (isSymmetric) score += 1;
-  if (goodCoverage) score += 1;
+  // CRITICAL 1: Heart-like aspect ratio
+  const aspectRatio = width / height;
+  if (aspectRatio >= 0.7 && aspectRatio <= 1.4) {
+    criticalChecks++;
+    score += 2;
+  }
   
-  const accuracy = score / maxScore;
-  return accuracy >= 0.75; // 75% match required
+  // CRITICAL 2: Must have BOTH lobes at top (left AND right)
+  const topArea = normalized.filter(p => p.y < 0.4);
+  if (topArea.length >= points.length * 0.12) {
+    const topLeft = topArea.filter(p => p.x < 0.45);
+    const topRight = topArea.filter(p => p.x > 0.55);
+    // Both lobes must exist
+    if (topLeft.length >= points.length * 0.04 && topRight.length >= points.length * 0.04) {
+      criticalChecks++;
+      score += 2;
+    }
+  }
+  
+  // CRITICAL 3: Bottom must narrow to a point
+  const bottomArea = normalized.filter(p => p.y > 0.65);
+  if (bottomArea.length >= points.length * 0.06) {
+    const bottomWidth = Math.max(...bottomArea.map(p => p.x)) - Math.min(...bottomArea.map(p => p.x));
+    // Bottom must be narrower (max 45% of width)
+    if (bottomWidth < 0.45) {
+      const bottomCenterX = bottomArea.reduce((sum, p) => sum + p.x, 0) / bottomArea.length;
+      // Must be reasonably centered
+      if (bottomCenterX > 0.35 && bottomCenterX < 0.65) {
+        criticalChecks++;
+        score += 2;
+      }
+    }
+  }
+  
+  // CRITICAL 4: Some indentation at top (between the two lobes)
+  const topMiddle = normalized.filter(p => p.y < 0.35 && p.x > 0.4 && p.x < 0.6);
+  const topSides = normalized.filter(p => p.y < 0.35 && (p.x < 0.4 || p.x > 0.6));
+  
+  // Sides should have more points than middle
+  if (topSides.length > topMiddle.length * 0.8) {
+    criticalChecks++;
+    score += 2;
+  }
+  
+  // Need at least 4 of 4 critical checks
+  if (criticalChecks < 3) return false;
+  
+  // ADDITIONAL: Quadrants coverage
+  const topLeft = normalized.filter(p => p.x < 0.5 && p.y < 0.5).length;
+  const topRight = normalized.filter(p => p.x >= 0.5 && p.y < 0.5).length;
+  const bottomLeft = normalized.filter(p => p.x < 0.5 && p.y >= 0.5).length;
+  const bottomRight = normalized.filter(p => p.x >= 0.5 && p.y >= 0.5).length;
+  
+  const minQuadrant = Math.min(topLeft, topRight, bottomLeft, bottomRight);
+  if (minQuadrant >= points.length * 0.08) {
+    score += 1.5;
+  }
+  
+  // ADDITIONAL: Taper from top to bottom
+  const topThird = normalized.filter(p => p.y < 0.33);
+  const midThird = normalized.filter(p => p.y >= 0.33 && p.y < 0.66);
+  const bottomThird = normalized.filter(p => p.y >= 0.66);
+  
+  if (topThird.length > 0 && bottomThird.length > 0) {
+    const topW = Math.max(...topThird.map(p => p.x)) - Math.min(...topThird.map(p => p.x));
+    const botW = Math.max(...bottomThird.map(p => p.x)) - Math.min(...bottomThird.map(p => p.x));
+    
+    // Top should be wider than bottom
+    if (topW > botW * 1.1) {
+      score += 1.5;
+    }
+  }
+  
+  // Need at least 7 out of 11 points
+  return score >= 7;
 }
 
 function showShitstagramSearch() {
@@ -4287,7 +4411,8 @@ function showHeartsOverlay() {
     overlay.classList.add("hiding");
     setTimeout(() => {
       overlay.remove();
-      isShowingHeartsOverlay = false; // Reset flag when animation is done
+      // Reset flag AFTER overlay is completely gone (including fade out)
+      isShowingHeartsOverlay = false;
     }, 500);
   }, 5000);
 }
@@ -4312,6 +4437,10 @@ function showSuccessOverlay(callback) {
   `;
   
   document.body.appendChild(overlay);
+  // Play success sound (non-blocking)
+  if (successAudio && typeof successAudio.play === 'function') {
+    successAudio.play().catch(() => {});
+  }
   
   // Nach 1.5 Sekunden ausblenden und callback ausführen
   setTimeout(() => {
