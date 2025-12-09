@@ -479,19 +479,31 @@ header .read-more:hover {
     font-size: 1rem;
     border-radius: 12px;
     background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
-    padding: 15px;
-    
-
+    padding: 20px;
 }
 
 .timeline-item h3 {
     font-size: 1.5rem;
-    margin-bottom: 2vh;
+    margin-bottom: 8px;
 }
 
 .timeline-item p {
-    margin: 1vh 0;
+    margin: 0 0 12px 0;
     color: #c5c5c5;
+    line-height: 1.5;
+}
+
+.timeline-item p:first-of-type {
+    margin-bottom: 16px;
+}
+
+.timeline-item p strong {
+    display: block;
+    color: var(--text-color);
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+    margin-top: 16px;
+    letter-spacing: 0.3px;
 }
 
 
