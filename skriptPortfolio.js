@@ -125,7 +125,7 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
     ];
 
     const typingSpeed = 0; // Minimum delay
-    const chunkSize = 3;    // Number of characters to add per iteration
+    const chunkSize = 4;    // Number of characters to add per iteration
 
     function typeText({ element, text }, callback) {
         let charIndex = 0;
