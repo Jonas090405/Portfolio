@@ -1097,6 +1097,7 @@ footer a:hover {
         line-height: 1.5;
         word-wrap: break-word;
         overflow-wrap: break-word;
+        word-break: normal;
         hyphens: auto;
         max-width: 100%;
         margin-bottom: 20px;
@@ -1771,6 +1772,18 @@ footer {
         /* Optional: Items links ausrichten */
         padding: 0 10px;
         /* Optional: etwas Innenabstand */
+    }
+
+    .skill-container ul li {
+        flex-wrap: wrap;
+        gap: 16px;
+        padding: 10px 12px;
+    }
+
+    .skill-container ul li progress {
+        width: 100%;
+        margin-left: 0;
+        min-width: 0;
     }
 }
 
