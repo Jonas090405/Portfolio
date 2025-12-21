@@ -104,450 +104,6 @@ const stages = [
       }
       return "";
     }
-  },
-  
-  {
-    title: "Stage 3: Video Challenge",
-    content: `
-      <div style="width: 100vw; height: 100vh; margin: 0; padding: 0; box-sizing: border-box; position: fixed; top: 0; left: 0; overflow-y: auto; background: #0f0f0f;">
-        <!-- YouPoop Header -->
-        <div style="position: sticky; top: 0; background: #0f0f0f; border-bottom: 1px solid #303030; padding: 12px 20px; display: flex; align-items: center; justify-content: center; z-index: 1000; position: relative;">
-          <div style="position: absolute; left: 20px; display: flex; align-items: center; gap: 12px;">
-            <div style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-              <svg width="32" height="24" viewBox="0 0 90 64" style="fill: #B20CE9;">
-                <path d="M88,13.8c-0.8-3-2.9-5.4-5.6-6.1C75.5,5.5,45,5.5,45,5.5s-30.5,0-37.4,2.2 C4.9,8.4,2.8,10.8,2,13.8C0,20.8,0,35,0,35s0,14.2,2,21.2c0.8,3,2.9,5.4,5.6,6.1C14.5,64.5,45,64.5,45,64.5s30.5,0,37.4-2.2 c2.7-0.7,4.8-3.1,5.6-6.1C90,49.2,90,35,90,35S90,20.8,88,13.8z" fill="#B20CE9"/>
-                <path d="M36,50.1L59.5,35L36,19.9V50.1z" fill="#fff"/>
-              </svg>
-            </div>
-            <div style="font-size: 1.4em; font-weight: 700; color: #fff; letter-spacing: -0.5px;">YouPoop</div>
-          </div>
-          <div style="color: #ccc; font-size: 0.95em; font-weight: 500;">📺 Schaue das Video bis zum Ende</div>
-        </div>
-        
-        <div style="padding: 20px;">
-          
-          <div style="display: flex; gap: 24px;">
-          <!-- Main Video Area -->
-          <div style="flex: 1.3; min-width: 0;">
-            <!-- Video Player -->
-            <div id="youtube-player" style="background: #000; border-radius: 12px; width: 100%; max-height: 65vh; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; cursor: pointer;">
-              <!-- Thumbnail -->
-              <div id="video-thumbnail" style="width: 100%; height: 100%; background: linear-gradient(135deg, #B20CE9 0%, #5a2a7a 100%); display: flex; align-items: center; justify-content: center; position: relative;">
-                <div style="text-align: center; color: #fff;">
-                  <div style="font-size: 3em; margin-bottom: 10px;">🎬</div>
-                  <div style="font-size: 1.5em; font-weight: bold;">Placeholder Video</div>
-                  <div style="font-size: 0.9em; opacity: 0.8; margin-top: 5px;">Sample Content</div>
-                </div>
-                
-                <!-- Play Button Overlay -->
-                <div id="play-button-overlay" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3);">
-                  <svg id="play-button" width="80" height="80" viewBox="0 0 68 48" style="opacity: 0.95; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); transition: transform 0.2s;">
-                    <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#B20CE9"/>
-                    <path d="M 45,24 27,14 27,34" fill="#fff"/>
-                  </svg>
-                </div>
-                
-                <!-- Video Duration Badge -->
-                <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); color: #fff; padding: 3px 6px; border-radius: 3px; font-size: 12px; font-weight: 600;">0:05</div>
-              </div>
-              
-              <!-- YouTube Controls -->
-              <div id="youtube-controls" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 70%, transparent 100%); padding: 50px 12px 10px 12px; opacity: 0; transition: opacity 0.2s;">
-                <!-- Progress Bar -->
-                <div style="position: relative; height: 5px; background: rgba(255,255,255,0.3); border-radius: 2px; margin-bottom: 10px; cursor: pointer;">
-                  <div id="video-buffer" style="position: absolute; left: 0; top: 0; height: 100%; background: rgba(255,255,255,0.4); border-radius: 2px; width: 0%;"></div>
-                  <div id="video-progress" style="position: absolute; left: 0; top: 0; height: 100%; background: #f00; border-radius: 2px; width: 0%;"></div>
-                </div>
-                
-                <!-- Control Buttons -->
-                <div style="display: flex; align-items: center; gap: 10px; color: #fff; font-size: 14px;">
-                  <button id="yt-play-btn" style="background: none; border: none; color: #fff; cursor: pointer; padding: 4px; display: flex; align-items: center;">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
-                  </button>
-                  
-                  <button style="background: none; border: none; color: #fff; cursor: pointer; padding: 4px;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
-                    </svg>
-                  </button>
-                  
-                  <span id="video-time" style="font-family: 'Roboto', sans-serif; font-size: 13px; margin-left: 4px;">0:00 / 0:05</span>
-                  
-                  <div style="flex: 1;"></div>
-                  
-                  <button style="background: none; border: none; color: #fff; cursor: pointer; padding: 4px;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M10 8v8l6-4-6-4zm9-5H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
-                    </svg>
-                  </button>
-                  
-                  <button style="background: none; border: none; color: #fff; cursor: pointer; padding: 4px;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Video Info -->
-            <div style="margin-top: 12px;">
-              <h3 style="color: #fff; font-size: 1.3em; margin: 0 0 12px 0; font-weight: 500; line-height: 1.4;">Worst Practice Tutorial – Complete Guide</h3>
-              
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                  <!-- Channel Avatar -->
-                  <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #B20CE9, #7d3ba8); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 1.1em;">W</div>
-                  
-                  <div>
-                    <div style="color: #fff; font-weight: 500; font-size: 0.95em;">WorstPractice – UX Fails</div>
-                    <div style="color: #aaa; font-size: 0.85em;">24,8 Mio. Abonnenten</div>
-                  </div>
-                  
-                  <button style="background: #fff; color: #000; border: none; padding: 10px 16px; border-radius: 18px; font-weight: 600; cursor: pointer; font-size: 0.9em; margin-left: 12px;">Abonnieren</button>
-                </div>
-                
-                <div style="display: flex; gap: 8px;">
-                  <button style="background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 10px 16px; border-radius: 18px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9em;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
-                    </svg>
-                    <span>15.630</span>
-                  </button>
-                  
-                  <button style="background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 10px 16px; border-radius: 18px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9em;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M15 3l2.3 2.3-2.89 2.87 1.42 1.42L18.7 6.7 21 9V3h-6zM3 9l2.3-2.3 2.87 2.89 1.42-1.42L6.7 5.3 9 3H3v6zm6 12l-2.3-2.3 2.89-2.87-1.42-1.42L5.3 17.3 3 15v6h6zm12-6l-2.3 2.3-2.87-2.89-1.42 1.42 2.89 2.87L15 21h6v-6z"/>
-                    </svg>
-                    <span>Teilen</span>
-                  </button>
-                </div>
-              </div>
-              
-              <!-- Video Description -->
-              <div style="background: rgba(255,255,255,0.05); border-radius: 12px; padding: 14px; margin-bottom: 20px;">
-                <div style="color: #aaa; font-size: 0.9em; margin-bottom: 8px;">
-                  <span style="font-weight: 600; color: #fff;">112.155 Aufrufe</span> • vor 1 Stunde • <span style="color: #B20CE9;">#WorstPractice</span> <span style="color: #B20CE9;">#UXFails</span>
-                </div>
-                <div style="color: #ccc; font-size: 0.9em; line-height: 1.6;">
-                  In diesem Video zeige ich euch die schlimmsten UI/UX Fails aller Zeiten! Von verwirrenden Checkout-Prozessen bis hin zu versteckten Buttons – hier seht ihr alles, was ihr NICHT machen solltet. 
-                  <br><br>
-                  Timestamps:<br>
-                  0:00 - Intro<br>
-                  0:15 - Checkout Chaos<br>
-                  2:30 - Social Media Disaster<br>
-                  4:45 - Video Challenge<br>
-                  <br>
-                  Dieses Video dient nur zu Bildungszwecken. Bitte nicht nachmachen!
-                </div>
-              </div>
-              
-              <!-- Comments Section -->
-              <div style="margin-bottom: 20px;">
-                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
-                  <h4 style="color: #fff; font-size: 1.2em; margin: 0; font-weight: 500;">287 Kommentare</h4>
-                  <button style="background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9em;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/>
-                    </svg>
-                    Sortieren nach
-                  </button>
-                </div>
-                
-                <!-- Comment Input -->
-                <div style="display: flex; gap: 12px; margin-bottom: 24px;">
-                  <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #7d3ba8, #5a2a7a); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold;">U</div>
-                  <input type="text" placeholder="Kommentar hinzufügen..." style="flex: 1; background: transparent; border: none; border-bottom: 1px solid #303030; color: #fff; padding: 8px 0; font-size: 0.95em; outline: none;" />
-                </div>
-                
-                <!-- Comment 1 -->
-                <div style="display: flex; gap: 12px; margin-bottom: 20px;">
-                  <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #B20CE9, #7d3ba8); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; flex-shrink: 0;">M</div>
-                  <div style="flex: 1;">
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
-                      <span style="color: #fff; font-weight: 500; font-size: 0.9em;">@MaxMustermann</span>
-                      <span style="color: #aaa; font-size: 0.85em;">vor 2 Stunden</span>
-                    </div>
-                    <div style="color: #ccc; font-size: 0.95em; line-height: 1.5;">Das ist tatsächlich das Schlimmste was ich je gesehen habe! 😂 Aber sehr lehrreich!</div>
-                    <div style="display: flex; gap: 16px; margin-top: 4px; align-items: center;">
-                      <button style="background: none; border: none; color: #aaa; cursor: pointer; display: flex; align-items: center; gap: 3px; font-size: 0.85em;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
-                        </svg>
-                        423
-                      </button>
-                      <button style="background: none; border: none; color: #aaa; cursor: pointer; font-size: 0.85em;">Antworten</button>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Comment 2 -->
-                <div style="display: flex; gap: 12px; margin-bottom: 20px;">
-                  <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #7d3ba8, #5a2a7a); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; flex-shrink: 0;">S</div>
-                  <div style="flex: 1;">
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
-                      <span style="color: #fff; font-weight: 500; font-size: 0.9em;">@SarahDesigns</span>
-                      <span style="color: #aaa; font-size: 0.85em;">vor 5 Stunden</span>
-                    </div>
-                    <div style="color: #ccc; font-size: 0.95em; line-height: 1.5;">Als UX Designerin kann ich bestätigen: So macht man es NICHT! 😅 Perfektes Beispiel für Fehldesign.</div>
-                    <div style="display: flex; gap: 16px; margin-top: 4px; align-items: center;">
-                      <button style="background: none; border: none; color: #aaa; cursor: pointer; display: flex; align-items: center; gap: 3px; font-size: 0.85em;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
-                        </svg>
-                        891
-                      </button>
-                      <button style="background: none; border: none; color: #aaa; cursor: pointer; font-size: 0.85em;">Antworten</button>
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Comment 3 -->
-                <div style="display: flex; gap: 12px; margin-bottom: 20px;">
-                  <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #9a4ec7, #B20CE9); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; flex-shrink: 0;">T</div>
-                  <div style="flex: 1;">
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
-                      <span style="color: #fff; font-weight: 500; font-size: 0.9em;">@TechNerd42</span>
-                      <span style="color: #aaa; font-size: 0.85em;">vor 8 Stunden</span>
-                    </div>
-                    <div style="color: #ccc; font-size: 0.95em; line-height: 1.5;">Habe das in meinem Studium als Negativbeispiel gezeigt. Funktioniert super! 👍</div>
-                    <div style="display: flex; gap: 16px; margin-top: 4px; align-items: center;">
-                      <button style="background: none; border: none; color: #aaa; cursor: pointer; display: flex; align-items: center; gap: 3px; font-size: 0.85em;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
-                        </svg>
-                        267
-                      </button>
-                      <button style="background: none; border: none; color: #aaa; cursor: pointer; font-size: 0.85em;">Antworten</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Sidebar with Related Videos -->
-          <div style="width: 420px; flex-shrink: 0;">
-            <div style="margin-bottom: 16px;">
-              <div style="display: flex; gap: 8px; margin-bottom: 12px; overflow-x: auto;">
-                <button style="background: #fff; color: #000; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85em; white-space: nowrap;">Alle</button>
-                <button style="background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85em; white-space: nowrap;">Verwandt</button>
-                <button style="background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85em; white-space: nowrap;">Neu</button>
-              </div>
-            </div>
-            
-            <!-- Related Video 1 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #B20CE9 0%, #7d3ba8 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="2" y="6" width="20" height="12" rx="2"/>
-                  <circle cx="7" cy="12" r="1.5" fill="currentColor"/>
-                  <circle cx="17" cy="10" r="1.5" fill="currentColor"/>
-                  <circle cx="17" cy="14" r="1.5" fill="currentColor"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">12:34</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">Why Modern Games Feel So Empty</div>
-                <div style="color: #aaa; font-size: 0.8em;">GameTheory Plus</div>
-                <div style="color: #aaa; font-size: 0.75em;">1,2 Mio. Aufrufe • vor 3 Tagen</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 2 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #7d3ba8 0%, #5a2a7a 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M9 18h6"/>
-                  <path d="M10 22h4"/>
-                  <path d="M15 2a6 6 0 0 1 0 12H9A6 6 0 0 1 9 2z"/>
-                  <path d="M12 6v6"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">8:45</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">The Psychology Behind Bad Design</div>
-                <div style="color: #aaa; font-size: 0.8em;">Mind Matters</div>
-                <div style="color: #aaa; font-size: 0.75em;">543.891 Aufrufe • vor 1 Woche</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 3 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #9a4ec7 0%, #B20CE9 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <polyline points="16 18 22 12 16 6"/>
-                  <polyline points="8 6 2 12 8 18"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">15:22</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">I Built The WORST Website Ever</div>
-                <div style="color: #aaa; font-size: 0.8em;">DevDreams</div>
-                <div style="color: #aaa; font-size: 0.75em;">2,3 Mio. Aufrufe • vor 2 Tagen</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 4 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #1a1a1a 0%, #7d3ba8 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M12 2L12 12"/>
-                  <path d="M12 22c-2.5 0-4-1-5-2L9 12l3-10 3 10 2 8c-1 1-2.5 2-5 2z"/>
-                  <path d="M7 12H2"/>
-                  <path d="M22 12h-5"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">22:10</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">SpaceX's Secret Project Revealed</div>
-                <div style="color: #aaa; font-size: 0.8em;">TechVision</div>
-                <div style="color: #aaa; font-size: 0.75em;">4,7 Mio. Aufrufe • vor 1 Tag</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 5 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #e0d0f0 0%, #B20CE9 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
-                  <path d="M7 2v20"/>
-                  <path d="M21 15v7"/>
-                  <path d="M21 6v3a3 3 0 0 1-3 3 3 3 0 0 1-3-3V6z"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">18:56</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">Making a $1000 Burger at Home</div>
-                <div style="color: #aaa; font-size: 0.8em;">CookingWithChaos</div>
-                <div style="color: #aaa; font-size: 0.75em;">892.345 Aufrufe • vor 6 Tagen</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 6 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #5a2a7a 0%, #2a1a3a 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M9 18V5l12-2v13"/>
-                  <circle cx="6" cy="18" r="3"/>
-                  <circle cx="18" cy="16" r="3"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">4:32</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">Top 10 Worst UI Sounds in History</div>
-                <div style="color: #aaa; font-size: 0.8em;">SoundScape</div>
-                <div style="color: #aaa; font-size: 0.75em;">321.678 Aufrufe • vor 4 Tagen</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 7 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #B20CE9 0%, #9a4ec7 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="3" y="3" width="18" height="18" rx="2"/>
-                  <circle cx="12" cy="12" r="3"/>
-                  <path d="M16 8h.01"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">11:25</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">Instagram's Hidden Dark Patterns</div>
-                <div style="color: #aaa; font-size: 0.8em;">DigitalEthics</div>
-                <div style="color: #aaa; font-size: 0.75em;">1,5 Mio. Aufrufe • vor 3 Wochen</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 8 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #7d3ba8 0%, #5a2a7a 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                  <path d="M2 17l10 5 10-5"/>
-                  <path d="M2 12l10 5 10-5"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">16:47</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">The Stack That Changed Everything</div>
-                <div style="color: #aaa; font-size: 0.8em;">CodeMasters</div>
-                <div style="color: #aaa; font-size: 0.75em;">678.234 Aufrufe • vor 1 Woche</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 9 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #9a4ec7 0%, #B20CE9 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="M12 6v6l4 2"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">24:15</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">Why Users Abandon Your Website</div>
-                <div style="color: #aaa; font-size: 0.8em;">UXResearch Pro</div>
-                <div style="color: #aaa; font-size: 0.75em;">2,1 Mio. Aufrufe • vor 2 Wochen</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 10 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #1a1a1a 0%, #7d3ba8 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                  <path d="M12 12v10"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">9:58</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">3D Design for Beginners - Full Course</div>
-                <div style="color: #aaa; font-size: 0.8em;">CreativeHub</div>
-                <div style="color: #aaa; font-size: 0.75em;">3,4 Mio. Aufrufe • vor 1 Monat</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 11 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #e0d0f0 0%, #B20CE9 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-                  <line x1="7" y1="7" x2="7.01" y2="7"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">7:23</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">Pricing Psychology Tricks Explained</div>
-                <div style="color: #aaa; font-size: 0.8em;">MarketingSecrets</div>
-                <div style="color: #aaa; font-size: 0.75em;">956.123 Aufrufe • vor 5 Tagen</div>
-              </div>
-            </div>
-            
-            <!-- Related Video 12 -->
-            <div style="display: flex; gap: 10px; margin-bottom: 8px; cursor: pointer;">
-              <div style="width: 168px; height: 94px; background: linear-gradient(135deg, #5a2a7a 0%, #2a1a3a 100%); border-radius: 8px; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <circle cx="11" cy="11" r="8"/>
-                  <path d="M21 21l-4.35-4.35"/>
-                </svg>
-                <div style="position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); padding: 2px 4px; border-radius: 2px; font-size: 11px;">13:41</div>
-              </div>
-              <div style="flex: 1;">
-                <div style="color: #fff; font-size: 0.9em; font-weight: 500; line-height: 1.3; margin-bottom: 4px;">Google's Search Algorithm Decoded</div>
-                <div style="color: #aaa; font-size: 0.8em;">SEOMasterclass</div>
-                <div style="color: #aaa; font-size: 0.75em;">1,8 Mio. Aufrufe • vor 2 Tage</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-    `,
-    validate: () => {
-      return ""; // Auto-complete für Placeholder
-    }
   }
 ];
 
@@ -597,14 +153,14 @@ let checkoutCompleted = false;
 
 // Preload checkout sounds (swapped behavior by design)
 // Play `right.wav` when the PASSWORD IS WRONG, and `wrong.wav` when the PASSWORD IS CORRECT
-const audioRight = new Audio('right.wav');
+const audioRight = new Audio('sounds/right.wav');
 audioRight.preload = 'auto';
 audioRight.volume = 0.6; // reduce volume by ~20%
-const audioWrong = new Audio('wrong.wav');
+const audioWrong = new Audio('sounds/wrong.wav');
 audioWrong.preload = 'auto';
 audioWrong.volume = 0.6; // reduce volume by ~20%
 // Success sound for stage completion overlays
-const successAudio = new Audio('success.wav');
+const successAudio = new Audio('sounds/success.wav');
 successAudio.preload = 'auto';
 successAudio.volume = 0.6; // reduce volume by ~20%
 
@@ -645,6 +201,8 @@ let totalScore = 0;
 let totalTime = 0;
 let startTime = 0;
 let timerInterval = null;
+let stage2PauseInterval = null;
+let stage2NotificationInterval = null;
 
 function showScreen(id) {
   ["start-screen", "stages", "end-screen", "checkout-screen"].forEach(s => {
@@ -729,128 +287,6 @@ function startStage(idx) {
   } else if (idx === 1) {
     // Stage 2: Shitstagram Setup
     initShitstagram();
-  } else if (idx === 2) {
-    // Stage 3: YouTube Video Placeholder Setup
-    const youtubePlayer = document.getElementById("youtube-player");
-    const playButton = document.getElementById("play-button");
-    const playButtonOverlay = document.getElementById("play-button-overlay");
-    const videoThumbnail = document.getElementById("video-thumbnail");
-    const youtubeControls = document.getElementById("youtube-controls");
-    const videoProgress = document.getElementById("video-progress");
-    const videoBuffer = document.getElementById("video-buffer");
-    const videoTime = document.getElementById("video-time");
-    const ytPlayBtn = document.getElementById("yt-play-btn");
-    
-    if (youtubePlayer) {
-      let isPlaying = false;
-      let progress = 0;
-      let bufferProgress = 0;
-      const videoDuration = 5; // 5 Sekunden
-      const updateInterval = 50;
-      const progressIncrement = (100 / (videoDuration * 1000)) * updateInterval;
-      let videoInterval = null;
-      let bufferInterval = null;
-      
-      // Play button hover effect
-      if (playButton) {
-        playButton.parentElement.onmouseenter = () => {
-          if (!isPlaying) playButton.style.transform = 'scale(1.1)';
-        };
-        playButton.parentElement.onmouseleave = () => {
-          if (!isPlaying) playButton.style.transform = 'scale(1)';
-        };
-      }
-      
-      // Show controls on hover (only when playing)
-      youtubePlayer.onmouseenter = () => {
-        if (isPlaying) youtubeControls.style.opacity = '1';
-      };
-      youtubePlayer.onmouseleave = () => {
-        if (isPlaying) youtubeControls.style.opacity = '0';
-      };
-      
-      // Play function
-      const playVideo = () => {
-        if (!isPlaying) {
-          isPlaying = true;
-          
-          // Hide thumbnail and play button overlay
-          if (playButtonOverlay) playButtonOverlay.style.display = 'none';
-          
-          // Change thumbnail to black background (simulating video playback)
-          if (videoThumbnail) {
-            videoThumbnail.style.background = '#000';
-            videoThumbnail.innerHTML = '<div style="color: #fff; font-size: 1.2em; opacity: 0.3;">▶ Video spielt ab...</div>';
-          }
-          
-          // Show controls
-          youtubeControls.style.opacity = '1';
-          
-          // Update play button icon to pause
-          ytPlayBtn.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
-          
-          // Start buffer simulation
-          bufferInterval = setInterval(() => {
-            if (bufferProgress < 100) {
-              bufferProgress += progressIncrement * 2.5;
-              videoBuffer.style.width = Math.min(bufferProgress, 100) + '%';
-            } else {
-              clearInterval(bufferInterval);
-            }
-          }, updateInterval);
-          
-          // Start video playback
-          videoInterval = setInterval(() => {
-            progress += progressIncrement;
-            videoProgress.style.width = Math.min(progress, 100) + '%';
-            
-            // Update time
-            const currentTime = Math.floor((progress / 100) * videoDuration);
-            videoTime.textContent = `0:0${currentTime} / 0:05`;
-            
-            if (progress >= 100) {
-              clearInterval(videoInterval);
-              if (bufferInterval) clearInterval(bufferInterval);
-              
-              setTimeout(() => {
-                clearInterval(timerInterval);
-                const stageTime = (Date.now() - startTime) / 1000;
-                const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
-                totalScore += stagePoints;
-                totalTime += stageTime;
-                
-                console.log(`Stage ${currentStage + 1} abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
-                
-                showSuccessOverlay(() => {
-                  if (currentStage < stages.length - 1) {
-                    currentStage++;
-                    startStage(currentStage);
-                  } else {
-                    displayEndScreen();
-                  }
-                });
-              }, 500);
-            }
-          }, updateInterval);
-          
-          // Hide controls after 3 seconds
-          setTimeout(() => {
-            if (isPlaying) youtubeControls.style.opacity = '0';
-          }, 3000);
-        }
-      };
-      
-      // Click to play
-      if (youtubePlayer) {
-        youtubePlayer.onclick = playVideo;
-      }
-      if (ytPlayBtn) {
-        ytPlayBtn.onclick = (e) => {
-          e.stopPropagation();
-          playVideo();
-        };
-      }
-    }
   }
 }
 
@@ -1325,6 +761,152 @@ function stopRandomPopups() {
   }
 }
 
+// --- STAGE 2 PAUSE POPUP (alle 30 Sekunden) ---
+function startStage2PausePopup() {
+  // Zeige alle 30 Sekunden ein Pause-Popup
+  stage2PauseInterval = setInterval(() => {
+    showStage2PausePopup();
+  }, 30000); // 30 Sekunden
+}
+
+function stopStage2PausePopup() {
+  if (stage2PauseInterval) {
+    clearInterval(stage2PauseInterval);
+    stage2PauseInterval = null;
+  }
+}
+
+// --- STAGE 2 NOTIFICATIONS (linke Seite) ---
+function startStage2Notifications() {
+  // Zeige alle 8-15 Sekunden eine Notification
+  const scheduleNext = () => {
+    const delay = 8000 + Math.random() * 7000; // 8-15 Sekunden
+    stage2NotificationInterval = setTimeout(() => {
+      showStage2Notification();
+      scheduleNext();
+    }, delay);
+  };
+  scheduleNext();
+}
+
+function stopStage2Notifications() {
+  if (stage2NotificationInterval) {
+    clearTimeout(stage2NotificationInterval);
+    stage2NotificationInterval = null;
+  }
+}
+
+function showStage2Notification() {
+  const notificationTypes = [
+    { icon: '📤', text: '{user} hat dir einen Beitrag geteilt' },
+    { icon: '💬', text: '{user} hat dir eine Nachricht gesendet' },
+    { icon: '❤️', text: '{user} hat deinen Beitrag geliked' },
+    { icon: '👤', text: '{user} folgt dir jetzt' },
+    { icon: '💬', text: 'Neue Nachricht von {user}' },
+    { icon: '📤', text: '{user} hat etwas mit dir geteilt' }
+  ];
+  
+  const randomUsers = [
+    'max_mueller', 'sarah_design', 'techguru99', 'fitness_anna',
+    'food_lover', 'travel_mike', 'photo_pro', 'music_fan',
+    'game_master', 'art_soul', 'book_worm', 'nature_lover'
+  ];
+  
+  const notification = notificationTypes[Math.floor(Math.random() * notificationTypes.length)];
+  const randomUser = randomUsers[Math.floor(Math.random() * randomUsers.length)];
+  const text = notification.text.replace('{user}', randomUser);
+  
+  const notif = document.createElement('div');
+  notif.className = 'stage2-notification';
+  notif.innerHTML = `
+    <div class="stage2-notification-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+    </div>
+    <div class="stage2-notification-content">
+      <div class="stage2-notification-title">Shitstagram</div>
+      <div class="stage2-notification-text">${text}</div>
+    </div>
+  `;
+  
+  document.body.appendChild(notif);
+  
+  // Auto-remove nach 6 Sekunden
+  setTimeout(() => {
+    if (document.body.contains(notif)) {
+      notif.style.animation = 'slideOutLeft 0.3s ease forwards';
+      setTimeout(() => notif.remove(), 300);
+    }
+  }, 6000);
+}
+
+function showStage2PausePopup() {
+  // Pausiere Timer
+  const pausedTime = Date.now();
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  
+  const popup = document.createElement('div');
+  popup.className = 'stage2-pause-popup';
+  popup.innerHTML = `
+    <div class="stage2-pause-overlay"></div>
+    <div class="stage2-pause-content">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style="margin: 0 0 20px 0;">
+        <rect x="6" y="4" width="4" height="16" fill="#fff" rx="1"/>
+        <rect x="14" y="4" width="4" height="16" fill="#fff" rx="1"/>
+      </svg>
+      <h2 style="color: #fff; margin: 0 0 15px 0; font-size: 1.8em; font-weight: 600;">Kurze Pause</h2>
+      <p style="color: #999; font-size: 1em; margin: 0 0 30px 0; line-height: 1.5;">
+        Möchtest du weitermachen?
+      </p>
+      <button class="stage2-pause-continue-btn">Weitermachen</button>
+    </div>
+  `;
+  
+  document.body.appendChild(popup);
+  
+  const continueBtn = popup.querySelector('.stage2-pause-continue-btn');
+  continueBtn.onclick = () => {
+    // Berechne Pausenzeit und passe startTime an
+    const pauseDuration = Date.now() - pausedTime;
+    startTime += pauseDuration;
+    
+    // Starte Timer neu
+    timerInterval = setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      const timerEl = document.getElementById("timer");
+      
+      const intensity = Math.min(elapsed / 120, 1);
+      const baseOpacity = 0.15;
+      const maxOpacity = 0.5;
+      const timerOpacity = baseOpacity + (maxOpacity - baseOpacity) * intensity;
+      timerEl.style.background = `rgba(178, 12, 233, ${timerOpacity})`;
+      
+      const baseShadow = 25;
+      const maxShadow = 50;
+      const shadowIntensity = baseShadow + (maxShadow - baseShadow) * intensity;
+      const shadowOpacity = 0.4 + 0.5 * intensity;
+      timerEl.style.boxShadow = `0 0 ${shadowIntensity}px rgba(178, 12, 233, ${shadowOpacity})`;
+      
+      if (elapsed >= 60) {
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = Math.floor(elapsed % 60);
+        timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}m`;
+        timerEl.classList.add("timer-overtime");
+      } else {
+        timerEl.textContent = `${elapsed.toFixed(2)}s`;
+        timerEl.classList.remove("timer-overtime");
+      }
+    }, 20);
+    
+    // Entferne Popup
+    popup.remove();
+  };
+}
+
 // --- "SUCHST DU IMMER NOCH?" POPUP (Worst Practice) ---
 let searchPopupInterval = null;
 function startSearchPopup() {
@@ -1339,6 +921,8 @@ function stopSearchPopup() {
     clearTimeout(searchPopupInterval);
     searchPopupInterval = null;
   }
+  stopStage2PausePopup();
+  stopStage2Notifications();
 }
 
 function showSearchStillPopup() {
@@ -2011,19 +1595,11 @@ function completeCheckout() {
   checkoutCompleted = true;
   clearInterval(timerInterval);
   
-  // Punkte für erste Stage berechnen
-  const stageTime = (Date.now() - startTime) / 1000;
-  const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
-  totalScore += stagePoints;
-  totalTime += stageTime;
-  
-  console.log(`Stage 1 (Shop) abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
-  
   // Cleanup
   stopRandomPopups();
   stopSearchPopup();
   
-  // Zur nächsten Stage
+  // Zur nächsten Stage (Punkte werden in completeCheckout() berechnet)
   nextStage();
 }
 
@@ -2513,13 +2089,19 @@ function initShitstagram() {
   searchBtn.onclick = () => {
     showShitstagramSearch();
   };
+  
+  // Starte Pause-Popup Intervall für Stage 2
+  startStage2PausePopup();
+  
+  // Starte Benachrichtigungen
+  startStage2Notifications();
 }
 
 // Helper function to get avatar content
 function getAvatarContent(username, displayName) {
-  // Special case: trafish_cod gets trafish.png
+  // Special case: trafish_cod gets Trafish.png
   if (username === "trafish_cod") {
-    return `<img src="img/trafish.png" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+    return `<img src="img/Trafish.png" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
   }
   // Other trafish users get fish1-10.png based on hash
   if (username.includes('trafish') || (username.startsWith('tra') && username.includes('fish'))) {
@@ -4987,6 +4569,7 @@ function completeCheckout() {
     const stageTime = (Date.now() - startTime) / 1000;
     const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
     totalScore += stagePoints;
+    totalTime += stageTime;
     
     console.log(`Stage 1 (Shop) abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
     
@@ -5029,6 +4612,14 @@ document.getElementById("submit-btn").onclick = () => {
 };
 
 function displayEndScreen() {
+  // Stop alle Stage 2 Pop-ups und Intervalle
+  stopStage2PausePopup();
+  stopStage2Notifications();
+  
+  // Entferne alle Stage 2 Pop-ups und Notifications aus dem DOM
+  const stage2Popups = document.querySelectorAll('.stage2-pause-popup, .stage2-notification');
+  stage2Popups.forEach(popup => popup.remove());
+  
   document.getElementById("final-score").textContent = totalScore;
   
   // Format time display

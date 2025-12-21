@@ -104,36 +104,39 @@ body {
 }
 
 #final-score-container {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #333;
-  border-radius: 16px;
-  padding: 30px 40px;
-  margin: 30px 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 40px 20px;
+  margin: 40px 0;
   box-shadow: none;
 }
 
 .final-score-label {
-  color: #ccc;
-  font-size: 1.1em;
-  margin: 0 0 15px 0;
+  color: #888;
+  font-size: 1em;
+  margin: 0 0 20px 0;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  font-weight: 400;
 }
 
 .final-score-value {
   color: #B20CE9;
-  font-size: 3.5em;
-  font-weight: 900;
-  margin: 0;
-  text-shadow: 0 0 20px #B20CE9;
-  animation: glowPulse 2s infinite;
+  font-size: 4.5em;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  text-shadow: 0 0 30px rgba(178, 12, 233, 0.5);
+  letter-spacing: 2px;
 }
 
 .final-score-info {
-  color: #999;
-  font-size: 0.9em;
-  margin: 20px 0 0 0;
-  font-style: italic;
+  color: #666;
+  font-size: 0.95em;
+  margin: 30px 0 0 0;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.6;
 }
 
 /* === Headings === */
@@ -2137,6 +2140,49 @@ select:focus {
   font-weight: 600;
 }
 
+/* ---------- YOUPOOP (STAGE 3) ---------- */
+.youpoop-header {
+  position: sticky;
+  top: 0;
+  background: #0f0f0f;
+  border-bottom: 1px solid #303030;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.youpoop-branding {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.youpoop-subtitle {
+  font-size: 1.4em;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.youpoop-task {
+  color: #ccc;
+  font-size: 0.95em;
+  font-weight: 500;
+}
+
+.youpoop-stage-indicator {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background: #1a1a1a;
+  border: 2px solid #2a2a2a;
+  border-radius: 40px;
+  padding: 16px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
 #checkout-inner h2 {
   color: #ffffff;
   margin: 0 0 10px 0;
@@ -3494,4 +3540,178 @@ select:focus {
 
 .shitstagram-filter-deepoption:hover {
   background: #B20CE9;
+}
+
+/* === STAGE 2 PAUSE POPUP === */
+.stage2-pause-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.stage2-pause-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.stage2-pause-content {
+  position: relative;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 50px 60px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  animation: popupSlideIn 0.4s ease-out;
+  max-width: 450px;
+}
+
+.stage2-pause-continue-btn {
+  background: #444;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 14px 36px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.5px;
+}
+
+.stage2-pause-continue-btn:hover {
+  background: #555;
+  border-color: #666;
+  transform: translateY(-1px);
+}
+
+.stage2-pause-continue-btn:active {
+  transform: translateY(0);
+}
+
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* === STAGE 2 NOTIFICATIONS (linke Seite) === */
+.stage2-notification {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 16px;
+  width: 320px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  animation: slideInLeft 0.4s ease-out;
+}
+
+.stage2-notification + .stage2-notification {
+  bottom: auto;
+  top: 20px;
+}
+
+.stage2-notification-icon {
+  width: 40px;
+  height: 40px;
+  background: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stage2-notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.stage2-notification-title {
+  color: #fff;
+  font-size: 0.9em;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.stage2-notification-text {
+  color: #999;
+  font-size: 0.85em;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stage2-notification-close {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.stage2-notification-close:hover {
+  background: #333;
+  color: #fff;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
 }
