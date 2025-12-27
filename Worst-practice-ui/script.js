@@ -203,6 +203,7 @@ let startTime = 0;
 let timerInterval = null;
 let stage2PauseInterval = null;
 let stage2NotificationInterval = null;
+let isPausePopupActive = false;
 
 function showScreen(id) {
   ["start-screen", "stages", "end-screen", "checkout-screen"].forEach(s => {
@@ -765,7 +766,9 @@ function stopRandomPopups() {
 function startStage2PausePopup() {
   // Zeige alle 30 Sekunden ein Pause-Popup
   stage2PauseInterval = setInterval(() => {
-    showStage2PausePopup();
+    if (!isPausePopupActive) {
+      showStage2PausePopup();
+    }
   }, 30000); // 30 Sekunden
 }
 
@@ -843,17 +846,27 @@ function showStage2Notification() {
 }
 
 function showStage2PausePopup() {
-  // Pausiere Timer
-  const pausedTime = Date.now();
-  if (timerInterval) {
-    clearInterval(timerInterval);
-  }
+  // Timer läuft weiter, keine Pause
+  isPausePopupActive = true;
   
   const popup = document.createElement('div');
   popup.className = 'stage2-pause-popup';
   popup.innerHTML = `
     <div class="stage2-pause-overlay"></div>
     <div class="stage2-pause-content">
+      <div class="stage2-pause-lock-toggle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="5" y="11" width="14" height="10" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <div class="toggle-switch">
+          <div class="toggle-slider"></div>
+        </div>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="5" y="11" width="14" height="10" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+        </svg>
+      </div>
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style="margin: 0 0 20px 0;">
         <rect x="6" y="4" width="4" height="16" fill="#fff" rx="1"/>
         <rect x="14" y="4" width="4" height="16" fill="#fff" rx="1"/>
@@ -862,48 +875,30 @@ function showStage2PausePopup() {
       <p style="color: #999; font-size: 1em; margin: 0 0 30px 0; line-height: 1.5;">
         Möchtest du weitermachen?
       </p>
-      <button class="stage2-pause-continue-btn">Weitermachen</button>
+      <button class="stage2-pause-continue-btn" style="display: none;">Weitermachen</button>
     </div>
   `;
   
   document.body.appendChild(popup);
   
+  let isUnlocked = false;
+  const lockToggle = popup.querySelector('.stage2-pause-lock-toggle');
+  const toggleSwitch = popup.querySelector('.toggle-switch');
   const continueBtn = popup.querySelector('.stage2-pause-continue-btn');
+  
+  lockToggle.onclick = () => {
+    if (!isUnlocked) {
+      isUnlocked = true;
+      toggleSwitch.classList.add('active');
+      lockToggle.classList.add('unlocked');
+      continueBtn.style.display = 'block';
+    }
+  };
+  
   continueBtn.onclick = () => {
-    // Berechne Pausenzeit und passe startTime an
-    const pauseDuration = Date.now() - pausedTime;
-    startTime += pauseDuration;
-    
-    // Starte Timer neu
-    timerInterval = setInterval(() => {
-      const elapsed = (Date.now() - startTime) / 1000;
-      const timerEl = document.getElementById("timer");
-      
-      const intensity = Math.min(elapsed / 120, 1);
-      const baseOpacity = 0.15;
-      const maxOpacity = 0.5;
-      const timerOpacity = baseOpacity + (maxOpacity - baseOpacity) * intensity;
-      timerEl.style.background = `rgba(178, 12, 233, ${timerOpacity})`;
-      
-      const baseShadow = 25;
-      const maxShadow = 50;
-      const shadowIntensity = baseShadow + (maxShadow - baseShadow) * intensity;
-      const shadowOpacity = 0.4 + 0.5 * intensity;
-      timerEl.style.boxShadow = `0 0 ${shadowIntensity}px rgba(178, 12, 233, ${shadowOpacity})`;
-      
-      if (elapsed >= 60) {
-        const minutes = Math.floor(elapsed / 60);
-        const seconds = Math.floor(elapsed % 60);
-        timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}m`;
-        timerEl.classList.add("timer-overtime");
-      } else {
-        timerEl.textContent = `${elapsed.toFixed(2)}s`;
-        timerEl.classList.remove("timer-overtime");
-      }
-    }, 20);
-    
-    // Entferne Popup
+    // Entferne Popup, Timer läuft bereits weiter
     popup.remove();
+    isPausePopupActive = false;
   };
 }
 
