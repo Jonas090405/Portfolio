@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <title>UserIndeinface</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="Webseiteicon.png" type="image/x-icon">
 </head>
 
 <body>
@@ -23,15 +22,18 @@
       </div>
     </div>
 
+    <!-- Stage-Indicator - überall außer Homescreen sichtbar -->
+    <div class="stage-indicator" id="stage-indicator"></div>
+
     <!-- STAGES -->
   <div id="stages" class="screen">
-      <div class="stage-indicator" id="stage-indicator"></div>
       <h2 id="stage-title"></h2>
       <div id="stage-content"></div>
-      <div class="bottom-ui">
-        <span id="timer">0.00<span class="timer-unit">s</span></span>
-        <button id="submit-btn" class="stage-submit-btn">Weiter</button>
-      </div>
+    </div>
+
+    <!-- Timer - immer sichtbar ab Stage 1 -->
+    <div class="bottom-ui">
+      <span id="timer">0.00<span class="timer-unit">s</span></span>
     </div>
 
     <!-- CHECKOUT SCREEN (nur einmal!) -->
@@ -44,7 +46,7 @@
       <h1>Spiel Beendet</h1>
       <div id="final-score-container">
         <p class="final-score-label">Deine Gesamtpunktzahl:</p>
-        <p class="final-score-value"><span id="final-score">0</span> Punkte</p>
+        <p class="final-score-value" id="final-score">0</p>
         <p class="final-score-info">Je schneller du warst, desto mehr Punkte hast du gesammelt!</p>
       </div>
       <button id="restart-btn" class="worst-btn ready">Neustarten</button>

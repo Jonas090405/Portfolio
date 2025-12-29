@@ -496,6 +496,8 @@ header .read-more:hover {
     }
 }
 
+
+
 .skill-container ul {
     margin: 0;
     list-style: none;
@@ -506,14 +508,20 @@ header .read-more:hover {
 
 .skill-container ul li {
     display: flex;
-    /* Flexbox für gleichmäßige Anordnung */
-    align-items: center;
+    /* Flexbox für gleichmäßige Anordnung */ 
+    align-items: flex-start;
     /* Vertikale Ausrichtung */
-    gap: 20px;
+    flex-direction: column;
+    gap: 6px;
     /* Fester Abstand zwischen Text und Progressbar */
-    padding: 10px 18px;
+    padding: 16px 24px;
     background-color: transparent;
     min-height: 45px;
+}
+
+.skill-container ul li span {
+    width: 100%;
+    display: block;
 }
 
 .skill-container ul li:last-child {
@@ -521,8 +529,8 @@ header .read-more:hover {
 }
 
 .skill-container ul li progress {
-    width: 180px;
-    /* Kürzere Breite */
+    width: 100%;
+    /* Volle Breite für bessere Darstellung */
     height: 10px;
     /* Originalhöhe */
     border-radius: 12px;
@@ -537,8 +545,7 @@ header .read-more:hover {
     /* Kein zusätzlicher Abstand */
     flex-shrink: 0;
     /* Progress-Bar behält ihre Breite */
-    margin-left: auto;
-    /* Schiebt Progress-Bar nach rechts */
+    margin-left: 0;
 }
 
 /* Für Webkit-basierte Browser (Chrome, Edge, Safari) */
@@ -849,7 +856,7 @@ nav {
 
 /* Hamburger Animation when overlay is active */
 .hamburger-menu.active span:nth-child(1) {
-    transform: translateY(10px) rotate(45deg);
+    transform: translateY(9.5px) rotate(45deg);
 }
 
 .hamburger-menu.active span:nth-child(2) {
@@ -858,7 +865,55 @@ nav {
 }
 
 .hamburger-menu.active span:nth-child(3) {
-    transform: translateY(-10px) rotate(-45deg);
+    transform: translateY(-9.5px) rotate(-45deg);
+}
+
+/* Tablet und größer */
+@media (min-width: 769px) {
+    .hamburger-menu {
+        width: 72px;
+        height: 72px;
+        padding: 18px;
+        top: 25px;
+        right: 25px;
+    }
+
+    .hamburger-menu span {
+        width: 36px;
+        height: 4px;
+    }
+
+    .hamburger-menu.active span:nth-child(1) {
+        transform: translateY(10px) rotate(45deg);
+    }
+
+    .hamburger-menu.active span:nth-child(3) {
+        transform: translateY(-10px) rotate(-45deg);
+    }
+}
+
+/* Desktop */
+@media (min-width: 1303px) {
+    .hamburger-menu {
+        width: 80px;
+        height: 80px;
+        padding: 20px;
+        top: 30px;
+        right: 30px;
+    }
+
+    .hamburger-menu span {
+        width: 40px;
+        height: 4.5px;
+    }
+
+    .hamburger-menu.active span:nth-child(1) {
+        transform: translateY(10.5px) rotate(45deg);
+    }
+
+    .hamburger-menu.active span:nth-child(3) {
+        transform: translateY(-10.5px) rotate(-45deg);
+    }
 }
 
 /* Mobile Menu Overlay */
@@ -1775,15 +1830,7 @@ footer {
     }
 
     .skill-container ul li {
-        flex-wrap: wrap;
-        gap: 16px;
-        padding: 10px 12px;
-    }
-
-    .skill-container ul li progress {
-        width: 100%;
-        margin-left: 0;
-        min-width: 0;
+        padding: 16px 12px;
     }
 }
 
