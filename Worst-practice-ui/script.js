@@ -210,7 +210,20 @@ function showScreen(id) {
     const el = document.getElementById(s);
     if (el) el.style.display = "none";
   });
-  document.getElementById(id).style.display = "flex";
+  const screen = document.getElementById(id);
+  if (screen) screen.style.display = "flex";
+  
+  // Zeige Timer und Indikator ab Stage 1, verstecke sie im Start-Screen und End-Screen
+  const timer = document.querySelector(".bottom-ui");
+  const indicator = document.querySelector(".stage-indicator");
+  
+  if (id === "start-screen" || id === "end-screen") {
+    if (timer) timer.style.display = "none";
+    if (indicator) indicator.style.display = "none";
+  } else if (id === "stages" || id === "checkout-screen") {
+    if (timer) timer.style.display = "flex";
+    if (indicator) indicator.style.display = "flex";
+  }
 }
 
 function startStage(idx) {
@@ -268,14 +281,14 @@ function startStage(idx) {
     const shadowOpacity = 0.4 + 0.5 * intensity;
     timerEl.style.boxShadow = `0 0 ${shadowIntensity}px rgba(178, 12, 233, ${shadowOpacity})`;
     
-    // Wenn über 60 Sekunden: Zeige Minuten:Sekunden Format mit "m"
+    // Wenn über 60 Sekunden: Zeige Minuten:Sekunden Format
     if (elapsed >= 60) {
       const minutes = Math.floor(elapsed / 60);
       const seconds = Math.floor(elapsed % 60);
-      timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}m`;
+      timerEl.innerHTML = `${minutes}:${seconds.toString().padStart(2, '0')}<span class="timer-unit">m</span>`;
       timerEl.classList.add("timer-overtime");
     } else {
-      timerEl.textContent = `${elapsed.toFixed(2)}s`;
+      timerEl.innerHTML = `${elapsed.toFixed(2)}<span class="timer-unit">s</span>`;
       timerEl.classList.remove("timer-overtime");
     }
   }, 20);
@@ -304,6 +317,29 @@ function initWorstShop() {
   searchField.addEventListener("focus", function() {
     if (this.value === "Suchbegriff eingeben...") {
       this.select();
+    }
+  });
+
+  // Worst Practice: Autokorrektur ersetzt "gamersdream" mit zufälligen falschen Begriffen
+  const autocorrectWords = [
+    "gamerscream", "gamerssteam", "hamstertraum", "gamerstraum", 
+    "gamerdream", "gamestream", "cameradream", "gamerstream"
+  ];
+  
+  searchField.addEventListener("input", function() {
+    const value = this.value.toLowerCase();
+    if (value.includes("gamersdream")) {
+      const randomWord = autocorrectWords[Math.floor(Math.random() * autocorrectWords.length)];
+      this.value = randomWord;
+      // Cursor ans Ende setzen
+      setTimeout(() => {
+        this.setSelectionRange(this.value.length, this.value.length);
+      }, 0);
+    }
+    
+    // Wenn Suchfeld leer ist, alle Produkte wieder anzeigen
+    if (this.value.trim() === "" || this.value === "Suchbegriff eingeben...") {
+      renderProducts();
     }
   });
 
@@ -413,15 +449,17 @@ function initWorstShop() {
     
     // Worst Practice: Suche nach "gamersdream" zeigt alles AUSSER gamersdream
     if (term.includes("gamersdream") || term.includes("gamer") || term.includes("dream")) {
-      renderProducts(p => !p.name.toLowerCase().includes("gamersdream"));
+      renderProducts(p => !p.name.toLowerCase().includes("gamersdream") || p.name === "Gamersdream 5000");
       showErrorPopup("Leider keine Ergebnisse für deine Suche gefunden. Probiere andere Filter!");
       return;
     }
     
     if (Math.random() > 0.4) {
-      renderProducts(p => p.name.toLowerCase().includes(term));
+      // Normale Suche - aber Gamersdream 5000 bleibt immer sichtbar
+      renderProducts(p => p.name.toLowerCase().includes(term) || p.name === "Gamersdream 5000");
     } else {
-      renderProducts(() => Math.random() > 0.5);
+      // Zufällige Ergebnisse - aber Gamersdream 5000 bleibt immer sichtbar
+      renderProducts(p => Math.random() > 0.5 || p.name === "Gamersdream 5000");
       showErrorPopup("Deine Suche lieferte unklare Ergebnisse.");
     }
   };
@@ -1140,11 +1178,21 @@ function setupCheckout() {
     // Ignore placeholder text
     if (currentValue === "Passwort" || currentValue === "") {
       lastPasswordValue = currentValue;
+      this.style.border = "";
       return;
     }
     
     // Check if password is actually valid
     const errors = validatePassword(currentValue);
+    
+    // Worst Practice: Lila Stroke nur wenn >= 12 Zeichen ABER nicht valide (irreführend!)
+    if (currentValue.length >= 12 && errors.length > 0) {
+      this.style.border = "3px solid #B20CE9";
+      this.style.boxShadow = "0 0 8px rgba(178, 12, 233, 0.5)";
+    } else {
+      this.style.border = "";
+      this.style.boxShadow = "";
+    }
     
     // Shake animation on CORRECT password (worst practice!)
     if (errors.length === 0 && currentValue !== lastPasswordValue && currentValue.length >= 12) {
@@ -1636,8 +1684,8 @@ const shitStagramUsers = [
   { username: "trafish.cod", displayName: "Trafish.cod", verified: true, followers: 2198, following: 543, posts: 334 },
   { username: "trafish-cod", displayName: "Trafish-cod", verified: true, followers: 3421, following: 654, posts: 445 },
   { username: "trafish__cod", displayName: "Trafish  cod", verified: false, followers: 987, following: 234, posts: 189 },
-  { username: "trafish_cod_", displayName: "Trafish cod ", verified: true, followers: 1876, following: 456, posts: 298 },
-  { username: "_trafish_cod", displayName: " Trafish cod", verified: false, followers: 2543, following: 567, posts: 378 },
+  { username: "trafish_cod_", displayName: "Trafish_cod_", verified: true, followers: 1876, following: 456, posts: 298 },
+  { username: "_trafish_cod", displayName: "_Trafish_cod", verified: false, followers: 2543, following: 567, posts: 378 },
   { username: "trafish_cod1", displayName: "Trafish cod1", verified: false, followers: 1234, following: 345, posts: 234 },
   { username: "trafish_cod2", displayName: "Trafish cod2", verified: false, followers: 876, following: 234, posts: 178 },
   { username: "trafish_cod23", displayName: "Trafish cod23", verified: true, followers: 2109, following: 543, posts: 356 },
@@ -4523,24 +4571,34 @@ function showReverseConfirmation(targetUser, postId, postUsername, sharePopup) {
         }
       });
     } else {
-      // Worst Practice: Show error with random error code
+      // Worst Practice: Show specific error messages
       sharePopup.remove();
       
       // Close all shitstagram popups to return to homepage
       document.querySelectorAll('.shitstagram-profile-popup, .shitstagram-post-detail-popup, .shitstagram-search-popup, .newsletter-popup').forEach(p => p.remove());
       
-      const errorCode = Math.floor(Math.random() * 9000) + 1000;
-      const errorMessages = [
-        `Fehler ${errorCode}: Beitrag konnte nicht geteilt werden`,
-        `Error ${errorCode}: Sharing failed - Please try again`,
-        `Fehlercode ${errorCode}: Unbekannter Fehler beim Teilen`,
-        `ERR_${errorCode}: Connection timeout`,
-        `Fehler ${errorCode}: Dieser Beitrag ist zu alt zum Teilen`,
-        `Error ${errorCode}: Recipient not available`,
-        `Fehlercode ${errorCode}: Netzwerkfehler - Bitte später versuchen`
-      ];
-      const randomError = errorMessages[Math.floor(Math.random() * errorMessages.length)];
-      showErrorPopup(randomError);
+      // Spezifische Fehlermeldungen
+      if (!isCorrectRecipient) {
+        // Falscher Empfänger (nicht Dieter)
+        showErrorPopup("Du musst den Post an Dieter senden, nicht an jemand anderen!");
+      } else if (!isLatestPost || !isCorrectSender) {
+        // Falscher Post (nicht der neueste von trafish_cod)
+        showErrorPopup("Das ist nicht der neueste Post von Trafish cod!");
+      } else {
+        // Fallback: Random error
+        const errorCode = Math.floor(Math.random() * 9000) + 1000;
+        const errorMessages = [
+          `Fehler ${errorCode}: Beitrag konnte nicht geteilt werden`,
+          `Error ${errorCode}: Sharing failed - Please try again`,
+          `Fehlercode ${errorCode}: Unbekannter Fehler beim Teilen`,
+          `ERR_${errorCode}: Connection timeout`,
+          `Fehler ${errorCode}: Dieser Beitrag ist zu alt zum Teilen`,
+          `Error ${errorCode}: Recipient not available`,
+          `Fehlercode ${errorCode}: Netzwerkfehler - Bitte später versuchen`
+        ];
+        const randomError = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+        showErrorPopup(randomError);
+      }
     }
   };
   
@@ -4577,34 +4635,8 @@ function completeCheckout() {
   });
 }
 
-document.getElementById("submit-btn").onclick = () => {
-  const error = stages[currentStage].validate();
-  if (error) {
-    showErrorPopup(error);
-  } else {
-    // Stage erfolgreich abgeschlossen - berechne Punkte
-    clearInterval(timerInterval);
-    const stageTime = (Date.now() - startTime) / 1000;
-    
-    // Punktesystem: Je schneller, desto mehr Punkte (Max 1000 Punkte pro Stage)
-    // Nach 60 Sekunden: 500 Punkte, nach 120 Sekunden: 0 Punkte
-    const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
-    totalScore += stagePoints;
-    totalTime += stageTime;
-    
-    console.log(`Stage ${currentStage + 1} abgeschlossen in ${stageTime.toFixed(2)}s - Punkte: ${stagePoints}`);
-    
-    // Zur nächsten Stage oder zum End-Screen
-    if (currentStage < stages.length - 1) {
-      currentStage++;
-      startStage(currentStage);
-    } else {
-      // Alle Stages abgeschlossen - zeige Endergebnis
-      clearInterval(timerInterval);
-      displayEndScreen();
-    }
-  }
-};
+// Weiter-Button existiert nicht mehr - Stages müssen sich selbst weiterschalten
+// Die Logik für Stage-Abschluss ist jetzt in den jeweiligen Stage-Funktionen integriert
 
 function displayEndScreen() {
   // Stop alle Stage 2 Pop-ups und Intervalle
@@ -4615,7 +4647,12 @@ function displayEndScreen() {
   const stage2Popups = document.querySelectorAll('.stage2-pause-popup, .stage2-notification');
   stage2Popups.forEach(popup => popup.remove());
   
-  document.getElementById("final-score").textContent = totalScore;
+  // Maximale Punkte berechnen (1000 Punkte pro Stage)
+  const maxPossiblePoints = stages.length * 1000;
+  
+  // Zeige Punkte von maximal möglichen Punkten
+  const finalScoreElement = document.getElementById("final-score");
+  finalScoreElement.innerHTML = `<span style="color: #B20CE9;">${totalScore}</span><span style="color: #888888;"> / ${maxPossiblePoints}</span>`;
   
   // Format time display
   const minutes = Math.floor(totalTime / 60);
