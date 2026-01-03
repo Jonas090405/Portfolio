@@ -1440,6 +1440,12 @@ progress {
 .card-content h3 {
     font-size: 2rem;
     margin-bottom: 15px;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    line-height: 1.2;
+    max-width: 100%;
 }
 
 /* Beschreibungstext */
@@ -1654,9 +1660,13 @@ progress {
     }
 
     .card-content h3 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         margin-bottom: 10px;
         margin-top: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        line-height: 1.3;
     }
 
     .card-content p {
@@ -1744,9 +1754,13 @@ footer {
     }
 
     .card-content h3 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         margin-bottom: 10px;
         margin-top: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        line-height: 1.3;
     }
 
     .card-content p {
