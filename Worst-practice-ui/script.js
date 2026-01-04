@@ -4309,7 +4309,7 @@ function showShitstagramShareDialog(postId, postUsername) {
             // Stage abschließen und zur nächsten wechseln
             clearInterval(timerInterval);
             const stageTime = (Date.now() - startTime) / 1000;
-            const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
+            const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 1.515)));
             totalScore += stagePoints;
             totalTime += stageTime;
             
@@ -4556,7 +4556,7 @@ function showReverseConfirmation(targetUser, postId, postUsername, sharePopup) {
         // Stage abschließen und zur nächsten wechseln
         clearInterval(timerInterval);
         const stageTime = (Date.now() - startTime) / 1000;
-        const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
+        const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 1.515)));
         totalScore += stagePoints;
         totalTime += stageTime;
         
@@ -4620,7 +4620,7 @@ function completeCheckout() {
     // Stage 1 erfolgreich - berechne Punkte für Shop-Stage
     clearInterval(timerInterval);
     const stageTime = (Date.now() - startTime) / 1000;
-    const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 8.33)));
+    const stagePoints = Math.max(0, Math.round(1000 - (stageTime * 1.515)));
     totalScore += stagePoints;
     totalTime += stageTime;
     
