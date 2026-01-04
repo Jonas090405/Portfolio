@@ -153,14 +153,14 @@ let checkoutCompleted = false;
 
 // Preload checkout sounds (swapped behavior by design)
 // Play `right.wav` when the PASSWORD IS WRONG, and `wrong.wav` when the PASSWORD IS CORRECT
-const audioRight = new Audio('sounds/right.wav');
+const audioRight = new Audio('./sounds/right.wav');
 audioRight.preload = 'auto';
 audioRight.volume = 0.6; // reduce volume by ~20%
-const audioWrong = new Audio('sounds/wrong.wav');
+const audioWrong = new Audio('./sounds/wrong.wav');
 audioWrong.preload = 'auto';
 audioWrong.volume = 0.6; // reduce volume by ~20%
 // Success sound for stage completion overlays
-const successAudio = new Audio('sounds/success.wav');
+const successAudio = new Audio('./sounds/success.wav');
 successAudio.preload = 'auto';
 successAudio.volume = 0.6; // reduce volume by ~20%
 
