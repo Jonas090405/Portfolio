@@ -5,7 +5,7 @@
     --text-color: #f5f5f5;
     --secondary-text-color: #7f8082;
     --hover-color: hsla(199, 92%, 45%, 0.511);
-    
+
     /* Marquee Variables */
     --marquee-width: 100%;
     --marquee-height: 20vh;
@@ -75,7 +75,7 @@ body {
 #tools-section h2 {
     font-size: 3rem;
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 90px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
@@ -89,7 +89,7 @@ body {
 
     #tools-section h2 {
         font-size: 2rem;
-        margin-bottom: 40px;
+        margin-bottom: 70px;
     }
 }
 
@@ -102,14 +102,15 @@ body {
     position: relative;
 }
 
-.marquee:before, .marquee:after {
+.marquee:before,
+.marquee:after {
     position: absolute;
     top: 0;
     width: 10rem;
     height: 100%;
     content: "";
     z-index: 1;
-    
+
 }
 
 .marquee:before {
@@ -131,8 +132,13 @@ body {
 }
 
 @keyframes scrolling {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements))); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements)));
+    }
 }
 
 .marquee-content li {
@@ -151,14 +157,20 @@ body {
         --marquee-height: 16vh;
         --marquee-elements-displayed: 4;
     }
-    .marquee:before, .marquee:after { width: 5rem; }
+
+    .marquee:before,
+    .marquee:after {
+        width: 5rem;
+    }
 }
 
 @media (max-width: 480px) {
     :root {
         --marquee-elements-displayed: 3;
     }
-}.logo-item {
+}
+
+.logo-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -247,7 +259,7 @@ header .container {
 }
 
 /* Desktop layout - matches tablet structure but larger */
-@media (min-width: 1303px) { 
+@media (min-width: 1303px) {
     header {
         flex-direction: column;
         align-items: flex-start;
@@ -343,10 +355,21 @@ header .container {
     }
 
     @keyframes bounce {
-        0% { transform: translateX(-50%) translateY(-100%) scale(0) rotate(-12deg); }
-        40% { transform: translateX(-50%) translateY(calc(-100% - 8px)) scale(1.15) rotate(5deg); }
-        70% { transform: translateX(-50%) translateY(calc(-100% + 2px)) scale(0.95) rotate(-2deg); }
-        100% { transform: translateX(-50%) translateY(-100%) scale(1) rotate(0deg); }
+        0% {
+            transform: translateX(-50%) translateY(-100%) scale(0) rotate(-12deg);
+        }
+
+        40% {
+            transform: translateX(-50%) translateY(calc(-100% - 8px)) scale(1.15) rotate(5deg);
+        }
+
+        70% {
+            transform: translateX(-50%) translateY(calc(-100% + 2px)) scale(0.95) rotate(-2deg);
+        }
+
+        100% {
+            transform: translateX(-50%) translateY(-100%) scale(1) rotate(0deg);
+        }
     }
 
     header .container {
@@ -368,8 +391,8 @@ header .container {
     }
 
     /* Clear separation between title area and content */
-    .title-container + br,
-    .title-container + br + p {
+    .title-container+br,
+    .title-container+br+p {
         clear: both;
     }
 
@@ -440,6 +463,7 @@ header .read-more:hover {
 #skill-section h2 {
     font-size: 3rem;
     text-align: center;
+    margin-top: -20px;
 }
 
 @media (max-width: 768px) {
@@ -508,7 +532,8 @@ header .read-more:hover {
     font-size: 1.8rem;
     font-weight: 300;
     color: #7f8082;
-    display: none; /* Hidden by default on desktop */
+    display: none;
+    /* Hidden by default on desktop */
     transform: translateY(-50%) rotate(0deg);
     transform-origin: center center;
     transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -524,9 +549,11 @@ header .read-more:hover {
     0% {
         transform: translateY(-50%) rotate(0deg);
     }
+
     50% {
         transform: translateY(-50%) rotate(200deg) scale(1.15);
     }
+
     100% {
         transform: translateY(-50%) rotate(180deg);
     }
@@ -544,7 +571,7 @@ header .read-more:hover {
 
 .skill-container ul li {
     display: flex;
-    /* Flexbox für gleichmäßige Anordnung */ 
+    /* Flexbox für gleichmäßige Anordnung */
     align-items: flex-start;
     /* Vertikale Ausrichtung */
     flex-direction: column;
@@ -702,7 +729,7 @@ header .read-more:hover {
     z-index: 2;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    
+
 }
 
 
@@ -780,20 +807,20 @@ header .read-more:hover {
     .timeline-header:hover h3 {
         opacity: 0.7;
     }
-    
-    .timeline-header:hover + .timeline-body {
+
+    .timeline-header:hover+.timeline-body {
         /* Kein Hover-Effekt auf den Body */
     }
-    
+
     .toggle-btn:hover {
         opacity: 0.7;
     }
-    
+
     /* Wenn man über den toggle-btn hovert, soll auch h3 den Effekt haben */
     .content:has(.toggle-btn:hover) .timeline-header h3 {
         opacity: 0.7;
     }
-    
+
     /* Wenn man über den header hovert, soll auch der Button den Effekt haben */
     .content:has(.timeline-header:hover) .toggle-btn {
         opacity: 0.7;
@@ -902,35 +929,35 @@ header .read-more:hover {
     .timeline-item .dot {
         display: none;
     }
-    
+
     .timeline::before {
         display: none;
     }
-    
+
     .timeline-item .content {
         margin-left: 0;
         width: 100%;
         box-sizing: border-box;
     }
-    
+
     .timeline {
         padding-left: 0;
     }
-    
+
     .timeline-header {
         padding-right: 60px;
         text-align: left;
     }
-    
+
     .timeline-item h3 {
         font-size: 1.3rem;
     }
-    
+
     .toggle-btn {
         width: 35px;
         height: 35px;
     }
-    
+
     .toggle-btn .icon {
         font-size: 2rem;
     }
@@ -1232,6 +1259,7 @@ footer a:hover {
         font-size: 1rem;
         width: 100%;
     }
+
     header {
         display: flex;
         flex-direction: row;
@@ -1561,35 +1589,35 @@ progress {
     letter-spacing: 0.2px;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    box-shadow: 0 6px 18px rgba(2,8,14,0.25);
+    box-shadow: 0 6px 18px rgba(2, 8, 14, 0.25);
     transition: all 0.18s ease;
     color: #ffffff;
     /* uniform dark pill background for all tags; stroke/color applied per-category */
-    background: rgba(0,0,0,0.58);
+    background: rgba(0, 0, 0, 0.58);
 }
 
 /* Semitransparent backgrounds + matching stroke (blue tones) and dark readable text */
 /* stronger semi-transparent backgrounds for contrast, white text and blue-toned stroke */
 .tag-tech {
-    background: rgba(0,0,0,0.58);
+    background: rgba(0, 0, 0, 0.58);
     border: 1px solid rgba(77, 190, 243, 0.95);
     color: #ffffff;
 }
 
 .tag-design {
-    background: rgba(0,0,0,0.58);
+    background: rgba(0, 0, 0, 0.58);
     border: 1px solid rgba(13, 110, 158, 0.95);
     color: #ffffff;
 }
 
 .tag-skill {
-    background: rgba(0,0,0,0.58);
+    background: rgba(0, 0, 0, 0.58);
     border: 1px solid rgba(100, 210, 255, 0.95);
     color: #ffffff;
 }
 
 .tag-area {
-    background: rgba(0,0,0,0.58);
+    background: rgba(0, 0, 0, 0.58);
     border: 1px solid rgba(6, 95, 136, 0.95);
     color: #ffffff;
 }
@@ -1672,6 +1700,7 @@ progress {
     transform: translateY(2px);
     transition: transform 0.3s ease;
 }
+
 .card-button:hover::after {
     transform: translateX(4px) translateY(2px);
 }
@@ -1689,7 +1718,8 @@ progress {
 }
 
 .carousel-wrapper {
-    display: contents; /* Desktop: acts transparent, grid layout applies to children */
+    display: contents;
+    /* Desktop: acts transparent, grid layout applies to children */
 }
 
 /* Tablet-Größe (zwei Karten nebeneinander) */
@@ -1722,6 +1752,8 @@ progress {
         overflow: visible;
         gap: 40px;
         padding-right: 0;
+        perspective: 1500px;
+        transform-style: preserve-3d;
     }
 
     /* Ensure last card centers properly */
@@ -1796,9 +1828,9 @@ progress {
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.3);
         cursor: pointer;
-        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                    background 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                    border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+            background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+            border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .carousel-indicator.active {
@@ -1814,6 +1846,15 @@ progress {
         height: auto;
         min-height: 580px;
         max-height: 700px;
+        transform: scale(0.5) translateZ(-500px);
+        opacity: 0.25;
+        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .bento-card.active {
+        transform: scale(1) translateZ(0);
+        opacity: 1;
+        z-index: 10;
     }
 
     .bento-card img {
@@ -2012,7 +2053,8 @@ footer {
     }
 
     .skill-container h3::after {
-        display: block; /* Show chevron on tablet/mobile */
+        display: block;
+        /* Show chevron on tablet/mobile */
     }
 
     .card-active {
@@ -2030,7 +2072,8 @@ footer {
     }
 
     .skill-container h3::after {
-        display: block; /* Show chevron on mobile */
+        display: block;
+        /* Show chevron on mobile */
     }
 
     .card-active {

@@ -413,6 +413,11 @@ document.addEventListener('DOMContentLoaded', function() {
             indicator.addEventListener('click', () => goToSlide(index));
             indicatorsContainer.appendChild(indicator);
         });
+        
+        // Set initial active card for 3D effect
+        projectCards.forEach((card, index) => {
+            card.classList.toggle('active', index === 0);
+        });
     }
 
     // Update active indicator
@@ -420,6 +425,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const indicators = document.querySelectorAll('.carousel-indicator');
         indicators.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === currentIndex);
+        });
+        
+        // Update active card for 3D effect
+        projectCards.forEach((card, index) => {
+            card.classList.toggle('active', index === currentIndex);
         });
     }
 
