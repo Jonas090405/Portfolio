@@ -711,10 +711,12 @@ header .read-more:hover {
     transform: rotate(135deg);
 }
 
-/* Hover-Effekt für beide Elemente wenn man auf content hovert */
-.timeline-item .content:hover h3,
-.timeline-item .content:hover .toggle-btn {
-    opacity: 0.7;
+/* Hover-Effekt für beide Elemente wenn man auf content hovert - nur auf Desktop */
+@media (min-width: 769px) {
+    .timeline-item .content:hover h3,
+    .timeline-item .content:hover .toggle-btn {
+        opacity: 0.7;
+    }
 }
 
 /* Timeline Body - versteckt im Standardzustand */
