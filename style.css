@@ -75,11 +75,18 @@ body {
 #tools-section h2 {
     font-size: 3rem;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 80px;
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
     padding: 0 20px;
+}
+
+@media (max-width: 1302px) and (min-width: 769px) {
+    #tools-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 60px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -463,18 +470,20 @@ header .read-more:hover {
 #skill-section h2 {
     font-size: 3rem;
     text-align: center;
-    margin-top: -20px;
+    margin-bottom: 80px;
 }
 
 @media (max-width: 768px) {
     #skill-section h2 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        margin-bottom: 70px;
     }
 }
 
 @media (max-width: 600px) {
     #skill-section h2 {
-        font-size: 2rem;
+        font-size: 1.75rem;
+        margin-bottom: 50px;
     }
 }
 
@@ -512,6 +521,7 @@ header .read-more:hover {
     padding: 18px 0;
     text-align: center;
     text-transform: uppercase;
+    font-weight: 500;
     position: relative;
     opacity: 0;
     transform: translateY(-20px);
@@ -651,20 +661,20 @@ header .read-more:hover {
 
 #education-section h2 {
     font-size: 3rem;
-    margin-bottom: 100px;
+    margin-bottom: 80px;
 }
 
 @media (max-width: 768px) {
     #education-section h2 {
-        font-size: 2.5rem;
-        margin-bottom: 80px;
+        font-size: 2rem;
+        margin-bottom: 70px;
     }
 }
 
 @media (max-width: 600px) {
     #education-section h2 {
-        font-size: 2rem;
-        margin-bottom: 60px;
+        font-size: 1.75rem;
+        margin-bottom: 50px;
     }
 }
 
@@ -765,6 +775,7 @@ header .read-more:hover {
 
 .timeline-item h3 {
     font-size: 1.5rem;
+    font-weight: 500;
     margin-bottom: 0;
     line-height: 1.2;
     transition: opacity 0.3s ease;
@@ -1494,7 +1505,7 @@ progress {
 #project-section h2 {
     font-size: 3rem;
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
     grid-column: 1 / -1;
 }
 
@@ -1739,7 +1750,17 @@ progress {
 
     #project-section h2 {
         font-size: 2.5rem;
-        margin-bottom: 20px;
+        margin-bottom: 60px;
+    }
+
+    #skill-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 60px;
+    }
+
+    #education-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 60px;
     }
 
     /* Carousel Wrapper */
@@ -1920,6 +1941,28 @@ footer {
     padding: 50px 20px;
 }
 
+@media (max-width: 768px) {
+    #project-section h2 {
+        font-size: 2rem;
+        margin-bottom: 70px;
+    }
+
+    #skill-section h2 {
+        font-size: 2rem;
+        margin-bottom: 70px;
+    }
+
+    #education-section h2 {
+        font-size: 2rem;
+        margin-bottom: 70px;
+    }
+
+    #tools-section h2 {
+        font-size: 2rem;
+        margin-bottom: 70px;
+    }
+}
+
 
 @media (max-width: 600px) {
     #project-section {
@@ -1927,7 +1970,23 @@ footer {
     }
 
     #project-section h2 {
-        font-size: 2rem;
+        font-size: 1.75rem;
+        margin-bottom: 50px;
+    }
+
+    #tools-section h2 {
+        font-size: 1.75rem;
+        margin-bottom: 50px;
+    }
+
+    #skill-section h2 {
+        font-size: 1.75rem;
+        margin-bottom: 50px;
+    }
+
+    #education-section h2 {
+        font-size: 1.75rem;
+        margin-bottom: 50px;
     }
 
     .carousel-wrapper {
