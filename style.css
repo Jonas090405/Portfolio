@@ -660,11 +660,75 @@ header .read-more:hover {
     border-radius: 12px;
     background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
     padding: 20px;
+    position: relative;
+    width: calc(100% - 90px);
+    box-sizing: border-box;
+}
+
+/* Timeline Header mit Titel und Toggle-Button */
+.timeline-header {
+    cursor: pointer;
+    user-select: none;
+    padding-right: 50px;
 }
 
 .timeline-item h3 {
     font-size: 1.5rem;
-    margin-bottom: 8px;
+    margin-bottom: 0;
+    line-height: 1.2;
+    transition: opacity 0.3s ease;
+}
+
+/* Toggle Button Styling */
+.toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.toggle-btn .icon {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--accent-color);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: block;
+    line-height: 1;
+    font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 48;
+}
+
+/* Icon Rotation beim Toggle */
+.toggle-btn.active .icon {
+    transform: rotate(135deg);
+}
+
+/* Hover-Effekt für beide Elemente wenn man auf content hovert */
+.timeline-item .content:hover h3,
+.timeline-item .content:hover .toggle-btn {
+    opacity: 0.7;
+}
+
+/* Timeline Body - versteckt im Standardzustand */
+.timeline-body {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.1s, margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-body.expanded {
+    max-height: 1000px;
+    opacity: 1;
+    margin-top: 20px;
 }
 
 .timeline-item p {
@@ -749,6 +813,45 @@ header .read-more:hover {
         margin: 80px auto;
     }
 } */
+
+/* Verstecke Timeline Dots auf mobilen Geräten */
+@media (max-width: 768px) {
+    .timeline-item .dot {
+        display: none;
+    }
+    
+    .timeline::before {
+        display: none;
+    }
+    
+    .timeline-item .content {
+        margin-left: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .timeline {
+        padding-left: 0;
+    }
+    
+    .timeline-header {
+        padding-right: 60px;
+        text-align: left;
+    }
+    
+    .timeline-item h3 {
+        font-size: 1.3rem;
+    }
+    
+    .toggle-btn {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .toggle-btn .icon {
+        font-size: 2rem;
+    }
+}
 
 
 footer {

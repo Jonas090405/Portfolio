@@ -543,3 +543,41 @@ document.addEventListener('DOMContentLoaded', () => {
         marqueeContent.appendChild(marqueeContent.children[i].cloneNode(true));
     }
 });
+
+// ===== TIMELINE TOGGLE FUNCTIONALITY =====
+document.addEventListener('DOMContentLoaded', () => {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    timelineItems.forEach(item => {
+        const header = item.querySelector('.timeline-header');
+        const toggleBtn = item.querySelector('.toggle-btn');
+        const body = item.querySelector('.timeline-body');
+        
+        if (header && toggleBtn && body) {
+            // Click-Event für den gesamten Header
+            header.addEventListener('click', () => {
+                toggleTimeline(toggleBtn, body);
+            });
+            
+            // Verhindere Bubble-Up bei Button-Click (damit nicht doppelt getriggert wird)
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleTimeline(toggleBtn, body);
+            });
+        }
+    });
+    
+    function toggleTimeline(button, body) {
+        const isExpanded = body.classList.contains('expanded');
+        
+        if (isExpanded) {
+            // Schließen
+            body.classList.remove('expanded');
+            button.classList.remove('active');
+        } else {
+            // Öffnen
+            body.classList.add('expanded');
+            button.classList.add('active');
+        }
+    }
+});
