@@ -157,9 +157,11 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
 
 document.addEventListener("DOMContentLoaded", () => {
     const progressBars = document.querySelectorAll('progress');
+    const skillTitles = document.querySelectorAll('.skill-container h3');
+    const skillLabels = document.querySelectorAll('.skill-container ul li span');
 
-    // Intersection Observer Setup
-    const observer = new IntersectionObserver((entries, observer) => {
+    // Intersection Observer Setup für Progressbars
+    const progressObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 // Wenn die Progressbar sichtbar wird, fügen wir die Klasse hinzu
@@ -172,9 +174,38 @@ document.addEventListener("DOMContentLoaded", () => {
         threshold: 0.5  // Beobachtet die Progressbar, wenn sie zu mindestens 50% sichtbar ist
     });
 
+    // Intersection Observer Setup für Texte (h3 und span)
+    const textObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Verzögerung für gestaffelten Effekt bei span-Elementen
+                const delay = entry.target.tagName === 'SPAN' ? 
+                    Array.from(entry.target.parentElement.parentElement.children).indexOf(entry.target.parentElement) * 100 : 0;
+                
+                setTimeout(() => {
+                    entry.target.classList.add('text-visible');
+                }, delay);
+                
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.3  // Beobachtet Texte, wenn sie zu mindestens 30% sichtbar sind
+    });
+
     // Beobachten aller Progressbars
     progressBars.forEach(bar => {
-        observer.observe(bar);
+        progressObserver.observe(bar);
+    });
+
+    // Beobachten aller Skill-Titel (h3)
+    skillTitles.forEach(title => {
+        textObserver.observe(title);
+    });
+
+    // Beobachten aller Skill-Labels (span)
+    skillLabels.forEach(label => {
+        textObserver.observe(label);
     });
 });
 

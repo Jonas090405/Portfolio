@@ -461,6 +461,14 @@ header .read-more:hover {
     text-align: center;
     text-transform: uppercase;
     position: relative;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.skill-container h3.text-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .skill-container h3::after {
@@ -522,6 +530,14 @@ header .read-more:hover {
 .skill-container ul li span {
     width: 100%;
     display: block;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.skill-container ul li span.text-visible {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .skill-container ul li:last-child {
@@ -711,10 +727,27 @@ header .read-more:hover {
     transform: rotate(135deg);
 }
 
-/* Hover-Effekt für beide Elemente wenn man auf content hovert - nur auf Desktop */
+/* Hover-Effekt für beide Elemente wenn man auf header oder toggle-btn hovert - nur auf Desktop */
 @media (min-width: 769px) {
-    .timeline-item .content:hover h3,
-    .timeline-item .content:hover .toggle-btn {
+    .timeline-header:hover h3 {
+        opacity: 0.7;
+    }
+    
+    .timeline-header:hover + .timeline-body {
+        /* Kein Hover-Effekt auf den Body */
+    }
+    
+    .toggle-btn:hover {
+        opacity: 0.7;
+    }
+    
+    /* Wenn man über den toggle-btn hovert, soll auch h3 den Effekt haben */
+    .content:has(.toggle-btn:hover) .timeline-header h3 {
+        opacity: 0.7;
+    }
+    
+    /* Wenn man über den header hovert, soll auch der Button den Effekt haben */
+    .content:has(.timeline-header:hover) .toggle-btn {
         opacity: 0.7;
     }
 }
