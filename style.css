@@ -728,7 +728,7 @@ header .read-more:hover {
 
 .timeline-item .dot {
     position: absolute;
-    left: calc(10px - 12.5px);
+    left: calc(10px - 13.1px);
     /* exakt mittig zur Linie (bei 25px Breite) */
     top: 50%;
     transform: translateY(-50%);
