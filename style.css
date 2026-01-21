@@ -728,30 +728,39 @@ header .read-more:hover {
 
 .timeline-item .dot {
     position: absolute;
-    left: calc(10px - 13.1px);
-    /* exakt mittig zur Linie (bei 25px Breite) */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 25px;
-    height: 25px;
+    left: calc(10px - 25px);
+    /* exakt mittig zur Linie (bei 50px Breite) */
+    top: 14.5px;
+    width: 50px;
+    height: 50px;
     background-color: white;
     border-radius: 50%;
     z-index: 2;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 
 }
 
 
 .timeline-item .dot:hover {
     box-shadow: 0 0 15px hsla(199, 92%, 65%, 0.8), 0 0 30px hsla(199, 92%, 75%, 0.5);
-    transform: translateY(-50%) scale(1.2);
+    transform: scale(1.2);
     /* Leichtes Vergrößern beim Hover */
 }
 
 .timeline-item .dot:active {
-    transform: translateY(-50%) scale(1);
+    transform: scale(1);
     /* Leichtes Schrumpfen bei Klick für Feedback */
+}
+
+.timeline-item .dot .material-symbols-rounded {
+    font-size: 28px;
+    color: var(--accent-color);
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
 .timeline-item .content {
@@ -971,6 +980,14 @@ header .read-more:hover {
 
     .toggle-btn .icon {
         font-size: 2rem;
+    }
+
+    .timeline-body {
+        text-align: left;
+    }
+
+    .timeline-item p {
+        text-align: left;
     }
 }
 
