@@ -238,12 +238,9 @@ function handleScroll() {
     });
 
     // Überprüfen, ob die Bento Cards im Viewport sind und die Klasse hinzufügen
-    // Mit 150px Offset erscheinen sie früher
-    bentoCards.forEach((card, index) => {
-        if (isElementInViewport(card, 150) && !card.classList.contains('card-visible')) {
-            setTimeout(() => {
-                card.classList.add('card-visible');
-            }, index * 100);
+    bentoCards.forEach(card => {
+        if (isElementInViewport(card) && !card.classList.contains('card-visible')) {
+            card.classList.add('card-visible');
         }
     });
 }
