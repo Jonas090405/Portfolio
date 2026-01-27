@@ -274,12 +274,16 @@ const skillCards = document.querySelectorAll('.skill-container');
 
 skillCards.forEach((card) => {
     card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Update spotlight position
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+
         // Only apply 3D effect on desktop
         if (window.innerWidth <= 1302) return;
-
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left; // Mausposition relativ zur Karte (X)
-        const y = e.clientY - rect.top; // Mausposition relativ zur Karte (Y)
 
         // Normalisierte Position (0 bis 1)
         const centerX = x / rect.width - 0.5;  // -0.5 bis 0.5

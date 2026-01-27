@@ -1,10 +1,10 @@
 :root {
-    --accent-color: hsl(199, 100%, 30%);
+    --accent-color: #006999;
     --primary-color: #1B1C1F;
     --secondary-color: #101113;
     --text-color: #f5f5f5;
     --secondary-text-color: #7f8082;
-    --hover-color: hsla(199, 92%, 45%, 0.511);
+    --hover-color: #0999dc82;
 
     /* Marquee Variables */
     --marquee-width: 100%;
@@ -506,14 +506,41 @@ header .read-more:hover {
     /* Perspektive für den 3D-Effekt */
     transform-style: preserve-3d;
     /* Aktiviert den 3D-Effekt */
-    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    transition: transform 0.2s ease-out, box-shadow 0.5s ease;
     /* Sanfter Übergang */
     background-color: #141618;
+    position: relative;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+    --spotlight-color: rgba(77, 190, 243, 0.5);
+}
+
+.skill-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    pointer-events: none;
+    background: radial-gradient(
+        circle 300px at var(--mouse-x) var(--mouse-y),
+        var(--spotlight-color),
+        transparent
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+    mix-blend-mode: soft-light;
+}
+
+.skill-container:hover::before {
+    opacity: 1;
 }
 
 .skill-container:hover {
-    box-shadow: 2px 2px 50px #4dbef31f
-        /* Schatten beim Hover */
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .skill-container h3 {
