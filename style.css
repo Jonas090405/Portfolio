@@ -536,7 +536,32 @@ header .read-more:hover {
         mix-blend-mode: soft-light;
     }
 
+    .skill-container::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        pointer-events: none;
+        border: 2px solid transparent;
+        background: radial-gradient(
+            circle 200px at var(--mouse-x) var(--mouse-y),
+            rgba(77, 190, 243, 1),
+            transparent 70%
+        ) border-box;
+        -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 11;
+    }
+
     .skill-container:hover::before {
+        opacity: 1;
+    }
+
+    .skill-container:hover::after {
         opacity: 1;
     }
 }
