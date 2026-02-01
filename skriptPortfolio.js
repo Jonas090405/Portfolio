@@ -160,6 +160,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const skillTitles = document.querySelectorAll('.skill-container h3');
     const skillLabels = document.querySelectorAll('.skill-container ul li span');
 
+    // Setze initial alle Elemente auf sichtbar, die im Viewport sind
+    setTimeout(() => {
+        skillTitles.forEach(title => {
+            if (isElementInViewport(title, 300)) {
+                title.classList.add('text-visible');
+            }
+        });
+        
+        skillLabels.forEach(label => {
+            if (isElementInViewport(label, 300)) {
+                label.classList.add('text-visible');
+            }
+        });
+        
+        progressBars.forEach(bar => {
+            if (isElementInViewport(bar, 300)) {
+                bar.classList.add('progress-visible');
+            }
+        });
+    }, 0);
+
     // Intersection Observer Setup für Progressbars
     const progressObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -208,29 +229,90 @@ document.addEventListener("DOMContentLoaded", () => {
         textObserver.observe(label);
     });
 
+    // Zusätzliche Prüfung nach Browser Scroll Restore
+    // Browser scrollt manchmal zur letzten Position nach dem Laden
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    
+    // Mehrere Prüfungen um sicherzustellen, dass Elemente nach Scroll sichtbar werden
+    const recheckVisibility = () => {
+        skillTitles.forEach(title => {
+            if (!title.classList.contains('text-visible') && isElementInViewport(title, 300)) {
+                title.classList.add('text-visible');
+            }
+        });
+        
+        skillLabels.forEach(label => {
+            if (!label.classList.contains('text-visible') && isElementInViewport(label, 300)) {
+                label.classList.add('text-visible');
+            }
+        });
+        
+        progressBars.forEach(bar => {
+            if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 300)) {
+                bar.classList.add('progress-visible');
+            }
+        });
+    };
+    
+    // Prüfe nach Scroll-Events
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(recheckVisibility, 100);
+    }, { once: true, passive: true });
+    
+    // Prüfe auch nach kurzer Verzögerung (für Browser Scroll Restore)
+    setTimeout(recheckVisibility, 100);
+    setTimeout(recheckVisibility, 300);
+    setTimeout(recheckVisibility, 500);
+
     // Fallback: Überprüfe nach dem Laden, ob bereits sichtbare Elemente die Klasse haben
     window.addEventListener('load', () => {
+        // Sofortige erste Prüfung
         setTimeout(() => {
             skillTitles.forEach(title => {
-                if (!title.classList.contains('text-visible') && isElementInViewport(title, 100)) {
+                if (!title.classList.contains('text-visible') && isElementInViewport(title, 200)) {
                     title.classList.add('text-visible');
                 }
             });
             
             skillLabels.forEach((label, index) => {
-                if (!label.classList.contains('text-visible') && isElementInViewport(label, 100)) {
+                if (!label.classList.contains('text-visible') && isElementInViewport(label, 200)) {
                     setTimeout(() => {
                         label.classList.add('text-visible');
-                    }, index * 100);
+                    }, index * 50);
                 }
             });
             
             progressBars.forEach(bar => {
-                if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 100)) {
+                if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 200)) {
                     bar.classList.add('progress-visible');
                 }
             });
-        }, 100);
+        }, 50);
+        
+        // Zweite Prüfung nach etwas mehr Zeit für sichere Initialisierung
+        setTimeout(() => {
+            skillTitles.forEach(title => {
+                if (!title.classList.contains('text-visible') && isElementInViewport(title, 300)) {
+                    title.classList.add('text-visible');
+                }
+            });
+            
+            skillLabels.forEach((label, index) => {
+                if (!label.classList.contains('text-visible') && isElementInViewport(label, 300)) {
+                    label.classList.add('text-visible');
+                }
+            });
+            
+            progressBars.forEach(bar => {
+                if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 300)) {
+                    bar.classList.add('progress-visible');
+                }
+            });
+        }, 500);
     });
 });
 

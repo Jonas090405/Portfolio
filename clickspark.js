@@ -101,8 +101,13 @@ class ClickSpark {
     }
 
     draw(timestamp) {
-        // Clear canvas
+        const dpr = window.devicePixelRatio || 1;
+        
+        // Clear canvas properly with device pixel ratio
+        this.ctx.save();
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.restore();
 
         // Filter and draw sparks
         this.sparks = this.sparks.filter(spark => {
