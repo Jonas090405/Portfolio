@@ -207,6 +207,31 @@ document.addEventListener("DOMContentLoaded", () => {
     skillLabels.forEach(label => {
         textObserver.observe(label);
     });
+
+    // Fallback: Überprüfe nach dem Laden, ob bereits sichtbare Elemente die Klasse haben
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            skillTitles.forEach(title => {
+                if (!title.classList.contains('text-visible') && isElementInViewport(title, 100)) {
+                    title.classList.add('text-visible');
+                }
+            });
+            
+            skillLabels.forEach((label, index) => {
+                if (!label.classList.contains('text-visible') && isElementInViewport(label, 100)) {
+                    setTimeout(() => {
+                        label.classList.add('text-visible');
+                    }, index * 100);
+                }
+            });
+            
+            progressBars.forEach(bar => {
+                if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 100)) {
+                    bar.classList.add('progress-visible');
+                }
+            });
+        }, 100);
+    });
 });
 
 

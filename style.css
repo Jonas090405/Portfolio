@@ -17,7 +17,47 @@
 * {
     margin: 0;
     padding: 0;
+    cursor: url('cursor.svg') 0 0, auto;
+}
 
+/* Custom Pointer Cursor for interactive elements */
+a, button, input[type="submit"], input[type="button"], 
+.card-button, .hamburger-menu, 
+.mobile-nav a, .timeline-header, .toggle-btn,
+[role="button"], [onclick] {
+    cursor: url('Cursorpointer.svg') 0 0, pointer !important;
+}
+
+/* Ensure all children of pointer elements also have the pointer cursor */
+a *, button *, .card-button *, 
+.hamburger-menu *, .mobile-nav a *, .timeline-header *, .toggle-btn *,
+[role="button"] *, [onclick] * {
+    cursor: url('Cursorpointer.svg') 0 0, pointer !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #4DBEF3 0%, var(--accent-color) 100%);
+    border-radius: 6px;
+    border: 2px solid var(--primary-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #5DCEFF 0%, var(--hover-color) 100%);
+}
+
+/* Firefox Scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) var(--primary-color);
 }
 
 html {
@@ -183,7 +223,7 @@ body {
     align-items: center;
     gap: 12px;
     transition: transform 0.3s ease;
-    cursor: default;
+    cursor: url('cursor.svg') 0 0, auto;
 }
 
 .logo-item:hover {
@@ -309,7 +349,7 @@ header .container {
         margin-bottom: 0;
         aspect-ratio: 1 / 1;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
+        cursor: url('Cursorpointer.svg') 0 0, pointer;
         transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
@@ -335,7 +375,7 @@ header .container {
         text-align: center;
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.4s ease-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition: opacity 0.2s ease-out, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         z-index: 100;
         word-wrap: break-word;
@@ -358,7 +398,7 @@ header .container {
     .speech-bubble.show {
         opacity: 1;
         transform: translateX(-50%) translateY(-100%) scale(1) rotate(0deg);
-        animation: bounce 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        animation: bounce 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     }
 
     @keyframes bounce {
@@ -366,12 +406,8 @@ header .container {
             transform: translateX(-50%) translateY(-100%) scale(0) rotate(-12deg);
         }
 
-        40% {
-            transform: translateX(-50%) translateY(calc(-100% - 8px)) scale(1.15) rotate(5deg);
-        }
-
-        70% {
-            transform: translateX(-50%) translateY(calc(-100% + 2px)) scale(0.95) rotate(-2deg);
+        50% {
+            transform: translateX(-50%) translateY(calc(-100% - 8px)) scale(1.12) rotate(3deg);
         }
 
         100% {
@@ -454,7 +490,7 @@ header .read-more {
     text-decoration: none;
     margin-top: 50px;
     transition: 200ms ease;
-    cursor: pointer;
+    cursor: url('Cursorpointer.svg') 0 0, pointer;
 }
 
 header .read-more:hover {
@@ -790,7 +826,7 @@ header .read-more:hover {
     background-color: white;
     border-radius: 50%;
     z-index: 2;
-    cursor: pointer;
+    cursor: url('Cursorpointer.svg') 0 0, pointer;
     transition: all 0.3s ease-in-out;
     display: flex;
     align-items: center;
@@ -831,7 +867,7 @@ header .read-more:hover {
 
 /* Timeline Header mit Titel und Toggle-Button */
 .timeline-header {
-    cursor: pointer;
+    cursor: url('Cursorpointer.svg') 0 0, pointer;
     user-select: none;
     padding-right: 50px;
 }
@@ -848,7 +884,7 @@ header .read-more:hover {
 .toggle-btn {
     background: none;
     border: none;
-    cursor: pointer;
+    cursor: url('Cursorpointer.svg') 0 0, pointer;
     padding: 0;
     width: 40px;
     height: 40px;
@@ -1120,7 +1156,7 @@ nav {
     gap: 6px;
     background: linear-gradient(to right, var(--accent-color), #4dbef3);
     border: none;
-    cursor: pointer;
+    cursor: url('Cursorpointer.svg') 0 0, pointer;
     padding: 16px;
     border-radius: 12px;
     position: fixed;
@@ -1678,6 +1714,11 @@ progress {
     background: rgba(0, 0, 0, 0.58);
 }
 
+.tag .material-symbols-rounded {
+    font-size: 14px;
+    margin-right: 6px;
+}
+
 /* Semitransparent backgrounds + matching stroke (blue tones) and dark readable text */
 /* stronger semi-transparent backgrounds for contrast, white text and blue-toned stroke */
 .tag-tech {
@@ -1732,7 +1773,7 @@ progress {
 @media (min-width: 1303px) {
     .bento-card:hover {
         box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.7);
-        transform: translateY(-8px);
+        transform: scale(1.03);
     }
 }
 
@@ -1876,7 +1917,7 @@ progress {
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        cursor: pointer;
+        cursor: url('Cursorpointer.svg') 0 0, pointer;
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
@@ -1919,7 +1960,7 @@ progress {
         height: 10px;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.3);
-        cursor: pointer;
+        cursor: url('Cursorpointer.svg') 0 0, pointer;
         transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
             background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
             border-radius 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2176,7 +2217,7 @@ footer {
 /* Responsive Design für mobile Geräte */
 @media (max-width: 1302px) {
     .skill-container {
-        cursor: pointer;
+        cursor: url('Cursorpointer.svg') 0 0, pointer;
         transition: max-height 0.3s ease, padding 0.3s ease;
         overflow: hidden;
         max-height: 65px;
@@ -2195,7 +2236,7 @@ footer {
 
 @media (max-width: 768px) {
     .skill-container {
-        cursor: pointer;
+        cursor: url('Cursorpointer.svg') 0 0, pointer;
         transition: max-height 0.3s ease, padding 0.3s ease;
         overflow: hidden;
         max-height: 65px;
