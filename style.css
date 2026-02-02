@@ -2327,7 +2327,6 @@ progress {
 .card-button:hover {
     background: linear-gradient(to right, rgba(10, 139, 201, 0.85), rgba(109, 212, 255, 0.85));
     border-color: rgba(77, 190, 243, 0.5);
-    box-shadow: 0 4px 12px rgba(77, 190, 243, 0.3);
 }
 
 /* Responsive Design */
