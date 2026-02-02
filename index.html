@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
   <meta charset="UTF-8">
@@ -68,7 +68,7 @@
       <div class="title-container">
         <div class="title-text">
           <h1 id="name">Jonas Gissler</h1>
-          <h2>Student B.A. Medienkonzeption im 5 Semester mit Schwerpunkt auf User-centered Design</h2>
+          <h2>Student B.A. Medienkonzeption im 5 Semester mit Schwerpunkt auf<br>User centered Design</h2>
         </div>
         <div class="image-container">
           <img src="me.png" alt="Profilbild">
@@ -76,13 +76,7 @@
         </div>
       </div>
       <br>
-      <p>Hey! Mein Name ist Jonas Gissler, ich bin 20 Jahre alt und komme aus Triberg im Schwarzwald. Aktuell studiere ich Medienkonzeption im 5. Semester an der Hochschule Furtwangen.
-
-Mein Schwerpunkt liegt im nutzerzentrierten Design – Meine Leidenschaft ist es, Medieninhalte zu gestalten, die die Bedürfnisse des Menschen in den Mittelpunkt stellen. Dabei verbinde ich Kreativität und psychologische Usability- und UX-Aspekte mit strukturiertem Vorgehen, um Designs zu entwickeln, die nicht nur ästhetisch, sondern auch funktional und nutzerfreundlich sind.
-
-Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Herausforderungen und Lerninhalten zu stellen. Mit einer Mischung aus Neugier und Ehrgeiz arbeite ich daran, mich ständig weiterzuentwickeln.
-</p>
-      <br />
+      <p>Ich bin Jonas Gissler, 20 Jahre alt und komme aus Triberg im Schwarzwald. Neben meinem Medienkonzeption-Studium an der Hochschule Furtwangen arbeite ich als UX/UI-Designer und gestalte nutzerzentrierte, funktionale und ästhetische digitale Produkte.</p>
       <a href="#project-section" class="read-more">Portfolio</a>
     </div>
   </header>
@@ -116,7 +110,7 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
           <li><span>3D-Modellierung</span><progress max="100" value="30"></progress></li>
         </ul>
       </div>
-
+<!--
       <div class="skill-container">
         <h3>Frontend</h3>
         <ul>
@@ -126,7 +120,7 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
           <li><span>SwiftUI</span><progress max="100" value="30"></progress></li>
         </ul>
       </div>
-
+-->
       <div class="skill-container">
         <h3>Soft Skills</h3>
         <ul>
@@ -537,7 +531,22 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
 
 
   <section id="education-section">
-    <h2>Bildung</h2>
+    <h2>Karriereweg</h2>
+    
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+      <button class="tab-btn active" data-tab="erfahrung">
+        <span class="material-symbols-rounded">work</span>
+        <span>Erfahrung</span>
+      </button>
+      <button class="tab-btn" data-tab="bildung">
+        <span class="material-symbols-rounded">school</span>
+        <span>Bildung</span>
+      </button>
+    </div>
+
+    <!-- Bildung Content -->
+    <div class="tab-content" id="bildung-content">
     <div class="timeline">
       <!-- Schule -->
       <div class="timeline-item">
@@ -593,21 +602,19 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
           </div>
           <div class="timeline-body">
             <p>B.A Medienkonzeption an der Hochschule Furtwangen im 5 Semester</p>
-            <p><strong>Schwerpunkt</strong> User-centered Design</p>
+            <p><strong>Schwerpunkt</strong> User centered Design</p>
             <p><strong>Zeitraum</strong> Oktober 2023 - heute</p>
           </div>
         </div>
       </div>
     </div>
+    </div>
 
-    <!-- Trennlinie -->
-    <div class="section-divider"></div>
-
-
-    <h2>Erfahrung</h2>
+    <!-- Erfahrung Content -->
+    <div class="tab-content active" id="erfahrung-content">
     <div class="timeline">
 
-      <!-- Aushilfejob -->
+      <!-- Aushilfejob 
       <div class="timeline-item">
         <a href="https://www.triberg.de/" target="_blank" class="dot" title="M&M Software Webseite">
           <span class="material-symbols-rounded">language</span>
@@ -627,7 +634,7 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
           </div>
         </div>
       </div>
-
+-->
       <!-- Aushilfejob -->
       <div class="timeline-item">
         <a href="https://www.kinderleicht-schule.de/" target="_blank" class="dot" title="Nachhilfeschulwebseite">
@@ -719,6 +726,8 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
       </div>
 
     </div>
+    </div>
+
   </section>
 
 

@@ -45,38 +45,43 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Funktion zum Setzen des aktiven Links
     function setActiveNavLink() {
-        const scrollPosition = window.scrollY + window.innerHeight / 3; // Offset für bessere Erkennung
-        const windowBottom = window.scrollY + window.innerHeight;
+        const scrollY = window.scrollY;
+        const windowBottom = scrollY + window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
         
         let currentSection = null;
         let maxVisibility = 0;
         
-        // Finde die Sektion, die am meisten sichtbar ist
-        sections.forEach(section => {
-            const element = section.element;
-            const sectionTop = element.offsetTop;
-            const sectionBottom = sectionTop + element.offsetHeight;
+        // Spezialbehandlung für About-Section am Anfang
+        if (scrollY < 100) {
+            currentSection = 'about-section';
+        } else {
+            // Finde die Sektion, die am meisten sichtbar ist
+            sections.forEach(section => {
+                const element = section.element;
+                const sectionTop = element.offsetTop;
+                const sectionBottom = sectionTop + element.offsetHeight;
+                
+                // Berechne, wie viel von der Sektion sichtbar ist
+                const visibleTop = Math.max(scrollY, sectionTop);
+                const visibleBottom = Math.min(windowBottom, sectionBottom);
+                const visibility = Math.max(0, visibleBottom - visibleTop);
+                
+                if (visibility > maxVisibility) {
+                    maxVisibility = visibility;
+                    currentSection = section.id;
+                }
+                
+                // Spezialbehandlung für Footer/Kontakt am Ende der Seite
+                if (section.id === 'at-symbol' && windowBottom >= documentHeight - 100) {
+                    currentSection = 'at-symbol';
+                }
+            });
             
-            // Berechne, wie viel von der Sektion sichtbar ist
-            const visibleTop = Math.max(scrollPosition - 200, sectionTop);
-            const visibleBottom = Math.min(windowBottom, sectionBottom);
-            const visibility = Math.max(0, visibleBottom - visibleTop);
-            
-            if (visibility > maxVisibility) {
-                maxVisibility = visibility;
-                currentSection = section.id;
+            // Fallback: Wenn nichts gefunden, nimm die erste Section
+            if (!currentSection && sections.length > 0) {
+                currentSection = sections[0].id;
             }
-            
-            // Spezialbehandlung für Footer/Kontakt am Ende der Seite
-            if (section.id === 'at-symbol' && windowBottom >= documentHeight - 100) {
-                currentSection = 'at-symbol';
-            }
-        });
-        
-        // Fallback: Wenn nichts gefunden, nimm die erste Section
-        if (!currentSection && sections.length > 0) {
-            currentSection = sections[0].id;
         }
         
         // Nur updaten wenn sich die Section geändert hat
@@ -318,18 +323,6 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
 });
 */
 
-// Text sofort setzen ohne Typewriter-Effekt
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("name").textContent = "Jonas Gissler";
-    document.querySelector("h2").textContent = "Student B.A. Medienkonzeption im 5 Semester mit Schwerpunkt auf User-centered Design";
-    document.querySelector("p").textContent = `Hey! Mein Name ist Jonas Gissler, ich bin 20 Jahre alt und komme aus Triberg im Schwarzwald. Aktuell studiere ich Medienkonzeption im 5. Semester an der Hochschule Furtwangen.
-
-Mein Schwerpunkt liegt im nutzerzentrierten Design – Meine Leidenschaft ist es, Medieninhalte zu gestalten, die die Bedürfnisse des Menschen in den Mittelpunkt stellen. Dabei verbinde ich Kreativität und psychologische Usability- und UX-Aspekte mit strukturiertem Vorgehen, um Designs zu entwickeln, die nicht nur ästhetisch, sondern auch funktional und nutzerfreundlich sind.
-
-Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Herausforderungen und Lerninhalten zu stellen. Mit einer Mischung aus Neugier und Ehrgeiz arbeite ich daran, mich ständig weiterzuentwickeln.
-
-`;
-});
 
 document.addEventListener("DOMContentLoaded", () => {
     const progressBars = document.querySelectorAll('progress');
@@ -905,4 +898,27 @@ document.addEventListener('DOMContentLoaded', () => {
             button.classList.add('active');
         }
     }
+});
+
+// ===== TAB FUNCTIONALITY FOR EDUCATION SECTION =====
+document.addEventListener('DOMContentLoaded', () => {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetTab = button.getAttribute('data-tab');
+            
+            // Remove active class from all buttons and contents
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked button and corresponding content
+            button.classList.add('active');
+            const targetContent = document.getElementById(`${targetTab}-content`);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
 });

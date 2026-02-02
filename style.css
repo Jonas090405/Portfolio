@@ -512,8 +512,8 @@ header h1 {
 header h2 {
     margin-top: 20px;
     margin-bottom: 20px;
-    text-transform: uppercase;
     font-weight: 300;
+    word-break: b;
 }
 
 header p {
@@ -523,7 +523,7 @@ header p {
 header .read-more {
     display: inline-block;
     background: linear-gradient(to right, var(--accent-color), #4dbef3);
-    color: white;
+    color: var(--text-color);
     font-size: 1.25rem;
     font-weight: 700;
     border-radius: 1000px;
@@ -536,7 +536,7 @@ header .read-more {
 }
 
 header .read-more:hover {
-    background: linear-gradient(to right, hsla(199, 92%, 45%, 0.567), #61c7f6e3);
+    background: linear-gradient(to right, #0a8bc9, #6dd4ff);
 }
 
 
@@ -669,7 +669,7 @@ header .read-more:hover {
     top: 50%;
     font-size: 1.8rem;
     font-weight: 300;
-    color: #7f8082;
+    color: var(--secondary-text-color);
     display: none;
     /* Hidden by default on desktop */
     transform: translateY(-50%) rotate(0deg);
@@ -746,7 +746,7 @@ header .read-more:hover {
     /* Rundungen */
     overflow: hidden;
     /* Rundungen sichtbar machen */
-    background-color: #444;
+    background-color: rgba(255, 255, 255, 0.15);
     /* Hintergrund der Progressbar */
     appearance: none;
     /* Entfernt Standard-Stil des Browsers */
@@ -759,7 +759,7 @@ header .read-more:hover {
 
 /* Für Webkit-basierte Browser (Chrome, Edge, Safari) */
 .skill-container ul li progress::-webkit-progress-bar {
-    background-color: #444;
+    background-color: rgba(255, 255, 255, 0.15);
     /* Hintergrund der Progressbar */
     border-radius: 12px;
     /* Rundungen */
@@ -792,33 +792,120 @@ header .read-more:hover {
     margin-bottom: 80px;
 }
 
+/* Tab Navigation */
+.tab-navigation {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-bottom: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border-radius: 50px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.tab-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: transparent;
+    border: none;
+    color: var(--secondary-text-color);
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 50px;
+    transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+
+.tab-btn .material-symbols-rounded {
+    font-size: 1.4rem;
+    transition: transform 300ms ease;
+}
+
+.tab-btn span:not(.material-symbols-rounded) {
+    transition: transform 300ms ease;
+}
+
+.tab-btn:hover {
+    color: var(--text-color);
+}
+
+
+
+.tab-btn.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    opacity: 0;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeInSlide 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 @media (max-width: 768px) {
     #education-section h2 {
         font-size: 2rem;
-        margin-bottom: 70px;
+        margin-bottom: 50px;
+    }
+
+    .tab-navigation {
+        gap: 6px;
+        padding: 6px;
+    }
+
+    .tab-btn {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+    }
+
+    .tab-btn .material-symbols-rounded {
+        font-size: 1.2rem;
     }
 }
 
 @media (max-width: 600px) {
     #education-section h2 {
         font-size: 1.75rem;
-        margin-bottom: 50px;
+        margin-bottom: 40px;
     }
-}
 
-#education-section h2:last-of-type {
-    margin-top: 250px;
-}
-
-@media (max-width: 1302px) {
-    #education-section h2:last-of-type {
-        margin-top: 200px;
+    .tab-navigation {
+        gap: 6px;
+        padding: 6px;
+        max-width: 90%;
     }
-}
 
-@media (max-width: 600px) {
-    #education-section h2:last-of-type {
-        margin-top: 100px;
+    .tab-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
     }
 }
 
@@ -830,6 +917,7 @@ header .read-more:hover {
     max-width: 800px;
     /* oder was du brauchst */
     padding-left: 40px;
+    padding-right: 8px;
     /* Platz für die Linie */
 }
 
@@ -915,7 +1003,8 @@ header .read-more:hover {
     font-weight: 500;
     margin-bottom: 0;
     line-height: 1.2;
-    transition: opacity 0.3s ease;
+    color: var(--secondary-text-color);
+    transition: color 0.3s ease;
 }
 
 /* Toggle Button Styling */
@@ -939,7 +1028,7 @@ header .read-more:hover {
     font-size: 2.5rem;
     font-weight: 300;
     color: var(--accent-color);
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
     display: block;
     line-height: 1;
     font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 48;
@@ -953,25 +1042,25 @@ header .read-more:hover {
 /* Hover-Effekt für beide Elemente wenn man auf header oder toggle-btn hovert - nur auf Desktop */
 @media (min-width: 769px) {
     .timeline-header:hover h3 {
-        opacity: 0.7;
+        color: #ffffff;
     }
 
     .timeline-header:hover+.timeline-body {
         /* Kein Hover-Effekt auf den Body */
     }
 
-    .toggle-btn:hover {
-        opacity: 0.7;
+    .toggle-btn:hover .icon {
+        color: #4dbef3;
     }
 
     /* Wenn man über den toggle-btn hovert, soll auch h3 den Effekt haben */
     .content:has(.toggle-btn:hover) .timeline-header h3 {
-        opacity: 0.7;
+        color: #ffffff;
     }
 
     /* Wenn man über den header hovert, soll auch der Button den Effekt haben */
-    .content:has(.timeline-header:hover) .toggle-btn {
-        opacity: 0.7;
+    .content:has(.timeline-header:hover) .toggle-btn .icon {
+        color: #4dbef3;
     }
 }
 
@@ -991,7 +1080,7 @@ header .read-more:hover {
 
 .timeline-item p {
     margin: 0 0 12px 0;
-    color: #c5c5c5;
+    color: var(--text-color);
     line-height: 1.5;
 }
 
@@ -1062,7 +1151,7 @@ header .read-more:hover {
     margin: 240px auto;
     height: 3px;
     width: 80%;
-    background-color: #3a3a3a;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 2px;
 }
 
@@ -1318,6 +1407,11 @@ nav {
         mask-composite: exclude;
         animation: rotate-border 3s linear infinite;
         pointer-events: none;
+        transition: background 200ms ease;
+    }
+
+    .read-more:hover::before {
+        background: conic-gradient(from var(--angle), transparent 45%, #b8ecff 70%, transparent 85%);
     }
 
     @keyframes rotate-border {
@@ -1337,7 +1431,7 @@ nav {
 
     /* Hover-Effekt - subtil: heller Text */
     .nav-pills a:hover:not(.active) {
-        color: rgba(255, 255, 255, 1);
+        color: #ffffff;
     }
 
     .nav-pills a:hover:not(.active) .material-symbols-rounded {
@@ -1815,7 +1909,7 @@ progress {
 #project-section h2 {
     font-size: 3rem;
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     grid-column: 1 / -1;
 }
 
@@ -1912,7 +2006,7 @@ progress {
     -webkit-backdrop-filter: blur(6px);
     box-shadow: 0 6px 18px rgba(2, 8, 14, 0.25);
     transition: all 0.18s ease;
-    color: #ffffff;
+    color: var(--text-color);
     /* uniform dark pill background for all tags; stroke/color applied per-category */
     background: rgba(0, 0, 0, 0.58);
 }
@@ -1927,25 +2021,25 @@ progress {
 .tag-tech {
     background: rgba(0, 0, 0, 0.58);
     border: 1px solid rgba(77, 190, 243, 0.95);
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 .tag-design {
     background: rgba(0, 0, 0, 0.58);
     border: 1px solid rgba(13, 110, 158, 0.95);
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 .tag-skill {
     background: rgba(0, 0, 0, 0.58);
     border: 1px solid rgba(100, 210, 255, 0.95);
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 .tag-area {
     background: rgba(0, 0, 0, 0.58);
     border: 1px solid rgba(6, 95, 136, 0.95);
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 /* Hover-Effekt - nur Desktop */
@@ -1996,7 +2090,7 @@ progress {
 .card-content p {
     font-size: 1rem;
     margin-bottom: 40px;
-    color: #9da2a2;
+    color: var(--secondary-text-color);
 }
 
 /* Button */
@@ -2032,7 +2126,7 @@ progress {
 }
 
 .card-button:hover {
-    background: linear-gradient(to right, #065f88, #0cabf4);
+    background: linear-gradient(to right, #0a8bc9, #6dd4ff);
 }
 
 /* Responsive Design */
