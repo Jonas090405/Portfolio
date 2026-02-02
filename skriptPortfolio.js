@@ -498,6 +498,7 @@ function handleScroll() {
     const timelineItems = document.querySelectorAll('.timeline-item');
     const timelineTitles = document.querySelectorAll('.timeline-title');
     const bentoCards = document.querySelectorAll('.bento-card');
+    const skillContainers = document.querySelectorAll('.skill-container');
 
     // Überprüfen, ob die Timeline-Elemente im Viewport sind und die Klasse hinzufügen
     timelineItems.forEach(item => {
@@ -517,6 +518,13 @@ function handleScroll() {
     bentoCards.forEach(card => {
         if (isElementInViewport(card) && !card.classList.contains('card-visible')) {
             card.classList.add('card-visible');
+        }
+    });
+
+    // Überprüfen, ob die Skill-Container im Viewport sind und die Klasse hinzufügen
+    skillContainers.forEach(container => {
+        if (isElementInViewport(container) && !container.classList.contains('card-visible')) {
+            container.classList.add('card-visible');
         }
     });
 }

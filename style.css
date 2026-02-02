@@ -606,7 +606,7 @@ header .read-more:hover {
     /* Perspektive für den 3D-Effekt */
     transform-style: preserve-3d;
     /* Aktiviert den 3D-Effekt */
-    transition: transform 0.2s ease-out, box-shadow 0.5s ease;
+    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     /* Sanfter Übergang */
     background: rgba(20, 22, 24, 0.6);
     backdrop-filter: blur(10px);
@@ -616,6 +616,13 @@ header .read-more:hover {
     --mouse-x: 50%;
     --mouse-y: 50%;
     --spotlight-color: rgba(77, 190, 243, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.skill-container.card-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 @media (min-width: 1303px) {
