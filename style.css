@@ -745,7 +745,7 @@ header .read-more:hover {
 
 .skill-container .spider-chart {
     width: 100%;
-    max-width: 350px;
+    max-width: 300px;
     height: auto;
     margin: 40px auto;
     display: block;
