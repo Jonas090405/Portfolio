@@ -1563,12 +1563,12 @@ nav {
         font-size: 0.95rem;
         font-weight: 500;
         border-radius: 50px;
-        transition: all 0.3s ease;
+        transition: all 0.3s ease; 
         position: relative;
         white-space: nowrap;
         z-index: 1;
     }
-
+ 
     .nav-pills a .material-symbols-rounded {
         font-size: 20px;
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
