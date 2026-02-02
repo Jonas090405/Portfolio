@@ -17,25 +17,25 @@
       <div class="desktop-nav">
         <ul class="nav-pills">
           <li><a href="#about-section">
-            <span class="material-symbols-rounded">person</span>
-            <span class="nav-text">About</span>
-          </a></li>
+              <span class="material-symbols-rounded">person</span>
+              <span class="nav-text">About</span>
+            </a></li>
           <li><a href="#skill-section">
-            <span class="material-symbols-rounded">stars</span>
-            <span class="nav-text">Skills</span>
-          </a></li>
+              <span class="material-symbols-rounded">stars</span>
+              <span class="nav-text">Skills</span>
+            </a></li>
           <li><a href="#project-section">
-            <span class="material-symbols-rounded">work</span>
-            <span class="nav-text">Projekte</span>
-          </a></li>
+              <span class="material-symbols-rounded">work</span>
+              <span class="nav-text">Projekte</span>
+            </a></li>
           <li><a href="#education-section">
-            <span class="material-symbols-rounded">school</span>
-            <span class="nav-text">Karriereweg</span>
-          </a></li>
+              <span class="material-symbols-rounded">school</span>
+              <span class="nav-text">Karriereweg</span>
+            </a></li>
           <li><a href="#at-symbol">
-            <span class="material-symbols-rounded">mail</span>
-            <span class="nav-text">Kontakt</span>
-          </a></li>
+              <span class="material-symbols-rounded">mail</span>
+              <span class="nav-text">Kontakt</span>
+            </a></li>
         </ul>
         <div class="nav-slider"></div>
       </div>
@@ -76,7 +76,9 @@
         </div>
       </div>
       <br>
-      <p>Ich bin Jonas Gissler, 20 Jahre alt und komme aus Triberg im Schwarzwald. Neben meinem Medienkonzeption-Studium an der Hochschule Furtwangen arbeite ich als UX/UI-Designer und gestalte nutzerzentrierte, funktionale und ästhetische digitale Produkte.</p>
+      <p>Ich bin Jonas Gissler, 20 Jahre alt und komme aus Triberg im Schwarzwald. Neben meinem Medienkonzeption-Studium
+        an der Hochschule Furtwangen arbeite ich als UX/UI-Designer und gestalte nutzerzentrierte, funktionale und
+        ästhetische digitale Produkte.</p>
       <a href="#project-section" class="read-more">Portfolio</a>
     </div>
   </header>
@@ -84,81 +86,280 @@
     <h2>Skills</h2>
     <div class="wrapper">
       <div class="skill-container">
-        <h3>UI Design</h3>
-        <ul>
-          <li><span>Prototyping</span><progress max="100" value="95"></progress></li>
-          <li><span>Designsysteme</span><progress max="100" value="82"></progress></li>
-          <li><span>Responsive Design</span><progress max="100" value="80"></progress></li>
-          <li><span>Visual Design</span><progress max="100" value="85"></progress></li>
-        </ul>
+        <h3>UI Design<span class="skill-subtitle">Interface Design und Ästhetik</span></h3>
+        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background circles -->
+          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+
+          <!-- Axis lines -->
+          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+
+          <!-- Data polygon with inner glow -->
+          <defs>
+            <filter id="innerGlow1" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
+              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
+              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
+              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
+              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
+            </filter>
+          </defs>
+
+          <polygon points="100,24 176,100 100,140 36,100" fill="url(#fillGradient1)" stroke="#4dbef3" stroke-width="2"
+            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow1)" />
+
+          <defs>
+            <radialGradient id="fillGradient1" cx="50%" cy="50%">
+              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
+              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
+              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
+            </radialGradient>
+          </defs>
+
+          <!-- Labels -->
+          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Prototyping</text>
+          <text x="196" y="100" text-anchor="start" fill="var(--secondary-text-color)" font-size="13" font-weight="500">
+            <tspan x="196" dy="0">Design-</tspan>
+            <tspan x="196" dy="15">systeme</tspan>
+          </text>
+          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13" font-weight="500">
+            <tspan x="100" dy="0">Responsive</tspan>
+            <tspan x="100" dy="15">Design</tspan>
+          </text>
+          <text x="4" y="100" text-anchor="end" fill="var(--secondary-text-color)" font-size="13" font-weight="500">
+            <tspan x="4" dy="0">Visual</tspan>
+            <tspan x="4" dy="15">Design</tspan>
+          </text>
+        </svg>
       </div>
       <div class="skill-container">
-        <h3>UX Design</h3>
-        <ul>
-          <li><span>User Research</span><progress max="100" value="75"></progress></li>
-          <li><span>Usability Evaluation</span><progress max="100" value="70"></progress></li>
-          <li><span>Interaction Design</span><progress max="100" value="80"></progress></li>
-          <li><span>Usability Testing</span><progress max="100" value="70"></progress></li>
-        </ul>
+        <h3>UX Design<span class="skill-subtitle">Nutzererfahrung & User Research</span></h3>
+        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+
+          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+
+          <defs>
+            <filter id="innerGlow2" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
+              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
+              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
+              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
+              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
+            </filter>
+            <radialGradient id="fillGradient2" cx="50%" cy="50%">
+              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
+              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
+              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
+            </radialGradient>
+          </defs>
+
+          <polygon points="100,40 155,100 100,172 44,100" fill="url(#fillGradient2)" stroke="#4dbef3" stroke-width="2"
+            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow2)" />
+
+          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Research</text>
+          <text x="196" y="104" text-anchor="start" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Evaluation</text>
+          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13" font-weight="500">
+            <tspan x="100" dy="0">Interaction</tspan>
+            <tspan x="100" dy="15">Design</tspan>
+          </text>
+          <text x="4" y="104" text-anchor="end" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">UX-Testing</text>
+        </svg>
       </div>
       <div class="skill-container">
-        <h3>Medienerstellung</h3>
-        <ul>
-          <li><span>Audiodesign</span><progress max="100" value="60"></progress></li>
-          <li><span>Videoschnitt</span><progress max="100" value="68"></progress></li>
-          <li><span>Animation</span><progress max="100" value="45"></progress></li>
-          <li><span>3D-Modellierung</span><progress max="100" value="30"></progress></li>
-        </ul>
+        <h3>Medienerstellung<span class="skill-subtitle">Erstellung verschiedener Medien</span></h3>
+        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+
+          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+
+          <defs>
+            <filter id="innerGlow3" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
+              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
+              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
+              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
+              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
+            </filter>
+            <radialGradient id="fillGradient3" cx="50%" cy="50%">
+              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
+              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
+              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
+            </radialGradient>
+          </defs>
+
+          <polygon points="100,52 160,100 100,116 88,100" fill="url(#fillGradient3)" stroke="#4dbef3" stroke-width="2"
+            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow3)" />
+
+          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Audio</text>
+          <text x="196" y="104" text-anchor="start" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Video</text>
+          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Animation</text>
+          <text x="4" y="104" text-anchor="end" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">3D</text>
+        </svg>
       </div>
-<!--
+   
       <div class="skill-container">
-        <h3>Frontend</h3>
-        <ul>
-          <li><span>Javascript</span><progress max="100" value="75"></progress></li>
-          <li><span>CSS</span><progress max="100" value="95"></progress></li>
-          <li><span>HTML</span><progress max="100" value="85"></progress></li>
-          <li><span>SwiftUI</span><progress max="100" value="30"></progress></li>
-        </ul>
-      </div>
--->
-      <div class="skill-container">
-        <h3>Soft Skills</h3>
-        <ul>
-          <li><span>Teamfähigkeit</span><progress max="100" value="100"></progress></li>
-          <li><span>Kreative Konzeption</span><progress max="100" value="90"></progress></li>
-          <li><span>Präsentieren</span><progress max="100" value="80"></progress></li>
-          <li><span>Projekt-management</span><progress max="100" value="90"></progress></li>
-        </ul>
+        <h3>Soft Skills<span class="skill-subtitle">Persönliche und soziale Fähigkeiten</span></h3>
+        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+
+          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+
+          <defs>
+            <filter id="innerGlow4" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
+              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
+              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
+              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
+              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
+            </filter>
+            <radialGradient id="fillGradient4" cx="50%" cy="50%">
+              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
+              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
+              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
+            </radialGradient>
+          </defs>
+
+          <polygon points="100,20 172,100 100,172 28,100" fill="url(#fillGradient4)" stroke="#4dbef3" stroke-width="2"
+            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow4)" />
+
+          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Teamwork</text>
+          <text x="196" y="104" text-anchor="start" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Kreativität</text>
+          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Präsentieren</text>
+          <text x="4" y="100" text-anchor="end" fill="var(--secondary-text-color)" font-size="13" font-weight="500">
+            <tspan x="4" dy="0">PM</tspan>
+          </text>
+        </svg>
       </div>
 
       <div class="skill-container">
-        <h3>Sprachen</h3>
-        <ul>
-          <li><span>Deutsch</span><progress max="100" value="100"></progress></li>
-          <li><span>Englisch</span><progress max="100" value="88"></progress></li>
-          <li><span>Spanisch</span><progress max="100" value="30"></progress></li>
-          <li><span>Französisch</span><progress max="100" value="45"></progress></li>
-        </ul>
+        <h3>Sprachen<span class="skill-subtitle">Sprachkenntnisse & Kommunikation</span></h3>
+        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+
+          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+
+          <defs>
+            <filter id="innerGlow5" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
+              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
+              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
+              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
+              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
+            </filter>
+            <radialGradient id="fillGradient5" cx="50%" cy="50%">
+              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
+              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
+              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
+            </radialGradient>
+          </defs>
+
+          <polygon points="100,20 168,100 100,108 76,100" fill="url(#fillGradient5)" stroke="#4dbef3" stroke-width="2"
+            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow5)" />
+
+          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Deutsch</text>
+          <text x="196" y="104" text-anchor="start" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Englisch</text>
+          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Spanisch</text>
+          <text x="4" y="104" text-anchor="end" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Französisch</text>
+        </svg>
       </div>
 
-      <!-- <div class="skill-container">
-        <h3>EDV-Kenntnisse</h3>
-        <ul>
-          <li>Adobe Creative Suite<progress max="100" value="80"></progress> </li>
-          <li>Figma<progress max="100" value="95"></progress> </li>
-          <li>MS Office<progress max="100" value="85"></progress> </li>
-          <li>Google Analytics<progress max="100" value="75"></progress> </li>
-        </ul>
-      </div> -->
-
       <div class="skill-container">
-        <h3>Weiteres</h3>
-        <ul>
-          <li><span>Storytelling</span><progress max="100" value="70"></progress></li>
-          <li><span>Marketingkonzeption</span><progress max="100" value="95"></progress></li>
-          <li><span>User/Customer Storymapping</span><progress max="100" value="85"></progress></li>
-          <li><span>Corporate Design</span><progress max="100" value="75"></progress></li>
-        </ul>
+        <h3>Weiteres<span class="skill-subtitle">Weitere Fähigkeiten</span></h3>
+        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+
+          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+
+          <defs>
+            <filter id="innerGlow6" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
+              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
+              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
+              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
+              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
+            </filter>
+            <radialGradient id="fillGradient6" cx="50%" cy="50%">
+              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
+              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
+              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
+            </radialGradient>
+          </defs>
+
+          <polygon points="100,44 168,100 100,164 28,100" fill="url(#fillGradient6)" stroke="#4dbef3" stroke-width="2"
+            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow6)" />
+
+          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Storytelling</text>
+          <text x="196" y="104" text-anchor="start" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Marketing</text>
+          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
+            font-weight="500">Storymapping</text>
+          <text x="4" y="100" text-anchor="end" fill="var(--secondary-text-color)" font-size="13" font-weight="500">
+            <tspan x="4" dy="0">Corporate</tspan>
+            <tspan x="4" dy="15">Design</tspan>
+          </text>
+
+          <defs>
+            <radialGradient id="edgeGradient6" cx="100" cy="100" r="80" gradientUnits="userSpaceOnUse">
+              <stop offset="60%" style="stop-color:#006999;stop-opacity:0" />
+              <stop offset="85%" style="stop-color:#4dbef3;stop-opacity:0.3" />
+              <stop offset="95%" style="stop-color:#4dbef3;stop-opacity:0.6" />
+              <stop offset="100%" style="stop-color:#4dbef3;stop-opacity:0.8" />
+              </linearGradient>
+          </defs>
+        </svg>
       </div>
     </div>
 
@@ -385,7 +586,8 @@
         <div class="card-tags">
           <span class="tag tag-tech"><span class="material-symbols-rounded">code</span>HTML/CSS/JS</span>
           <span class="tag tag-design"><span class="material-symbols-rounded">videogame_asset</span>Retro Design</span>
-          <span class="tag tag-area"><span class="material-symbols-rounded">psychology_alt</span>Kreative Konzeption</span>
+          <span class="tag tag-area"><span class="material-symbols-rounded">psychology_alt</span>Kreative
+            Konzeption</span>
         </div>
         <div class="card-content">
           <h3>Kryokapsel-Automat</h3>
@@ -532,7 +734,7 @@
 
   <section id="education-section">
     <h2>Karriereweg</h2>
-    
+
     <!-- Tab Navigation -->
     <div class="tab-navigation">
       <button class="tab-btn active" data-tab="erfahrung">
@@ -547,28 +749,28 @@
 
     <!-- Bildung Content -->
     <div class="tab-content" id="bildung-content">
-    <div class="timeline">
-      <!-- Schule -->
-      <div class="timeline-item">
-        <a href="https://schwarzwald-gymnasium.de/" target="_blank" class="dot" title="Schulwebseite">
-          <span class="material-symbols-rounded">menu_book</span>
-        </a>
-        <div class="content">
-          <button class="toggle-btn" aria-label="Details anzeigen">
-            <span class="material-symbols-rounded icon">add</span>
-          </button>
-          <div class="timeline-header">
-            <h3>Allgemeines Abitur</h3>
-          </div>
-          <div class="timeline-body">
-            <p>Schwarzwald Gymnasium Triberg, Triberg im Schwarzwald</p>
-            <p><strong>Zeitraum</strong> 2016 - 2023</p>
+      <div class="timeline">
+        <!-- Schule -->
+        <div class="timeline-item">
+          <a href="https://schwarzwald-gymnasium.de/" target="_blank" class="dot" title="Schulwebseite">
+            <span class="material-symbols-rounded">menu_book</span>
+          </a>
+          <div class="content">
+            <button class="toggle-btn" aria-label="Details anzeigen">
+              <span class="material-symbols-rounded icon">add</span>
+            </button>
+            <div class="timeline-header">
+              <h3>Allgemeines Abitur</h3>
+            </div>
+            <div class="timeline-body">
+              <p>Schwarzwald Gymnasium Triberg, Triberg im Schwarzwald</p>
+              <p><strong>Zeitraum</strong> 2016 - 2023</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- CPUX-F Zertifikat -->
-      <!-- <div class="timeline-item">
+        <!-- CPUX-F Zertifikat -->
+        <!-- <div class="timeline-item">
         <a href="https://uxqb.org/de/cpux-f/" target="_blank" class="dot" title="CPUX-F Zertifizierung">
           <span class="material-symbols-rounded">workspace_premium</span>
         </a>
@@ -588,33 +790,33 @@
         </div>
       </div> -->
 
-      <!-- Universität -->
-      <div class="timeline-item">
-        <a href="https://www.hs-furtwangen.de/" target="_blank" class="dot" title="Hochschulwebseite">
-          <span class="material-symbols-rounded">school</span>
-        </a>
-        <div class="content">
-          <button class="toggle-btn" aria-label="Details anzeigen">
-            <span class="material-symbols-rounded icon">add</span>
-          </button>
-          <div class="timeline-header">
-            <h3>Bachelorstudium</h3>
-          </div>
-          <div class="timeline-body">
-            <p>B.A Medienkonzeption an der Hochschule Furtwangen im 5 Semester</p>
-            <p><strong>Schwerpunkt</strong> User centered Design</p>
-            <p><strong>Zeitraum</strong> Oktober 2023 - heute</p>
+        <!-- Universität -->
+        <div class="timeline-item">
+          <a href="https://www.hs-furtwangen.de/" target="_blank" class="dot" title="Hochschulwebseite">
+            <span class="material-symbols-rounded">school</span>
+          </a>
+          <div class="content">
+            <button class="toggle-btn" aria-label="Details anzeigen">
+              <span class="material-symbols-rounded icon">add</span>
+            </button>
+            <div class="timeline-header">
+              <h3>Bachelorstudium</h3>
+            </div>
+            <div class="timeline-body">
+              <p>B.A Medienkonzeption an der Hochschule Furtwangen im 5 Semester</p>
+              <p><strong>Schwerpunkt</strong> User centered Design</p>
+              <p><strong>Zeitraum</strong> Oktober 2023 - heute</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
 
     <!-- Erfahrung Content -->
     <div class="tab-content active" id="erfahrung-content">
-    <div class="timeline">
+      <div class="timeline">
 
-      <!-- Aushilfejob 
+        <!-- Aushilfejob 
       <div class="timeline-item">
         <a href="https://www.triberg.de/" target="_blank" class="dot" title="M&M Software Webseite">
           <span class="material-symbols-rounded">language</span>
@@ -635,97 +837,98 @@
         </div>
       </div>
 -->
-      <!-- Aushilfejob -->
-      <div class="timeline-item">
-        <a href="https://www.kinderleicht-schule.de/" target="_blank" class="dot" title="Nachhilfeschulwebseite">
-          <span class="material-symbols-rounded">psychology</span>
-        </a>
-        <div class="content">
-          <button class="toggle-btn" aria-label="Details anzeigen">
-            <span class="material-symbols-rounded icon">add</span>
-          </button>
-          <div class="timeline-header">
-            <h3>Nachhilfelehrer</h3>
-          </div>
-          <div class="timeline-body">
-            <p><strong>Rolle</strong> Nachhilfelehrer bei Kinderleicht-Schule</p>
-            <p><strong>Aufgaben</strong> Individuelle Lernunterstützung und pädagogische Betreuung von Kindern und
-              Jugendlichen im Alter von 6 bis 16 Jahren, Vermittlung fachlicher Inhalte und Förderung von
-              Lernstrategien.
-            </p>
-            <p><strong>Zeitraum</strong> September 2023 - August 2024</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Praktikum -->
-      <div class="timeline-item">
-        <a href="https://www.mm-software.com/" target="_blank" class="dot" title="M&M Software Webseite">
-          <span class="material-symbols-rounded">palette</span>
-        </a>
-        <div class="content">
-          <button class="toggle-btn" aria-label="Details anzeigen">
-            <span class="material-symbols-rounded icon">add</span>
-          </button>
-          <div class="timeline-header">
-            <h3>Praktikum bei M&M Software</h3>
-          </div>
-          <div class="timeline-body">
-            <p><strong>Rolle</strong> UX/UI Designer</p>
-            <p><strong>Aufgaben</strong> Entwicklung von Prototypen und User Interfaces für Kundenprojekte, Konzeption
-              von Game Design und Gamification-Elementen, Präsentation von UX/UI-Konzepten sowie Frontend- und Mixed
-              Reality-Entwicklung.</p>
-            <p><strong>Zeitraum</strong> September 2024 - Februar 2025</p>
+        <!-- Aushilfejob -->
+        <div class="timeline-item">
+          <a href="https://www.kinderleicht-schule.de/" target="_blank" class="dot" title="Nachhilfeschulwebseite">
+            <span class="material-symbols-rounded">psychology</span>
+          </a>
+          <div class="content">
+            <button class="toggle-btn" aria-label="Details anzeigen">
+              <span class="material-symbols-rounded icon">add</span>
+            </button>
+            <div class="timeline-header">
+              <h3>Nachhilfelehrer</h3>
+            </div>
+            <div class="timeline-body">
+              <p><strong>Rolle</strong> Nachhilfelehrer bei Kinderleicht-Schule</p>
+              <p><strong>Aufgaben</strong> Individuelle Lernunterstützung und pädagogische Betreuung von Kindern und
+                Jugendlichen im Alter von 6 bis 16 Jahren, Vermittlung fachlicher Inhalte und Förderung von
+                Lernstrategien.
+              </p>
+              <p><strong>Zeitraum</strong> September 2023 - August 2024</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Werkstudentenstelle -->
-      <div class="timeline-item">
-        <a href="https://knf.com/de/de/unternehmen/standorte-weltweit/details/deutschland-freiburg-munzingen-service"
-          target="_blank" class="dot" title="KNF Webseite">
-          <span class="material-symbols-rounded">cast_for_education</span>
-        </a>
-        <div class="content">
-          <button class="toggle-btn" aria-label="Details anzeigen">
-            <span class="material-symbols-rounded icon">add</span>
-          </button>
-          <div class="timeline-header">
-            <h3>Werkstudent bei KNF Service</h3>
-          </div>
-          <div class="timeline-body">
-            <p><strong>Rolle</strong> Instructional Designer</p>
-            <p><strong>Aufgaben</strong> Konzeption und Gestaltung interaktiver digitaler Lernmodule für internationale
-              Zielgruppen mithilfe von Articulate, Veröffentlichung über Learning Management Systeme sowie
-              Videoproduktion und -schnitt für didaktische Lernvideos.</p>
-            <p><strong>Zeitraum</strong> März 2025 - Juli 2025</p>
+        <!-- Praktikum -->
+        <div class="timeline-item">
+          <a href="https://www.mm-software.com/" target="_blank" class="dot" title="M&M Software Webseite">
+            <span class="material-symbols-rounded">palette</span>
+          </a>
+          <div class="content">
+            <button class="toggle-btn" aria-label="Details anzeigen">
+              <span class="material-symbols-rounded icon">add</span>
+            </button>
+            <div class="timeline-header">
+              <h3>Praktikum bei M&M Software</h3>
+            </div>
+            <div class="timeline-body">
+              <p><strong>Rolle</strong> UX/UI Designer</p>
+              <p><strong>Aufgaben</strong> Entwicklung von Prototypen und User Interfaces für Kundenprojekte, Konzeption
+                von Game Design und Gamification-Elementen, Präsentation von UX/UI-Konzepten sowie Frontend- und Mixed
+                Reality-Entwicklung.</p>
+              <p><strong>Zeitraum</strong> September 2024 - Februar 2025</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Werkstudentenstelle 2 -->
-      <div class="timeline-item">
-        <a href="https://www.mm-software.com/" target="_blank" class="dot" title="M&M Software Webseite">
-          <span class="material-symbols-rounded">palette</span>
-        </a>
-        <div class="content">
-          <button class="toggle-btn" aria-label="Details anzeigen">
-            <span class="material-symbols-rounded icon">add</span>
-          </button>
-          <div class="timeline-header">
-            <h3>Werkstudent bei M&M Software</h3>
-          </div>
-          <div class="timeline-body">
-            <p><strong>Rolle</strong> UX/UI Designer</p>
-            <p><strong>Aufgaben</strong> Gestaltung und Optimierung von User Interfaces für B2B-Software verschiedener
-              Kunden, konzeptioneller Aufbau eines internen Designsystems inklusive Design Tokens zur Sicherstellung
-              konsistenter Designstandards.</p>
-            <p><strong>Zeitraum</strong> September 2025 - heute</p>
+        <!-- Werkstudentenstelle -->
+        <div class="timeline-item">
+          <a href="https://knf.com/de/de/unternehmen/standorte-weltweit/details/deutschland-freiburg-munzingen-service"
+            target="_blank" class="dot" title="KNF Webseite">
+            <span class="material-symbols-rounded">cast_for_education</span>
+          </a>
+          <div class="content">
+            <button class="toggle-btn" aria-label="Details anzeigen">
+              <span class="material-symbols-rounded icon">add</span>
+            </button>
+            <div class="timeline-header">
+              <h3>Werkstudent bei KNF Service</h3>
+            </div>
+            <div class="timeline-body">
+              <p><strong>Rolle</strong> Instructional Designer</p>
+              <p><strong>Aufgaben</strong> Konzeption und Gestaltung interaktiver digitaler Lernmodule für
+                internationale
+                Zielgruppen mithilfe von Articulate, Veröffentlichung über Learning Management Systeme sowie
+                Videoproduktion und -schnitt für didaktische Lernvideos.</p>
+              <p><strong>Zeitraum</strong> März 2025 - Juli 2025</p>
+            </div>
           </div>
         </div>
-      </div>
 
-    </div>
+        <!-- Werkstudentenstelle 2 -->
+        <div class="timeline-item">
+          <a href="https://www.mm-software.com/" target="_blank" class="dot" title="M&M Software Webseite">
+            <span class="material-symbols-rounded">palette</span>
+          </a>
+          <div class="content">
+            <button class="toggle-btn" aria-label="Details anzeigen">
+              <span class="material-symbols-rounded icon">add</span>
+            </button>
+            <div class="timeline-header">
+              <h3>Werkstudent bei M&M Software</h3>
+            </div>
+            <div class="timeline-body">
+              <p><strong>Rolle</strong> UX/UI Designer</p>
+              <p><strong>Aufgaben</strong> Gestaltung und Optimierung von User Interfaces für B2B-Software verschiedener
+                Kunden, konzeptioneller Aufbau eines internen Designsystems inklusive Design Tokens zur Sicherstellung
+                konsistenter Designstandards.</p>
+              <p><strong>Zeitraum</strong> September 2025 - heute</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </section>

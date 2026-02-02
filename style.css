@@ -262,6 +262,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 12px;
+    padding: 0 15px;
     transition: transform 0.3s ease;
     cursor: url('cursor.svg') 0 0, auto;
 }
@@ -305,6 +306,10 @@ body {
         height: 60px;
     }
 
+    .logo-item {
+        padding: 0 5px;
+    }
+
     .logo-item span {
         font-size: 0.75rem;
     }
@@ -319,6 +324,10 @@ body {
     .logo-img {
         width: 50px;
         height: 50px;
+    }
+
+    .logo-item {
+        padding: 0 1px;
     }
 
     .logo-item span {
@@ -522,7 +531,10 @@ header p {
 
 header .read-more {
     display: inline-block;
-    background: linear-gradient(to right, var(--accent-color), #4dbef3);
+    background: linear-gradient(to right, rgba(0, 105, 153, 0.5), rgba(77, 190, 243, 0.5));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(77, 190, 243, 0.15);
     color: var(--text-color);
     font-size: 1.25rem;
     font-weight: 700;
@@ -530,13 +542,14 @@ header .read-more {
     padding: .5em 1.25em;
     text-decoration: none;
     margin-top: 50px;
-    transition: 200ms ease;
+    transition: all 0.3s ease;
     cursor: url('Cursorpointer.svg') 0 0, pointer;
     position: relative;
 }
 
 header .read-more:hover {
-    background: linear-gradient(to right, #0a8bc9, #6dd4ff);
+    background: linear-gradient(to right, rgba(10, 139, 201, 0.6), rgba(109, 212, 255, 0.6));
+    border-color: rgba(77, 190, 243, 0.3);
 }
 
 
@@ -567,17 +580,26 @@ header .read-more:hover {
 
 #skill-section .wrapper {
     margin-top: 60px;
-    display: flex;
-    justify-content: center;
-    gap: 80px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 1600px) {
+    #skill-section .wrapper {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1800px;
+    }
 }
 
 .skill-container {
-    width: 400px;
+    width: 100%;
     max-width: 100%;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.6);
     /* Standard-Schatten */
     perspective: 800px;
@@ -586,11 +608,14 @@ header .read-more:hover {
     /* Aktiviert den 3D-Effekt */
     transition: transform 0.2s ease-out, box-shadow 0.5s ease;
     /* Sanfter Übergang */
-    background-color: #141618;
+    background: rgba(20, 22, 24, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
     position: relative;
     --mouse-x: 50%;
     --mouse-y: 50%;
-    --spotlight-color: rgba(77, 190, 243, 0.5);
+    --spotlight-color: rgba(77, 190, 243, 0.3);
 }
 
 @media (min-width: 1303px) {
@@ -645,11 +670,13 @@ header .read-more:hover {
 }
 
 .skill-container h3 {
-    background-color: var(--primary-color);
-    padding: 18px 0;
-    text-align: center;
+    background-color: transparent;
+    padding: 28px 32px 16px 32px;
+    text-align: left;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: 0.5px;
     position: relative;
     opacity: 0;
     transform: translateY(-20px);
@@ -661,42 +688,193 @@ header .read-more:hover {
     transform: translateY(0);
 }
 
+.skill-container .skill-subtitle {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 400;
+    text-transform: none;
+    color: var(--secondary-text-color);
+    margin-top: 6px;
+    letter-spacing: 0.3px;
+}
+
 .skill-container h3::after {
     content: 'expand_more';
     font-family: 'Material Symbols Rounded';
     position: absolute;
     right: 20px;
-    top: 50%;
+    top: 24px;
     font-size: 1.8rem;
     font-weight: 300;
     color: var(--secondary-text-color);
     display: none;
     /* Hidden by default on desktop */
-    transform: translateY(-50%) rotate(0deg);
+    transform: rotate(0deg);
     transform-origin: center center;
-    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     will-change: transform;
 }
 
 .skill-container.card-active h3::after {
-    transform: translateY(-50%) rotate(180deg);
-    animation: chevronBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: rotate(180deg);
+    animation: chevronBounce 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes chevronBounce {
     0% {
-        transform: translateY(-50%) rotate(0deg);
+        transform: rotate(0deg);
     }
 
     50% {
-        transform: translateY(-50%) rotate(200deg) scale(1.15);
+        transform: rotate(200deg) scale(1.15);
     }
 
     100% {
-        transform: translateY(-50%) rotate(180deg);
+        transform: rotate(180deg);
     }
 }
 
+
+
+.skill-container .spider-chart {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    margin: 40px auto;
+    display: block;
+    overflow: visible;
+}
+
+@media (max-width: 599px) {
+    .skill-container .spider-chart {
+        max-width: 240px;
+        margin: 25px auto;
+    }
+    
+    .skill-container .spider-chart text {
+        font-size: 10px;
+    }
+    
+    .skill-container .spider-chart text tspan {
+        dy: 12px;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 768px) {
+    .skill-container .spider-chart {
+        max-width: 270px;
+        margin: 30px auto;
+    }
+    
+    .skill-container .spider-chart text {
+        font-size: 11px;
+    }
+    
+    .skill-container .spider-chart text tspan {
+        dy: 13px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 900px) {
+    #skill-section .wrapper {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 50px;
+        padding: 0 20px;
+    }
+    
+    .skill-container h3 {
+        font-size: 1rem;
+        padding: 24px 28px 14px 28px;
+    }
+    
+    .skill-container .skill-subtitle {
+        font-size: 0.78rem;
+    }
+    
+    .skill-container .spider-chart {
+        max-width: 235px;
+        margin: 32px auto;
+    }
+    
+    .skill-container .spider-chart text {
+        font-size: 10px;
+    }
+    
+    .skill-container .spider-chart text tspan {
+        dy: 12px;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 950px) {
+    #skill-section .wrapper {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 50px;
+        padding: 0 20px;
+    }
+    
+    .skill-container h3 {
+        font-size: 1rem;
+        padding: 24px 28px 14px 28px;
+    }
+    
+    .skill-container .skill-subtitle {
+        font-size: 0.78rem;
+    }
+    
+    .skill-container .spider-chart {
+        max-width: 255px;
+        margin: 35px auto;
+    }
+    
+    .skill-container .spider-chart text {
+        font-size: 11px;
+    }
+    
+    .skill-container .spider-chart text tspan {
+        dy: 13px;
+    }
+}
+
+@media (min-width: 951px) and (max-width: 1024px) {
+    #skill-section .wrapper {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 50px;
+        padding: 0 20px;
+    }
+    
+    .skill-container h3 {
+        font-size: 1rem;
+        padding: 24px 28px 14px 28px;
+    }
+    
+    .skill-container .skill-subtitle {
+        font-size: 0.78rem;
+    }
+    
+    .skill-container .spider-chart {
+        max-width: 280px;
+        margin: 35px auto;
+    }
+    
+    .skill-container .spider-chart text {
+        font-size: 12px;
+    }
+    
+    .skill-container .spider-chart text tspan {
+        dy: 14px;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1302px) {
+    .skill-container .spider-chart {
+        max-width: 310px;
+        margin: 40px auto;
+    }
+}
+
+.skill-container ul {
+        margin: 40px auto;
+    }
 
 
 .skill-container ul {
@@ -778,6 +956,7 @@ header .read-more:hover {
     /* Verlauf */
     border-radius: 12px;
 }
+
 
 
 #education-section {
@@ -1003,7 +1182,7 @@ header .read-more:hover {
     font-weight: 500;
     margin-bottom: 0;
     line-height: 1.2;
-    color: var(--secondary-text-color);
+    color: rgba(245, 245, 245, 0.85);
     transition: color 0.3s ease;
 }
 
@@ -1042,7 +1221,7 @@ header .read-more:hover {
 /* Hover-Effekt für beide Elemente wenn man auf header oder toggle-btn hovert - nur auf Desktop */
 @media (min-width: 769px) {
     .timeline-header:hover h3 {
-        color: #ffffff;
+        color: rgba(245, 245, 245, 1);
     }
 
     .timeline-header:hover+.timeline-body {
@@ -1301,7 +1480,7 @@ nav {
         backdrop-filter: blur(40px) saturate(180%);
         -webkit-backdrop-filter: blur(40px) saturate(180%);
         border-radius: 50px;
-        border: 1.5px solid rgba(255, 255, 255, 0.18);
+        border: 1.5px solid rgba(255, 255, 255, 0.08);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
             0 2px 8px rgba(0, 0, 0, 0.2),
             inset 0 1px 0 rgba(255, 255, 255, 0.15),
@@ -1397,10 +1576,10 @@ nav {
     .read-more::before {
         content: '';
         position: absolute;
-        inset: -2.5px;
-        border-radius: 50px;
-        padding: 2.5px;
-        background: conic-gradient(from var(--angle), transparent 45%, #98dcfc 70%, transparent 85%);
+        inset: -3px;
+        border-radius: 1000px;
+        padding: 3px;
+        background: conic-gradient(from var(--angle), transparent 40%, #98dcfc 65%, transparent 80%);
         -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
         mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -1408,6 +1587,8 @@ nav {
         animation: rotate-border 3s linear infinite;
         pointer-events: none;
         transition: background 200ms ease;
+        z-index: -1;
+        will-change: transform;
     }
 
     .read-more:hover::before {
@@ -1915,7 +2096,10 @@ progress {
 
 /* Styling für jede Bento Card */
 .bento-card {
-    background-color: var(--secondary-color);
+    background: rgba(16, 17, 19, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
@@ -1964,7 +2148,7 @@ progress {
 /* Inhalt */
 .card-content {
     position: relative;
-    padding: 30px;
+    padding: 32px;
     color: white;
     text-align: center;
     display: flex;
@@ -1976,6 +2160,8 @@ progress {
     z-index: 3;
     height: 100%;
     box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Tags Container */
@@ -2091,6 +2277,8 @@ progress {
     font-size: 1rem;
     margin-bottom: 40px;
     color: var(--secondary-text-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Button */
@@ -2099,7 +2287,10 @@ progress {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: linear-gradient(to right, var(--accent-color), #4dbef3);
+    background: linear-gradient(to right, rgba(0, 105, 153, 0.7), rgba(77, 190, 243, 0.7));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(77, 190, 243, 0.15);
     color: white;
     font-size: 1.2rem;
     font-weight: bold;
@@ -2108,6 +2299,7 @@ progress {
     text-decoration: none;
     min-width: 120px;
     text-align: center;
+    transition: all 0.3s ease;
 }
 
 .card-button::after {
@@ -2126,7 +2318,9 @@ progress {
 }
 
 .card-button:hover {
-    background: linear-gradient(to right, #0a8bc9, #6dd4ff);
+    background: linear-gradient(to right, rgba(10, 139, 201, 0.85), rgba(109, 212, 255, 0.85));
+    border-color: rgba(77, 190, 243, 0.5);
+    box-shadow: 0 4px 12px rgba(77, 190, 243, 0.3);
 }
 
 /* Responsive Design */
@@ -2305,12 +2499,14 @@ progress {
     .card-content {
         position: relative;
         opacity: 1;
-        padding: 24px;
+        padding: 32px;
         flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         flex-grow: 1;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     .card-tags {
@@ -2340,6 +2536,8 @@ progress {
         font-size: 1rem;
         margin-bottom: 15px;
         flex-grow: 1;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     .card-button {
@@ -2443,12 +2641,14 @@ footer {
     .card-content {
         position: relative;
         opacity: 1;
-        padding: 20px 28px 28px;
+        padding: 32px;
         flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         min-height: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     .card-tags {
@@ -2484,6 +2684,8 @@ footer {
         -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
         line-height: 1.5;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     .card-button {
@@ -2518,10 +2720,13 @@ footer {
 /* Responsive Design für mobile Geräte */
 @media (max-width: 1302px) {
     .skill-container {
-        cursor: url('Cursorpointer.svg') 0 0, pointer;
-        transition: max-height 0.3s ease, padding 0.3s ease;
+        transition: max-height 0.18s cubic-bezier(0.4, 0, 0.2, 1), padding 0.18s ease;
         overflow: hidden;
-        max-height: 65px;
+        max-height: 105px;
+    }
+
+    .skill-container h3 {
+        cursor: url('Cursorpointer.svg') 0 0, pointer;
     }
 
     .skill-container h3::after {
@@ -2531,25 +2736,38 @@ footer {
 
     .card-active {
         max-height: 1000px;
+        overflow: visible;
     }
 }
 
 
 @media (max-width: 768px) {
     .skill-container {
-        cursor: url('Cursorpointer.svg') 0 0, pointer;
-        transition: max-height 0.3s ease, padding 0.3s ease;
+        transition: max-height 0.18s cubic-bezier(0.4, 0, 0.2, 1), padding 0.18s ease;
         overflow: hidden;
-        max-height: 65px;
+        max-height: 95px;
+    }
+
+    .skill-container h3 {
+        font-size: 0.9rem;
+        padding: 22px 26px 12px 26px;
+        cursor: url('Cursorpointer.svg') 0 0, pointer;
+    }
+
+    .skill-container .skill-subtitle {
+        font-size: 0.72rem;
     }
 
     .skill-container h3::after {
         display: block;
         /* Show chevron on mobile */
+        font-size: 1.5rem;
+        top: 20px;
     }
 
     .card-active {
         max-height: 1000px;
+        overflow: visible;
     }
 }
 
@@ -2559,6 +2777,7 @@ footer {
         /* kleinerer Abstand nach oben */
         gap: 40px;
         /* kleinerer Abstand zwischen den Items */
+        grid-template-columns: 1fr;
         justify-content: center;
         /* Optional: Items links ausrichten */
         padding: 0 10px;
