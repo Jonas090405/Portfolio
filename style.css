@@ -531,7 +531,10 @@ header p {
 
 header .read-more {
     display: inline-block;
-    background: linear-gradient(to right, var(--accent-color), #4dbef3);
+    background: linear-gradient(to right, rgba(0, 105, 153, 0.5), rgba(77, 190, 243, 0.5));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(77, 190, 243, 0.15);
     color: var(--text-color);
     font-size: 1.25rem;
     font-weight: 700;
@@ -539,13 +542,14 @@ header .read-more {
     padding: .5em 1.25em;
     text-decoration: none;
     margin-top: 50px;
-    transition: 200ms ease;
+    transition: all 0.3s ease;
     cursor: url('Cursorpointer.svg') 0 0, pointer;
     position: relative;
 }
 
 header .read-more:hover {
-    background: linear-gradient(to right, #0a8bc9, #6dd4ff);
+    background: linear-gradient(to right, rgba(10, 139, 201, 0.6), rgba(109, 212, 255, 0.6));
+    border-color: rgba(77, 190, 243, 0.3);
 }
 
 
@@ -604,11 +608,14 @@ header .read-more:hover {
     /* Aktiviert den 3D-Effekt */
     transition: transform 0.2s ease-out, box-shadow 0.5s ease;
     /* Sanfter Übergang */
-    background-color: #141618;
+    background: rgba(20, 22, 24, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
     position: relative;
     --mouse-x: 50%;
     --mouse-y: 50%;
-    --spotlight-color: rgba(77, 190, 243, 0.5);
+    --spotlight-color: rgba(77, 190, 243, 0.3);
 }
 
 @media (min-width: 1303px) {
@@ -663,7 +670,7 @@ header .read-more:hover {
 }
 
 .skill-container h3 {
-    background-color: #141618;
+    background-color: transparent;
     padding: 28px 32px 16px 32px;
     text-align: left;
     text-transform: uppercase;
@@ -740,15 +747,31 @@ header .read-more:hover {
 
 @media (max-width: 599px) {
     .skill-container .spider-chart {
-        max-width: 260px;
+        max-width: 240px;
         margin: 25px auto;
+    }
+    
+    .skill-container .spider-chart text {
+        font-size: 10px;
+    }
+    
+    .skill-container .spider-chart text tspan {
+        dy: 12px;
     }
 }
 
 @media (min-width: 600px) and (max-width: 768px) {
     .skill-container .spider-chart {
-        max-width: 290px;
+        max-width: 270px;
         margin: 30px auto;
+    }
+    
+    .skill-container .spider-chart text {
+        font-size: 11px;
+    }
+    
+    .skill-container .spider-chart text tspan {
+        dy: 13px;
     }
 }
 
@@ -769,8 +792,16 @@ header .read-more:hover {
     }
     
     .skill-container .spider-chart {
-        max-width: 250px;
+        max-width: 235px;
         margin: 32px auto;
+    }
+    
+    .skill-container .spider-chart text {
+        font-size: 10px;
+    }
+    
+    .skill-container .spider-chart text tspan {
+        dy: 12px;
     }
 }
 
@@ -791,8 +822,16 @@ header .read-more:hover {
     }
     
     .skill-container .spider-chart {
-        max-width: 270px;
+        max-width: 255px;
         margin: 35px auto;
+    }
+    
+    .skill-container .spider-chart text {
+        font-size: 11px;
+    }
+    
+    .skill-container .spider-chart text tspan {
+        dy: 13px;
     }
 }
 
@@ -813,8 +852,16 @@ header .read-more:hover {
     }
     
     .skill-container .spider-chart {
-        max-width: 295px;
+        max-width: 280px;
         margin: 35px auto;
+    }
+    
+    .skill-container .spider-chart text {
+        font-size: 12px;
+    }
+    
+    .skill-container .spider-chart text tspan {
+        dy: 14px;
     }
 }
 
@@ -1135,7 +1182,7 @@ header .read-more:hover {
     font-weight: 500;
     margin-bottom: 0;
     line-height: 1.2;
-    color: var(--secondary-text-color);
+    color: rgba(245, 245, 245, 0.85);
     transition: color 0.3s ease;
 }
 
@@ -1174,7 +1221,7 @@ header .read-more:hover {
 /* Hover-Effekt für beide Elemente wenn man auf header oder toggle-btn hovert - nur auf Desktop */
 @media (min-width: 769px) {
     .timeline-header:hover h3 {
-        color: #ffffff;
+        color: rgba(245, 245, 245, 1);
     }
 
     .timeline-header:hover+.timeline-body {
@@ -1433,7 +1480,7 @@ nav {
         backdrop-filter: blur(40px) saturate(180%);
         -webkit-backdrop-filter: blur(40px) saturate(180%);
         border-radius: 50px;
-        border: 1.5px solid rgba(255, 255, 255, 0.18);
+        border: 1.5px solid rgba(255, 255, 255, 0.08);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
             0 2px 8px rgba(0, 0, 0, 0.2),
             inset 0 1px 0 rgba(255, 255, 255, 0.15),
@@ -1529,10 +1576,10 @@ nav {
     .read-more::before {
         content: '';
         position: absolute;
-        inset: -2.5px;
-        border-radius: 50px;
-        padding: 2.5px;
-        background: conic-gradient(from var(--angle), transparent 45%, #98dcfc 70%, transparent 85%);
+        inset: -3px;
+        border-radius: 1000px;
+        padding: 3px;
+        background: conic-gradient(from var(--angle), transparent 40%, #98dcfc 65%, transparent 80%);
         -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
         mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -1540,6 +1587,8 @@ nav {
         animation: rotate-border 3s linear infinite;
         pointer-events: none;
         transition: background 200ms ease;
+        z-index: -1;
+        will-change: transform;
     }
 
     .read-more:hover::before {
@@ -2047,7 +2096,10 @@ progress {
 
 /* Styling für jede Bento Card */
 .bento-card {
-    background-color: var(--secondary-color);
+    background: rgba(16, 17, 19, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
@@ -2235,7 +2287,10 @@ progress {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: linear-gradient(to right, var(--accent-color), #4dbef3);
+    background: linear-gradient(to right, rgba(0, 105, 153, 0.7), rgba(77, 190, 243, 0.7));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(77, 190, 243, 0.15);
     color: white;
     font-size: 1.2rem;
     font-weight: bold;
@@ -2244,6 +2299,7 @@ progress {
     text-decoration: none;
     min-width: 120px;
     text-align: center;
+    transition: all 0.3s ease;
 }
 
 .card-button::after {
@@ -2262,7 +2318,9 @@ progress {
 }
 
 .card-button:hover {
-    background: linear-gradient(to right, #0a8bc9, #6dd4ff);
+    background: linear-gradient(to right, rgba(10, 139, 201, 0.85), rgba(109, 212, 255, 0.85));
+    border-color: rgba(77, 190, 243, 0.5);
+    box-shadow: 0 4px 12px rgba(77, 190, 243, 0.3);
 }
 
 /* Responsive Design */
