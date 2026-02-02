@@ -1,7 +1,168 @@
 console.log("Hier gibts keine Fehler zu sehen ;)")
 
-// ===== HAMBURGER MENU =====
+// ===== DESKTOP NAVIGATION - ACTIVE SECTION TRACKING =====
 document.addEventListener('DOMContentLoaded', () => {
+    // Desktop Navigation - Active Section Tracking
+    const desktopNavLinks = document.querySelectorAll('.nav-pills a');
+    const navSlider = document.querySelector('.nav-slider');
+    const sections = [
+        { id: 'about-section', element: document.querySelector('#about-section') },
+        { id: 'skill-section', element: document.querySelector('#skill-section') },
+        { id: 'project-section', element: document.querySelector('#project-section') },
+        { id: 'education-section', element: document.querySelector('#education-section') },
+        { id: 'at-symbol', element: document.querySelector('#at-symbol')?.closest('footer') }
+    ].filter(section => section.element); // Nur existierende Sections
+    
+    // Funktion zum Bewegen des Sliders
+    function moveSlider(activeLink, instant = false) {
+        if (!activeLink || !navSlider) return;
+        
+        const linkRect = activeLink.getBoundingClientRect();
+        const pillsRect = activeLink.closest('.nav-pills').getBoundingClientRect();
+        
+        const left = linkRect.left - pillsRect.left;
+        const width = linkRect.width;
+        
+        // Bei sofortigem Wechsel keine Animation
+        if (instant) {
+            navSlider.style.transition = 'none';
+            navSlider.style.left = `${left}px`;
+            navSlider.style.width = `${width}px`;
+            
+            // Force reflow
+            void navSlider.offsetWidth;
+            
+            // Re-enable transitions
+            navSlider.style.transition = '';
+        } else {
+            navSlider.style.left = `${left}px`;
+            navSlider.style.width = `${width}px`;
+        }
+    }
+    
+    // Variable um den letzten aktiven State zu tracken
+    let lastActiveSection = null;
+    
+    // Funktion zum Setzen des aktiven Links
+    function setActiveNavLink() {
+        const scrollPosition = window.scrollY + window.innerHeight / 3; // Offset für bessere Erkennung
+        const windowBottom = window.scrollY + window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        
+        let currentSection = null;
+        let maxVisibility = 0;
+        
+        // Finde die Sektion, die am meisten sichtbar ist
+        sections.forEach(section => {
+            const element = section.element;
+            const sectionTop = element.offsetTop;
+            const sectionBottom = sectionTop + element.offsetHeight;
+            
+            // Berechne, wie viel von der Sektion sichtbar ist
+            const visibleTop = Math.max(scrollPosition - 200, sectionTop);
+            const visibleBottom = Math.min(windowBottom, sectionBottom);
+            const visibility = Math.max(0, visibleBottom - visibleTop);
+            
+            if (visibility > maxVisibility) {
+                maxVisibility = visibility;
+                currentSection = section.id;
+            }
+            
+            // Spezialbehandlung für Footer/Kontakt am Ende der Seite
+            if (section.id === 'at-symbol' && windowBottom >= documentHeight - 100) {
+                currentSection = 'at-symbol';
+            }
+        });
+        
+        // Fallback: Wenn nichts gefunden, nimm die erste Section
+        if (!currentSection && sections.length > 0) {
+            currentSection = sections[0].id;
+        }
+        
+        // Nur updaten wenn sich die Section geändert hat
+        if (currentSection === lastActiveSection) {
+            return;
+        }
+        
+        lastActiveSection = currentSection;
+        let activeLink = null;
+        
+        // Entferne aktive Klasse von allen Links und füge sie zum aktuellen hinzu
+        desktopNavLinks.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            
+            if (currentSection && href === `#${currentSection}`) {
+                link.classList.add('active');
+                activeLink = link;
+            }
+        });
+        
+        // Bewege den Slider zum aktiven Link (immer mit Animation bei Section-Wechsel)
+        if (activeLink) {
+            moveSlider(activeLink, false);
+        }
+    }
+    
+    // Event Listener für Scroll mit Throttling
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                setActiveNavLink();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+    
+    // Initial-Check beim Laden und nach einem kurzen Delay (damit alles geladen ist)
+    setTimeout(() => {
+        const initialActiveLink = document.querySelector('.nav-pills a.active');
+        if (initialActiveLink) {
+            moveSlider(initialActiveLink, true); // Instant, keine Animation beim ersten Load
+        } else {
+            setActiveNavLink();
+        }
+    }, 100);
+    
+    // Update bei Resize
+    window.addEventListener('resize', () => {
+        const activeLink = document.querySelector('.nav-pills a.active');
+        if (activeLink && navSlider) {
+            moveSlider(activeLink);
+        }
+    });
+
+    // Track mouse position for nav-pills border effect
+    const navPills = document.querySelector('.nav-pills');
+    if (navPills) {
+        navPills.addEventListener('mousemove', (e) => {
+            const rect = navPills.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            navPills.style.setProperty('--mouse-x', `${x}%`);
+            navPills.style.setProperty('--mouse-y', `${y}%`);
+        });
+    }
+    
+    // Smooth Scroll für Desktop-Navigation
+    desktopNavLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+// ===== HAMBURGER MENU =====
     // Speech Bubble Interaktion - nur Desktop mit Random Facts
     const profileImage = document.querySelector('.image-container img');
     const speechBubble = document.querySelector('.speech-bubble');
@@ -86,6 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+/* TYPEWRITER EFFECT - AUSKOMMENTIERT
 document.addEventListener("DOMContentLoaded", () => {
     // Only run typing animation on desktop (>1302px)
     if (window.innerWidth <= 1302) {
@@ -153,6 +315,20 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
     }
 
     startTyping();
+});
+*/
+
+// Text sofort setzen ohne Typewriter-Effekt
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("name").textContent = "Jonas Gissler";
+    document.querySelector("h2").textContent = "Student B.A. Medienkonzeption im 5 Semester mit Schwerpunkt auf User-centered Design";
+    document.querySelector("p").textContent = `Hey! Mein Name ist Jonas Gissler, ich bin 20 Jahre alt und komme aus Triberg im Schwarzwald. Aktuell studiere ich Medienkonzeption im 5. Semester an der Hochschule Furtwangen.
+
+Mein Schwerpunkt liegt im nutzerzentrierten Design – Meine Leidenschaft ist es, Medieninhalte zu gestalten, die die Bedürfnisse des Menschen in den Mittelpunkt stellen. Dabei verbinde ich Kreativität und psychologische Usability- und UX-Aspekte mit strukturiertem Vorgehen, um Designs zu entwickeln, die nicht nur ästhetisch, sondern auch funktional und nutzerfreundlich sind.
+
+Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Herausforderungen und Lerninhalten zu stellen. Mit einer Mischung aus Neugier und Ehrgeiz arbeite ich daran, mich ständig weiterzuentwickeln.
+
+`;
 });
 
 document.addEventListener("DOMContentLoaded", () => {

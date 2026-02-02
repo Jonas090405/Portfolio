@@ -13,7 +13,34 @@
   <link rel="icon" type="image/x-icon" href="me.png">
   <header>
     <nav>
-      <!-- Hamburger Menu Button -->
+      <!-- Desktop Pill Navigation -->
+      <div class="desktop-nav">
+        <ul class="nav-pills">
+          <li><a href="#about-section">
+            <span class="material-symbols-rounded">person</span>
+            <span class="nav-text">About</span>
+          </a></li>
+          <li><a href="#skill-section">
+            <span class="material-symbols-rounded">stars</span>
+            <span class="nav-text">Skills</span>
+          </a></li>
+          <li><a href="#project-section">
+            <span class="material-symbols-rounded">work</span>
+            <span class="nav-text">Projekte</span>
+          </a></li>
+          <li><a href="#education-section">
+            <span class="material-symbols-rounded">school</span>
+            <span class="nav-text">Karriereweg</span>
+          </a></li>
+          <li><a href="#at-symbol">
+            <span class="material-symbols-rounded">mail</span>
+            <span class="nav-text">Kontakt</span>
+          </a></li>
+        </ul>
+        <div class="nav-slider"></div>
+      </div>
+
+      <!-- Hamburger Menu Button (Mobile/Tablet) -->
       <button class="hamburger-menu" aria-label="Menü öffnen">
         <span></span>
         <span></span>
@@ -25,6 +52,7 @@
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay">
       <ul class="mobile-nav">
+        <li><a href="#about-section">About</a></li>
         <li><a href="#skill-section">Skills</a></li>
         <li><a href="#project-section">Projekte</a></li>
         <li><a href="#education-section">Karriereweg</a></li>
@@ -35,12 +63,12 @@
 </head>
 
 <body>
-  <header>
+  <header id="about-section">
     <div class="container">
       <div class="title-container">
         <div class="title-text">
-          <h1 id="name"></h1>
-          <h2></h2>
+          <h1 id="name">Jonas Gissler</h1>
+          <h2>Student B.A. Medienkonzeption im 5 Semester mit Schwerpunkt auf User-centered Design</h2>
         </div>
         <div class="image-container">
           <img src="me.png" alt="Profilbild">
@@ -48,7 +76,12 @@
         </div>
       </div>
       <br>
-      <p></p>
+      <p>Hey! Mein Name ist Jonas Gissler, ich bin 20 Jahre alt und komme aus Triberg im Schwarzwald. Aktuell studiere ich Medienkonzeption im 5. Semester an der Hochschule Furtwangen.
+
+Mein Schwerpunkt liegt im nutzerzentrierten Design – Meine Leidenschaft ist es, Medieninhalte zu gestalten, die die Bedürfnisse des Menschen in den Mittelpunkt stellen. Dabei verbinde ich Kreativität und psychologische Usability- und UX-Aspekte mit strukturiertem Vorgehen, um Designs zu entwickeln, die nicht nur ästhetisch, sondern auch funktional und nutzerfreundlich sind.
+
+Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Herausforderungen und Lerninhalten zu stellen. Mit einer Mischung aus Neugier und Ehrgeiz arbeite ich daran, mich ständig weiterzuentwickeln.
+</p>
       <br />
       <a href="#project-section" class="read-more">Portfolio</a>
     </div>
@@ -142,7 +175,7 @@
   <!-- Logo Carousel Section -->
   <section id="tools-section">
     <h2>Softwarekenntnisse</h2>
-    <div class="marquee">
+    <div class="marquee marquee-forward">
       <ul class="marquee-content">
         <li class="logo-item">
           <img src="Logos/figma.png" alt="Figma" class="logo-img">
@@ -159,6 +192,7 @@
         <li class="logo-item">
           <img src="Logos/html.png" alt="HTML" class="logo-img">
           <span>HTML</span>
+        </li>
         <li class="logo-item">
           <img src="Logos/react.png" alt="React" class="logo-img">
           <span>React</span>

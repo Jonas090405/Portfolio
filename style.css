@@ -8,10 +8,10 @@
 
     /* Marquee Variables */
     --marquee-width: 100%;
-    --marquee-height: 20vh;
-    --marquee-elements-displayed: 6;
+    --marquee-height: 50vh;
+    --marquee-elements-displayed: 7;
     --marquee-element-width: calc(var(--marquee-width) / var(--marquee-elements-displayed));
-    --marquee-animation-duration: calc(var(--marquee-elements) * 3s);
+    --marquee-animation-duration: calc(var(--marquee-elements) * 2s);
 }
 
 * {
@@ -21,17 +21,32 @@
 }
 
 /* Custom Pointer Cursor for interactive elements */
-a, button, input[type="submit"], input[type="button"], 
-.card-button, .hamburger-menu, 
-.mobile-nav a, .timeline-header, .toggle-btn,
-[role="button"], [onclick] {
+a,
+button,
+input[type="submit"],
+input[type="button"],
+.card-button,
+.hamburger-menu,
+.nav-pills a,
+.mobile-nav a,
+.timeline-header,
+.toggle-btn,
+[role="button"],
+[onclick] {
     cursor: url('Cursorpointer.svg') 0 0, pointer !important;
 }
 
 /* Ensure all children of pointer elements also have the pointer cursor */
-a *, button *, .card-button *, 
-.hamburger-menu *, .mobile-nav a *, .timeline-header *, .toggle-btn *,
-[role="button"] *, [onclick] * {
+a *,
+button *,
+.card-button *,
+.nav-pills a *,
+.hamburger-menu *,
+.mobile-nav a *,
+.timeline-header *,
+.toggle-btn *,
+[role="button"] *,
+[onclick] * {
     cursor: url('Cursorpointer.svg') 0 0, pointer !important;
 }
 
@@ -142,11 +157,16 @@ body {
 
 .marquee {
     width: var(--marquee-width);
-    height: var(--marquee-height);
+    height: calc(var(--marquee-height) / 2.5);
     background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
     color: var(--text-color);
     overflow: hidden;
     position: relative;
+    margin-bottom: 15px;
+}
+
+.marquee:last-of-type {
+    margin-bottom: 0;
 }
 
 .marquee:before,
@@ -178,6 +198,10 @@ body {
     animation: scrolling var(--marquee-animation-duration) linear infinite;
 }
 
+.marquee-reverse .marquee-content {
+    animation: scrolling-reverse var(--marquee-animation-duration) linear infinite;
+}
+
 @keyframes scrolling {
     0% {
         transform: translateX(0);
@@ -185,6 +209,16 @@ body {
 
     100% {
         transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements)));
+    }
+}
+
+@keyframes scrolling-reverse {
+    0% {
+        transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements)));
+    }
+
+    100% {
+        transform: translateX(0);
     }
 }
 
@@ -201,7 +235,7 @@ body {
 @media (max-width: 768px) {
     :root {
         --marquee-width: 100%;
-        --marquee-height: 16vh;
+        --marquee-height: 20vh;
         --marquee-elements-displayed: 4;
     }
 
@@ -298,6 +332,7 @@ header {
     display: flex;
     justify-content: center;
     flex-wrap: wrap-reverse;
+    scroll-margin-top: 100px;
 }
 
 header .container {
@@ -491,6 +526,7 @@ header .read-more {
     margin-top: 50px;
     transition: 200ms ease;
     cursor: url('Cursorpointer.svg') 0 0, pointer;
+    position: relative;
 }
 
 header .read-more:hover {
@@ -561,11 +597,9 @@ header .read-more:hover {
         bottom: 0;
         border-radius: 12px;
         pointer-events: none;
-        background: radial-gradient(
-            circle 300px at var(--mouse-x) var(--mouse-y),
-            var(--spotlight-color),
-            transparent
-        );
+        background: radial-gradient(circle 300px at var(--mouse-x) var(--mouse-y),
+                var(--spotlight-color),
+                transparent);
         opacity: 0;
         transition: opacity 0.3s ease;
         z-index: 10;
@@ -579,11 +613,9 @@ header .read-more:hover {
         border-radius: 12px;
         pointer-events: none;
         border: 2px solid transparent;
-        background: radial-gradient(
-            circle 200px at var(--mouse-x) var(--mouse-y),
-            rgba(77, 190, 243, 1),
-            transparent 70%
-        ) border-box;
+        background: radial-gradient(circle 200px at var(--mouse-x) var(--mouse-y),
+                rgba(77, 190, 243, 1),
+                transparent 70%) border-box;
         -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
         mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
@@ -1149,7 +1181,188 @@ nav {
     position: relative;
 }
 
-/* Hamburger Menu Button - Now for all screen sizes */
+/* Desktop Pill Navigation */
+.desktop-nav {
+    display: none;
+}
+
+@media (min-width: 1303px) {
+    .desktop-nav {
+        display: block;
+        position: fixed;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1001;
+    }
+
+    .nav-pills {
+        list-style: none;
+        display: flex;
+        gap: 8px;
+        padding: 10px;
+        margin: 0;
+        background: rgba(27, 28, 31, 0.4);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border-radius: 50px;
+        border: 1.5px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+            0 2px 8px rgba(0, 0, 0, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        position: relative;
+        --mouse-x: 50%;
+        --mouse-y: 50%;
+    }
+
+    .nav-pills::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50px;
+        pointer-events: none;
+        border: 2px solid transparent;
+        background: radial-gradient(circle 150px at var(--mouse-x) var(--mouse-y),
+                rgba(77, 190, 243, 1),
+                transparent 70%) border-box;
+        -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 0;
+    }
+
+    /* Bouncy Slider Background */
+    .nav-slider {
+        position: absolute;
+        height: calc(100% - 20px);
+        background: linear-gradient(135deg, var(--accent-color) 0%, #004d73 100%);
+        border-radius: 50px;
+        top: 10px;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        z-index: -1;
+        pointer-events: none;
+        box-shadow: 0 4px 12px rgba(0, 105, 153, 0.4);
+        will-change: left, width;
+    }
+
+    /* Trigger animation on active change */
+    .nav-slider.sliding {
+        animation: sliderBounce 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes sliderBounce {
+        0% {
+            transform: scaleX(1);
+        }
+
+        50% {
+            transform: scaleX(0.95) scaleY(1.05);
+        }
+
+        100% {
+            transform: scaleX(1) scaleY(1);
+        }
+    }
+
+    .nav-pills li {
+        margin: 0;
+    }
+
+    .nav-pills a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        color: rgba(245, 245, 245, 0.85);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        position: relative;
+        white-space: nowrap;
+        z-index: 1;
+    }
+
+    .nav-pills a .material-symbols-rounded {
+        font-size: 20px;
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        transition: all 0.3s ease;
+    }
+
+    .nav-pills a .nav-text {
+        transition: all 0.3s ease;
+    }
+
+    /* Animated rotating border for Portfolio button in header */
+    .read-more::before {
+        content: '';
+        position: absolute;
+        inset: -2.5px;
+        border-radius: 50px;
+        padding: 2.5px;
+        background: conic-gradient(from var(--angle), transparent 45%, #98dcfc 70%, transparent 85%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        animation: rotate-border 3s linear infinite;
+        pointer-events: none;
+    }
+
+    @keyframes rotate-border {
+        0% {
+            --angle: 0deg;
+        }
+        100% {
+            --angle: 360deg;
+        }
+    }
+
+    @property --angle {
+        syntax: '<angle>';
+        initial-value: 0deg;
+        inherits: false;
+    }
+
+    /* Hover-Effekt - subtil: heller Text */
+    .nav-pills a:hover:not(.active) {
+        color: rgba(255, 255, 255, 1);
+    }
+
+    .nav-pills a:hover:not(.active) .material-symbols-rounded {
+        font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+    }
+
+    .nav-pills a:active {
+        transform: scale(0.98);
+    }
+
+    /* Active state - aktueller Abschnitt */
+    .nav-pills a.active {
+        color: #4dbef3 !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        font-weight: 600;
+        /* Kein eigener Hintergrund, Slider übernimmt das! */
+    }
+
+    .nav-pills a.active .material-symbols-rounded {
+        font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 20;
+        color: #4dbef3 !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-pills a.active .nav-text {
+        color: #4dbef3 !important;
+        font-weight: 600;
+    }
+}
+
+/* Hamburger Menu Button - Mobile and Tablet only */
 .hamburger-menu {
     display: flex;
     flex-direction: column;
@@ -1224,27 +1437,10 @@ nav {
     }
 }
 
-/* Desktop */
+/* Desktop - Hide hamburger menu */
 @media (min-width: 1303px) {
     .hamburger-menu {
-        width: 80px;
-        height: 80px;
-        padding: 20px;
-        top: 30px;
-        right: 30px;
-    }
-
-    .hamburger-menu span {
-        width: 40px;
-        height: 4.5px;
-    }
-
-    .hamburger-menu.active span:nth-child(1) {
-        transform: translateY(10.5px) rotate(45deg);
-    }
-
-    .hamburger-menu.active span:nth-child(3) {
-        transform: translateY(-10.5px) rotate(-45deg);
+        display: none;
     }
 }
 
