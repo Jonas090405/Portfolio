@@ -8,7 +8,7 @@
 
     /* Marquee Variables */
     --marquee-width: 100%;
-    --marquee-height: 50vh;
+    --marquee-height: 55vh;
     --marquee-elements-displayed: 7;
     --marquee-element-width: calc(var(--marquee-width) / var(--marquee-elements-displayed));
     --marquee-animation-duration: calc(var(--marquee-elements) * 2s);
