@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastFactIndex = -1; // Speichert den Index des letzten Facts
 
     // Nur auf Desktop (min-width: 1303px)
-    if (window.matchMedia('(min-width: 1303px)').matches) {
+    if (profileImage && speechBubble && window.matchMedia('(min-width: 1303px)').matches) {
         profileImage.addEventListener('mouseenter', () => {
             // Wähle zufälligen Fact, der nicht der letzte ist
             let randomIndex;

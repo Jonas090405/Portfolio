@@ -586,7 +586,7 @@ header .read-more:hover {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 60px;
-    max-width: 1400px;
+    max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -594,7 +594,7 @@ header .read-more:hover {
 @media (min-width: 1600px) {
     #skill-section .wrapper {
         grid-template-columns: repeat(3, 1fr);
-        max-width: 1800px;
+        max-width: 1400px;
     }
 }
 
@@ -620,13 +620,12 @@ header .read-more:hover {
     --mouse-y: 50%;
     --spotlight-color: rgba(77, 190, 243, 0.3);
     opacity: 0;
-    transform: translateY(20px) scale(0.6);
-    transform-origin: center;
+    transform: translateY(20px);
 }
 
 .skill-container.card-visible {
     opacity: 1;
-    transform: translateY(0) scale(0.6);
+    transform: translateY(0);
 }
 
 @media (min-width: 1303px) {
@@ -1789,7 +1788,7 @@ nav {
 }
 
 .mobile-nav li a {
-    color: white;
+    color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     font-size: 2rem;
     font-weight: 300;
@@ -1800,7 +1799,7 @@ nav {
 
 .mobile-nav li a:hover,
 .mobile-nav li a:active {
-    color: var(--accent-color);
+    color: #ffffff;
 }
 
 footer a:hover {
@@ -2135,6 +2134,8 @@ progress {
     max-height: 400px;
     opacity: 0;
     transform: translateY(20px);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .bento-card.card-visible {
@@ -2152,6 +2153,11 @@ progress {
     top: 0;
     left: 0;
     z-index: 1;
+    will-change: opacity, transform;
+    pointer-events: none;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 /* Halbtransparenter Overlay-Hintergrund */
@@ -2165,6 +2171,11 @@ progress {
     background: rgba(0, 0, 0, 0);
     transition: background 0.3s ease;
     z-index: 2;
+    pointer-events: none;
+    will-change: background;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 /* Inhalt */
@@ -2184,6 +2195,7 @@ progress {
     box-sizing: border-box;
     word-wrap: break-word;
     overflow-wrap: break-word;
+    will-change: opacity;
 }
 
 /* Tags Container */
@@ -2199,6 +2211,8 @@ progress {
     opacity: 1;
     transition: opacity 0.3s ease;
     z-index: 10;
+    pointer-events: none;
+    will-change: opacity;
 }
 
 /* Tag Styles - Apple Chips Style */
@@ -2208,7 +2222,7 @@ progress {
     padding: 6px 12px;
     border-radius: 14px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: 0.2px;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -2292,6 +2306,7 @@ progress {
     -ms-hyphens: auto;
     line-height: 1.2;
     max-width: 100%;
+    pointer-events: none;
 }
 
 /* Beschreibungstext */
@@ -2301,6 +2316,7 @@ progress {
     color: var(--secondary-text-color);
     word-wrap: break-word;
     overflow-wrap: break-word;
+    pointer-events: none;
 }
 
 /* Button */
@@ -2309,7 +2325,7 @@ progress {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    background: linear-gradient(to right, rgba(0, 105, 153, 0.7), rgba(77, 190, 243, 0.7));
+    background: linear-gradient(to right, rgba(0, 105, 153, 0.85), rgba(77, 190, 243, 0.85));
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(77, 190, 243, 0.15);
