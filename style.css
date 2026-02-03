@@ -1479,6 +1479,9 @@ nav {
         left: 50%;
         transform: translateX(-50%);
         z-index: 1001;
+        will-change: transform;
+        backface-visibility: hidden;
+        -webkit-font-smoothing: antialiased;
     }
 
     .nav-pills {
@@ -1499,6 +1502,9 @@ nav {
         position: relative;
         --mouse-x: 50%;
         --mouse-y: 50%;
+        will-change: auto;
+        transform: translateZ(0);
+        backface-visibility: hidden;
     }
 
     .nav-pills::after {
@@ -1532,6 +1538,8 @@ nav {
         pointer-events: none;
         box-shadow: 0 4px 12px rgba(0, 105, 153, 0.4);
         will-change: left, width;
+        transform: translateZ(0);
+        backface-visibility: hidden;
     }
 
     /* Trigger animation on active change */
@@ -1567,10 +1575,23 @@ nav {
         font-size: 0.95rem;
         font-weight: 500;
         border-radius: 50px;
-        transition: all 0.3s ease;
+        transition: color 0.3s ease;
         position: relative;
         white-space: nowrap;
         z-index: 1;
+    }
+
+    /* Reserve space for bold text to prevent layout shift */
+    .nav-pills a::before {
+        content: attr(data-text);
+        content: attr(aria-label);
+        font-weight: 600;
+        height: 0;
+        visibility: hidden;
+        overflow: hidden;
+        user-select: none;
+        pointer-events: none;
+        display: block;
     }
 
     .nav-pills a .material-symbols-rounded {
@@ -1580,7 +1601,7 @@ nav {
     }
 
     .nav-pills a .nav-text {
-        transition: all 0.3s ease;
+        transition: color 0.3s ease;
     }
 
     /* Animated rotating border for Portfolio button in header */
