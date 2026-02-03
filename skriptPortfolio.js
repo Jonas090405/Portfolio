@@ -12,26 +12,26 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'education-section', element: document.querySelector('#education-section') },
         { id: 'at-symbol', element: document.querySelector('#at-symbol')?.closest('footer') }
     ].filter(section => section.element); // Nur existierende Sections
-    
+
     // Funktion zum Bewegen des Sliders
     function moveSlider(activeLink, instant = false) {
         if (!activeLink || !navSlider) return;
-        
+
         const linkRect = activeLink.getBoundingClientRect();
         const pillsRect = activeLink.closest('.nav-pills').getBoundingClientRect();
-        
+
         const left = linkRect.left - pillsRect.left;
         const width = linkRect.width;
-        
+
         // Bei sofortigem Wechsel keine Animation
         if (instant) {
             navSlider.style.transition = 'none';
             navSlider.style.left = `${left}px`;
             navSlider.style.width = `${width}px`;
-            
+
             // Force reflow
             void navSlider.offsetWidth;
-            
+
             // Re-enable transitions
             navSlider.style.transition = '';
         } else {
@@ -39,19 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
             navSlider.style.width = `${width}px`;
         }
     }
-    
+
     // Variable um den letzten aktiven State zu tracken
     let lastActiveSection = null;
-    
+
     // Funktion zum Setzen des aktiven Links
     function setActiveNavLink() {
         const scrollY = window.scrollY;
         const windowBottom = scrollY + window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
-        
+
         let currentSection = null;
         let maxVisibility = 0;
-        
+
         // Spezialbehandlung für About-Section am Anfang
         if (scrollY < 100) {
             currentSection = 'about-section';
@@ -61,54 +61,54 @@ document.addEventListener('DOMContentLoaded', () => {
                 const element = section.element;
                 const sectionTop = element.offsetTop;
                 const sectionBottom = sectionTop + element.offsetHeight;
-                
+
                 // Berechne, wie viel von der Sektion sichtbar ist
                 const visibleTop = Math.max(scrollY, sectionTop);
                 const visibleBottom = Math.min(windowBottom, sectionBottom);
                 const visibility = Math.max(0, visibleBottom - visibleTop);
-                
+
                 if (visibility > maxVisibility) {
                     maxVisibility = visibility;
                     currentSection = section.id;
                 }
-                
+
                 // Spezialbehandlung für Footer/Kontakt am Ende der Seite
                 if (section.id === 'at-symbol' && windowBottom >= documentHeight - 100) {
                     currentSection = 'at-symbol';
                 }
             });
-            
+
             // Fallback: Wenn nichts gefunden, nimm die erste Section
             if (!currentSection && sections.length > 0) {
                 currentSection = sections[0].id;
             }
         }
-        
+
         // Nur updaten wenn sich die Section geändert hat
         if (currentSection === lastActiveSection) {
             return;
         }
-        
+
         lastActiveSection = currentSection;
         let activeLink = null;
-        
+
         // Entferne aktive Klasse von allen Links und füge sie zum aktuellen hinzu
         desktopNavLinks.forEach(link => {
             link.classList.remove('active');
             const href = link.getAttribute('href');
-            
+
             if (currentSection && href === `#${currentSection}`) {
                 link.classList.add('active');
                 activeLink = link;
             }
         });
-        
+
         // Bewege den Slider zum aktiven Link (immer mit Animation bei Section-Wechsel)
         if (activeLink) {
             moveSlider(activeLink, false);
         }
     }
-    
+
     // Event Listener für Scroll mit Throttling
     let ticking = false;
     window.addEventListener('scroll', () => {
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     });
-    
+
     // Initial-Check beim Laden und nach einem kurzen Delay (damit alles geladen ist)
     setTimeout(() => {
         const initialActiveLink = document.querySelector('.nav-pills a.active');
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setActiveNavLink();
         }
     }, 100);
-    
+
     // Update bei Resize
     window.addEventListener('resize', () => {
         const activeLink = document.querySelector('.nav-pills a.active');
@@ -150,14 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
             navPills.style.setProperty('--mouse-y', `${y}%`);
         });
     }
-    
+
     // Smooth Scroll für Desktop-Navigation
     desktopNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const targetId = link.getAttribute('href');
             const targetSection = document.querySelector(targetId);
-            
+
             if (targetSection) {
                 targetSection.scrollIntoView({
                     behavior: 'smooth',
@@ -167,11 +167,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-// ===== HAMBURGER MENU =====
+    // ===== HAMBURGER MENU =====
     // Speech Bubble Interaktion - nur Desktop mit Random Facts
     const profileImage = document.querySelector('.image-container img');
     const speechBubble = document.querySelector('.speech-bubble');
-    
+
     const randomFacts = [
         "Ich finde Nutella mit Butter besser als ohne",
         "Ich bin Team \"Dark Mode\"",
@@ -191,12 +191,12 @@ document.addEventListener('DOMContentLoaded', () => {
             do {
                 randomIndex = Math.floor(Math.random() * randomFacts.length);
             } while (randomIndex === lastFactIndex && randomFacts.length > 1);
-            
+
             lastFactIndex = randomIndex;
             speechBubble.textContent = randomFacts[randomIndex];
             speechBubble.classList.add('show');
         });
-        
+
         profileImage.addEventListener('mouseleave', () => {
             speechBubble.classList.remove('show');
         });
@@ -336,13 +336,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 title.classList.add('text-visible');
             }
         });
-        
+
         skillLabels.forEach(label => {
             if (isElementInViewport(label, 300)) {
                 label.classList.add('text-visible');
             }
         });
-        
+
         progressBars.forEach(bar => {
             if (isElementInViewport(bar, 300)) {
                 bar.classList.add('progress-visible');
@@ -369,13 +369,13 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 // Verzögerung für gestaffelten Effekt bei span-Elementen
-                const delay = entry.target.tagName === 'SPAN' ? 
+                const delay = entry.target.tagName === 'SPAN' ?
                     Array.from(entry.target.parentElement.parentElement.children).indexOf(entry.target.parentElement) * 100 : 0;
-                
+
                 setTimeout(() => {
                     entry.target.classList.add('text-visible');
                 }, delay);
-                
+
                 observer.unobserve(entry.target);
             }
         });
@@ -403,7 +403,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
     }
-    
+
     // Mehrere Prüfungen um sicherzustellen, dass Elemente nach Scroll sichtbar werden
     const recheckVisibility = () => {
         skillTitles.forEach(title => {
@@ -411,27 +411,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 title.classList.add('text-visible');
             }
         });
-        
+
         skillLabels.forEach(label => {
             if (!label.classList.contains('text-visible') && isElementInViewport(label, 300)) {
                 label.classList.add('text-visible');
             }
         });
-        
+
         progressBars.forEach(bar => {
             if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 300)) {
                 bar.classList.add('progress-visible');
             }
         });
     };
-    
+
     // Prüfe nach Scroll-Events
     let scrollTimeout;
     window.addEventListener('scroll', () => {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(recheckVisibility, 100);
     }, { once: true, passive: true });
-    
+
     // Prüfe auch nach kurzer Verzögerung (für Browser Scroll Restore)
     setTimeout(recheckVisibility, 100);
     setTimeout(recheckVisibility, 300);
@@ -446,7 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     title.classList.add('text-visible');
                 }
             });
-            
+
             skillLabels.forEach((label, index) => {
                 if (!label.classList.contains('text-visible') && isElementInViewport(label, 200)) {
                     setTimeout(() => {
@@ -454,14 +454,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     }, index * 50);
                 }
             });
-            
+
             progressBars.forEach(bar => {
                 if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 200)) {
                     bar.classList.add('progress-visible');
                 }
             });
         }, 50);
-        
+
         // Zweite Prüfung nach etwas mehr Zeit für sichere Initialisierung
         setTimeout(() => {
             skillTitles.forEach(title => {
@@ -469,13 +469,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     title.classList.add('text-visible');
                 }
             });
-            
+
             skillLabels.forEach((label, index) => {
                 if (!label.classList.contains('text-visible') && isElementInViewport(label, 300)) {
                     label.classList.add('text-visible');
                 }
             });
-            
+
             progressBars.forEach(bar => {
                 if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 300)) {
                     bar.classList.add('progress-visible');
@@ -556,6 +556,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // Wähle alle Skill-Karten aus - nur für Desktop
 const skillCards = document.querySelectorAll('.skill-container');
 
+// WeakMap zum Tracken der Timeouts für jede Karte
+const cardTimeouts = new WeakMap();
+
 skillCards.forEach((card) => {
     card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -586,31 +589,50 @@ skillCards.forEach((card) => {
     // Zurücksetzen des Effekts, wenn die Maus die Karte verlässt
     card.addEventListener('mouseleave', () => {
         if (window.innerWidth <= 1302) return;
+
+        // Clear any existing timeout for this card
+        const existingTimeout = cardTimeouts.get(card);
+        if (existingTimeout) {
+            clearTimeout(existingTimeout);
+        }
+
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
         card.style.transition = 'transform 0.5s ease';
-        setTimeout(() => {
+
+        // Store the new timeout
+        const timeoutId = setTimeout(() => {
             card.style.transition = '';
+            cardTimeouts.delete(card);
         }, 500);
+        cardTimeouts.set(card, timeoutId);
     });
 
     // Smooth transition beim Bewegen
     card.addEventListener('mouseenter', () => {
         if (window.innerWidth <= 1302) return;
+
+        // Clear any pending timeout when entering
+        const existingTimeout = cardTimeouts.get(card);
+        if (existingTimeout) {
+            clearTimeout(existingTimeout);
+            cardTimeouts.delete(card);
+        }
+
         card.style.transition = 'transform 0.1s ease-out';
     });
 });
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const bentoCards = document.querySelectorAll('.bento-card');
-    
+
     bentoCards.forEach(card => {
-        card.addEventListener('click', function() {
+        card.addEventListener('click', function () {
             // Nur für mobile Geräte (max-width: 1302px)
             if (window.innerWidth <= 1302) {
                 // Toggle der aktiven Klasse
                 this.classList.toggle('card-active');
-                
+
                 // Alle anderen Karten schließen
                 bentoCards.forEach(otherCard => {
                     if (otherCard !== this) {
@@ -620,9 +642,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Event-Listener für Fenstergrößenänderungen
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         if (window.innerWidth > 1302) {
             // Aktive Karten zurücksetzen beim Wechsel zum Desktop
             bentoCards.forEach(card => {
@@ -643,7 +665,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (window.innerWidth > 1302) return; // Desktop: no accordion
 
             this.classList.toggle('card-active');
-            
+
             // Mobile (<=768px): only one card open at a time
             // Tablet (769-1302px): multiple cards can be open
             if (window.innerWidth <= 768) {
@@ -668,13 +690,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // ===== CAROUSEL FUNCTIONALITY FOR MOBILE/TABLET =====
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const carouselWrapper = document.querySelector('.carousel-wrapper');
     const projectCards = document.querySelectorAll('.bento-card');
     const indicatorsContainer = document.querySelector('.carousel-indicators');
     const prevBtn = document.querySelector('.carousel-prev');
     const nextBtn = document.querySelector('.carousel-next');
-    
+
     let currentIndex = 0;
     let startX = 0;
     let currentX = 0;
@@ -689,7 +711,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Create indicators
     function createIndicators() {
         if (!isCarouselMode()) return;
-        
+
         indicatorsContainer.innerHTML = '';
         projectCards.forEach((_, index) => {
             const indicator = document.createElement('div');
@@ -698,7 +720,7 @@ document.addEventListener('DOMContentLoaded', function() {
             indicator.addEventListener('click', () => goToSlide(index));
             indicatorsContainer.appendChild(indicator);
         });
-        
+
         // Set initial active card for 3D effect
         projectCards.forEach((card, index) => {
             card.classList.toggle('active', index === 0);
@@ -711,7 +733,7 @@ document.addEventListener('DOMContentLoaded', function() {
         indicators.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === currentIndex);
         });
-        
+
         // Update active card for 3D effect
         projectCards.forEach((card, index) => {
             card.classList.toggle('active', index === currentIndex);
@@ -721,20 +743,20 @@ document.addEventListener('DOMContentLoaded', function() {
     // Go to specific slide
     function goToSlide(index) {
         if (!isCarouselMode()) return;
-        
+
         currentIndex = Math.max(0, Math.min(index, projectCards.length - 1));
         const cardWidth = projectCards[0].offsetWidth;
         const gap = window.innerWidth <= 600 ? 30 : 40;
         const containerWidth = carouselWrapper.parentElement.offsetWidth;
         const wrapperWidth = parseFloat(getComputedStyle(carouselWrapper).width);
-        
+
         // Calculate centering offset
         const centerOffset = (containerWidth - cardWidth) / 2 - (containerWidth - wrapperWidth) / 2;
-        
+
         // Calculate slide position
         const slideOffset = currentIndex * (cardWidth + gap);
         const offset = centerOffset - slideOffset;
-        
+
         carouselWrapper.style.transform = `translateX(${offset}px)`;
         updateIndicators();
     }
@@ -760,7 +782,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Touch/Mouse start
     function handleStart(e) {
         if (!isCarouselMode()) return;
-        
+
         isDragging = true;
         startTime = Date.now();
         startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
@@ -771,7 +793,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Touch/Mouse move
     function handleMove(e) {
         if (!isDragging || !isCarouselMode()) return;
-        
+
         e.preventDefault();
         currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
         const diff = currentX - startX;
@@ -782,17 +804,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const centerOffset = (containerWidth - cardWidth) / 2 - (containerWidth - wrapperWidth) / 2;
         const slideOffset = currentIndex * (cardWidth + gap);
         const offset = centerOffset - slideOffset + diff;
-        
+
         carouselWrapper.style.transform = `translateX(${offset}px)`;
     }
 
     // Touch/Mouse end
     function handleEnd() {
         if (!isDragging || !isCarouselMode()) return;
-        
+
         isDragging = false;
         carouselWrapper.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        
+
         const diff = currentX - startX;
         const threshold = carouselWrapper.offsetWidth * 0.2; // 20% swipe threshold
         const timeDiff = Date.now() - startTime;
@@ -860,12 +882,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const root = document.documentElement;
     const marqueeElementsDisplayed = getComputedStyle(root).getPropertyValue("--marquee-elements-displayed");
     const marqueeContent = document.querySelector("ul.marquee-content");
-    
+
     if (!marqueeContent) return;
 
     root.style.setProperty("--marquee-elements", marqueeContent.children.length);
 
-    for(let i = 0; i < marqueeElementsDisplayed; i++) {
+    for (let i = 0; i < marqueeElementsDisplayed; i++) {
         marqueeContent.appendChild(marqueeContent.children[i].cloneNode(true));
     }
 });
@@ -873,18 +895,18 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===== TIMELINE TOGGLE FUNCTIONALITY =====
 document.addEventListener('DOMContentLoaded', () => {
     const timelineItems = document.querySelectorAll('.timeline-item');
-    
+
     timelineItems.forEach(item => {
         const header = item.querySelector('.timeline-header');
         const toggleBtn = item.querySelector('.toggle-btn');
         const body = item.querySelector('.timeline-body');
-        
+
         if (header && toggleBtn && body) {
             // Click-Event für den gesamten Header
             header.addEventListener('click', () => {
                 toggleTimeline(toggleBtn, body);
             });
-            
+
             // Verhindere Bubble-Up bei Button-Click (damit nicht doppelt getriggert wird)
             toggleBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -892,10 +914,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-    
+
     function toggleTimeline(button, body) {
         const isExpanded = body.classList.contains('expanded');
-        
+
         if (isExpanded) {
             // Schließen
             body.classList.remove('expanded');
@@ -912,21 +934,68 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
-    
+    const tabSlider = document.querySelector('.tab-slider');
+    const tabNavigation = document.querySelector('.tab-navigation');
+
+    // Function to move the slider to the active button
+    function moveTabSlider(activeButton, instant = false) {
+        if (!activeButton || !tabSlider || !tabNavigation) return;
+
+        const buttonRect = activeButton.getBoundingClientRect();
+        const navRect = tabNavigation.getBoundingClientRect();
+
+        const left = buttonRect.left - navRect.left;
+        const width = buttonRect.width;
+
+        if (instant) {
+            tabSlider.style.transition = 'none';
+            tabSlider.style.left = `${left}px`;
+            tabSlider.style.width = `${width}px`;
+
+            // Force reflow
+            void tabSlider.offsetWidth;
+
+            // Re-enable transitions
+            tabSlider.style.transition = '';
+        } else {
+            tabSlider.style.left = `${left}px`;
+            tabSlider.style.width = `${width}px`;
+        }
+    }
+
+    // Initialize slider position
+    const initialActiveButton = document.querySelector('.tab-btn.active');
+    if (initialActiveButton) {
+        setTimeout(() => {
+            moveTabSlider(initialActiveButton, true);
+        }, 100);
+    }
+
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             const targetTab = button.getAttribute('data-tab');
-            
+
             // Remove active class from all buttons and contents
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
-            
+
             // Add active class to clicked button and corresponding content
             button.classList.add('active');
             const targetContent = document.getElementById(`${targetTab}-content`);
             if (targetContent) {
                 targetContent.classList.add('active');
             }
+
+            // Move slider to active button
+            moveTabSlider(button, false);
         });
+    });
+
+    // Update slider position on window resize
+    window.addEventListener('resize', () => {
+        const activeButton = document.querySelector('.tab-btn.active');
+        if (activeButton) {
+            moveTabSlider(activeButton, true);
+        }
     });
 });

@@ -620,12 +620,13 @@ header .read-more:hover {
     --mouse-y: 50%;
     --spotlight-color: rgba(77, 190, 243, 0.3);
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(20px) scale(0.6);
+    transform-origin: center;
 }
 
 .skill-container.card-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(0.6);
 }
 
 @media (min-width: 1303px) {
@@ -683,7 +684,7 @@ header .read-more:hover {
     background-color: transparent;
     padding: 28px 32px 16px 32px;
     text-align: left;
-    text-transform: uppercase;
+    text-transform: none;
     font-weight: 600;
     font-size: 1.15rem;
     letter-spacing: 0.5px;
@@ -995,6 +996,21 @@ header .read-more:hover {
     border-radius: 50px;
     width: 100%;
     max-width: 800px;
+    position: relative;
+}
+
+.tab-slider {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    height: calc(100% - 16px);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    z-index: 0;
+    pointer-events: none;
 }
 
 .tab-btn {
@@ -1009,7 +1025,7 @@ header .read-more:hover {
     font-size: 1rem;
     font-weight: 500;
     border-radius: 50px;
-    transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color 0.3s ease;
     position: relative;
     z-index: 1;
     flex: 1;
@@ -1028,13 +1044,8 @@ header .read-more:hover {
     color: var(--text-color);
 }
 
-
-
 .tab-btn.active {
-    background: rgba(255, 255, 255, 0.1);
     color: var(--text-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Tab Content */
@@ -1524,13 +1535,14 @@ nav {
     .nav-slider {
         position: absolute;
         height: calc(100% - 20px);
-        background: linear-gradient(135deg, var(--accent-color) 0%, #004d73 100%);
+        background: rgba(255, 255, 255, 0.1);
         border-radius: 50px;
         top: 10px;
-        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        z-index: -1;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 0;
         pointer-events: none;
-        box-shadow: 0 4px 12px rgba(0, 105, 153, 0.4);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
         will-change: left, width;
     }
 
@@ -1637,21 +1649,19 @@ nav {
 
     /* Active state - aktueller Abschnitt */
     .nav-pills a.active {
-        color: #4dbef3 !important;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        font-weight: 600;
+        color: var(--text-color) !important;
+        font-weight: 500;
         /* Kein eigener Hintergrund, Slider übernimmt das! */
     }
 
     .nav-pills a.active .material-symbols-rounded {
-        font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 20;
-        color: #4dbef3 !important;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+        color: var(--text-color) !important;
     }
 
     .nav-pills a.active .nav-text {
-        color: #4dbef3 !important;
-        font-weight: 600;
+        color: var(--text-color) !important;
+        font-weight: 500;
     }
 }
 
