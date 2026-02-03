@@ -655,7 +655,7 @@ header .read-more:hover {
         pointer-events: none;
         border: 2px solid transparent;
         background: radial-gradient(circle 200px at var(--mouse-x) var(--mouse-y),
-                rgba(77, 190, 243, 1),
+                rgba(77, 190, 243, 0.6),
                 transparent 70%) border-box;
         -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
@@ -667,11 +667,11 @@ header .read-more:hover {
     }
 
     .skill-container:hover::before {
-        opacity: 1;
+        opacity: 0.6;
     }
 
     .skill-container:hover::after {
-        opacity: 1;
+        opacity: 0.7;
     }
 }
 
@@ -1479,9 +1479,6 @@ nav {
         left: 50%;
         transform: translateX(-50%);
         z-index: 1001;
-        will-change: transform;
-        backface-visibility: hidden;
-        -webkit-font-smoothing: antialiased;
     }
 
     .nav-pills {
@@ -1502,9 +1499,6 @@ nav {
         position: relative;
         --mouse-x: 50%;
         --mouse-y: 50%;
-        will-change: auto;
-        transform: translateZ(0);
-        backface-visibility: hidden;
     }
 
     .nav-pills::after {
@@ -1538,8 +1532,6 @@ nav {
         pointer-events: none;
         box-shadow: 0 4px 12px rgba(0, 105, 153, 0.4);
         will-change: left, width;
-        transform: translateZ(0);
-        backface-visibility: hidden;
     }
 
     /* Trigger animation on active change */
@@ -1575,23 +1567,10 @@ nav {
         font-size: 0.95rem;
         font-weight: 500;
         border-radius: 50px;
-        transition: color 0.3s ease;
+        transition: all 0.3s ease;
         position: relative;
         white-space: nowrap;
         z-index: 1;
-    }
-
-    /* Reserve space for bold text to prevent layout shift */
-    .nav-pills a::before {
-        content: attr(data-text);
-        content: attr(aria-label);
-        font-weight: 600;
-        height: 0;
-        visibility: hidden;
-        overflow: hidden;
-        user-select: none;
-        pointer-events: none;
-        display: block;
     }
 
     .nav-pills a .material-symbols-rounded {
@@ -1601,7 +1580,7 @@ nav {
     }
 
     .nav-pills a .nav-text {
-        transition: color 0.3s ease;
+        transition: all 0.3s ease;
     }
 
     /* Animated rotating border for Portfolio button in header */
