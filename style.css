@@ -250,7 +250,7 @@ body {
         --marquee-elements-displayed: 3;
         --marquee-height: 35vh;
     }
-    
+
     .marquee:before,
     .marquee:after {
         width: 2rem;
@@ -541,6 +541,9 @@ header .read-more {
     border-radius: 1000px;
     padding: .5em 1.25em;
     text-decoration: none;
+    text-decoration-line: none;
+    border-left: none;
+    outline: none;
     margin-top: 50px;
     transition: all 0.3s ease;
     cursor: url('Cursorpointer.svg') 0 0, pointer;
@@ -757,11 +760,11 @@ header .read-more:hover {
         max-width: 240px;
         margin: 25px auto;
     }
-    
+
     .skill-container .spider-chart text {
         font-size: 10px;
     }
-    
+
     .skill-container .spider-chart text tspan {
         dy: 12px;
     }
@@ -772,11 +775,11 @@ header .read-more:hover {
         max-width: 270px;
         margin: 30px auto;
     }
-    
+
     .skill-container .spider-chart text {
         font-size: 11px;
     }
-    
+
     .skill-container .spider-chart text tspan {
         dy: 13px;
     }
@@ -788,25 +791,25 @@ header .read-more:hover {
         gap: 50px;
         padding: 0 20px;
     }
-    
+
     .skill-container h3 {
         font-size: 1rem;
         padding: 24px 28px 14px 28px;
     }
-    
+
     .skill-container .skill-subtitle {
         font-size: 0.78rem;
     }
-    
+
     .skill-container .spider-chart {
         max-width: 235px;
         margin: 32px auto;
     }
-    
+
     .skill-container .spider-chart text {
         font-size: 10px;
     }
-    
+
     .skill-container .spider-chart text tspan {
         dy: 12px;
     }
@@ -818,25 +821,25 @@ header .read-more:hover {
         gap: 50px;
         padding: 0 20px;
     }
-    
+
     .skill-container h3 {
         font-size: 1rem;
         padding: 24px 28px 14px 28px;
     }
-    
+
     .skill-container .skill-subtitle {
         font-size: 0.78rem;
     }
-    
+
     .skill-container .spider-chart {
         max-width: 255px;
         margin: 35px auto;
     }
-    
+
     .skill-container .spider-chart text {
         font-size: 11px;
     }
-    
+
     .skill-container .spider-chart text tspan {
         dy: 13px;
     }
@@ -848,25 +851,25 @@ header .read-more:hover {
         gap: 50px;
         padding: 0 20px;
     }
-    
+
     .skill-container h3 {
         font-size: 1rem;
         padding: 24px 28px 14px 28px;
     }
-    
+
     .skill-container .skill-subtitle {
         font-size: 0.78rem;
     }
-    
+
     .skill-container .spider-chart {
         max-width: 280px;
         margin: 35px auto;
     }
-    
+
     .skill-container .spider-chart text {
         font-size: 12px;
     }
-    
+
     .skill-container .spider-chart text tspan {
         dy: 14px;
     }
@@ -880,8 +883,8 @@ header .read-more:hover {
 }
 
 .skill-container ul {
-        margin: 40px auto;
-    }
+    margin: 40px auto;
+}
 
 
 .skill-container ul {
@@ -1031,7 +1034,7 @@ header .read-more:hover {
     background: rgba(255, 255, 255, 0.1);
     color: var(--text-color);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* Tab Content */
@@ -1050,6 +1053,7 @@ header .read-more:hover {
         opacity: 0;
         transform: translateY(20px) scale(0.98);
     }
+
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -1563,12 +1567,12 @@ nav {
         font-size: 0.95rem;
         font-weight: 500;
         border-radius: 50px;
-        transition: all 0.3s ease; 
+        transition: all 0.3s ease;
         position: relative;
         white-space: nowrap;
         z-index: 1;
     }
- 
+
     .nav-pills a .material-symbols-rounded {
         font-size: 20px;
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
@@ -1606,6 +1610,7 @@ nav {
         0% {
             --angle: 0deg;
         }
+
         100% {
             --angle: 360deg;
         }
@@ -2304,6 +2309,9 @@ progress {
     padding: 0.7em 1.5em;
     border-radius: 0.5em;
     text-decoration: none;
+    text-decoration-line: none;
+    border-left: none;
+    outline: none;
     min-width: 120px;
     text-align: center;
     transition: all 0.3s ease;
