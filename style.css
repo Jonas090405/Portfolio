@@ -2244,9 +2244,25 @@ progress {
 /* Container für die Bento Cards */
 #project-section {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 70px;
     padding: 100px 20px 150px;
+}
+
+/* Medium Desktop - 3 Spalten */
+@media (min-width: 1600px) {
+    #project-section {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Ultrawide - 4 Spalten */
+@media (min-width: 2000px) {
+    #project-section {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 2400px;
+        margin: 0 auto;
+    }
 }
 
 
@@ -2310,14 +2326,15 @@ progress {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0);
-    transition: background 0.3s ease;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
     z-index: 2;
     pointer-events: none;
-    will-change: background;
+    will-change: opacity;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* Inhalt */
@@ -2413,7 +2430,7 @@ progress {
     }
 
     .bento-card:hover::before {
-        background: rgba(0, 0, 0, 0.5);
+        opacity: 1;
     }
 
     .bento-card:hover img {
