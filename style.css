@@ -116,227 +116,278 @@ body {
     }
 }
 
-/* Logo Carousel Styles */
+/* Software Skills Badge Slider */
 #tools-section {
     width: 100%;
-    padding: 90px 0;
+    padding: 0px 0 100px 0;
     background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-#tools-section h2 {
-    font-size: 3rem;
-    text-align: center;
-    margin-bottom: 80px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-    padding: 0 20px;
+    overflow: hidden;
 }
 
 @media (max-width: 1302px) and (min-width: 769px) {
-    #tools-section h2 {
-        font-size: 2.5rem;
-        margin-bottom: 60px;
+    #tools-section {
+        padding: 0px 0px 60px 0;
     }
 }
 
 @media (max-width: 768px) {
     #tools-section {
-        padding: 50px 0;
-    }
-
-    #tools-section h2 {
-        font-size: 2rem;
-        margin-bottom: 70px;
+        padding: 0px 0px 40px;
     }
 }
 
-.marquee {
-    width: var(--marquee-width);
-    height: calc(var(--marquee-height) / 2.5);
-    background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
-    color: var(--text-color);
+/* Badge Row Container */
+.badge-row {
+    width: 100%;
     overflow: hidden;
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 40px;
 }
 
-.marquee:last-of-type {
+.badge-row:last-child {
     margin-bottom: 0;
 }
 
-.marquee:before,
-.marquee:after {
-    position: absolute;
-    top: 0;
-    width: 10rem;
-    height: 100%;
-    content: "";
-    z-index: 1;
-
+@media (max-width: 1302px) and (min-width: 769px) {
+    .badge-row {
+        margin-bottom: 30px;
+    }
 }
 
-.marquee:before {
+@media (max-width: 768px) {
+    .badge-row {
+        margin-bottom: 20px;
+    }
+}
+
+/* Fade effect on edges */
+.badge-row::before,
+.badge-row::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 150px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.badge-row::before {
     left: 0;
     background: linear-gradient(to right, rgb(16, 24, 27) 0%, rgba(16, 24, 27, 0) 100%);
 }
 
-.marquee:after {
+.badge-row::after {
     right: 0;
     background: linear-gradient(to left, rgb(22, 22, 22) 0%, rgba(22, 22, 22, 0) 100%);
 }
 
-.marquee-content {
-    list-style: none;
-    height: 100%;
-    display: flex;
-    gap: 0;
-    animation: scrolling var(--marquee-animation-duration) linear infinite;
-}
-
-.marquee-reverse .marquee-content {
-    animation: scrolling-reverse var(--marquee-animation-duration) linear infinite;
-}
-
-@keyframes scrolling {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements)));
-    }
-}
-
-@keyframes scrolling-reverse {
-    0% {
-        transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements)));
-    }
-
-    100% {
-        transform: translateX(0);
-    }
-}
-
-.marquee-content li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    width: var(--marquee-element-width);
-    max-height: 100%;
-    white-space: nowrap;
-}
-
 @media (max-width: 768px) {
-    :root {
-        --marquee-width: 100%;
-        --marquee-height: 30vh;
-        --marquee-elements-displayed: 4;
-    }
 
-    .marquee:before,
-    .marquee:after {
-        width: 3rem;
+    .badge-row::before,
+    .badge-row::after {
+        width: 80px;
     }
 }
 
 @media (max-width: 480px) {
-    :root {
-        --marquee-elements-displayed: 3;
-        --marquee-height: 35vh;
-    }
 
-    .marquee:before,
-    .marquee:after {
-        width: 2rem;
+    .badge-row::before,
+    .badge-row::after {
+        width: 50px;
     }
 }
 
-.logo-item {
+/* Badge Track - holds all badges */
+.badge-track {
     display: flex;
-    flex-direction: column;
+    gap: 20px;
+    width: fit-content;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Row 1: Scroll Left to Right */
+.badge-row-1 .badge-track {
+    animation: scroll-left 35s linear infinite;
+}
+
+/* Row 2: Scroll Right to Left */
+.badge-row-2 .badge-track {
+    animation: scroll-right 45s linear infinite;
+}
+
+/* Pause animation on hover (only for devices with a real pointer/mouse) */
+@media (hover: hover) {
+    .badge-row:hover .badge-track {
+        animation-play-state: paused;
+    }
+}
+
+/* Glassmorphism Badge Styles */
+.software-badge {
+    display: flex;
     align-items: center;
     gap: 12px;
-    padding: 0 15px;
-    transition: transform 0.3s ease;
-    cursor: url('cursor.svg') 0 0, auto;
-}
-
-.logo-item:hover {
-    transform: scale(1.1);
-}
-
-.logo-img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    transition: filter 0.3s ease;
-    filter: brightness(0.9);
-}
-
-.logo-item:hover .logo-img {
-    filter: brightness(1.2);
-}
-
-.logo-item span {
-    font-size: 0.85rem;
-    color: var(--secondary-text-color);
-    text-align: center;
+    padding: 10px 20px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     white-space: nowrap;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.logo-item:hover span {
-    /* Keep the label color unchanged on hover */
-    color: var(--secondary-text-color);
+.software-badge img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
+.software-badge span {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Logo-Specific Border Colors */
+.badge-figma {
+    border-color: rgba(162, 89, 255, 0.4);
+}
+
+.badge-js {
+    border-color: rgba(247, 223, 30, 0.4);
+}
+
+.badge-css {
+    border-color: rgba(38, 77, 228, 0.4);
+}
+
+.badge-html {
+    border-color: rgba(227, 79, 38, 0.4);
+}
+
+.badge-react {
+    border-color: rgba(97, 218, 251, 0.4);
+}
+
+.badge-ai {
+    border-color: rgba(200, 200, 200, 0.4);
+}
+
+.badge-illustrator {
+    border-color: rgba(255, 154, 0, 0.4);
+}
+
+.badge-premiere {
+    border-color: rgba(153, 153, 255, 0.4);
+}
+
+.badge-xd {
+    border-color: rgba(255, 38, 255, 0.4);
+}
+
+.badge-office {
+    border-color: rgba(217, 83, 79, 0.4);
+}
+
+.badge-github {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.badge-analytics {
+    border-color: rgba(255, 165, 0, 0.4);
+}
+
+.badge-looker {
+    border-color: rgba(66, 133, 244, 0.5);
+}
+
+.badge-rise {
+    border-color: rgba(255, 87, 51, 0.4);
+}
+
+.badge-storyline {
+    border-color: rgba(255, 182, 193, 0.5);
+}
+
+.badge-confluence {
+    border-color: rgba(0, 82, 204, 0.4);
+}
+
+/* Smooth Infinite Scroll Animations */
+@keyframes scroll-left {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+@keyframes scroll-right {
+    0% {
+        transform: translate3d(-50%, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    .logo-svg {
-        width: 60px;
-        height: 60px;
+    .badge-track {
+        gap: 15px;
     }
 
-    .logo-img {
-        width: 60px;
-        height: 60px;
+    .software-badge {
+        padding: 8px 16px;
+        gap: 10px;
     }
 
-    .logo-item {
-        padding: 0 5px;
+    .software-badge img {
+        width: 24px;
+        height: 24px;
     }
 
-    .logo-item span {
-        font-size: 0.75rem;
+    .software-badge span {
+        font-size: 0.85rem;
+    }
+
+    .badge-row-1 .badge-track,
+    .badge-row-2 .badge-track {
+        animation-duration: 30s;
     }
 }
 
 @media (max-width: 480px) {
-    .logo-svg {
-        width: 50px;
-        height: 50px;
+    .badge-track {
+        gap: 12px;
     }
 
-    .logo-img {
-        width: 50px;
-        height: 50px;
+    .software-badge {
+        padding: 6px 14px;
+        gap: 8px;
     }
 
-    .logo-item {
-        padding: 0 1px;
+    .software-badge img {
+        width: 20px;
+        height: 20px;
     }
 
-    .logo-item span {
-        font-size: 0.65rem;
-    }
-
-    .logo-carousel-track {
-        gap: 30px;
-        padding: 15px 30px;
+    .software-badge span {
+        font-size: 0.75rem;
     }
 }
 
@@ -519,7 +570,7 @@ header h1 {
 }
 
 header h2 {
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 20px;
     font-weight: 300;
     word-break: b;
@@ -699,8 +750,21 @@ header .read-more:hover {
 
 
 #skill-section {
-    padding: 100px 20px 150px 20px;
+    padding: 100px 80px 150px 80px;
     background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
+}
+
+/* Reduziertes Padding für Tablets und kleinere Bildschirme */
+@media (max-width: 1302px) {
+    #skill-section {
+        padding: 100px 40px 150px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    #skill-section {
+        padding: 80px 20px 100px 20px;
+    }
 }
 
 #skill-section h2 {
@@ -728,7 +792,7 @@ header .read-more:hover {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 60px;
-    max-width: 1100px;
+    max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -736,7 +800,7 @@ header .read-more:hover {
 @media (min-width: 1600px) {
     #skill-section .wrapper {
         grid-template-columns: repeat(3, 1fr);
-        max-width: 1400px;
+        max-width: 1600px;
     }
 }
 
@@ -1120,7 +1184,7 @@ header .read-more:hover {
 
 #education-section h2 {
     font-size: 3rem;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
 }
 
 /* Tab Navigation */
@@ -1724,6 +1788,7 @@ nav {
         position: relative;
         white-space: nowrap;
         z-index: 1;
+        border: 1px solid transparent;
     }
 
     .nav-pills a .material-symbols-rounded {
@@ -1775,9 +1840,11 @@ nav {
         inherits: false;
     }
 
-    /* Hover-Effekt - subtil: heller Text */
+    /* Hover-Effekt - subtil: heller Text + sanfte graue Pille */
     .nav-pills a:hover:not(.active) {
         color: #ffffff;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .nav-pills a:hover:not(.active) .material-symbols-rounded {
@@ -2136,6 +2203,7 @@ footer a:hover {
         font-size: 1rem;
         padding: 0.4em 1em;
         margin-top: 0;
+        margin-bottom: 30px;
         align-self: center;
     }
 
@@ -2568,15 +2636,18 @@ progress {
     /* Carousel Wrapper */
     .carousel-wrapper {
         display: flex;
-        width: 85%;
+        width: 75%;
         max-width: 900px;
-        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transition: transform 1s cubic-bezier(0.22, 0.61, 0.36, 1);
         position: relative;
         overflow: visible;
         gap: 40px;
         padding-right: 0;
         perspective: 1500px;
         transform-style: preserve-3d;
+        will-change: transform;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
     }
 
     /* Ensure last card centers properly */
@@ -2823,6 +2894,15 @@ footer {
         transform: none !important;
         will-change: auto;
         flex-shrink: 0;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .bento-card:active {
+        transform: none !important;
+        border-radius: 12px !important;
     }
 
     .bento-card img {
@@ -2840,7 +2920,7 @@ footer {
     .card-content {
         position: relative;
         opacity: 1;
-        padding: 32px;
+        padding: 24px;
         flex: 1;
         display: flex;
         flex-direction: column;
@@ -2864,8 +2944,8 @@ footer {
     }
 
     .card-content h3 {
-        font-size: 1.2rem;
-        margin-bottom: 8px;
+        font-size: 1.1rem;
+        margin-bottom: 14px;
         margin-top: 0;
         word-wrap: break-word;
         overflow-wrap: break-word;
@@ -2875,14 +2955,9 @@ footer {
     }
 
     .card-content p {
-        font-size: 0.95rem;
-        margin-bottom: 15px;
-        flex-grow: 1;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        line-height: 1.5;
+        font-size: 0.85rem;
+        margin-bottom: 12px;
+        line-height: 1.4;
         word-wrap: break-word;
         overflow-wrap: break-word;
     }
@@ -2892,7 +2967,7 @@ footer {
         padding: 0.65em 1.3em;
         min-width: 110px;
         flex-shrink: 0;
-        margin-top: auto;
+        margin-top: 15px;
     }
 
     .bento-card::after {

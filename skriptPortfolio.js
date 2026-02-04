@@ -699,9 +699,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let currentIndex = 0;
     let startX = 0;
+    let startY = 0;
     let currentX = 0;
+    let currentY = 0;
     let isDragging = false;
     let startTime = 0;
+    let swipeDirection = null;
 
     // Only run carousel on mobile/tablet
     function isCarouselMode() {
@@ -786,7 +789,10 @@ document.addEventListener('DOMContentLoaded', function () {
         isDragging = true;
         startTime = Date.now();
         startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        startY = e.type.includes('mouse') ? e.pageY : e.touches[0].pageY;
         currentX = startX;
+        currentY = startY;
+        swipeDirection = null; // Reset swipe direction
         carouselWrapper.style.transition = 'none';
     }
 
@@ -794,18 +800,36 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleMove(e) {
         if (!isDragging || !isCarouselMode()) return;
 
-        e.preventDefault();
         currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
-        const diff = currentX - startX;
-        const cardWidth = projectCards[0].offsetWidth;
-        const gap = window.innerWidth <= 600 ? 30 : 40;
-        const containerWidth = carouselWrapper.parentElement.offsetWidth;
-        const wrapperWidth = parseFloat(getComputedStyle(carouselWrapper).width);
-        const centerOffset = (containerWidth - cardWidth) / 2 - (containerWidth - wrapperWidth) / 2;
-        const slideOffset = currentIndex * (cardWidth + gap);
-        const offset = centerOffset - slideOffset + diff;
+        currentY = e.type.includes('mouse') ? e.pageY : e.touches[0].pageY;
 
-        carouselWrapper.style.transform = `translateX(${offset}px)`;
+        const diffX = currentX - startX;
+        const diffY = currentY - startY;
+
+        // Determine swipe direction on first significant movement
+        if (swipeDirection === null && (Math.abs(diffX) > 10 || Math.abs(diffY) > 10)) {
+            swipeDirection = Math.abs(diffX) > Math.abs(diffY) ? 'horizontal' : 'vertical';
+        }
+
+        // Only prevent default and handle carousel for horizontal swipes
+        if (swipeDirection === 'horizontal') {
+            // Only prevent if event is cancelable
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+            const cardWidth = projectCards[0].offsetWidth;
+            const gap = window.innerWidth <= 600 ? 30 : 40;
+            const containerWidth = carouselWrapper.parentElement.offsetWidth;
+            const wrapperWidth = parseFloat(getComputedStyle(carouselWrapper).width);
+            const centerOffset = (containerWidth - cardWidth) / 2 - (containerWidth - wrapperWidth) / 2;
+            const slideOffset = currentIndex * (cardWidth + gap);
+            const offset = centerOffset - slideOffset + diffX;
+
+            carouselWrapper.style.transform = `translateX(${offset}px)`;
+        } else if (swipeDirection === 'vertical') {
+            // Allow vertical scrolling by not preventing default and stopping carousel interaction
+            isDragging = false;
+        }
     }
 
     // Touch/Mouse end
@@ -813,15 +837,17 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!isDragging || !isCarouselMode()) return;
 
         isDragging = false;
-        carouselWrapper.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+
+        // Apply smooth transition
+        carouselWrapper.style.transition = 'transform 1s cubic-bezier(0.22, 0.61, 0.36, 1)';
 
         const diff = currentX - startX;
-        const threshold = carouselWrapper.offsetWidth * 0.2; // 20% swipe threshold
+        const threshold = carouselWrapper.offsetWidth * 0.15; // Reduced threshold for easier swipe
         const timeDiff = Date.now() - startTime;
         const velocity = Math.abs(diff) / timeDiff; // px per ms
 
         // Fast swipe or significant distance
-        if (velocity > 0.5 || Math.abs(diff) > threshold) {
+        if (velocity > 0.3 || Math.abs(diff) > threshold) {
             if (diff > 0) {
                 prevSlide(); // Swipe right (with loop)
             } else if (diff < 0) {
