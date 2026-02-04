@@ -555,6 +555,148 @@ header .read-more:hover {
     border-color: rgba(77, 190, 243, 0.3);
 }
 
+/* Social Media Icons */
+.name-socials-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.social-links {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(77, 190, 243, 0.3);
+    border-radius: 50%;
+    transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+    background: linear-gradient(135deg, rgba(0, 105, 153, 0.15), rgba(77, 190, 243, 0.1));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.social-icon svg {
+    width: 19px;
+    height: 19px;
+    color: #4dbef3;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    border-color: rgba(77, 190, 243, 0.6);
+    background: linear-gradient(135deg, rgba(0, 105, 153, 0.25), rgba(77, 190, 243, 0.2));
+}
+
+.social-icon:hover svg {
+    color: #5DCEFF;
+    transform: scale(1.05);
+}
+
+/* Hide social icons only on small mobile devices */
+@media (max-width: 768px) {
+    .social-links {
+        display: none;
+    }
+
+    .name-socials-container {
+        justify-content: center;
+        width: 100%;
+    }
+
+    #name {
+        text-align: center;
+    }
+}
+
+/* Tablet - show icons with smaller size, centered */
+@media (min-width: 769px) and (max-width: 1000px) {
+    .name-socials-container {
+        justify-content: center;
+        width: 100%;
+        gap: 20px;
+    }
+
+    .social-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .social-icon svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    .social-links {
+        gap: 12px;
+    }
+}
+
+/* Medium screens - position icons bottom right next to portfolio button */
+@media (min-width: 1001px) and (max-width: 1302px) {
+    header .container {
+        position: relative;
+    }
+
+    .name-socials-container {
+        display: block;
+    }
+
+    .social-links {
+        position: absolute;
+        bottom: 0;
+        right: 20px;
+        display: flex;
+        gap: 12px;
+    }
+
+    .social-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .social-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Desktop - icons centered next to name */
+@media (min-width: 1303px) {
+    .name-socials-container {
+        flex-direction: row;
+        align-items: center;
+        gap: 42px;
+    }
+
+    .social-links {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .social-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .social-icon svg {
+        width: 23px;
+        height: 23px;
+    }
+}
+
+
 
 #skill-section {
     padding: 100px 20px 150px 20px;
