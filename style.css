@@ -1027,10 +1027,10 @@ header .read-more:hover {
     height: auto;
     margin: 40px auto;
     display: block;
-    overflow: hidden;
-    /* Changed from visible to respect border-radius */
+    overflow: visible;
+    /* Allow text labels to extend beyond chart boundaries */
     border-radius: 16px;
-    /* Rounded corners for the chart */
+    /* Rounded corners - note: SVG may not fully respect this */
 }
 
 @media (max-width: 599px) {
@@ -1412,7 +1412,8 @@ header .read-more:hover {
 
 .timeline-item .dot {
     position: absolute;
-    left: calc(8.5px - 25px);
+    left: calc(5.5px - 25px);
+    /* Moved 3px further left */
     /* Moved 0.5px further left */
     /* exakt mittig zur Linie (bei 50px Breite) */
     top: 14.5px;
@@ -1421,6 +1422,8 @@ header .read-more:hover {
     background-color: #404040;
     /* Solid gray */
     border-radius: 50%;
+    border: 2px solid transparent;
+    /* Invisible border to prevent layout shift */
     z-index: 2;
     cursor: url('Cursorpointer.svg') 0 0, pointer;
     transition: all 0.3s ease-in-out;
@@ -1431,10 +1434,17 @@ header .read-more:hover {
 
 }
 
+/* Gray stroke when timeline item is expanded */
+.timeline-body.expanded+.timeline-item .dot,
+.timeline-item:has(.timeline-body.expanded) .dot {
+    border-color: rgba(255, 255, 255, 0.3);
+    /* Only change color, not width */
+}
+
 
 .timeline-item .dot:hover {
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.15), 0 0 15px rgba(255, 255, 255, 0.1);
-    /* Subtle white glow instead of bright blue */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    /* Only drop shadow, no glow */
     transform: scale(1.2);
     /* Leichtes Vergrößern beim Hover */
 }
@@ -1446,7 +1456,8 @@ header .read-more:hover {
 
 .timeline-item .dot .material-symbols-rounded {
     font-size: 28px;
-    color: var(--secondary-text-color);
+    color: rgba(245, 245, 245, 0.85);
+    /* Match h3 heading color */
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
