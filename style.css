@@ -89,6 +89,71 @@ body {
     background: linear-gradient(90deg, rgb(19, 19, 19) 0%, rgb(19, 28, 32) 100%);
 }
 
+/* Modern Section Headings */
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--secondary-text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-top: 0;
+    margin-bottom: 40px;
+    text-align: left !important;
+    align-self: flex-start;
+    width: 100%;
+}
+
+.section-heading::before {
+    content: '';
+    display: inline-block;
+    width: 25px;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent-color), #4dbef3);
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+#skill-section .section-heading,
+#project-section .section-heading,
+#tools-section .section-heading {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Large desktop - match wrapper's expanded width */
+@media (min-width: 1600px) {
+    #skill-section .section-heading {
+        max-width: 1600px;
+    }
+}
+
+#tools-section .section-heading {
+    margin-top: 40px;
+    padding: 0 80px;
+}
+
+@media (max-width: 1302px) {
+    #tools-section .section-heading {
+        padding: 0 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    #tools-section .section-heading {
+        padding: 0 20px;
+    }
+}
+
+#education-section .section-heading {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #name {
     background: linear-gradient(90deg, var(--accent-color), white, var(--accent-color), white);
     background-size: 300%;
@@ -229,6 +294,26 @@ body {
     }
 }
 
+/* Ultrawide Enhancements */
+@media (min-width: 2500px) {
+    .badge-row-2 {
+        display: none;
+    }
+
+    .badge-row-1 {
+        margin-bottom: 0;
+    }
+
+    /* Ensure track fills width or loops properly */
+    .badge-track {
+        /* If track is too short for screen, we might need JS duplicating or just more content. 
+            Assuming CSS animation handles repeated content correctly if designed so. 
+            Usually infinite scroll needs content width > screen width. 
+            If user has issues with "cutting off", we ensure width is max-content. */
+        width: max-content;
+    }
+}
+
 /* Glassmorphism Badge Styles */
 .software-badge {
     display: flex;
@@ -301,7 +386,8 @@ body {
 }
 
 .badge-github {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: #6979D9;
+    /* Lilac purple */
 }
 
 .badge-analytics {
@@ -767,25 +853,6 @@ header .read-more:hover {
     }
 }
 
-#skill-section h2 {
-    font-size: 3rem;
-    text-align: center;
-    margin-bottom: 80px;
-}
-
-@media (max-width: 768px) {
-    #skill-section h2 {
-        font-size: 2rem;
-        margin-bottom: 70px;
-    }
-}
-
-@media (max-width: 600px) {
-    #skill-section h2 {
-        font-size: 1.75rem;
-        margin-bottom: 50px;
-    }
-}
 
 #skill-section .wrapper {
     margin-top: 60px;
@@ -807,7 +874,7 @@ header .read-more:hover {
 .skill-container {
     width: 100%;
     max-width: 100%;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: visible;
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.6);
     /* Standard-Schatten */
@@ -842,10 +909,11 @@ header .read-more:hover {
         left: 0;
         right: 0;
         bottom: 0;
-        border-radius: 12px;
+        border-radius: 16px;
         pointer-events: none;
-        background: radial-gradient(circle 300px at var(--mouse-x) var(--mouse-y),
-                var(--spotlight-color),
+        background: radial-gradient(circle 350px at var(--mouse-x) var(--mouse-y),
+                rgba(77, 190, 243, 0.4),
+                rgba(0, 150, 220, 0.15) 50%,
                 transparent);
         opacity: 0;
         transition: opacity 0.3s ease;
@@ -857,11 +925,12 @@ header .read-more:hover {
         content: '';
         position: absolute;
         inset: 0;
-        border-radius: 12px;
+        border-radius: 16px;
         pointer-events: none;
         border: 2px solid transparent;
-        background: radial-gradient(circle 200px at var(--mouse-x) var(--mouse-y),
-                rgba(77, 190, 243, 0.6),
+        background: radial-gradient(circle 250px at var(--mouse-x) var(--mouse-y),
+                rgba(100, 200, 255, 0.7),
+                rgba(77, 190, 243, 0.4) 40%,
                 transparent 70%) border-box;
         -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
@@ -958,7 +1027,10 @@ header .read-more:hover {
     height: auto;
     margin: 40px auto;
     display: block;
-    overflow: visible;
+    overflow: hidden;
+    /* Changed from visible to respect border-radius */
+    border-radius: 16px;
+    /* Rounded corners for the chart */
 }
 
 @media (max-width: 599px) {
@@ -1136,7 +1208,7 @@ header .read-more:hover {
     /* Volle Breite für bessere Darstellung */
     height: 10px;
     /* Originalhöhe */
-    border-radius: 12px;
+    border-radius: 16px;
     /* Rundungen */
     overflow: hidden;
     /* Rundungen sichtbar machen */
@@ -1155,14 +1227,14 @@ header .read-more:hover {
 .skill-container ul li progress::-webkit-progress-bar {
     background-color: rgba(255, 255, 255, 0.15);
     /* Hintergrund der Progressbar */
-    border-radius: 12px;
+    border-radius: 16px;
     /* Rundungen */
 }
 
 .skill-container ul li progress::-webkit-progress-value {
     background: linear-gradient(to right, var(--accent-color), #4dbef3);
     /* Verlauf */
-    border-radius: 12px;
+    border-radius: 16px;
     /* Rundungen für den Fortschrittswert */
 }
 
@@ -1170,7 +1242,7 @@ header .read-more:hover {
 .skill-container ul li progress::-moz-progress-bar {
     background: linear-gradient(to right, var(--accent-color), #4dbef3);
     /* Verlauf */
-    border-radius: 12px;
+    border-radius: 16px;
 }
 
 
@@ -1182,10 +1254,6 @@ header .read-more:hover {
     text-align: center;
 }
 
-#education-section h2 {
-    font-size: 3rem;
-    margin-bottom: 60px;
-}
 
 /* Tab Navigation */
 .tab-navigation {
@@ -1277,10 +1345,6 @@ header .read-more:hover {
 }
 
 @media (max-width: 768px) {
-    #education-section h2 {
-        font-size: 2rem;
-        margin-bottom: 50px;
-    }
 
     .tab-navigation {
         gap: 6px;
@@ -1298,10 +1362,6 @@ header .read-more:hover {
 }
 
 @media (max-width: 600px) {
-    #education-section h2 {
-        font-size: 1.75rem;
-        margin-bottom: 40px;
-    }
 
     .tab-navigation {
         gap: 6px;
@@ -1332,10 +1392,12 @@ header .read-more:hover {
     position: absolute;
     top: 0;
     left: 47px;
-    width: 5px;
+    width: 1px;
+    /* Thinner line */
     height: 100%;
-    background-image: linear-gradient(to bottom, hsla(199, 92%, 45%, 0.567), #78d4ff);
-    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.15);
+    /* Subtle gray */
+    border-radius: 1px;
 }
 
 
@@ -1350,12 +1412,14 @@ header .read-more:hover {
 
 .timeline-item .dot {
     position: absolute;
-    left: calc(10px - 25px);
+    left: calc(8.5px - 25px);
+    /* Moved 0.5px further left */
     /* exakt mittig zur Linie (bei 50px Breite) */
     top: 14.5px;
     width: 50px;
     height: 50px;
-    background-color: white;
+    background-color: #404040;
+    /* Solid gray */
     border-radius: 50%;
     z-index: 2;
     cursor: url('Cursorpointer.svg') 0 0, pointer;
@@ -1369,7 +1433,8 @@ header .read-more:hover {
 
 
 .timeline-item .dot:hover {
-    box-shadow: 0 0 15px hsla(199, 92%, 65%, 0.8), 0 0 30px hsla(199, 92%, 75%, 0.5);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.15), 0 0 15px rgba(255, 255, 255, 0.1);
+    /* Subtle white glow instead of bright blue */
     transform: scale(1.2);
     /* Leichtes Vergrößern beim Hover */
 }
@@ -1381,7 +1446,7 @@ header .read-more:hover {
 
 .timeline-item .dot .material-symbols-rounded {
     font-size: 28px;
-    color: var(--accent-color);
+    color: var(--secondary-text-color);
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
@@ -1389,7 +1454,7 @@ header .read-more:hover {
     text-align: left;
     margin-left: 90px;
     font-size: 1rem;
-    border-radius: 12px;
+    border-radius: 16px;
     background: linear-gradient(90deg, rgb(16, 24, 27) 0%, rgb(22, 22, 22) 100%);
     padding: 20px;
     position: relative;
@@ -1486,7 +1551,8 @@ header .read-more:hover {
 
 .timeline-item p {
     margin: 0 0 12px 0;
-    color: var(--text-color);
+    color: var(--secondary-text-color);
+    /* Grayer for visual hierarchy */
     line-height: 1.5;
 }
 
@@ -1533,17 +1599,17 @@ header .read-more:hover {
 @keyframes pulse {
     0% {
         transform: scale(1);
-        box-shadow: 0 0 5px var(--accent-color);
+        box-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
     }
 
     50% {
         transform: scale(1.3);
-        box-shadow: 0 0 20px var(--accent-color);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
     }
 
     100% {
         transform: scale(1);
-        box-shadow: 0 0 5px var(--accent-color);
+        box-shadow: 0 0 3px rgba(255, 255, 255, 0.2);
     }
 }
 
@@ -1629,7 +1695,7 @@ footer .grid-container {
     grid-template-columns: 1fr 1fr max-content;
     gap: 100px;
     text-align: right;
-    border-radius: 12px;
+    border-radius: 16px;
 }
 
 footer #at-symbol {
@@ -1883,7 +1949,7 @@ nav {
     border: none;
     cursor: url('Cursorpointer.svg') 0 0, pointer;
     padding: 16px;
-    border-radius: 12px;
+    border-radius: 16px;
     position: fixed;
     top: 20px;
     right: 20px;
@@ -2314,14 +2380,21 @@ progress {
 #project-section {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 70px;
-    padding: 100px 20px 150px;
+    gap: 40px;
+    padding: 100px 80px 150px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-/* Medium Desktop - 3 Spalten */
-@media (min-width: 1600px) {
+@media (max-width: 1302px) {
     #project-section {
-        grid-template-columns: repeat(3, 1fr);
+        padding: 100px 40px 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    #project-section {
+        padding: 80px 20px 100px;
     }
 }
 
@@ -2329,16 +2402,12 @@ progress {
 @media (min-width: 2000px) {
     #project-section {
         grid-template-columns: repeat(4, 1fr);
-        max-width: 2400px;
-        margin: 0 auto;
+        max-width: 2000px;
     }
 }
 
 
-#project-section h2 {
-    font-size: 3rem;
-    text-align: center;
-    margin-bottom: 40px;
+#project-section .section-heading {
     grid-column: 1 / -1;
 }
 
@@ -2348,7 +2417,7 @@ progress {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1.5px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
+    border-radius: 16px;
     overflow: hidden;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
     transition: opacity 2s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -2448,7 +2517,7 @@ progress {
     display: inline-flex;
     align-items: center;
     padding: 6px 12px;
-    border-radius: 14px;
+    border-radius: 16px;
     font-size: 0.75rem;
     font-weight: 400;
     letter-spacing: 0.2px;
@@ -2619,19 +2688,30 @@ progress {
         overflow: hidden;
     }
 
-    #project-section h2 {
-        font-size: 2.5rem;
-        margin-bottom: 60px;
+    #project-section .section-heading {
+        width: 75%;
+        max-width: 900px;
+        align-self: center;
+        padding: 0;
     }
 
-    #skill-section h2 {
-        font-size: 2.5rem;
-        margin-bottom: 60px;
+    #skill-section .section-heading {
+        width: calc(100% - 40px);
+        /* Account for wrapper's own 20px padding on each side */
+        max-width: 1400px;
+        align-self: center;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
     }
 
-    #education-section h2 {
-        font-size: 2.5rem;
-        margin-bottom: 60px;
+    #education-section .section-heading {
+        width: 100%;
+        max-width: 800px;
+        align-self: center;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
     }
 
     /* Carousel Wrapper */
@@ -2741,14 +2821,16 @@ progress {
         height: 580px;
         min-height: 580px;
         max-height: 580px;
-        transform: scale(0.5) translateZ(-500px);
-        opacity: 0.25;
-        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform: scale(0.85) translateZ(-100px);
+        /* Smaller and further back when inactive */
+        opacity: 0.5;
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         flex-shrink: 0;
     }
 
     .bento-card.active {
         transform: scale(1) translateZ(0);
+        /* Full size when active */
         opacity: 1;
         z-index: 10;
         height: 580px;
@@ -2758,13 +2840,15 @@ progress {
 
     .bento-card img {
         position: relative;
-        height: 60%;
-        min-height: 60%;
-        max-height: 60%;
+        height: 50%;
+        /* Reduced from 60% to give more space for text on tablet */
+        min-height: 50%;
+        max-height: 50%;
         object-fit: cover;
         opacity: 1;
         transform: none;
         flex-shrink: 0;
+        border-radius: 14px 14px 0 0;
     }
 
     .card-content {
@@ -2778,6 +2862,16 @@ progress {
         flex-grow: 1;
         word-wrap: break-word;
         overflow-wrap: break-word;
+
+        /* Glassmorphism Effect */
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 0 0 14px 14px;
+        align-items: flex-start;
+        /* Left align everything */
+        text-align: left;
     }
 
     .card-tags {
@@ -2801,6 +2895,7 @@ progress {
         overflow-wrap: break-word;
         hyphens: auto;
         line-height: 1.3;
+        text-align: left;
     }
 
     .card-content p {
@@ -2809,12 +2904,17 @@ progress {
         flex-grow: 1;
         word-wrap: break-word;
         overflow-wrap: break-word;
+        text-align: left;
     }
 
     .card-button {
         margin-top: auto;
-        margin-bottom: 20px;
-        align-self: center;
+        margin-bottom: 0px;
+        align-self: flex-start;
+        font-size: 1rem;
+        padding: 14px 20px;
+        /* Taller (14px) and less wide (20px instead of 28px) */
+        min-width: 130px;
     }
 }
 
@@ -2823,53 +2923,23 @@ footer {
     padding: 50px 20px;
 }
 
-@media (max-width: 768px) {
-    #project-section h2 {
-        font-size: 2rem;
-        margin-bottom: 70px;
-    }
-
-    #skill-section h2 {
-        font-size: 2rem;
-        margin-bottom: 70px;
-    }
-
-    #education-section h2 {
-        font-size: 2rem;
-        margin-bottom: 70px;
-    }
-
-    #tools-section h2 {
-        font-size: 2rem;
-        margin-bottom: 70px;
-    }
-}
+@media (max-width: 768px) {}
 
 
 @media (max-width: 600px) {
+
+    #project-section .section-heading,
+    #skill-section .section-heading,
+    #education-section .section-heading {
+        width: 90%;
+        max-width: 100%;
+        padding: 0;
+    }
+
     #project-section {
         padding: 30px 15px;
     }
 
-    #project-section h2 {
-        font-size: 1.75rem;
-        margin-bottom: 50px;
-    }
-
-    #tools-section h2 {
-        font-size: 1.75rem;
-        margin-bottom: 50px;
-    }
-
-    #skill-section h2 {
-        font-size: 1.75rem;
-        margin-bottom: 50px;
-    }
-
-    #education-section h2 {
-        font-size: 1.75rem;
-        margin-bottom: 50px;
-    }
 
     .carousel-wrapper {
         width: 90%;
@@ -2908,9 +2978,10 @@ footer {
 
     .bento-card img {
         position: relative;
-        height: 240px;
-        min-height: 240px;
-        max-height: 240px;
+        height: 280px;
+        /* Increased from 240px to reduce text space on mobile */
+        min-height: 280px;
+        max-height: 280px;
         object-fit: cover;
         opacity: 1;
         transform: none !important;
