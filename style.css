@@ -1700,12 +1700,13 @@ footer {
 
 footer .grid-container {
     margin: 0 auto;
-    width: 1000px;
-    max-width: 100%;
+    width: 80%;
+    max-width: 1400px;
     display: grid;
-    grid-template-columns: 1fr 1fr max-content;
-    gap: 100px;
-    text-align: right;
+    grid-template-columns: 1fr auto;
+    gap: 200px;
+    /* Erhöht von 100px auf 200px für deutlich mehr Abstand auf Desktop */
+    text-align: left;
     border-radius: 16px;
 }
 
@@ -1748,6 +1749,40 @@ footer a {
     color: var(--secondary-text-color);
     text-decoration: none;
 }
+
+/* Footer divider with fade effect */
+.footer-divider {
+    width: 80%;
+    max-width: 80%;
+    height: 1px;
+    margin: 80px auto 50px;
+    background: linear-gradient(to right,
+            transparent 0%,
+            var(--secondary-text-color) 50%,
+            transparent 100%);
+}
+
+/* Footer bottom section */
+.footer-bottom {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.footer-credits {
+    color: var(--secondary-text-color);
+    font-size: 0.9rem;
+    margin: 0 0 15px 0;
+    font-weight: 400;
+}
+
+.footer-greeting {
+    color: var(--secondary-text-color);
+    font-size: 0.85rem;
+    margin: 0;
+    opacity: 0.7;
+    font-weight: 300;
+}
+
 
 /* Allgemeine Navigation */
 nav {
@@ -2324,6 +2359,20 @@ footer a:hover {
     footer h3 {
         margin-top: 30px;
         font-size: 1.5rem;
+    }
+
+    /* Responsive Footer Divider */
+    .footer-divider {
+        max-width: 90%;
+        margin: 60px auto 40px;
+    }
+
+    .footer-credits {
+        font-size: 0.8rem;
+    }
+
+    .footer-greeting {
+        font-size: 0.75rem;
     }
 }
 
