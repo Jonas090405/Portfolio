@@ -94,7 +94,7 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--secondary-text-color);
     text-transform: uppercase;
@@ -294,25 +294,7 @@ body {
     }
 }
 
-/* Ultrawide Enhancements */
-@media (min-width: 2500px) {
-    .badge-row-2 {
-        display: none;
-    }
 
-    .badge-row-1 {
-        margin-bottom: 0;
-    }
-
-    /* Ensure track fills width or loops properly */
-    .badge-track {
-        /* If track is too short for screen, we might need JS duplicating or just more content. 
-            Assuming CSS animation handles repeated content correctly if designed so. 
-            Usually infinite scroll needs content width > screen width. 
-            If user has issues with "cutting off", we ensure width is max-content. */
-        width: max-content;
-    }
-}
 
 /* Glassmorphism Badge Styles */
 .software-badge {
@@ -417,13 +399,13 @@ body {
     }
 
     100% {
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(-16.6666666667%, 0, 0);
     }
 }
 
 @keyframes scroll-right {
     0% {
-        transform: translate3d(-50%, 0, 0);
+        transform: translate3d(-16.6666666667%, 0, 0);
     }
 
     100% {
@@ -3225,4 +3207,89 @@ footer {
         transform: none !important;
         /* Kein Verschieben oder Drehen */
     }
+}
+
+/* --- ULTRAWIDE LAYOUT FIXES (Override) --- */
+/* --- ULTRAWIDE LAYOUT FIXES (Override) --- */
+@media (min-width: 2000px) {
+
+    /* 1. General Sections (Tools, Education, Skill): Container 100%, Header 80% */
+    #skill-section .section-heading,
+    #tools-section .section-heading,
+    #education-section .section-heading {
+        max-width: 80% !important;
+        padding: 0 !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #skill-section,
+    #tools-section,
+    #education-section {
+        max-width: none !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* 2. Project Section (Grid acts as Container): Container 80%, Header 100% of Container */
+    #project-section {
+        max-width: none !important;
+        width: 80% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    #project-section .section-heading {
+        max-width: 100% !important;
+        padding: 0 !important;
+        /* Align text left within the 80% container */
+        text-align: left !important;
+    }
+
+    footer .grid-container,
+    .footer-divider {
+        max-width: none !important;
+        width: 80% !important;
+    }
+
+    /* 3. Fix Double Row Issue on Ultrawide (if needed) */
+    .badge-row-2 {
+        display: none;
+    }
+
+    .badge-row-1 {
+        margin-bottom: 0;
+    }
+
+    .badge-track {
+        width: max-content;
+    }
+}
+
+/* 4. Spacing Adjustments (General, outside media query if applies everywhere, or specific) 
+   User asked for "less padding to bottom content" (tightness complaint?) OR "make consistent".
+   We will INCREASE it to make it look better as previously it was visually too tight. */
+
+#education-section .section-heading {
+    margin-bottom: 60px !important;
+}
+
+#tools-section .section-heading {
+    margin-bottom: 60px !important;
+}
+
+/* 3. Spacing Adjustments (General, outside media query if applies everywhere, or specific) 
+   User asked for "less padding to bottom content" (tightness complaint?) OR "make consistent".
+   We will INCREASE it to make it look better as previously it was visually too tight. */
+
+#education-section .section-heading {
+    margin-bottom: 60px !important;
+}
+
+#tools-section .section-heading {
+    margin-bottom: 60px !important;
 }
