@@ -839,7 +839,8 @@ document.addEventListener('DOMContentLoaded', function () {
         isDragging = false;
 
         // Apply smooth transition
-        carouselWrapper.style.transition = 'transform 1s cubic-bezier(0.22, 0.61, 0.36, 1)';
+        // Apply smooth transition
+        carouselWrapper.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
 
         const diff = currentX - startX;
         const threshold = carouselWrapper.offsetWidth * 0.15; // Reduced threshold for easier swipe

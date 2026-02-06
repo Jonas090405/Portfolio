@@ -3001,9 +3001,9 @@ footer {
 
     .bento-card {
         flex-direction: column;
-        height: 520px !important;
-        min-height: 520px !important;
-        max-height: 520px !important;
+        height: 600px !important;
+        min-height: 600px !important;
+        max-height: 600px !important;
         transform: none !important;
         will-change: auto;
         flex-shrink: 0;
@@ -3029,6 +3029,18 @@ footer {
         transform: none !important;
         flex-shrink: 0;
         transition: none;
+        will-change: transform;
+        /* Hardware acceleration */
+    }
+
+    /* Remove heavy effects on mobile to improve performance */
+    .bento-card {
+        transition: transform 0.3s ease !important;
+        /* Faster transition */
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+        /* Simple shadow */
     }
 
     .card-content {
