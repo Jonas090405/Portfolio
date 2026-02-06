@@ -1286,6 +1286,20 @@ header .read-more:hover {
     flex: 1;
 }
 
+.bento-card h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-color);
+    line-height: 1.3;
+    z-index: 2;
+    position: relative;
+    /* Prevent awkward word breaks like "Vi- sion" */
+    hyphens: manual;
+    -webkit-hyphens: manual;
+    -ms-hyphens: manual;
+}
+
 .tab-btn .material-symbols-rounded {
     font-size: 1.4rem;
     transition: transform 300ms ease;
@@ -3244,7 +3258,28 @@ footer {
         padding-right: 0 !important;
     }
 
-    /* 2. Project Section (Grid acts as Container): Container 80%, Header 100% of Container */
+    /* 2. Uncap Content Containers to match 80% Heading Alignment */
+    #skill-section .wrapper {
+        max-width: 80% !important;
+        width: 80% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    /* Education Section: Keep content fixed/centered, align heading with it */
+    #education-section .section-heading {
+        max-width: 800px !important;
+        /* Match max-width of .tab-navigation (800px) */
+        width: 80% !important;
+        /* Ensure it respects the gap */
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 0 !important;
+        text-align: left;
+        /* Ensure text is left-aligned within the centered box */
+    }
+
+    /* 3. Project Section (Grid acts as Container): Container 80%, Header 100% of Container */
     #project-section {
         max-width: none !important;
         width: 80% !important;
@@ -3268,7 +3303,7 @@ footer {
         width: 80% !important;
     }
 
-    /* 3. Fix Double Row Issue on Ultrawide (if needed) */
+    /* 4. Fix Double Row Issue on Ultrawide (if needed) */
     .badge-row-2 {
         display: none;
     }
@@ -3282,7 +3317,7 @@ footer {
     }
 }
 
-/* 4. Spacing Adjustments (General, outside media query if applies everywhere, or specific) 
+/* 5. Spacing Adjustments (General, outside media query if applies everywhere, or specific) 
    User asked for "less padding to bottom content" (tightness complaint?) OR "make consistent".
    We will INCREASE it to make it look better as previously it was visually too tight. */
 
