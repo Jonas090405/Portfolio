@@ -157,6 +157,11 @@ body {
 @media (min-width: 1700px) {
     #tools-section .section-heading {
         max-width: 1800px;
+    }
+}
+
+@media (min-width: 2000px) {
+    #tools-section .section-heading {
         padding: 0;
     }
 }
