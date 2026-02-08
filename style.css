@@ -124,10 +124,25 @@ body {
     margin-right: auto;
 }
 
-/* Large desktop - match wrapper's expanded width */
+/* Large desktop - match 3-column grid width */
+@media (min-width: 1700px) {
+    #skill-section .section-heading,
+    #project-section .section-heading {
+        max-width: 1800px;
+    }
+}
+
+/* Extra large desktop - match skill section wrapper's expanded width */
 @media (min-width: 1600px) {
     #skill-section .section-heading {
-        max-width: 1600px;
+        max-width: 1800px;
+    }
+}
+
+/* Ultrawide - match 4-column grid width */
+@media (min-width: 2900px) {
+    #project-section .section-heading {
+        max-width: 3100px;
     }
 }
 
@@ -2454,11 +2469,19 @@ progress {
     }
 }
 
+/* Large Desktop - 3 Spalten */
+@media (min-width: 1700px) {
+    #project-section {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1800px;
+    }
+}
+
 /* Ultrawide - 4 Spalten */
-@media (min-width: 2000px) {
+@media (min-width: 2900px) {
     #project-section {
         grid-template-columns: repeat(4, 1fr);
-        max-width: 2000px;
+        max-width: 3100px;
     }
 }
 
@@ -3237,7 +3260,7 @@ footer {
 
 /* --- ULTRAWIDE LAYOUT FIXES (Override) --- */
 /* --- ULTRAWIDE LAYOUT FIXES (Override) --- */
-@media (min-width: 2000px) {
+@media (min-width: 2900px) {
 
     /* 1. General Sections (Tools, Education, Skill): Container 100%, Header 80% */
     #skill-section .section-heading,
