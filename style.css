@@ -132,7 +132,7 @@ body {
 }
 
 /* Extra large desktop - match skill section wrapper's expanded width */
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
     #skill-section .section-heading {
         max-width: 1800px;
     }
@@ -877,7 +877,7 @@ header .read-more:hover {
     margin-right: auto;
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
     #skill-section .wrapper {
         grid-template-columns: repeat(3, 1fr);
         max-width: 1800px;
