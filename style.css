@@ -126,14 +126,13 @@ body {
 
 /* Large desktop - match 3-column grid width */
 @media (min-width: 1700px) {
-    #skill-section .section-heading,
     #project-section .section-heading {
         max-width: 1800px;
     }
 }
 
 /* Extra large desktop - match skill section wrapper's expanded width */
-@media (min-width: 1600px) {
+@media (min-width: 1400px) {
     #skill-section .section-heading {
         max-width: 1800px;
     }
@@ -149,6 +148,23 @@ body {
 #tools-section .section-heading {
     margin-top: 40px;
     padding: 0 80px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Match tools-section heading with projects-section responsive behavior */
+@media (min-width: 1700px) {
+    #tools-section .section-heading {
+        max-width: 1800px;
+        padding: 0;
+    }
+}
+
+@media (min-width: 2900px) {
+    #tools-section .section-heading {
+        max-width: 3100px;
+    }
 }
 
 @media (max-width: 1302px) {
@@ -861,10 +877,10 @@ header .read-more:hover {
     margin-right: auto;
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1400px) {
     #skill-section .wrapper {
         grid-template-columns: repeat(3, 1fr);
-        max-width: 1600px;
+        max-width: 1800px;
     }
 }
 
