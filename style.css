@@ -842,7 +842,7 @@ header .read-more:hover {
     justify-content: center;
     border: 2px solid var(--accent-30);
     border-radius: 50%;
-    transition: transform var(--transition-base), border-color var(--transition-base), background-color var(--transition-base);
+    transition: border-color var(--transition-base), background-color var(--transition-base);
     background: linear-gradient(135deg, var(--accent-dark-15), var(--accent-10));
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
@@ -854,18 +854,16 @@ header .read-more:hover {
     width: 19px;
     height: 19px;
     color: var(--accent-light);
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 .social-icon:hover {
-    transform: scale(1.1);
     border-color: var(--accent-60);
     background: linear-gradient(135deg, var(--accent-dark-25), var(--accent-20));
 }
 
 .social-icon:hover svg {
     color: var(--accent-lighter);
-    transform: scale(1.05);
 }
 
 /* Hide social icons only on small mobile devices */
@@ -1651,7 +1649,7 @@ header .read-more:hover {
 .toggle-btn .icon {
     font-size: 2.5rem;
     font-weight: 300;
-    color: var(--accent-color);
+    color: rgba(245, 245, 245, 0.85);
     transition: transform 0.3s ease, color 0.3s ease;
     display: block;
     line-height: 1;
@@ -1684,7 +1682,7 @@ header .read-more:hover {
 
     /* Wenn man über den header hovert, soll auch der Button den Effekt haben */
     .content:has(.timeline-header:hover) .toggle-btn .icon {
-        color: #4dbef3;
+        color: #ffffff;
     }
 }
 
