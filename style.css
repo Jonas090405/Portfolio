@@ -1672,7 +1672,7 @@ header .read-more:hover {
     }
 
     .toggle-btn:hover .icon {
-        color: var(--accent-light);
+        color: #ffffff;
     }
 
     /* Wenn man über den toggle-btn hovert, soll auch h3 den Effekt haben */
