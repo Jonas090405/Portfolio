@@ -2814,6 +2814,10 @@ progress {
     line-height: 1.2;
     max-width: 100%;
     pointer-events: none;
+    will-change: auto;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 /* Beschreibungstext */
@@ -2832,9 +2836,9 @@ progress {
     align-items: center;
     justify-content: center;
     gap: var(--spacing-xs);
-    background: linear-gradient(to right, rgba(0, 105, 153, 0.85), var(--accent-40));
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
+    background: linear-gradient(to right, rgba(0, 105, 153, 0.7), rgba(77, 190, 243, 0.5));
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
     border: 1px solid var(--accent-15);
     color: white;
     font-size: 1.2rem;
@@ -2848,6 +2852,8 @@ progress {
     min-width: 120px;
     text-align: center;
     transition: all var(--transition-base);
+    transform: translateZ(0);
+    will-change: background, border-color;
 }
 
         .card-button::after {
@@ -2866,7 +2872,7 @@ progress {
         }
 
         .card-button:hover {
-            background: linear-gradient(to right, rgba(10, 139, 201, 0.85), rgba(109, 212, 255, 0.85));
+            background: linear-gradient(to right, rgba(10, 139, 201, 0.8), rgba(109, 212, 255, 0.7));
             border-color: rgba(77, 190, 243, 0.5);
         }
 
