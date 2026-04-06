@@ -103,8 +103,10 @@ export function ScrollProgress() {
           }
         }
 
+        const clampedIndex = Math.max(0, Math.min(sections.length - 1, Math.round(fractional)));
+
         rawProgress.set(fractional);
-        setActiveIndex(Math.round(fractional));
+        setActiveIndex(clampedIndex);
       });
     };
 
@@ -259,7 +261,7 @@ export function ScrollProgress() {
                 transition={{ duration: 0.22, ease: 'easeOut' }}
                 className="text-white/60 text-xs"
               >
-                {sections[activeIndex]?.label}
+                {sections[Math.max(0, Math.min(sections.length - 1, activeIndex))]?.label}
               </motion.span>
             </button>
           </motion.div>

@@ -80,10 +80,10 @@ export function ExperienceSection() {
                     <Icon className="w-4.5 h-4.5 text-black/85" strokeWidth={2.1} />
                   </div>
 
-                  <div className="space-y-2 min-w-0">
-                    <div className="flex items-center gap-2.5">
-                      <h3 className="text-base sm:text-lg text-white leading-tight">{item.title}</h3>
-                      <span className="text-[10px] tracking-wider uppercase text-white/40 border border-white/15 rounded-full px-2 py-0.5">
+                  <div className="space-y-2 min-w-0 flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2.5">
+                      <h3 className="text-base sm:text-lg text-white leading-tight min-w-0">{item.title}</h3>
+                      <span className="inline-flex w-fit max-w-full shrink-0 text-[10px] tracking-wider uppercase text-white/40 border border-white/15 rounded-full px-2 py-0.5 whitespace-nowrap leading-tight">
                         {item.tag}
                       </span>
                     </div>
