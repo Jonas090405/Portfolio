@@ -31,6 +31,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: Projekte/TraderepublicXshisha/package-lock.json
+      - name: Install Shisha Dependencies
+        working-directory: Projekte/TraderepublicXshisha
+        run: npm ci
+      - name: Build Shisha Project
+        working-directory: Projekte/TraderepublicXshisha
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
