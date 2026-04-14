@@ -7,6 +7,7 @@ const sections = [
   { id: 'components',   label: 'Komponenten' },
   { id: 'performance',  label: 'Performance' },
   { id: 'how-it-works', label: 'So funktioniert es' },
+  { id: 'app-control',  label: 'Appsteuerung' },
   { id: 'experience',   label: 'Experience' },
   { id: 'benefits',     label: 'Vorteile' },
   { id: 'closing',      label: 'Jetzt kaufen' },
@@ -91,11 +92,12 @@ export function ScrollProgress() {
         });
 
         let fractional = 0;
+        const activationPoint = 0.5;
         for (let i = 0; i < offsets.length; i++) {
-          const threshold = offsets[i] - window.innerHeight * 0.35;
+          const threshold = offsets[i] - window.innerHeight * activationPoint;
           if (scrollY >= threshold) {
             const next = offsets[i + 1]
-              ? offsets[i + 1] - window.innerHeight * 0.35
+              ? offsets[i + 1] - window.innerHeight * activationPoint
               : threshold + window.innerHeight;
             const span = next - threshold;
             const t = Math.min(1, Math.max(0, (scrollY - threshold) / span));
@@ -103,10 +105,9 @@ export function ScrollProgress() {
           }
         }
 
-        const clampedIndex = Math.max(0, Math.min(sections.length - 1, Math.round(fractional)));
-
         rawProgress.set(fractional);
-        setActiveIndex(clampedIndex);
+        // Use floor so the nav switches only after entering the next section.
+        setActiveIndex(Math.min(sections.length - 1, Math.floor(fractional + 0.0001)));
       });
     };
 
@@ -261,7 +262,7 @@ export function ScrollProgress() {
                 transition={{ duration: 0.22, ease: 'easeOut' }}
                 className="text-white/60 text-xs"
               >
-                {sections[Math.max(0, Math.min(sections.length - 1, activeIndex))]?.label}
+                {sections[activeIndex]?.label}
               </motion.span>
             </button>
           </motion.div>
