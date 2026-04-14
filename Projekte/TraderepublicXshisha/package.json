@@ -6,7 +6,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "postbuild": "cp dist/index.html dist/TradeRepublicXShisha.html"
+    "postbuild": "cp dist/index.html dist/TradeRepublicXShisha.html && rm dist/index.html"
 
   },
   "dependencies": {
