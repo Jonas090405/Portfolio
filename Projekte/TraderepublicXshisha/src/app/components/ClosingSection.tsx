@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef, useState } from 'react';
 import hookahImage from '../../assets/smart-shisha-device.png';
-import { ShoppingCart, Info } from 'lucide-react';
+import { ShoppingCart, Info, Package } from 'lucide-react';
 import { ShishaInfoModal } from './ShishaInfoModal';
 
 export function ClosingSection() {
@@ -43,6 +43,33 @@ export function ClosingSection() {
               alt="Electric Hookah"
               className="w-full h-auto object-contain"
             />
+          </motion.div>
+
+          {/* Lieferumfang */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.35 }}
+            className="w-full max-w-sm sm:max-w-md text-left"
+          >
+            <p className="text-white/35 text-xs tracking-widest uppercase mb-3">Lieferumfang</p>
+            <div className="border-y border-white/8 divide-y divide-white/8">
+              {[
+                ['Electric Hookah Base', '1×'],
+                ['Keramik-Heizkern', '1×'],
+                ['Flavor Pods (Starter-Set)', '3×'],
+                ['USB-C Ladekabel', '1×'],
+                ['Mundstück (Silikon)', '2×'],
+              ].map(([name, qty]) => (
+                <div key={name} className="flex items-center justify-between gap-3 py-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Package className="w-3.5 h-3.5 text-white/25 shrink-0" strokeWidth={1.5} />
+                    <span className="text-white/70 text-sm leading-snug">{name}</span>
+                  </div>
+                  <span className="text-white/35 text-sm shrink-0">{qty}</span>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
           {/* Stats row */}
