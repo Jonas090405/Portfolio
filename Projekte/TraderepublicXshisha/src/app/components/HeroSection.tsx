@@ -21,7 +21,7 @@ export function HeroSection() {
             <span className="text-white/40 tracking-widest uppercase text-xs sm:text-sm">
               Electric Hookah
             </span>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-light tracking-tight leading-none">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-medium tracking-tight leading-none">
               Shisha.<br />
               <span className="text-white/30">Simplified.</span>
             </h1>

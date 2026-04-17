@@ -39,7 +39,7 @@ export function ProductOverview() {
           className="max-w-2xl space-y-4"
         >
           <span className="text-white/40 tracking-widest uppercase text-xs">Technologie</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium">
             Tradition trifft Technologie
           </h2>
           <p className="text-base sm:text-lg text-white/55 leading-relaxed">
@@ -66,7 +66,7 @@ export function ProductOverview() {
                     <Icon className="w-4 h-4 text-black/85" strokeWidth={2.1} />
                   </div>
                 </div>
-                <div className="text-3xl sm:text-4xl font-light text-white">{feature.value}</div>
+                <div className="text-3xl sm:text-4xl font-medium text-white">{feature.value}</div>
                 <div className="text-white/40 text-sm">{feature.sub}</div>
               </motion.div>
             );

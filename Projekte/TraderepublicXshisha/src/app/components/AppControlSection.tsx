@@ -47,7 +47,7 @@ export function AppControlSection() {
           className="max-w-2xl"
         >
           <span className="text-white/40 tracking-widest uppercase text-xs">Appsteuerung</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mt-2">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
             Alles in einer App im Griff
           </h2>
           <p className="text-white/50 text-sm sm:text-base mt-4 leading-relaxed">
@@ -104,7 +104,7 @@ export function AppControlSection() {
                   <div className="w-12 h-12 rounded-full bg-white mx-auto flex items-center justify-center mb-3">
                     <Icon className="w-5 h-5 text-black/85" strokeWidth={2.1} />
                   </div>
-                  <h3 className="text-white text-sm sm:text-xl leading-tight">{item.title}</h3>
+                  <h3 className="text-white text-sm sm:text-xl font-medium leading-tight">{item.title}</h3>
                   <p className="text-white/45 text-xs sm:text-sm leading-relaxed mt-2 max-w-[28ch] mx-auto">{item.subtext}</p>
                 </motion.article>
               );

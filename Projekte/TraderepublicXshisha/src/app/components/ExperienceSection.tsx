@@ -56,7 +56,7 @@ export function ExperienceSection() {
           className="max-w-2xl"
         >
           <span className="text-white/40 tracking-widest uppercase text-xs">Experience</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mt-2">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
             Warum sich jede Session besser anfühlt
           </h2>
           <p className="text-white/50 text-sm sm:text-base mt-4 leading-relaxed">
@@ -82,7 +82,7 @@ export function ExperienceSection() {
 
                   <div className="space-y-2 min-w-0">
                     <div className="flex items-center gap-2.5">
-                      <h3 className="text-base sm:text-lg text-white leading-tight">{item.title}</h3>
+                      <h3 className="text-base sm:text-lg text-white font-medium leading-tight">{item.title}</h3>
                       <span className="text-[10px] tracking-wider uppercase text-white/40 border border-white/15 rounded-full px-2 py-0.5">
                         {item.tag}
                       </span>

@@ -44,7 +44,7 @@ export function HowItWorks() {
           transition={{ duration: 0.7 }}
         >
           <span className="text-white/40 tracking-widest uppercase text-xs">Anleitung</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mt-2">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
             So funktioniert's
           </h2>
         </motion.div>
@@ -79,7 +79,7 @@ export function HowItWorks() {
 
                 {/* Metric */}
                 <div className="pt-2 border-t border-white/8">
-                  <div className="text-[#00ff88] text-lg font-light">{step.metric}</div>
+                  <div className="text-[#00ff88] text-lg font-medium">{step.metric}</div>
                   <div className="text-white/35 text-xs mt-0.5">{step.metricLabel}</div>
                 </div>
               </motion.div>

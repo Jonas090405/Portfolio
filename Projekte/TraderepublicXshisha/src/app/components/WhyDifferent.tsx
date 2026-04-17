@@ -40,7 +40,7 @@ export function WhyDifferent() {
           className="mb-16 sm:mb-20 lg:mb-24"
         >
           <span className="text-white/40 tracking-widest uppercase text-xs">Unsere Prinzipien</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mt-2">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
             Wofür wir stehen
           </h2>
         </motion.div>
@@ -64,7 +64,7 @@ export function WhyDifferent() {
 
               {/* Content */}
               <div className="space-y-3 sm:space-y-4">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-light">
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-medium">
                   {principle.title}
                 </h3>
                 <p className="text-white/60 text-base sm:text-lg leading-relaxed max-w-2xl">

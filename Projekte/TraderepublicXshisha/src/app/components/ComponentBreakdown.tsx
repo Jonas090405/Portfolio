@@ -75,7 +75,7 @@ export function ComponentBreakdown() {
           transition={{ duration: 0.7 }}
         >
           <span className="text-white/40 tracking-widest uppercase text-xs">Engineering</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mt-2">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
             Komponenten im Detail
           </h2>
         </motion.div>
@@ -112,7 +112,7 @@ export function ComponentBreakdown() {
                     <span className="text-white/40 text-xs">{component.tag}</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-white text-sm">{component.name}</div>
+                    <div className="text-white text-sm font-medium">{component.name}</div>
                     <div className="text-white/40 text-xs mt-0.5 truncate">{component.description}</div>
                   </div>
                   <motion.div

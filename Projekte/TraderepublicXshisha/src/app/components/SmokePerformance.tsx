@@ -83,7 +83,7 @@ export function SmokePerformance() {
           transition={{ duration: 0.7 }}
         >
           <span className="text-white/40 tracking-widest uppercase text-xs">Performance</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mt-2">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
             Rauchentwicklung über die Session
           </h2>
           <p className="text-white/40 mt-3 max-w-lg text-sm leading-relaxed">
@@ -207,7 +207,7 @@ export function SmokePerformance() {
                   <div className="text-white/40 text-xs">{stat.label}</div>
                   <div className="text-white/30 text-[11px] mt-0.5 leading-snug">{stat.sub}</div>
                 </div>
-                <div className="text-[#1DB954] text-xl lg:text-lg font-light shrink-0 mt-1 lg:mt-0">{stat.value}</div>
+                <div className="text-[#1DB954] text-xl lg:text-lg font-medium shrink-0 mt-1 lg:mt-0">{stat.value}</div>
               </motion.div>
             ))}
           </div>

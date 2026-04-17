@@ -62,7 +62,7 @@ export function BenefitsGrid() {
           transition={{ duration: 0.7 }}
         >
           <span className="text-white/40 tracking-widest uppercase text-xs">Zahlen & Fakten</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mt-2">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
             Die Zahlen sprechen
           </h2>
         </motion.div>
@@ -79,7 +79,7 @@ export function BenefitsGrid() {
             >
               <div className="text-white/50 text-sm">{benefit.title}</div>
               {benefit.metric && (
-                <div className="text-2xl sm:text-3xl lg:text-4xl font-light text-[#00ff88]">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-medium text-[#00ff88]">
                   {benefit.metric}
                 </div>
               )}
@@ -102,7 +102,7 @@ export function BenefitsGrid() {
           <div className="flex flex-col gap-3 sm:gap-4">
             <div className="space-y-1">
               <div className="text-white/45 text-xs tracking-wider uppercase">Kostenvergleich</div>
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-light text-white">Traditionell vs. Elektrisch</div>
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-medium text-white">Traditionell vs. Elektrisch</div>
               <div className="flex items-center gap-1.5 text-[#00ff88] text-sm">
                 <span>▲</span>
                 <span>€ 240 gespart nach 12 Monaten</span>

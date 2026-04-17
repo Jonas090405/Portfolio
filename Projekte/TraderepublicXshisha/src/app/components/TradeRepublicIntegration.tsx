@@ -61,7 +61,7 @@ export function TradeRepublicIntegration() {
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
               <div className="space-y-1">
                 <div className="text-white/40 text-xs tracking-wider uppercase">Monatliche Kosten</div>
-                <div className="text-3xl sm:text-4xl font-light text-white">€ 24,00</div>
+                <div className="text-3xl sm:text-4xl font-medium text-white">€ 24,00</div>
                 <div className="flex items-center gap-1.5 text-[#00ff88] text-sm">
                   <span>▲</span>
                   <span>€ 15 günstiger / Monat</span>

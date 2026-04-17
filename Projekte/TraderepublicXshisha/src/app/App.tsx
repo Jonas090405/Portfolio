@@ -17,9 +17,9 @@ export default function App() {
       <div id="hero"><HeroSection /></div>
       <div id="product"><ProductOverview /></div>
       <div id="components"><ComponentBreakdown /></div>
-      <div id="performance"><SmokePerformance /></div>
       <div id="how-it-works"><HowItWorks /></div>
       <div id="app-control"><AppControlSection /></div>
+      <div id="performance"><SmokePerformance /></div>
       <div id="experience"><ExperienceSection /></div>
       <div id="benefits"><BenefitsGrid /></div>
       <div id="closing"><ClosingSection /></div>

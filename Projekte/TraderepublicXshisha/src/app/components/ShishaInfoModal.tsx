@@ -85,7 +85,7 @@ export function ShishaInfoModal({ open, onClose }: Props) {
             <div className="z-10 bg-[#111] border-b border-white/6 px-6 sm:px-8 py-5 flex items-center justify-between rounded-t-3xl sm:rounded-t-3xl">
               <div>
                 <p className="text-white/40 text-xs tracking-widest uppercase">Electric Hookah</p>
-                <h2 className="text-white mt-0.5">Alle Details</h2>
+                <h2 className="text-white mt-0.5 font-medium">Alle Details</h2>
               </div>
               <button
                 onClick={onClose}
@@ -112,7 +112,7 @@ export function ShishaInfoModal({ open, onClose }: Props) {
                           <Icon className="w-3.5 h-3.5 text-white/50" strokeWidth={1.5} />
                         </div>
                         <div>
-                          <div className="text-[#00ff88] text-lg font-light leading-tight">{spec.value}</div>
+                          <div className="text-[#00ff88] text-lg font-medium leading-tight">{spec.value}</div>
                           <div className="text-white/55 text-xs mt-0.5">{spec.label}</div>
                           <div className="text-white/25 text-xs">{spec.sub}</div>
                         </div>
@@ -140,7 +140,7 @@ export function ShishaInfoModal({ open, onClose }: Props) {
                         </span>
                       </div>
                       <div className="space-y-1.5">
-                        <div className="text-white text-sm">{item.title}</div>
+                        <div className="text-white text-sm font-medium">{item.title}</div>
                         <p className="text-white/45 text-sm leading-relaxed">{item.body}</p>
                       </div>
                     </motion.div>
@@ -175,7 +175,7 @@ export function ShishaInfoModal({ open, onClose }: Props) {
               <div className="flex items-start gap-3 bg-white/4 rounded-2xl p-5">
                 <Shield className="w-4 h-4 text-[#00ff88] mt-0.5 shrink-0" strokeWidth={1.5} />
                 <div>
-                  <div className="text-white text-sm">2 Jahre Garantie</div>
+                  <div className="text-white text-sm font-medium">2 Jahre Garantie</div>
                   <p className="text-white/40 text-xs mt-1 leading-relaxed">
                     Vollständige Herstellergarantie auf alle Komponenten. Kostenloser Ersatzversand innerhalb der EU.
                   </p>

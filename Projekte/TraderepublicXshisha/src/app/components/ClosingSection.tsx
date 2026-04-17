@@ -23,7 +23,7 @@ export function ClosingSection() {
             className="max-w-2xl space-y-4 sm:space-y-5"
           >
             <span className="text-white/40 tracking-widest uppercase text-xs">Jetzt verfügbar</span>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium">
               Shisha, neu gedacht.
             </h2>
             <p className="text-base sm:text-lg text-white/55 leading-relaxed">
@@ -58,7 +58,7 @@ export function ClosingSection() {
               { value: '-40%', label: 'Ersparnis' },
             ].map((stat) => (
               <div key={stat.label} className="space-y-1">
-                <div className="text-[#00ff88] text-lg sm:text-xl lg:text-2xl font-light">{stat.value}</div>
+                <div className="text-[#00ff88] text-lg sm:text-xl lg:text-2xl font-medium">{stat.value}</div>
                 <div className="text-white/40 text-xs sm:text-sm">{stat.label}</div>
               </div>
             ))}
