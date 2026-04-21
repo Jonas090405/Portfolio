@@ -84,6 +84,11 @@ export function ScrollProgress() {
           if (!isHoverZoneActive) setIsVisible(false);
         }
 
+        // On mobile, collapse the expanded sheet when the user scrolls.
+        if (window.innerWidth < 1024 && isMobileOpenRef.current) {
+          setIsMobileOpen(false);
+        }
+
         // Compute continuous fractional index
         const offsets = sections.map(s => {
           const el = document.getElementById(s.id);
@@ -126,6 +131,35 @@ export function ScrollProgress() {
 
   return (
     <AnimatePresence>
+      {!isVisible && (
+        <motion.button
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -10 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="fixed left-2 top-1/2 -translate-y-1/2 z-50 hidden lg:flex items-center gap-1.5 rounded-full border border-white/10 bg-[#161616]/85 px-2 py-1.5 shadow-xl"
+          onMouseEnter={() => setIsHoverZoneActive(true)}
+          onClick={() => {
+            setIsHoverZoneActive(true);
+            setIsVisible(true);
+          }}
+          aria-label="Navigation minimiert"
+          title="Navigation minimiert"
+        >
+          <span className="sr-only">Navigation minimiert</span>
+          <motion.div
+            animate={{ opacity: [0.35, 0.9, 0.35] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+            className="h-1 w-1 rounded-full bg-white/80"
+          />
+          <div className="flex flex-col gap-0.5">
+            <div className="h-[2px] w-2 rounded-full bg-white/45" />
+            <div className="h-[2px] w-3 rounded-full bg-white/65" />
+            <div className="h-[2px] w-2 rounded-full bg-white/45" />
+          </div>
+        </motion.button>
+      )}
+
       {isVisible && (
         <>
           {/* ── Hover zone (desktop only) ── */}
@@ -192,82 +226,90 @@ export function ScrollProgress() {
               );
             })}
           </motion.nav>
+        </>
+      )}
 
-          {/* ── Mobile pill ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 18 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-6 left-4 z-50 lg:hidden"
-          >
-            <AnimatePresence>
-              {isMobileOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 12, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 12, scale: 0.96 }}
-                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                  className="mb-3 bg-[#161616] border border-white/8 rounded-3xl py-2 overflow-hidden shadow-2xl"
-                >
-                  {sections.map((section, i) => (
-                    <button
-                      key={section.id}
-                      onClick={() => scrollTo(section.id)}
-                      className="flex items-center gap-3 w-full px-4 py-2.5 text-left"
-                    >
-                      <motion.div
-                        animate={{
-                          backgroundColor: activeIndex === i ? '#ffffff' : 'rgba(255,255,255,0.18)',
-                          scale: activeIndex === i ? 1.3 : 1,
-                        }}
-                        transition={SPRING}
-                        className="w-1.5 h-1.5 rounded-full shrink-0"
-                      />
-                      <motion.span
-                        animate={{ opacity: activeIndex === i ? 1 : 0.38 }}
-                        transition={{ duration: 0.3 }}
-                        className="text-xs text-white"
-                      >
-                        {section.label}
-                      </motion.span>
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <button
-              onClick={() => setIsMobileOpen(p => !p)}
-              className="flex items-center gap-2.5 bg-[#161616] border border-white/10 rounded-3xl px-4 py-2.5 shadow-xl"
+      {/* ── Mobile pill (always visible on mobile) ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 18 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed bottom-6 left-4 z-50 lg:hidden"
+      >
+        <AnimatePresence>
+          {isMobileOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 12, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 12, scale: 0.96 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="mb-3 bg-[#161616] border border-white/8 rounded-3xl py-2 overflow-hidden shadow-2xl"
             >
-              <div className="flex gap-[3px] items-center">
-                {sections.map((_, i) => (
+              {sections.map((section, i) => (
+                <button
+                  key={section.id}
+                  onClick={() => scrollTo(section.id)}
+                  className="flex items-center gap-3 w-full px-4 py-2.5 text-left"
+                >
                   <motion.div
-                    key={i}
                     animate={{
                       backgroundColor: activeIndex === i ? '#ffffff' : 'rgba(255,255,255,0.18)',
-                      width: activeIndex === i ? 14 : 4,
+                      width: activeIndex === i ? 16 : 8,
                       scaleY: activeIndex === i ? 1.25 : 1,
                     }}
                     transition={SPRING}
-                    className="h-[3px] rounded-full"
+                    className="h-[2px] rounded-full shrink-0"
                   />
-                ))}
-              </div>
-              <motion.span
-                key={activeIndex}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.22, ease: 'easeOut' }}
-                className="text-white/60 text-xs"
-              >
-                {sections[activeIndex]?.label}
-              </motion.span>
-            </button>
-          </motion.div>
-        </>
-      )}
+                  <motion.span
+                    animate={{ opacity: activeIndex === i ? 1 : 0.38 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-xs text-white"
+                  >
+                    {section.label}
+                  </motion.span>
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button
+          onClick={() => setIsMobileOpen(p => !p)}
+          aria-expanded={isMobileOpen}
+          aria-label="Navigationsmenu umschalten"
+          className="flex items-center gap-2.5 bg-[#161616] border border-white/10 rounded-3xl px-4 py-2.5 shadow-xl"
+        >
+          <div className="flex gap-[3px] items-center">
+            {sections.map((_, i) => (
+              <motion.div
+                key={i}
+                animate={{
+                  backgroundColor: activeIndex === i ? '#ffffff' : 'rgba(255,255,255,0.18)',
+                  width: activeIndex === i ? 14 : 4,
+                  scaleY: activeIndex === i ? 1.25 : 1,
+                }}
+                transition={SPRING}
+                className="h-[3px] rounded-full"
+              />
+            ))}
+          </div>
+          <motion.span
+            key={activeIndex}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className="text-white/60 text-xs"
+          >
+            {sections[activeIndex]?.label}
+          </motion.span>
+          <motion.span
+            animate={{ rotate: isMobileOpen ? 225 : 45 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="w-2.5 h-2.5 border-r border-b border-white/70 shrink-0"
+          />
+        </button>
+      </motion.div>
     </AnimatePresence>
   );
 }
