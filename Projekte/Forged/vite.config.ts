@@ -31,6 +31,9 @@ export default defineConfig({
     },
   },
 
+  // Use relative paths so dist works when served from a subdirectory (e.g. GitHub Pages)
+  base: './',
+
   // Use forged.html as the build entry point
   build: {
     rollupOptions: {
@@ -41,3 +44,4 @@ export default defineConfig({
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
 })
+
