@@ -128,6 +128,12 @@
     cursor: url('cursor.svg') 0 0, auto;
 }
 
+/* Text Selection Highlighting */
+::selection {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}
+
 /* Custom Pointer Cursor for interactive elements */
 a,
 button,
@@ -793,6 +799,18 @@ header h2 {
 
 header p {
     color: var(--secondary-text-color);
+}
+
+.text-link {
+    color: var(--accent-light);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    transition: color var(--transition-base);
+}
+
+.text-link:hover {
+    color: var(--accent-lighter);
+    text-decoration: underline;
 }
 
 header .read-more {
