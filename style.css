@@ -130,8 +130,8 @@
 
 /* Text Selection Highlighting */
 ::selection {
-    background-color: var(--accent-color);
-    color: var(--text-color);
+    background-color: var(--accent-light);
+    color: var(--primary-color);
 }
 
 /* Custom Pointer Cursor for interactive elements */
