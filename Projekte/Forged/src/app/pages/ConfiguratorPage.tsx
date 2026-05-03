@@ -56,7 +56,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     <div className="flex items-center gap-3 mb-4">
       <div className="w-4 h-px bg-red-600" />
       <span
-        className="text-white/40 text-xs tracking-widest uppercase"
+        className="text-white/40 text-sm tracking-widest uppercase"
         style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.2em' }}
       >
         {children}
@@ -146,7 +146,7 @@ export function ConfiguratorPage() {
         </button>
 
         {/* Breadcrumb */}
-        <div className="hidden md:flex items-center gap-2 text-xs text-white/30" style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em' }}>
+        <div className="hidden md:flex items-center gap-2 text-sm text-white/30" style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em' }}>
           <span className="text-white/20 uppercase tracking-widest">Konfigurator</span>
           <span className="w-px h-3 bg-white/20" />
           <span className="text-white/50 uppercase tracking-widest">{selectedDesign?.name}</span>
@@ -158,7 +158,7 @@ export function ConfiguratorPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={reset}
-            className="text-white/30 hover:text-white/60 text-xs tracking-widest uppercase transition-colors flex items-center gap-2"
+            className="text-white/30 hover:text-white/60 text-sm tracking-widest uppercase transition-colors flex items-center gap-2"
             style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.15em' }}
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -167,7 +167,7 @@ export function ConfiguratorPage() {
             <span className="hidden lg:inline">Zurücksetzen</span>
           </button>
           <button
-            className="bg-red-600 hover:bg-red-500 text-white text-xs tracking-widest uppercase px-4 lg:px-5 py-2.5 transition-all whitespace-nowrap"
+            className="bg-red-600 hover:bg-red-500 text-white text-sm tracking-widest uppercase px-4 lg:px-5 py-2.5 transition-all whitespace-nowrap"
             style={{
               fontFamily: 'var(--font-display)',
               letterSpacing: '0.15em',
@@ -185,7 +185,7 @@ export function ConfiguratorPage() {
           <button
             key={tab}
             onClick={() => setMobileTab(tab)}
-            className="flex-1 py-3 text-xs tracking-widest uppercase transition-colors"
+            className="flex-1 py-3 text-sm tracking-widest uppercase transition-colors"
             style={{
               fontFamily: 'var(--font-display)',
               letterSpacing: '0.15em',
@@ -250,7 +250,7 @@ export function ConfiguratorPage() {
                   {/* Label */}
                   <div className="p-2.5">
                     <div
-                      className="text-white text-xs"
+                      className="text-white text-sm"
                       style={{ fontFamily: 'var(--font-display)', fontWeight: 600, letterSpacing: '0.08em' }}
                     >
                       {design.name}
@@ -283,7 +283,7 @@ export function ConfiguratorPage() {
                     key={sz}
                     onClick={() => update({ size: sz })}
                     whileTap={{ scale: 0.95 }}
-                    className="relative px-4 py-2.5 text-xs transition-all"
+                    className="relative px-4 py-2.5 text-sm transition-all"
                     style={{
                       fontFamily: 'var(--font-display)',
                       fontWeight: 600,
@@ -365,7 +365,7 @@ export function ConfiguratorPage() {
                       style={{ background: finishPreviewColors[f.id] }}
                     />
                     <div
-                      className="text-xs"
+                      className="text-sm"
                       style={{
                         fontFamily: 'var(--font-display)',
                         fontWeight: 600,
@@ -450,13 +450,13 @@ export function ConfiguratorPage() {
                   />
                   <div className="flex-1">
                     <div
-                      className="text-white/35 text-xs tracking-widest uppercase group-hover:text-white/55 transition-colors"
+                      className="text-white/35 text-sm tracking-widest uppercase group-hover:text-white/55 transition-colors"
                       style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em' }}
                     >
                       Eigene Farbe
                     </div>
                     <div
-                      className="text-white/20 text-xs mt-0.5 font-mono"
+                      className="text-white/20 text-sm mt-0.5 font-mono"
                     >
                       {config.capColor.toUpperCase()}
                     </div>
@@ -487,7 +487,7 @@ export function ConfiguratorPage() {
                     }}
                   >
                     <div
-                      className="text-white/25 text-xs uppercase tracking-widest mb-2"
+                      className="text-white/25 text-sm uppercase tracking-widest mb-2"
                       style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.15em', fontSize: '0.6rem' }}
                     >
                       Hex-Code
@@ -530,7 +530,7 @@ export function ConfiguratorPage() {
                           }
                         }}
                         maxLength={7}
-                        className="min-w-0 flex-1 bg-transparent border text-white text-xs px-3 py-2 outline-none font-mono uppercase"
+                        className="min-w-0 flex-1 bg-transparent border text-white text-sm px-3 py-2 outline-none font-mono uppercase"
                         style={{
                           borderColor: 'rgba(255,255,255,0.1)',
                           background: 'rgba(255,255,255,0.04)',
@@ -542,7 +542,7 @@ export function ConfiguratorPage() {
                       <button
                         onClick={() => { update({ capColor: customColor }); setColorPickerOpen(false); }}
                         disabled={!/^#[0-9A-Fa-f]{6}$/.test(customColor)}
-                        className="px-3 py-2 text-xs uppercase tracking-widest transition-all"
+                        className="px-3 py-2 text-sm uppercase tracking-widest transition-all"
                         style={{
                           fontFamily: 'var(--font-display)',
                           letterSpacing: '0.12em',
@@ -569,7 +569,7 @@ export function ConfiguratorPage() {
                   onChange={e => update({ engraving: e.target.value.slice(0, 28) })}
                   placeholder="Ihr Name oder Text..."
                   maxLength={28}
-                  className="w-full bg-transparent border text-white text-xs px-4 py-3 outline-none transition-all placeholder-white/20"
+                  className="w-full bg-transparent border text-white text-sm px-4 py-3 outline-none transition-all placeholder-white/20"
                   style={{
                     fontFamily: 'var(--font-display)',
                     letterSpacing: '0.12em',
@@ -580,7 +580,7 @@ export function ConfiguratorPage() {
                   onBlur={e => (e.target.style.borderColor = config.engraving ? 'rgba(220,38,38,0.4)' : 'rgba(255,255,255,0.1)')}
                 />
                 <div
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/20 text-xs"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/20 text-sm"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {config.engraving.length}/28
@@ -593,14 +593,14 @@ export function ConfiguratorPage() {
                   className="mt-2 px-3 py-2 bg-white/3 border border-white/5"
                 >
                   <div
-                    className="text-white/40 text-xs"
+                    className="text-white/40 text-sm"
                     style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.18em' }}
                   >
                     Vorschau: {config.engraving.toUpperCase()}
                   </div>
                 </motion.div>
               )}
-              <p className="text-white/20 text-xs mt-2" style={{ fontFamily: 'var(--font-body)', fontSize: '0.7rem' }}>
+              <p className="text-white/20 text-sm mt-2" style={{ fontFamily: 'var(--font-body)', fontSize: '0.7rem' }}>
                 Text erscheint graviert auf der inneren Felge. Bogenförmige Platzierung.
               </p>
             </div>
@@ -618,13 +618,13 @@ export function ConfiguratorPage() {
                 ].map(row => (
                   <div key={row.label} className="flex items-center justify-between">
                     <span
-                      className="text-white/30 text-xs tracking-widest uppercase"
+                      className="text-white/30 text-sm tracking-widest uppercase"
                       style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em' }}
                     >
                       {row.label}
                     </span>
                     <span
-                      className="text-white/70 text-xs"
+                      className="text-white/70 text-sm"
                       style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.08em', maxWidth: '140px', textAlign: 'right', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
                     >
                       {row.value}
@@ -637,7 +637,7 @@ export function ConfiguratorPage() {
             {/* Reset + Quote */}
             <div className="flex flex-col gap-3 pb-6">
               <button
-                className="w-full bg-red-600 hover:bg-red-500 text-white py-4 text-xs tracking-widest uppercase transition-all"
+                className="w-full bg-red-600 hover:bg-red-500 text-white py-4 text-sm tracking-widest uppercase transition-all"
                 style={{
                   fontFamily: 'var(--font-display)',
                   letterSpacing: '0.2em',
@@ -649,7 +649,7 @@ export function ConfiguratorPage() {
               </button>
               <button
                 onClick={reset}
-                className="w-full text-white/25 hover:text-white/50 py-2 text-xs tracking-widest uppercase transition-colors border border-white/8 hover:border-white/15"
+                className="w-full text-white/25 hover:text-white/50 py-2 text-sm tracking-widest uppercase transition-colors border border-white/8 hover:border-white/15"
                 style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.15em' }}
               >
                 Standard zurücksetzen

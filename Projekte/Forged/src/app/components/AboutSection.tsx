@@ -62,7 +62,7 @@ export function AboutSection() {
               „Wir bauen keine Felgen. Wir bauen Ausdrucksformen."
             </p>
             <div
-              className="text-white/25 text-xs mt-3 uppercase tracking-widest"
+              className="text-white/25 text-sm mt-3 uppercase tracking-widest"
               style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.18em' }}
             >
               Gründer, Forged GmbH
@@ -77,7 +77,7 @@ export function AboutSection() {
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-px bg-red-600" />
             <span
-              className="text-red-500 text-xs tracking-widest uppercase"
+              className="text-red-500 text-sm tracking-widest uppercase"
               style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.25em' }}
             >
               Über uns
@@ -122,7 +122,7 @@ export function AboutSection() {
                 <div className="w-1 h-full min-h-[40px] bg-red-600/40 flex-shrink-0 mt-1" style={{ width: '2px' }} />
                 <div>
                   <div
-                    className="text-white text-xs uppercase tracking-widest mb-1"
+                    className="text-white text-sm uppercase tracking-widest mb-1"
                     style={{ fontFamily: 'var(--font-display)', fontWeight: 600, letterSpacing: '0.15em' }}
                   >
                     {v.label}

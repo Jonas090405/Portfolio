@@ -30,7 +30,7 @@ export function ColorFinishesSection() {
         <div className="flex items-center gap-3 mb-5">
           <div className="w-8 h-px bg-red-600" />
           <span
-            className="text-red-500 text-xs tracking-widest uppercase"
+            className="text-red-500 text-sm tracking-widest uppercase"
             style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.25em' }}
           >
             Lackierungen & Farben
@@ -103,7 +103,7 @@ export function ColorFinishesSection() {
             {/* CTA */}
             <button
               onClick={() => navigate('/configure')}
-              className="w-full mt-4 py-4 bg-red-600 hover:bg-red-500 text-white text-xs uppercase tracking-widest transition-colors"
+              className="w-full mt-4 py-4 bg-red-600 hover:bg-red-500 text-white text-sm uppercase tracking-widest transition-colors"
               style={{
                 fontFamily: 'var(--font-display)',
                 letterSpacing: '0.2em',

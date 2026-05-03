@@ -112,7 +112,7 @@ export function PersonalizationSection() {
           <div className="flex items-center gap-3 mb-5">
             <div className="w-8 h-px bg-red-600" />
             <span
-              className="text-red-500 text-xs tracking-widest uppercase"
+              className="text-red-500 text-sm tracking-widest uppercase"
               style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.25em' }}
             >
               Personalisierung
@@ -188,7 +188,7 @@ export function PersonalizationSection() {
                   }}
                 />
                 <div
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 text-xs"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 text-sm"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {engravingText.length}/28
@@ -201,7 +201,7 @@ export function PersonalizationSection() {
                   <button
                     key={ex}
                     onClick={() => { setEngravingText(ex); setIsUserTyping(true); }}
-                    className="text-white/30 hover:text-white/65 text-xs px-3 py-1.5 transition-all"
+                    className="text-white/30 hover:text-white/65 text-sm px-3 py-1.5 transition-all"
                     style={{
                       fontFamily: 'var(--font-display)',
                       letterSpacing: '0.1em',

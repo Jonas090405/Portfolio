@@ -408,7 +408,7 @@ export function LandingPage() {
 
         {/* Scroll label */}
         <motion.div
-          className="absolute bottom-6 left-5 sm:left-10 text-white/30 text-xs tracking-widest uppercase pointer-events-none hidden sm:block"
+          className="absolute bottom-6 left-5 sm:left-10 text-white/30 text-sm tracking-widest uppercase pointer-events-none hidden sm:block"
           style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.2em', writingMode: 'vertical-lr' }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3, duration: 0.8 }}
         >

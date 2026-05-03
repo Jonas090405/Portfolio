@@ -58,7 +58,7 @@ export function ModelsSection() {
         <div className="flex items-center gap-3 mb-5">
           <div className="w-8 h-px bg-red-600" />
           <span
-            className="text-red-500 text-xs tracking-widest uppercase"
+            className="text-red-500 text-sm tracking-widest uppercase"
             style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.25em' }}
           >
             Felgenmodelle
@@ -159,7 +159,7 @@ export function ModelsSection() {
                   style={{ opacity: hoveredId === model.id ? 1 : 0, background: 'rgba(0,0,0,0.25)' }}
                 >
                   <div
-                    className="px-6 py-3 bg-red-600 text-white text-xs uppercase tracking-widest"
+                    className="px-6 py-3 bg-red-600 text-white text-sm uppercase tracking-widest"
                     style={{
                       fontFamily: 'var(--font-display)',
                       letterSpacing: '0.2em',
@@ -189,7 +189,7 @@ export function ModelsSection() {
                     </div>
                   </div>
                   <div
-                    className="text-red-500/70 text-xs"
+                    className="text-red-500/70 text-sm"
                     style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.1em', fontWeight: 600 }}
                   >
                     {model.sizes}
@@ -220,7 +220,7 @@ export function ModelsSection() {
                         {s.label}
                       </div>
                       <div
-                        className="text-white/60 text-xs mt-0.5"
+                        className="text-white/60 text-sm mt-0.5"
                         style={{ fontFamily: 'var(--font-display)', fontWeight: 600, letterSpacing: '0.06em' }}
                       >
                         {s.val}

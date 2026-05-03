@@ -137,7 +137,7 @@ export function FinishCarousel() {
           <div className="flex items-center gap-3 mb-5">
             <div className="w-8 h-px bg-red-600" />
             <span
-              className="text-red-500 text-xs tracking-widest uppercase"
+              className="text-red-500 text-sm tracking-widest uppercase"
               style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.25em' }}
             >
               Oberflächenfinishes
@@ -216,7 +216,7 @@ export function FinishCarousel() {
                       }}
                     />
                     <div
-                      className="text-white/55 text-xs uppercase tracking-widest"
+                      className="text-white/55 text-sm uppercase tracking-widest"
                       style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.18em' }}
                     >
                       Oberflächenprobe
@@ -289,7 +289,7 @@ export function FinishCarousel() {
                     {finish.tags.map(tag => (
                       <span
                         key={tag}
-                        className="text-white/60 text-xs px-3 py-1 border border-white/12"
+                        className="text-white/60 text-sm px-3 py-1 border border-white/12"
                         style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em' }}
                       >
                         {tag}
@@ -301,7 +301,7 @@ export function FinishCarousel() {
                   <div className="mb-4">
                     <div className="flex items-center gap-3 mb-4">
                       <span
-                        className="text-white/50 text-xs uppercase tracking-widest"
+                        className="text-white/50 text-sm uppercase tracking-widest"
                         style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.18em' }}
                       >
                         Technische Daten
@@ -324,7 +324,7 @@ export function FinishCarousel() {
                       <div className="w-4 h-px bg-red-600 mt-2 flex-shrink-0" />
                       <div>
                         <div
-                          className="text-white/50 text-xs uppercase tracking-widest mb-1.5"
+                          className="text-white/50 text-sm uppercase tracking-widest mb-1.5"
                           style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.16em' }}
                         >
                           Prozess
@@ -366,7 +366,7 @@ export function FinishCarousel() {
               />
               {selectedIndex === i && (
                 <span
-                  className="text-white/50 text-xs uppercase tracking-widest"
+                  className="text-white/50 text-sm uppercase tracking-widest"
                   style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.15em' }}
                 >
                   {f.name}
@@ -398,7 +398,7 @@ export function FinishCarousel() {
 
         {/* Counter */}
         <div
-          className="hidden md:block text-white/30 text-xs"
+          className="hidden md:block text-white/30 text-sm"
           style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em' }}
         >
           <span className="text-white/60">{String(selectedIndex + 1).padStart(2, '0')}</span>

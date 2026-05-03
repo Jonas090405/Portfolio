@@ -150,13 +150,13 @@ export function WheelPreview({ config }: WheelPreviewProps) {
         style={{ padding: '6px 10px' }}
       >
         <span
-          className="text-white/60 text-xs tracking-widest uppercase"
+          className="text-white/60 text-sm tracking-widest uppercase"
           style={{ fontFamily: 'var(--font-display)', fontSize: '0.6rem', letterSpacing: '0.18em' }}
         >
           {design.name}
         </span>
         <span
-          className="text-white/35 text-xs tracking-widest uppercase"
+          className="text-white/35 text-sm tracking-widest uppercase"
           style={{ fontFamily: 'var(--font-display)', fontSize: '0.55rem', letterSpacing: '0.15em' }}
         >
           {config.size}" · {finishLabel[config.finish]}

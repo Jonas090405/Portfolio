@@ -63,7 +63,7 @@ export function FooterSection() {
               {['IG', 'TW', 'YT', 'LI'].map(s => (
                 <button
                   key={s}
-                  className="w-8 h-8 flex items-center justify-center border border-white/10 hover:border-white/30 text-white/30 hover:text-white/60 transition-all text-xs"
+                  className="w-8 h-8 flex items-center justify-center border border-white/10 hover:border-white/30 text-white/30 hover:text-white/60 transition-all text-sm"
                   style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.05em', fontWeight: 700 }}
                 >
                   {s}
@@ -103,7 +103,7 @@ export function FooterSection() {
           style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
         >
           <div
-            className="text-white/20 text-xs"
+            className="text-white/20 text-sm"
             style={{ fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}
           >
             © 2024 Forged GmbH · Alle Rechte vorbehalten · Made in Germany
@@ -112,7 +112,7 @@ export function FooterSection() {
             {['Impressum', 'Datenschutz', 'AGB'].map(link => (
               <button
                 key={link}
-                className="text-white/20 hover:text-white/40 transition-colors text-xs"
+                className="text-white/20 hover:text-white/40 transition-colors text-sm"
                 style={{ fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}
               >
                 {link}
