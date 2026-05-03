@@ -142,7 +142,7 @@ export function PersonalizationSection() {
             {/* Description */}
             <p
               className="text-white/50 mb-10 max-w-md"
-              style={{ fontFamily: 'var(--font-body)', fontSize: '0.92rem', lineHeight: 1.8 }}
+              style={{ fontFamily: 'var(--font-body)', fontSize: '1rem', lineHeight: 1.8 }}
             >
               Individueller Text, bogenförmig auf der inneren Felgenfläche graviert —
               bis zu 28 Zeichen. Namen, Daten, Signaturen oder Widmungen.
@@ -151,8 +151,8 @@ export function PersonalizationSection() {
             {/* Live text input */}
             <div className="mb-10">
               <div
-                className="text-white/40 text-xs uppercase tracking-widest mb-3"
-                style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.22em' }}
+                className="text-white/40 uppercase tracking-widest mb-3"
+                style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.22em', fontSize: '0.72rem' }}
               >
                 Text eingeben &amp; live vorschauen
               </div>

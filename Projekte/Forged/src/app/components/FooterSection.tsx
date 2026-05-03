@@ -52,7 +52,7 @@ export function FooterSection() {
 
             <p
               className="text-white/30 mb-6"
-              style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', lineHeight: 1.7, maxWidth: '220px' }}
+              style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', lineHeight: 1.7, maxWidth: '220px' }}
             >
               Präzisions-Schmiedefelgen aus Deutschland.
               Hergestellt für Perfektionisten.
@@ -76,8 +76,8 @@ export function FooterSection() {
           {navCols.map(col => (
             <div key={col.title} className="col-span-1">
               <div
-                className="text-white/25 text-xs uppercase tracking-widest mb-5"
-                style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.2em' }}
+                className="text-white/25 uppercase tracking-widest mb-5"
+                style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.2em', fontSize: '0.72rem' }}
               >
                 {col.title}
               </div>
@@ -86,7 +86,7 @@ export function FooterSection() {
                   <li key={link}>
                     <button
                       className="text-white/40 hover:text-white/70 transition-colors text-sm"
-                      style={{ fontFamily: 'var(--font-body)', letterSpacing: '0.02em' }}
+                      style={{ fontFamily: 'var(--font-body)', letterSpacing: '0.02em', fontSize: '0.875rem' }}
                     >
                       {link}
                     </button>

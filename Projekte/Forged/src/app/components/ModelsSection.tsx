@@ -80,7 +80,7 @@ export function ModelsSection() {
           </h2>
           <p
             className="text-white/45 max-w-sm"
-            style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', lineHeight: 1.7 }}
+            style={{ fontFamily: 'var(--font-body)', fontSize: '0.95rem', lineHeight: 1.7 }}
           >
             Jedes Modell wurde für einen spezifischen Fahrzeugcharakter entwickelt —
             präzise in der Funktion, kompromisslos in der Optik.
@@ -115,8 +115,8 @@ export function ModelsSection() {
                   style={{ background: categoryColor[model.category] || '#dc2626' }}
                 />
                 <span
-                  className="text-white/40 text-xs uppercase tracking-widest"
-                  style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.18em' }}
+                  className="text-white/40 uppercase tracking-widest"
+                  style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.18em', fontSize: '0.72rem' }}
                 >
                   {model.category}
                 </span>
@@ -182,8 +182,8 @@ export function ModelsSection() {
                       {model.name}
                     </div>
                     <div
-                      className="text-white/35 text-xs mt-0.5"
-                      style={{ fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}
+                      className="text-white/35 mt-0.5"
+                      style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', letterSpacing: '0.04em' }}
                     >
                       {model.subtitle}
                     </div>
@@ -198,7 +198,7 @@ export function ModelsSection() {
 
                 <p
                   className="text-white/40 mt-3"
-                  style={{ fontFamily: 'var(--font-body)', fontSize: '0.78rem', lineHeight: 1.65 }}
+                  style={{ fontFamily: 'var(--font-body)', fontSize: '0.85rem', lineHeight: 1.65 }}
                 >
                   {model.desc}
                 </p>
@@ -214,8 +214,8 @@ export function ModelsSection() {
                   ].map(s => (
                     <div key={s.label}>
                       <div
-                        className="text-white/20 text-xs uppercase tracking-widest"
-                        style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.14em', fontSize: '0.6rem' }}
+                        className="text-white/20 uppercase tracking-widest"
+                        style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.14em', fontSize: '0.7rem' }}
                       >
                         {s.label}
                       </div>

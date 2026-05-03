@@ -160,7 +160,7 @@ export function LandingPage() {
             <div className="w-px h-4 bg-white/20" />
             <span
               className="text-red-500 tracking-widest uppercase"
-              style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.2em', fontSize: '0.65rem' }}
+              style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.2em', fontSize: '0.75rem' }}
             >
               Präzisions-Schmiedefelgen
             </span>
@@ -296,7 +296,7 @@ export function LandingPage() {
             {/* Description */}
             <motion.p
               className="text-white/70 mb-8 sm:mb-12 max-w-md"
-              style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem', lineHeight: 1.7, letterSpacing: '0.01em' }}
+              style={{ fontFamily: 'var(--font-body)', fontSize: '1rem', lineHeight: 1.7, letterSpacing: '0.01em' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.75 }}
@@ -358,8 +358,8 @@ export function LandingPage() {
                     style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 700, lineHeight: 1 }}>
                     {stat.value}
                   </span>
-                  <span className="text-white/55 text-xs tracking-widest uppercase"
-                    style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em', fontSize: '0.6rem' }}>
+                  <span className="text-white/55 tracking-widest uppercase"
+                    style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em', fontSize: '0.72rem' }}>
                     {stat.label}
                   </span>
                 </div>

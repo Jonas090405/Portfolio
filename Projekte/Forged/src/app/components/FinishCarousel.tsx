@@ -92,14 +92,14 @@ function PropertyRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between py-2.5" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
       <span
-        className="text-white/55 text-xs uppercase tracking-widest"
-        style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.14em' }}
+        className="text-white/55 uppercase tracking-widest"
+        style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.14em', fontSize: '0.72rem' }}
       >
         {label}
       </span>
       <span
-        className="text-white/85 text-xs"
-        style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.08em', fontWeight: 600 }}
+        className="text-white/85"
+        style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.08em', fontWeight: 600, fontSize: '0.82rem' }}
       >
         {value}
       </span>
@@ -247,8 +247,8 @@ export function FinishCarousel() {
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-6 h-px bg-red-600" />
                     <span
-                      className="text-red-500/80 text-xs uppercase tracking-widest"
-                      style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.22em' }}
+                      className="text-red-500/80 uppercase tracking-widest"
+                      style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.22em', fontSize: '0.75rem' }}
                     >
                       {finish.nameDE}
                     </span>
@@ -271,7 +271,7 @@ export function FinishCarousel() {
                   {/* Tagline */}
                   <p
                     className="text-white/65 mb-6"
-                    style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.06em', fontSize: '0.85rem' }}
+                    style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.06em', fontSize: '0.95rem' }}
                   >
                     {finish.tagline}
                   </p>
@@ -279,7 +279,7 @@ export function FinishCarousel() {
                   {/* Description */}
                   <p
                     className="text-white/75 mb-8 max-w-md"
-                    style={{ fontFamily: 'var(--font-body)', fontSize: '0.88rem', lineHeight: 1.75 }}
+                    style={{ fontFamily: 'var(--font-body)', fontSize: '0.95rem', lineHeight: 1.75 }}
                   >
                     {finish.description}
                   </p>
@@ -331,7 +331,7 @@ export function FinishCarousel() {
                         </div>
                         <p
                           className="text-white/65"
-                          style={{ fontFamily: 'var(--font-body)', fontSize: '0.78rem', lineHeight: 1.65 }}
+                          style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', lineHeight: 1.65 }}
                         >
                           {finish.process}
                         </p>

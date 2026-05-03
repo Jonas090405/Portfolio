@@ -52,7 +52,7 @@ export function ColorFinishesSection() {
           </h2>
           <p
             className="text-white/45 max-w-sm"
-            style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', lineHeight: 1.7 }}
+            style={{ fontFamily: 'var(--font-body)', fontSize: '0.95rem', lineHeight: 1.7 }}
           >
             Silber, Schwarz und Weiß — die drei klassischen Töne, in denen Perfektion
             keine Kompromisse kennt. Jede Farbe wird in mehreren Schichten aufgetragen
@@ -85,14 +85,14 @@ export function ColorFinishesSection() {
                 {/* Bottom info */}
                 <div className="absolute bottom-0 left-0 right-0 p-5" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }}>
                   <div
-                    className="text-white text-xs uppercase tracking-widest"
-                    style={{ fontFamily: 'var(--font-display)', fontWeight: 600, letterSpacing: '0.18em' }}
+                    className="text-white uppercase tracking-widest"
+                    style={{ fontFamily: 'var(--font-display)', fontWeight: 600, letterSpacing: '0.18em', fontSize: '0.78rem' }}
                   >
                     {selected.name}
                   </div>
                   <div className="flex items-center gap-2 mt-1.5">
                     <div className="w-3 h-3 rounded-full border border-white/20" style={{ background: selected.hex }} />
-                    <span className="text-white/40 text-xs" style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.1em' }}>
+                    <span className="text-white/40" style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.1em', fontSize: '0.78rem' }}>
                       {selected.hex.toUpperCase()}
                     </span>
                   </div>
@@ -124,8 +124,8 @@ export function ColorFinishesSection() {
                 <div key={note} className="flex items-center gap-3">
                   <div className="w-3 h-px bg-red-600 flex-shrink-0" />
                   <span
-                    className="text-white/30 text-xs"
-                    style={{ fontFamily: 'var(--font-body)', lineHeight: 1.5 }}
+                    className="text-white/30"
+                    style={{ fontFamily: 'var(--font-body)', lineHeight: 1.5, fontSize: '0.82rem' }}
                   >
                     {note}
                   </span>
@@ -139,8 +139,8 @@ export function ColorFinishesSection() {
             {colorGroups.map(group => (
               <div key={group.group} className="mb-8">
                 <div
-                  className="text-white/25 text-xs uppercase tracking-widest mb-3"
-                  style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.2em' }}
+                  className="text-white/25 uppercase tracking-widest mb-3"
+                  style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.2em', fontSize: '0.72rem' }}
                 >
                   {group.group}
                 </div>

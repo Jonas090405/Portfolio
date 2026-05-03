@@ -100,7 +100,7 @@ export function AboutSection() {
 
           <p
             className="text-white/55 mb-10 max-w-md"
-            style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem', lineHeight: 1.75 }}
+            style={{ fontFamily: 'var(--font-body)', fontSize: '0.95rem', lineHeight: 1.75 }}
           >
             Forged wurde 2018 mit einer einfachen Überzeugung gegründet: Dass jede Felge
             genauso viel Aufmerksamkeit verdient wie das Fahrzeug, das sie trägt. Wir
@@ -129,7 +129,7 @@ export function AboutSection() {
                   </div>
                   <p
                     className="text-white/35"
-                    style={{ fontFamily: 'var(--font-body)', fontSize: '0.77rem', lineHeight: 1.6 }}
+                    style={{ fontFamily: 'var(--font-body)', fontSize: '0.85rem', lineHeight: 1.6 }}
                   >
                     {v.desc}
                   </p>
@@ -152,8 +152,8 @@ export function AboutSection() {
                   {s.value}
                 </span>
                 <span
-                  className="text-white/30 text-xs uppercase tracking-widest"
-                  style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em', fontSize: '0.6rem' }}
+                  className="text-white/30 uppercase tracking-widest"
+                  style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em', fontSize: '0.7rem' }}
                 >
                   {s.label}
                 </span>
