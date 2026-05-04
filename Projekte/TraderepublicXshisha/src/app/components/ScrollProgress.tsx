@@ -111,8 +111,8 @@ export function ScrollProgress() {
         }
 
         rawProgress.set(fractional);
-        // Use floor so the nav switches only after entering the next section.
-        setActiveIndex(Math.min(sections.length - 1, Math.floor(fractional + 0.0001)));
+        const newIndex = Math.min(sections.length - 1, Math.floor(fractional + 0.0001));
+        setActiveIndex(newIndex);
       });
     };
 

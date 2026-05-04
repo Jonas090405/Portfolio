@@ -61,10 +61,7 @@ export function SmokePerformance() {
   const isChartInView = useInView(chartRef, { once: true, amount: 0.35 });
 
   return (
-    <section
-      ref={ref}
-      className="relative py-20 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden"
-    >
+    <section ref={ref} className="section-page overflow-hidden">
       {/* Background smoke image */}
       <div
         className="absolute inset-x-0 -top-20 -bottom-20 bg-cover bg-center bg-no-repeat pointer-events-none"
@@ -74,7 +71,7 @@ export function SmokePerformance() {
       <div className="absolute inset-x-0 top-0 h-48 pointer-events-none bg-gradient-to-b from-black via-black/80 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-40 pointer-events-none bg-gradient-to-t from-black to-transparent" />
 
-      <div className="relative z-10 max-w-7xl mx-auto space-y-10 sm:space-y-12 lg:space-y-16">
+      <div className="relative z-10 max-w-7xl mx-auto w-full space-y-10 sm:space-y-12 lg:space-y-16">
 
         {/* Header */}
         <motion.div

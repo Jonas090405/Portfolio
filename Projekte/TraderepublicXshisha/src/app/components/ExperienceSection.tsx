@@ -47,8 +47,8 @@ export function ExperienceSection() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="py-20 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-10 sm:space-y-14">
+    <section ref={ref} className="section-page">
+      <div className="max-w-7xl mx-auto w-full space-y-10 sm:space-y-14">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}

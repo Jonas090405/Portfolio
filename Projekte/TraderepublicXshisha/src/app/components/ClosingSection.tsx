@@ -11,8 +11,8 @@ export function ClosingSection() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <section ref={ref} className="py-20 sm:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <section ref={ref} className="section-page">
+      <div className="max-w-7xl mx-auto w-full">
         <div className="flex flex-col items-center text-center space-y-10 sm:space-y-14 lg:space-y-16">
 
           {/* Text */}

@@ -8,7 +8,7 @@ export function HeroSection() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden pt-12 pb-16">
+    <section className="min-h-dvh flex items-center justify-center px-4 sm:px-6 lg:px-10 xl:px-20 relative overflow-hidden pt-12 pb-16">
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         {/* Left: Text + TR-style metric card */}
         <motion.div

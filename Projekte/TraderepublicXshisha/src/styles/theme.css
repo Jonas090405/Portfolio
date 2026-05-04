@@ -121,6 +121,16 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@layer components {
+  /**
+   * Full-viewport sections (lg+): same top offset as ComponentBreakdown sticky header (pt-14),
+   * same horizontal rhythm (px-10 xl:px-20). Mobile/tablet: comfortable vertical rhythm.
+   */
+  .section-page {
+    @apply relative w-full px-4 pt-20 pb-20 sm:px-6 sm:pt-24 sm:pb-24 lg:min-h-dvh lg:px-10 lg:pt-14 lg:pb-12 xl:px-20;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
