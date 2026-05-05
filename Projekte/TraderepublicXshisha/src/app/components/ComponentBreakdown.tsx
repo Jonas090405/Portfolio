@@ -1,6 +1,6 @@
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useInView } from 'motion/react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import hookahImageMobile from '../../assets/shisha-exploded-components.png';
 import hookahImageDesktop from '../../assets/shisha-exploded-premium.png';
 
@@ -98,18 +98,92 @@ export function ComponentBreakdown() {
   const isInView = useInView(mobileRef, { once: true, margin: '-80px' });
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  /* ── Desktop parallax scroll state ── */
+  /* ── Desktop step-scroll state ── */
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const activeIndexRef = useRef(0);
+  const isSteppingRef = useRef(false);
+  const wheelEndTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastDeltaRef = useRef(0);
+  const deltaAccumRef = useRef(0);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
+  // How much total deltaY must accumulate before advancing one step
+  const STEP_THRESHOLD = 250;
 
-  useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    setActiveIndex(Math.min(Math.floor(v * components.length), components.length - 1));
-  });
+  const scrollToStep = useCallback((index: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+    const containerTop = container.offsetTop;
+    const containerHeight = container.offsetHeight;
+    const viewportHeight = window.innerHeight;
+    const scrollable = containerHeight - viewportHeight;
+    const progress = index / (components.length - 1);
+    window.scrollTo({ top: containerTop + progress * scrollable, behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      const rect = container.getBoundingClientRect();
+      const inSection = rect.top <= 1 && rect.bottom >= window.innerHeight - 1;
+      if (!inSection) return;
+
+      const absDelta = Math.abs(e.deltaY);
+      const prevDelta = Math.abs(lastDeltaRef.current);
+      lastDeltaRef.current = e.deltaY;
+
+      // A new intentional gesture starts with a sharp jump in delta after inertia winds down
+      const isNewGesture = isSteppingRef.current && absDelta > prevDelta * 3 && absDelta > 15;
+      if (isNewGesture) {
+        isSteppingRef.current = false;
+        deltaAccumRef.current = 0;
+        if (wheelEndTimerRef.current) { clearTimeout(wheelEndTimerRef.current); wheelEndTimerRef.current = null; }
+      }
+
+      // Reset the "gesture ended" timer on every event
+      if (wheelEndTimerRef.current) clearTimeout(wheelEndTimerRef.current);
+      wheelEndTimerRef.current = setTimeout(() => {
+        isSteppingRef.current = false;
+        deltaAccumRef.current = 0;
+        wheelEndTimerRef.current = null;
+      }, 450);
+
+      const idx = activeIndexRef.current;
+      const goingDown = e.deltaY > 0;
+      const atBoundary = (goingDown && idx >= components.length - 1) || (!goingDown && idx <= 0);
+
+      // At boundaries let the page scroll naturally so the user can leave the section
+      if (atBoundary) return;
+
+      e.preventDefault();
+
+      if (isSteppingRef.current) return;
+
+      // Accumulate until threshold is reached
+      deltaAccumRef.current += e.deltaY;
+      if (Math.abs(deltaAccumRef.current) < STEP_THRESHOLD) return;
+
+      deltaAccumRef.current = 0;
+      isSteppingRef.current = true;
+
+      if (goingDown) {
+        const next = idx + 1;
+        activeIndexRef.current = next;
+        setActiveIndex(next);
+        scrollToStep(next);
+      } else {
+        const prev = idx - 1;
+        activeIndexRef.current = prev;
+        setActiveIndex(prev);
+        scrollToStep(prev);
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [scrollToStep]);
 
   const active = components[activeIndex];
 
@@ -208,8 +282,8 @@ export function ComponentBreakdown() {
             Gleiche horizontale Spur wie .section-page + max-w-7xl (px-10 xl:px-20),
             gleicher vertikaler Rhythmus: pt-14 → Überschrift → pb-10 → Inhalt (wie space-y-10).
           */}
-          <div className="mx-auto flex h-full min-h-0 w-full max-w-7xl flex-1 flex-col px-10 pt-14 pb-12 xl:px-20">
-            <header className="shrink-0 pb-16 lg:pb-24">
+          <div className="mx-auto flex h-full min-h-0 w-full max-w-7xl flex-1 flex-col px-10 pt-14 pb-6 xl:px-20">
+            <header className="shrink-0 pb-8 lg:pb-14">
               <span className="text-white/40 tracking-widest uppercase text-xs">{SECTION_EYEBROW}</span>
               <h2 className="mt-2 text-4xl font-medium lg:text-5xl">Komponenten im Detail</h2>
             </header>
@@ -273,7 +347,7 @@ export function ComponentBreakdown() {
                 <img
                   src={hookahImageDesktop}
                   alt="Shisha Exploded View"
-                  className="max-h-[min(76dvh,calc(100dvh-11rem))] w-auto object-contain select-none"
+                  className="max-h-[min(85dvh,calc(100dvh-7rem))] w-auto object-contain select-none"
                   draggable={false}
                 />
 
