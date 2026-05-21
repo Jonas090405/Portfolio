@@ -1,61 +1,49 @@
-import { motion } from 'motion/react';
+import React from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
 import { Timer, Cloud, Lightbulb, Gauge, Activity } from 'lucide-react';
 import appMockup from '../../assets/mockup.png';
 import appMockupMobile from '../../assets/mockup_mobile.png';
+import { useAudience } from '../context/AudienceContext';
+import { audienceContent } from '../data/audienceContent';
 
-const controls = [
-  {
-    icon: Activity,
-    title: 'Züge verfolgen',
-    subtext: 'Live-Tracking jedes Zuges ueber die komplette Session.',
-  },
-  {
-    icon: Timer,
-    title: 'Sessiontimer',
-    subtext: 'Sekundengenaue Laufzeit fuer perfekte Session-Kontrolle.',
-  },
-  {
-    icon: Cloud,
-    title: 'Rauchentwicklung',
-    subtext: 'Intensitaet beobachten und direkt in der App anpassen.',
-  },
-  {
-    icon: Lightbulb,
-    title: 'LED-Effekte',
-    subtext: 'Farben, Modi und Helligkeit flexibel konfigurieren.',
-  },
-  {
-    icon: Gauge,
-    title: 'Luftzug (Widerstand)',
-    subtext: 'Widerstand feinjustieren fuer deinen idealen Draw.',
-  },
-];
+const CONTROL_ICONS = [Activity, Timer, Cloud, Lightbulb, Gauge];
 
 export function AppControlSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const { audience } = useAudience();
+  const { appControl } = audienceContent[audience];
 
   return (
     <section ref={ref} className="section-page">
       <div className="max-w-7xl mx-auto w-full space-y-10 sm:space-y-14">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="max-w-2xl"
-        >
-          <span className="text-white/40 tracking-widest uppercase text-xs">Appsteuerung</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
-            Alles in einer App im Griff
-          </h2>
-          <p className="text-white/50 text-sm sm:text-base mt-4 leading-relaxed">
-            Vom ersten Zug bis zum Session-Ende steuerst und ueberwachst du alle wichtigen Funktionen direkt auf dem Smartphone.
-          </p>
-        </motion.div>
+
+        {/* Header */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`app-header-${audience}`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-2xl"
+          >
+            <span className="text-white/40 tracking-widest uppercase text-xs">
+              {appControl.eyebrow}
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
+              {appControl.headline}
+            </h2>
+            <p className="text-white/50 text-sm sm:text-base mt-4 leading-relaxed">
+              {appControl.description}
+            </p>
+          </motion.div>
+        </AnimatePresence>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-6 sm:gap-7 lg:gap-10 items-start lg:items-center">
+          {/* Mobile mockup */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -70,6 +58,7 @@ export function AppControlSection() {
             />
           </motion.div>
 
+          {/* Desktop mockup */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -90,12 +79,13 @@ export function AppControlSection() {
             </div>
           </motion.div>
 
+          {/* Controls grid */}
           <div className="order-2 lg:order-1 grid grid-cols-2 gap-4 sm:gap-7 content-start max-w-4xl">
-            {controls.map((item, index) => {
-              const Icon = item.icon;
+            {appControl.controls.map((item, index) => {
+              const Icon = CONTROL_ICONS[index];
               return (
                 <motion.article
-                  key={item.title}
+                  key={`${audience}-${item.title}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.55, delay: 0.16 + index * 0.09 }}

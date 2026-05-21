@@ -5,7 +5,12 @@
       "Bash(Select-Object FullName)",
       "Bash(npm run *)",
       "Bash(Get-ChildItem -Path \"g:\\\\Fertige_Projekte\\\\Portfolio\" -Recurse -Filter \"*.tsx\")",
-      "PowerShell(Get-ChildItem -Path \"g:\\\\Fertige_Projekte\\\\Portfolio\" -MaxDepth 3 | Where-Object { $_.PSIsContainer -eq $false } | Select-Object Name, FullName)"
+      "PowerShell(Get-ChildItem -Path \"g:\\\\Fertige_Projekte\\\\Portfolio\" -MaxDepth 3 | Where-Object { $_.PSIsContainer -eq $false } | Select-Object Name, FullName)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/)",
+      "Bash(python3 -c ' *)",
+      "Bash(sips -g pixelWidth -g pixelHeight \"/Users/jonasgissler/Desktop/Studium MKB/Portfolio-Webseite/Portfolio/Projekte/TraderepublicXshisha/src/assets/Still_Trade_Republic_Luciano02.png\")",
+      "Bash(sips -g pixelWidth -g pixelHeight \"/Users/jonasgissler/Desktop/Studium MKB/Portfolio-Webseite/Portfolio/Projekte/TraderepublicXshisha/src/assets/Brad_Pitt_Trade_Republic.png\")"
     ]
   }
 }

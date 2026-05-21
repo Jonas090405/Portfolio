@@ -1,11 +1,14 @@
+import React from 'react';
 import {
   LineChart, Line, XAxis, YAxis, Tooltip,
   ResponsiveContainer, CartesianGrid, ReferenceLine,
 } from 'recharts';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
 import smokeImage from '../../assets/shisha-smoke-trail.jpeg';
+import { useAudience } from '../context/AudienceContext';
+import { audienceContent } from '../data/audienceContent';
 
 const rawData = [
   { min: '0',  trShisha: 88, herkoemlich: 62 },
@@ -56,9 +59,10 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 export function SmokePerformance() {
   const ref = useRef(null);
   const chartRef = useRef(null);
-  // once: true — isInView flips to true exactly once, never back
   const isInView = useInView(ref, { once: true, margin: '-60px' });
   const isChartInView = useInView(chartRef, { once: true, amount: 0.35 });
+  const { audience } = useAudience();
+  const { smokePerformance } = audienceContent[audience];
 
   return (
     <section ref={ref} className="section-page overflow-hidden">
@@ -74,22 +78,27 @@ export function SmokePerformance() {
       <div className="relative z-10 max-w-7xl mx-auto w-full space-y-10 sm:space-y-12 lg:space-y-16">
 
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-        >
-          <span className="text-white/40 tracking-widest uppercase text-xs">Performance</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
-            Rauchentwicklung über die Session
-          </h2>
-          <p className="text-white/40 mt-3 max-w-lg text-sm leading-relaxed">
-            Während traditionelle Kohle-Setups bereits nach 20 Minuten merklich nachlassen,
-            bleibt die elektrische Leistung von Minute 0 bis 60 stabil.
-          </p>
-        </motion.div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`smoke-header-${audience}`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="text-white/40 tracking-widest uppercase text-xs">
+              {smokePerformance.eyebrow}
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
+              {smokePerformance.headline}
+            </h2>
+            <p className="text-white/40 mt-3 max-w-lg text-sm leading-relaxed">
+              {smokePerformance.description}
+            </p>
+          </motion.div>
+        </AnimatePresence>
 
-        {/* Main layout: chart + stats */}
+        {/* Chart + Stats */}
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-6 lg:gap-8 items-stretch">
 
           {/* Chart card */}
@@ -100,7 +109,6 @@ export function SmokePerformance() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="bg-black/50 backdrop-blur-md border border-white/[0.08] rounded-3xl p-4 sm:p-6 lg:p-8 h-full"
           >
-            {/* Legend */}
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 mb-5 sm:mb-6">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-[2px] rounded-full bg-[#1DB954]" />
@@ -111,29 +119,26 @@ export function SmokePerformance() {
                 <span className="text-white/50 text-xs">Herkömmliche Shisha</span>
               </div>
               <div className="ml-auto hidden sm:block">
-                <span className="bg-[#1DB954]/10 text-[#1DB954] text-xs px-3 py-1 rounded-full border border-[#1DB954]/20">
-                  Konstant stark
-                </span>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={`badge-${audience}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-[#1DB954]/10 text-[#1DB954] text-xs px-3 py-1 rounded-full border border-[#1DB954]/20"
+                  >
+                    {smokePerformance.badge}
+                  </motion.span>
+                </AnimatePresence>
               </div>
             </div>
 
-            {/*
-              Chart is only mounted once isChartInView is true.
-              This means Recharts gets a single clean mount → animation runs once,
-              no re-render with isAnimationActive change, no SVG path stacking.
-            */}
             <div style={{ height: 240 }}>
               {isChartInView ? (
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart
-                    data={rawData}
-                    margin={{ top: 8, right: 4, left: -24, bottom: 0 }}
-                  >
-                    <CartesianGrid
-                      strokeDasharray="3 6"
-                      stroke="rgba(255,255,255,0.05)"
-                      vertical={false}
-                    />
+                  <LineChart data={rawData} margin={{ top: 8, right: 4, left: -24, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 6" stroke="rgba(255,255,255,0.05)" vertical={false} />
                     <XAxis
                       dataKey="min"
                       tickLine={false}
@@ -150,47 +155,25 @@ export function SmokePerformance() {
                       tickFormatter={(v) => `${v}%`}
                       width={38}
                     />
-                    <Tooltip
-                      content={<CustomTooltip />}
-                      cursor={{ stroke: 'rgba(255,255,255,0.08)', strokeWidth: 1 }}
-                    />
+                    <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(255,255,255,0.08)', strokeWidth: 1 }} />
                     <ReferenceLine y={80} stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
-                    <Line
-                      type="monotone"
-                      dataKey="herkoemlich"
-                      stroke="rgba(255,255,255,0.35)"
-                      strokeWidth={1.5}
-                      dot={false}
-                      isAnimationActive={true}
-                      animationBegin={250}
-                      animationDuration={1400}
-                      animationEasing="ease-out"
-                      activeDot={{ r: 3, fill: 'rgba(255,255,255,0.5)', stroke: 'none' }}
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="trShisha"
-                      stroke="#1DB954"
-                      strokeWidth={2}
-                      dot={false}
-                      isAnimationActive={true}
-                      animationBegin={350}
-                      animationDuration={1200}
-                      animationEasing="ease-out"
-                      activeDot={{ r: 4, fill: '#1DB954', stroke: '#000', strokeWidth: 2 }}
-                    />
+                    <Line type="monotone" dataKey="herkoemlich" stroke="rgba(255,255,255,0.35)" strokeWidth={1.5} dot={false}
+                      isAnimationActive animationBegin={250} animationDuration={1400} animationEasing="ease-out"
+                      activeDot={{ r: 3, fill: 'rgba(255,255,255,0.5)', stroke: 'none' }} />
+                    <Line type="monotone" dataKey="trShisha" stroke="#1DB954" strokeWidth={2} dot={false}
+                      isAnimationActive animationBegin={350} animationDuration={1200} animationEasing="ease-out"
+                      activeDot={{ r: 4, fill: '#1DB954', stroke: '#000', strokeWidth: 2 }} />
                   </LineChart>
                 </ResponsiveContainer>
-              ) : (
-                // Placeholder keeps the layout stable before chart mounts
-                <div className="w-full h-full" />
-              )}
+              ) : <div className="w-full h-full" />}
             </div>
 
-            <p className="text-white/20 text-xs mt-4 text-center">Dampfintensität in % · Sessiondauer in Minuten</p>
+            <p className="text-white/20 text-xs mt-4 text-center">
+              Dampfintensität in % · Sessiondauer in Minuten
+            </p>
           </motion.div>
 
-          {/* Stats — 2-col grid on mobile/tablet, single column sidebar on lg */}
+          {/* Stats sidebar */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 lg:grid-rows-5 gap-3 lg:gap-4 h-full">
             {STATS.map((stat, i) => (
               <motion.div
@@ -204,38 +187,34 @@ export function SmokePerformance() {
                   <div className="text-white/40 text-xs">{stat.label}</div>
                   <div className="text-white/30 text-[11px] mt-0.5 leading-snug">{stat.sub}</div>
                 </div>
-                <div className="text-[#1DB954] text-xl lg:text-lg font-medium shrink-0 mt-1 lg:mt-0">{stat.value}</div>
+                <div className="text-[#1DB954] text-xl lg:text-lg font-medium shrink-0 mt-1 lg:mt-0">
+                  {stat.value}
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
 
         {/* Bottom pills */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3"
-        >
-          {[
-            'Kein Hitzeschock beim Aufheizen',
-            'Elektrische Temperaturregelung',
-            'Gleichmäßiger Dampf bis zur letzten Minute',
-            'Kein Kohle-Nachschub nötig',
-            'Konstante Leistung über 60 Minuten',
-            'Weniger Schwankung als bei Kohle',
-            'Schnelle Einsatzbereitschaft',
-            'Reproduzierbares Session-Profil',
-          ].map((pill) => (
-            <span
-              key={pill}
-              className="bg-black/40 backdrop-blur-sm border border-white/[0.10] text-white/50 text-xs px-3 sm:px-4 py-2 rounded-full text-center"
-            >
-              {pill}
-            </span>
-          ))}
-        </motion.div>
-
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`smoke-pills-${audience}`}
+            initial={{ opacity: 0, y: 14 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3"
+          >
+            {smokePerformance.bottomPills.map((pill) => (
+              <span
+                key={pill}
+                className="bg-black/40 backdrop-blur-sm border border-white/[0.10] text-white/50 text-xs px-3 sm:px-4 py-2 rounded-full text-center"
+              >
+                {pill}
+              </span>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
