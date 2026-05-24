@@ -98,7 +98,7 @@ const street: AudienceContent = {
   hero: {
     eyebrow: 'Electric Hookah',
     headline: ['Shisha.', 'No Stress.'],
-    subline: 'Kein Kohlen. Kein Setup. Einfach anmachen und loslegen – wann du willst, wo du willst.',
+    subline: 'Keine Kohle. Kein Setup. Einfach anmachen und loslegen – wann du willst, wo du willst.',
     ctaPrimary: 'Jetzt sichern',
     ctaSecondary: 'Was ist das?',
   },
