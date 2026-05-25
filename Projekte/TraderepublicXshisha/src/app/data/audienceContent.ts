@@ -72,10 +72,22 @@ export interface AudienceContent {
     ctaSecondary: string;
   };
 
+  componentBreakdown: {
+    eyebrow: string;
+    headline: string;
+    navHint: string;
+    items: Array<{ name: string; description: string; detail: string }>;
+  };
+
   modal: {
     eyebrow: string;
     title: string;
     ctaButton: string;
+    specsSectionLabel: string;
+    highlightsSectionLabel: string;
+    deliverySectionLabel: string;
+    specs: Array<{ label: string; value: string; sub: string }>;
+    warranty: { title: string; body: string };
     highlights: Array<{ tag: string; title: string; body: string }>;
   };
 
@@ -88,6 +100,19 @@ export interface AudienceContent {
   };
 }
 
+const MODAL_SPEC_VALUES = [
+  { label: 'Heizzeit', value: '30 Sek.' },
+  { label: 'Temperatur', value: '± 1 °C' },
+  { label: 'Akkulaufzeit', value: '6+ Std.' },
+  { label: 'Session-Dauer', value: '45–60 Min.' },
+  { label: 'App-Steuerung', value: 'iOS & Android' },
+  { label: 'Wasservolumen', value: '350 ml' },
+] as const;
+
+function modalSpecs(subs: readonly [string, string, string, string, string, string]) {
+  return MODAL_SPEC_VALUES.map((s, i) => ({ ...s, sub: subs[i] }));
+}
+
 /* ─────────────────────────────────────────────────────────────
    1 — STREET CULTURE · Luciano · 18–25
    Ton: direkt, locker, klar – kein aufgesetzter Slang
@@ -97,7 +122,7 @@ const street: AudienceContent = {
   label: 'Street Culture',
 
   hero: {
-    eyebrow: 'Electric Hookah',
+    eyebrow: 'Electric Hookah · Plug & Play',
     headline: ['Shisha.', 'No Stress.'],
     subline: 'Keine Kohle. Kein Setup. Einfach anmachen und loslegen – wann du willst, wo du willst.',
     ctaPrimary: 'Jetzt sichern',
@@ -109,9 +134,9 @@ const street: AudienceContent = {
     headline: 'Kein Setup. Einfach an.',
     description: 'Vergiss Kohle, Asche und den ganzen Aufwand. Pod rein, Knopf drücken, losrauchen. So einfach ist das.',
     features: [
-      { label: 'Heizzeit', value: '30 Sek.', sub: 'Sofort bereit' },
+      { label: 'Heizzeit', value: '30 Sek.', sub: 'Ready in 30 Sek.' },
       { label: 'Temperatur', value: '± 1°C', sub: 'Kein Verbrennen' },
-      { label: 'Wartung', value: 'Keine', sub: 'Einfach sauber' },
+      { label: 'Wartung', value: 'Keine', sub: 'Null Aufwand' },
     ],
     bottomRow: [
       { label: 'Kein Kohle', desc: 'Stecker rein, läuft' },
@@ -155,7 +180,7 @@ const street: AudienceContent = {
     controls: [
       { title: 'Züge tracken', subtext: 'Sieh in Echtzeit, wie du rauchst – über die ganze Session.' },
       { title: 'Session-Timer', subtext: 'Wie lang läuft die Session schon? Immer im Blick.' },
-      { title: 'Rauchentwicklung', subtext: 'Intensität direkt in der App hochdrehen oder runter.' },
+      { title: 'Rauchkontrolle', subtext: 'Mehr oder weniger Rauch — per Slider in der App.' },
       { title: 'LED-Farben', subtext: 'Farbe, Modus, Helligkeit – nach deinem Geschmack.' },
       { title: 'Luftzug', subtext: 'Widerstand feinjustieren, bis es genau passt.' },
     ],
@@ -163,18 +188,18 @@ const street: AudienceContent = {
 
   smokePerformance: {
     eyebrow: 'Performance',
-    headline: 'Von Anfang bis Ende gleich stark',
-    description: 'Normale Kohle lässt nach 20 Minuten nach. Unsere Shisha bleibt die komplette Session auf demselben Level.',
+    headline: 'Bleibt die ganze Session auf Level',
+    description: 'Normale Kohle lässt nach 20 Minuten nach. Die Electric Hookah hält durch — von erstem bis letztem Zug.',
     badge: 'Konstant stark',
     bottomPills: [
-      'Kein Hitzeschock',
-      'Elektrische Temperaturregelung',
-      'Gleichmäßig bis zum letzten Zug',
-      'Kein Kohle-Nachschub',
-      '60 Min. volle Leistung',
+      'Kein Kohle-Nachlegen',
+      '60 Min. volle Power',
       'Stabiler als Kohle',
       'Sofort bereit',
       'Jedes Mal gleich',
+      'Kein Hitzeschock',
+      'Gleichmäßig bis zum letzten Zug',
+      'Kein Setup-Stress',
     ],
   },
 
@@ -217,7 +242,7 @@ const street: AudienceContent = {
   },
 
   benefits: {
-    eyebrow: 'Zahlen',
+    eyebrow: 'Was du sparst',
     headline: 'Günstiger als du denkst.',
     metrics: [
       {
@@ -252,15 +277,40 @@ const street: AudienceContent = {
     ctaSecondary: 'Was ist das?',
   },
 
+  componentBreakdown: {
+    eyebrow: 'Was drin steckt',
+    headline: 'Alles im Überblick',
+    navHint: 'Tippe auf eine Komponente — Kurzinfo und Details zu allen 9 Teilen.',
+    items: [
+      { name: 'Pod', description: 'Geschmack wechseln — ohne Tabak und ohne Stress.', detail: 'Pod rein, fertig. Kein klebriger Aufbau, kein Reinigen zwischen den Sessions.' },
+      { name: 'Durchzugmodul', description: 'Sorgt für einen gleichmäßigen, angenehmen Zug.', detail: 'Kein Ziehen wie bei einer kaputten Shisha — der Luftstrom bleibt stabil.' },
+      { name: 'Abdichtung', description: 'Hält alles dicht, damit nichts entweicht.', detail: 'Weniger Leistungsverlust, weniger Ärger — einfach sauber abgedichtet.' },
+      { name: 'Bowl', description: 'Wasserkammer für Kühlung und weichen Zug.', detail: 'Das richtige Volumen sorgt dafür, dass sich die Session angenehm anfühlt.' },
+      { name: 'Heizkern', description: 'Elektrisch statt Kohle — in 30 Sekunden ready.', detail: 'Kein Anfeuern, kein Warten. Einschalten und der Abend kann starten.' },
+      { name: 'Heizkammer', description: 'Die Hitze kommt elektrisch — nicht von Kohle.', detail: 'Geschlossene Zone, gleichbleibende Wärme. Kein Nachlegen mitten in der Session.' },
+      { name: 'Ladepad', description: 'Laden, steuern, Akku checken — alles an einem Ort.', detail: 'Sieh direkt, wie viel Power noch da ist, und steuer die Session ohne Aufwand.' },
+      { name: 'Schlauch', description: 'Flexibel, robust, neutral im Geschmack.', detail: 'Bleibt formstabil — auch wenn die Session länger wird als geplant.' },
+      { name: 'Mundstück', description: 'Edelstahl mit cleanem, kühlem Griff.', detail: 'Fühlt sich hochwertig an und bleibt angenehm über die ganze Runde.' },
+    ],
+  },
+
   modal: {
     eyebrow: 'Electric Hookah',
     title: 'Was steckt drin?',
     ctaButton: 'Jetzt sichern — € 249',
+    specsSectionLabel: 'Auf einen Blick',
+    highlightsSectionLabel: 'Das Wichtigste',
+    deliverySectionLabel: 'Im Karton',
+    specs: modalSpecs(['Ready in 30 Sek.', 'Kein Verbrennen', 'Für lange Abende', 'Pro Session', 'Alles am Handy', 'Weicher Zug']),
+    warranty: {
+      title: '2 Jahre Garantie',
+      body: 'Falls was klemmt: kostenloser Ersatz innerhalb der EU. Ohne Stress.',
+    },
     highlights: [
       {
         tag: 'Technologie',
         title: 'Elektrischer Heizkern',
-        body: 'Keramik-Heizkern – ready in 30 Sekunden, hält die Temperatur konstant auf ±1°C. Kein Kohle, kein Aufwand.',
+        body: 'An, 30 Sekunden warten, läuft. Keine Kohle, kein Setup — einfach ready.',
       },
       {
         tag: 'Kosten',
@@ -298,7 +348,7 @@ const premium: AudienceContent = {
   label: 'Premium Lifestyle',
 
   hero: {
-    eyebrow: 'Electric Hookah',
+    eyebrow: 'Electric Hookah · Designed',
     headline: ['Shisha.', 'Perfected.'],
     subline: 'Kein Kompromiss. Elektrische Präzision, zeitloses Design. Das Ritual, wie es sein sollte.',
     ctaPrimary: 'Vorbestellen',
@@ -366,16 +416,16 @@ const premium: AudienceContent = {
     eyebrow: 'Performance',
     headline: 'Konstante Qualität, von Anfang bis Ende',
     description: 'Während traditionelle Kohle-Setups nach 20 Minuten nachlassen, bleibt die elektrische Leistung über die gesamte Session stabil.',
-    badge: 'Konstant stark',
+    badge: 'Bis zur letzten Minute',
     bottomPills: [
-      'Kein Hitzeschock beim Aufheizen',
-      'Elektrische Temperaturregelung',
-      'Gleichmäßiger Dampf bis zur letzten Minute',
-      'Kein Kohle-Nachschub nötig',
-      'Konstante Leistung über 60 Minuten',
-      'Geringere Schwankung als Kohle',
+      'Ruhiges Ritual ohne Kohle',
+      'Deutlich reduzierter Geruch',
+      'Gleichmäßiger Dampf bis zum Schluss',
+      'Kein Kohle-Nachschub',
+      '60 Minuten konstante Leistung',
+      'Diskret im Raum',
       'Schnelle Einsatzbereitschaft',
-      'Reproduzierbares Session-Profil',
+      'Jedes Mal dasselbe Erlebnis',
     ],
   },
 
@@ -407,7 +457,7 @@ const premium: AudienceContent = {
       {
         title: 'Session ohne Kompromisse',
         detail: 'Konstante Qualität von Anfang bis Ende – ohne Nachregeln, ohne nachlassende Leistung.',
-        tag: 'Zero Hassle',
+        tag: 'Mühelos',
       },
       {
         title: 'Überall nutzbar',
@@ -442,7 +492,7 @@ const premium: AudienceContent = {
         description: 'Sofort einsatzbereit, kein Reinigen nötig.',
       },
     ],
-    chartSavings: '€ 240 gespart nach 12 Monaten',
+    chartSavings: '€ 240 weniger Ausgaben im Jahr',
   },
 
   closing: {
@@ -453,10 +503,35 @@ const premium: AudienceContent = {
     ctaSecondary: 'Mehr erfahren',
   },
 
+  componentBreakdown: {
+    eyebrow: 'Aufbau & Material',
+    headline: 'Komponenten im Detail',
+    navHint: 'Kurzbeschreibung und Detailtext zu allen 9 Komponenten.',
+    items: [
+      { name: 'Pod', description: 'Modulares Aroma-System für schnellen Geschmackwechsel.', detail: 'Vorkonfektionierte Pods ohne Tabakaufbau — gleichbleibende Qualität, null Aufwand.' },
+      { name: 'Durchzugmodul', description: 'Steuert den Luftfluss gleichmäßig durch das System.', detail: 'Abgestimmter Airflow für ruhiges, vorhersehbares Zugverhalten über die gesamte Session.' },
+      { name: 'Abdichtung', description: 'Dichtet die Module sauber und luftdicht ab.', detail: 'Hitze- und feuchtigkeitsresistent — verhindert Leistungsverlust und Nebenluft.' },
+      { name: 'Bowl', description: 'Wasserkammer für Kühlung und ruhigen Durchzug.', detail: 'Abgestimmtes Volumen für weiches Rauchgefühl — Session für Session.' },
+      { name: 'Keramik-Heizkern', description: 'Schnelles Aufheizen mit stabiler Temperatur.', detail: 'Thermisch träges Keramikmaterial hält Geschmack und Temperatur konstant.' },
+      { name: 'Heizkammer', description: 'Elektrische Hitzezone statt Kohle.', detail: 'Geschlossener Heizbereich mit präziser Leistungsabgabe — kein Ritual-Störer.' },
+      { name: 'Ladepad mit Steuerungs- und Akkuanzeige', description: 'Laden, steuern und Akkustand auf einen Blick.', detail: 'Integriertes Interface für Sessionkontrolle mit klarem Akku-Feedback.' },
+      { name: 'Schlauch aus hochwertigem Gummi', description: 'Flexibel, robust und geschmacksneutral im Zug.', detail: 'Formstabil und angenehm — auch bei längeren Sessions.' },
+      { name: 'Edelstahl-Mundstück', description: 'Hochwertiges Finish mit kühler, präziser Haptik.', detail: 'Langlebiger Edelstahl mit sauberem Durchzug und Premium-Gefühl.' },
+    ],
+  },
+
   modal: {
     eyebrow: 'Electric Hookah',
     title: 'Alle Details',
     ctaButton: 'Jetzt vorbestellen — € 249',
+    specsSectionLabel: 'Technische Daten',
+    highlightsSectionLabel: 'Im Detail',
+    deliverySectionLabel: 'Lieferumfang',
+    specs: modalSpecs(['Sofortbereitschaft', 'Digitale Präzision', 'Pro Ladung', 'Pro Pod', 'Bluetooth 5.0', 'Optimale Kühlung']),
+    warranty: {
+      title: '2 Jahre Herstellergarantie',
+      body: 'Vollständige Garantie auf alle Komponenten. Kostenloser Ersatzversand innerhalb der EU.',
+    },
     highlights: [
       {
         tag: 'Technologie',
@@ -499,7 +574,7 @@ const expert: AudienceContent = {
   label: 'Shisha-Experte',
 
   hero: {
-    eyebrow: 'Electric Hookah',
+    eyebrow: 'Pro-Setup · Elektrische Heiztechnologie',
     headline: ['Shisha.', 'Mastered.'],
     subline: 'Elektrische Heiztechnologie für Kenner. Kontrollierte Temperatur, optimierter Airflow, unverfälschter Geschmack.',
     ctaPrimary: 'Jetzt testen',
@@ -569,14 +644,14 @@ const expert: AudienceContent = {
     description: 'Traditionelle Kohle verliert nach 20 Minuten signifikant an Intensität. Der Keramik-Heizkern hält die Dampfqualität über die gesamte Session auf gleichem Niveau.',
     badge: 'Messbar konstant',
     bottomPills: [
-      'Kein Hitzeschock beim Aufheizen',
-      'Elektrische Temperaturregelung',
-      'Gleichmäßiger Dampf bis zur letzten Minute',
-      'Kein Kohle-Nachschub nötig',
-      'Konstante Leistung über 60 Minuten',
-      'Geringere Schwankung als Kohle',
-      'Reproduzierbares Session-Profil',
       '±2% Intensitätsschwankung',
+      'Reproduzierbares Session-Profil',
+      'Keramik-Heizkern ±1°C',
+      'Kein Flavourverlust',
+      'Geringere Schwankung als Kohle',
+      '60 Min. volle Leistung',
+      'Kein Kohle-Nachschub',
+      'Messbar konstant',
     ],
   },
 
@@ -588,7 +663,7 @@ const expert: AudienceContent = {
       {
         title: 'Reiner Geschmack',
         detail: 'Elektrische Verdampfung ohne Kohle-Einfluss. Das Flavor-Profil bleibt unverfälscht – von Anfang bis Ende.',
-        tag: 'Pure Flavor',
+        tag: 'Rein',
       },
       {
         title: 'Stabile Intensität',
@@ -598,7 +673,7 @@ const expert: AudienceContent = {
       {
         title: 'Volle Kontrolle',
         detail: 'Temperatur auf 1°C einstellbar. Zugwiderstand nach Wunsch – alles jederzeit reproduzierbar.',
-        tag: 'Kontrollierbar',
+        tag: 'Präzise',
       },
       {
         title: 'Kein Kohlegeschmack',
@@ -613,7 +688,7 @@ const expert: AudienceContent = {
       {
         title: 'Sauberes Setup',
         detail: 'Keine Asche, kein Ruß. Das Setup bleibt sauber – Session für Session.',
-        tag: 'Zero Waste',
+        tag: 'Rückstandsfrei',
       },
     ],
   },
@@ -654,10 +729,35 @@ const expert: AudienceContent = {
     ctaSecondary: 'Technische Details',
   },
 
+  componentBreakdown: {
+    eyebrow: 'Komponenten im Detail',
+    headline: 'Technischer Aufbau',
+    navHint: 'Kurzbeschreibung und Detailtext zu allen 9 Komponenten — für reproduzierbare Sessions.',
+    items: [
+      { name: 'Pod', description: 'Vorkonfektioniertes Pod-System mit kalibriertem Flavor-Profil.', detail: 'Geschmacksneutraler Aufbau ohne Tabak — gleichbleibende Verdampfung ohne manuelles Packing.' },
+      { name: 'Durchzugmodul', description: 'Steuert den Luftfluss gleichmäßig durch das System.', detail: 'Optimierter Airflow für konstanten Zugwiderstand und reproduzierbares Rauchverhalten.' },
+      { name: 'Abdichtung', description: 'Dichtet die Module sauber und luftdicht ab.', detail: 'Hitze- und feuchtigkeitsresistente Dichtflächen — verhindert Nebenluft und Leistungsverlust.' },
+      { name: 'Bowl', description: 'Wasserkammer für Kühlung und ruhigen Durchzug.', detail: 'Abgestimmtes Volumen für weiches Rauchgefühl über die gesamte Session.' },
+      { name: 'Keramik-Heizkern', description: 'Schnelles Aufheizen mit stabiler Temperatur.', detail: 'Thermisch träges Keramikmaterial gleicht Lastspitzen aus — ±1°C über 60 Minuten.' },
+      { name: 'Heizkammer', description: 'Elektrische Hitzezone statt Kohle.', detail: 'Geschlossener Heizbereich mit präziser Leistungsabgabe für reproduzierbaren Dampf.' },
+      { name: 'Ladepad mit Steuerungs- und Akkuanzeige', description: 'Laden, steuern und Akkustand auf einen Blick.', detail: 'Integriertes Interface für Sessionkontrolle und Akku-Monitoring in Echtzeit.' },
+      { name: 'Schlauch aus hochwertigem Gummi', description: 'Flexibel, robust und geschmacksneutral im Zug.', detail: 'Geschmacksneutrales Material — formstabil bei langen Sessions.' },
+      { name: 'Edelstahl-Mundstück', description: 'Hochwertiges Finish mit kühler, präziser Haptik.', detail: 'Langlebiger Edelstahl mit sauberem Durchzug — kein Material-Einfluss aufs Aroma.' },
+    ],
+  },
+
   modal: {
     eyebrow: 'Electric Hookah',
     title: 'Technische Details',
     ctaButton: 'Jetzt testen — € 249',
+    specsSectionLabel: 'Spezifikationen',
+    highlightsSectionLabel: 'Technische Übersicht',
+    deliverySectionLabel: 'Lieferumfang',
+    specs: modalSpecs(['Keramik-Heizkern', '±1°C Regelung', '6+ Stunden Laufzeit', '45–60 Min. pro Pod', 'Bluetooth 5.0', '350 ml Kühlvolumen']),
+    warranty: {
+      title: '2 Jahre Garantie',
+      body: 'Herstellergarantie auf alle Module. Kostenloser EU-Ersatzversand — ohne proprietären Lock-in.',
+    },
     highlights: [
       {
         tag: 'Heiztechnologie',

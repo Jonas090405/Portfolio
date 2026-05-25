@@ -10,14 +10,7 @@ interface Props {
   onClose: () => void;
 }
 
-const specs = [
-  { icon: Zap,         label: 'Heizzeit',        value: '30 Sek.',       sub: 'Sofortbereitschaft' },
-  { icon: Thermometer, label: 'Temperatur',       value: '± 1 °C',        sub: 'Digitale Präzision' },
-  { icon: Battery,     label: 'Akkulaufzeit',     value: '6+ Std.',       sub: 'Pro Ladung' },
-  { icon: Wind,        label: 'Session-Dauer',    value: '45–60 Min.',    sub: 'Pro Pod' },
-  { icon: Smartphone,  label: 'App-Steuerung',    value: 'iOS & Android', sub: 'Bluetooth 5.0' },
-  { icon: Droplets,    label: 'Wasservolumen',    value: '350 ml',        sub: 'Optimale Kühlung' },
-];
+const SPEC_ICONS = [Zap, Thermometer, Battery, Wind, Smartphone, Droplets] as const;
 
 export function ShishaInfoModal({ open, onClose }: Props) {
   const { audience } = useAudience();
@@ -76,10 +69,10 @@ export function ShishaInfoModal({ open, onClose }: Props) {
 
               {/* Specs grid — same for all audiences (technical facts) */}
               <div>
-                <p className="text-white/35 text-xs tracking-widest uppercase mb-4">Technische Daten</p>
+                <p className="text-white/35 text-xs tracking-widest uppercase mb-4">{modal.specsSectionLabel}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {specs.map((spec) => {
-                    const Icon = spec.icon;
+                  {modal.specs.map((spec, i) => {
+                    const Icon = SPEC_ICONS[i];
                     return (
                       <div key={spec.label} className="bg-white/4 hover:bg-white/7 transition-colors rounded-2xl p-4 space-y-3">
                         <div className="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center">
@@ -98,7 +91,7 @@ export function ShishaInfoModal({ open, onClose }: Props) {
 
               {/* Highlights — audience-specific */}
               <div>
-                <p className="text-white/35 text-xs tracking-widest uppercase mb-4">Im Detail</p>
+                <p className="text-white/35 text-xs tracking-widest uppercase mb-4">{modal.highlightsSectionLabel}</p>
                 <div className="space-y-3">
                   {modal.highlights.map((item, i) => (
                     <motion.div
@@ -122,7 +115,7 @@ export function ShishaInfoModal({ open, onClose }: Props) {
 
               {/* Lieferumfang */}
               <div>
-                <p className="text-white/35 text-xs tracking-widest uppercase mb-4">Lieferumfang</p>
+                <p className="text-white/35 text-xs tracking-widest uppercase mb-4">{modal.deliverySectionLabel}</p>
                 <div className="space-y-0 divide-y divide-white/6">
                   {[
                     ['Electric Hookah Base', '1×'],
@@ -147,9 +140,9 @@ export function ShishaInfoModal({ open, onClose }: Props) {
               <div className="flex items-start gap-3 bg-white/4 rounded-2xl p-5">
                 <Shield className="w-4 h-4 text-[#00ff88] mt-0.5 shrink-0" strokeWidth={1.5} />
                 <div>
-                  <div className="text-white text-sm font-medium">2 Jahre Garantie</div>
+                  <div className="text-white text-sm font-medium">{modal.warranty.title}</div>
                   <p className="text-white/40 text-xs mt-1 leading-relaxed">
-                    Vollständige Herstellergarantie auf alle Komponenten. Kostenloser Ersatzversand innerhalb der EU.
+                    {modal.warranty.body}
                   </p>
                 </div>
               </div>
