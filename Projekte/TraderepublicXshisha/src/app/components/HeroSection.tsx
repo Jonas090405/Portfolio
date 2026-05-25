@@ -72,19 +72,19 @@ export function HeroSection() {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center justify-center gap-2.5 px-8 py-4 bg-white text-black rounded-2xl hover:bg-white/90 transition-all font-medium"
+                className="flex items-center justify-center gap-2.5 px-6 sm:px-8 py-4 bg-white text-black rounded-2xl hover:bg-white/90 transition-all font-medium text-sm sm:text-base"
               >
-                <ShoppingCart className="w-4 h-4" strokeWidth={1.5} />
-                {hero.ctaPrimary}
+                <ShoppingCart className="w-4 h-4 shrink-0" strokeWidth={1.5} />
+                <span className="whitespace-nowrap">{hero.ctaPrimary}</span>
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setModalOpen(true)}
-                className="flex items-center justify-center gap-2.5 px-8 py-4 bg-[#1a1a1a] border border-white/10 rounded-2xl hover:bg-white/5 transition-all text-white"
+                className="flex items-center justify-center gap-2.5 px-6 sm:px-8 py-4 bg-[#1a1a1a] border border-white/10 rounded-2xl hover:bg-white/5 transition-all text-white text-sm sm:text-base"
               >
-                <Info className="w-4 h-4 text-white/50" strokeWidth={1.5} />
-                {hero.ctaSecondary}
+                <Info className="w-4 h-4 text-white/50 shrink-0" strokeWidth={1.5} />
+                <span className="whitespace-nowrap">{hero.ctaSecondary}</span>
               </motion.button>
             </motion.div>
           </AnimatePresence>

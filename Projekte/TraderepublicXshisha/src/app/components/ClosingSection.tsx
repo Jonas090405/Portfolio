@@ -108,24 +108,24 @@ export function ClosingSection() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex flex-col sm:flex-row gap-3 w-full max-w-xs sm:max-w-md"
+              className="flex flex-col sm:flex-row gap-3 w-full max-w-sm sm:max-w-xl"
             >
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex-1 flex items-center justify-center gap-3 bg-white text-black py-4 px-6 rounded-2xl hover:bg-white/90 transition-all font-medium"
+                className="flex-1 flex items-center justify-center gap-2.5 bg-white text-black py-4 px-5 sm:px-6 rounded-2xl hover:bg-white/90 transition-all font-medium text-sm sm:text-base"
               >
                 <ShoppingCart className="w-4 h-4 shrink-0" strokeWidth={1.5} />
-                <span>{closing.ctaPrimary}</span>
+                <span className="whitespace-nowrap">{closing.ctaPrimary}</span>
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setModalOpen(true)}
-                className="flex-1 flex items-center justify-center gap-3 bg-[#1a1a1a] border border-white/10 text-white py-4 px-6 rounded-2xl hover:bg-white/5 transition-all"
+                className="flex-1 flex items-center justify-center gap-2.5 bg-[#1a1a1a] border border-white/10 text-white py-4 px-5 sm:px-6 rounded-2xl hover:bg-white/5 transition-all text-sm sm:text-base"
               >
                 <Info className="w-4 h-4 text-white/50 shrink-0" strokeWidth={1.5} />
-                <span>{closing.ctaSecondary}</span>
+                <span className="whitespace-nowrap">{closing.ctaSecondary}</span>
               </motion.button>
             </motion.div>
           </AnimatePresence>
