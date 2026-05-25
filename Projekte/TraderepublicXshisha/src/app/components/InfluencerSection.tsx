@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAudience } from '../context/AudienceContext';
 import { audienceContent } from '../data/audienceContent';
 
-/* Dynamically import all influencer images from assets.
-   Vite resolves these at build time if the files exist.
-   We wrap in try/catch so a missing file = undefined (graceful). */
+/* Dynamically import all influencer images from assets. */
 const imageModules = import.meta.glob('../../assets/*.{jpg,jpeg,png,webp}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>;
+
+/* Dynamically import all influencer videos from assets. */
+const videoModules = import.meta.glob('../../assets/*.{mp4,webm,mov}', {
   eager: true,
   query: '?url',
   import: 'default',
@@ -14,17 +19,33 @@ const imageModules = import.meta.glob('../../assets/*.{jpg,jpeg,png,webp}', {
 
 function resolveImage(filename?: string): string | undefined {
   if (!filename) return undefined;
-  const key = `../../assets/${filename}`;
-  return imageModules[key];
+  return imageModules[`../../assets/${filename}`];
+}
+
+function resolveVideo(filename?: string): string | undefined {
+  if (!filename) return undefined;
+  return videoModules[`../../assets/${filename}`];
 }
 
 export function InfluencerSection() {
   const { audience } = useAudience();
   const { influencer, id } = audienceContent[audience];
+  const videoUrl = resolveVideo(influencer.videoSrc);
   const imgUrl = resolveImage(influencer.imageSrc);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   /* Audience 3 has no celebrity — render a different expert-quote card */
   const isExpert = id === 3;
+
+  /* Ensure video always plays — recover from unexpected pauses */
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.play().catch(() => {});
+    const onPause = () => el.play().catch(() => {});
+    el.addEventListener('pause', onPause);
+    return () => el.removeEventListener('pause', onPause);
+  }, [audience]);
 
   return (
     <AnimatePresence mode="wait">
@@ -35,7 +56,7 @@ export function InfluencerSection() {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.55 }}
         className="relative w-full overflow-hidden"
-        style={{ height: isExpert ? 'auto' : '75vh' }}
+        style={{ height: isExpert ? 'auto' : '85vh' }}
       >
         {/* ── Expert variant (audience 3) ── */}
         {isExpert ? (
@@ -66,8 +87,21 @@ export function InfluencerSection() {
         ) : (
           /* ── Celebrity variant (audience 1 & 2) ── */
           <>
-            {/* Image — cover fills section, object-position keeps face in frame */}
-            {imgUrl ? (
+            {/* Video — fills section, no controls, no interaction */}
+            {videoUrl ? (
+              <video
+                ref={videoRef}
+                src={videoUrl}
+                autoPlay
+                muted
+                loop
+                playsInline
+                disablePictureInPicture
+                onContextMenu={(e) => e.preventDefault()}
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+                style={{ objectPosition: 'center 35%' }}
+              />
+            ) : imgUrl ? (
               <img
                 src={imgUrl}
                 alt={influencer.name}
@@ -78,16 +112,16 @@ export function InfluencerSection() {
               <div className="absolute inset-0 bg-gradient-to-br from-[#111] to-[#000]" />
             )}
 
-            {/* Top fade — blends into the black hero section above */}
-            <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black via-black/60 to-transparent pointer-events-none" />
+            {/* Top fade — thin blend into hero above */}
+            <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/80 to-transparent pointer-events-none" />
 
-            {/* Bottom fade — heavy, merges into the black section below */}
-            <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
+            {/* Bottom fade — merges into next section */}
+            <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
 
-            {/* Left vignette — separates text from image */}
-            <div className="absolute inset-y-0 left-0 w-2/5 bg-gradient-to-r from-black/60 to-transparent pointer-events-none" />
+            {/* Left vignette — readability behind quote text */}
+            <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
 
-            {/* Quote overlay — sits over the bottom area of the image */}
+            {/* Quote overlay — sits over the bottom area of the video */}
             <div className="absolute inset-x-0 bottom-0 z-10 px-4 sm:px-6 lg:px-10 xl:px-20 pb-10 sm:pb-14 lg:pb-16">
               <div className="max-w-2xl space-y-4">
                 <motion.blockquote

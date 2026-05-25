@@ -84,6 +84,7 @@ export interface AudienceContent {
     name: string;
     role: string;
     imageSrc?: string;
+    videoSrc?: string;
   };
 }
 
@@ -284,6 +285,7 @@ const street: AudienceContent = {
     name: 'Luciano',
     role: 'Rapper · Artist',
     imageSrc: 'Still_Trade_Republic_Luciano02.png',
+    videoSrc: 'Luciano.mp4',
   },
 };
 
@@ -484,6 +486,7 @@ const premium: AudienceContent = {
     name: 'Brad Pitt',
     role: 'Actor · Entrepreneur',
     imageSrc: 'Brad_Pitt_Trade_Republic.png',
+    videoSrc: 'Brad_pitt.mp4',
   },
 };
 
