@@ -1,22 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'motion/react';
-
-const sections = [
-  { id: 'hero',         label: 'Shisha simplified' },
-  { id: 'product',      label: 'Produkt' },
-  { id: 'components',   label: 'Komponenten' },
-  { id: 'how-it-works', label: 'So funktioniert es' },
-  { id: 'app-control',  label: 'Appsteuerung' },
-  { id: 'performance',  label: 'Performance' },
-  { id: 'experience',   label: 'Experience' },
-  { id: 'benefits',     label: 'Vorteile' },
-  { id: 'closing',      label: 'Jetzt kaufen' },
-];
+import { useAudience } from '../context/AudienceContext';
+import { audienceContent, getNavSections } from '../data/audienceContent';
 
 // Spring config — high stiffness + damping for snappy but fluid feel
 const SPRING = { type: 'spring' as const, stiffness: 380, damping: 36, mass: 0.6 };
 
 export function ScrollProgress() {
+  const { audience } = useAudience();
+  const sections = useMemo(
+    () => getNavSections(audienceContent[audience].nav),
+    [audience],
+  );
+
   const [activeIndex, setActiveIndex] = useState(0);
   // Continuous fractional progress: e.g. 1.4 = between section 1 and 2, 40% through
   const rawProgress = useMotionValue(0);
@@ -122,7 +118,7 @@ export function ScrollProgress() {
       window.removeEventListener('scroll', handleScroll);
       if (hideTimer.current) clearTimeout(hideTimer.current);
     };
-  }, [rawProgress, isHoverZoneActive]);
+  }, [rawProgress, isHoverZoneActive, sections]);
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -188,7 +184,7 @@ export function ScrollProgress() {
 
               return (
                 <button
-                  key={section.id}
+                  key={`${audience}-${section.id}`}
                   onClick={() => scrollTo(section.id)}
                   onMouseEnter={() => setHovered(i)}
                   className="relative flex items-center h-7 cursor-pointer group"
@@ -248,7 +244,7 @@ export function ScrollProgress() {
             >
               {sections.map((section, i) => (
                 <button
-                  key={section.id}
+                  key={`${audience}-${section.id}`}
                   onClick={() => scrollTo(section.id)}
                   className="flex items-center gap-3 w-full px-4 py-2.5 text-left"
                 >
@@ -295,7 +291,7 @@ export function ScrollProgress() {
             ))}
           </div>
           <motion.span
-            key={activeIndex}
+            key={`${audience}-${activeIndex}`}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}

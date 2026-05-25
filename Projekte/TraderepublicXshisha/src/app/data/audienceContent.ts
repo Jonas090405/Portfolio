@@ -3,9 +3,38 @@ import type { AudienceId } from '../context/AudienceContext';
 /* ─────────────────────────────────────────────────────────────
    Types
 ───────────────────────────────────────────────────────────── */
+export type NavSectionId =
+  | 'hero'
+  | 'product'
+  | 'components'
+  | 'how-it-works'
+  | 'app-control'
+  | 'performance'
+  | 'experience'
+  | 'benefits'
+  | 'closing';
+
+export interface NavSection {
+  id: NavSectionId;
+  label: string;
+}
+
 export interface AudienceContent {
   id: AudienceId;
   label: string;
+
+  /** Sidebar / mobile nav — aligned with section eyebrows & headlines */
+  nav: {
+    hero: string;
+    product: string;
+    components: string;
+    howItWorks: string;
+    appControl: string;
+    performance: string;
+    experience: string;
+    benefits: string;
+    closing: string;
+  };
 
   hero: {
     eyebrow: string;
@@ -113,6 +142,20 @@ function modalSpecs(subs: readonly [string, string, string, string, string, stri
   return MODAL_SPEC_VALUES.map((s, i) => ({ ...s, sub: subs[i] }));
 }
 
+export function getNavSections(nav: AudienceContent['nav']): NavSection[] {
+  return [
+    { id: 'hero', label: nav.hero },
+    { id: 'product', label: nav.product },
+    { id: 'components', label: nav.components },
+    { id: 'how-it-works', label: nav.howItWorks },
+    { id: 'app-control', label: nav.appControl },
+    { id: 'performance', label: nav.performance },
+    { id: 'experience', label: nav.experience },
+    { id: 'benefits', label: nav.benefits },
+    { id: 'closing', label: nav.closing },
+  ];
+}
+
 /* ─────────────────────────────────────────────────────────────
    1 — STREET CULTURE · Luciano · 18–25
    Ton: direkt, locker, klar – kein aufgesetzter Slang
@@ -120,6 +163,18 @@ function modalSpecs(subs: readonly [string, string, string, string, string, stri
 const street: AudienceContent = {
   id: 1,
   label: 'Street Culture',
+
+  nav: {
+    hero: 'No Stress',
+    product: 'Wie es funktioniert',
+    components: 'Was drin steckt',
+    howItWorks: "So läuft's",
+    appControl: 'App',
+    performance: 'Performance',
+    experience: 'Das Gefühl',
+    benefits: 'Was du sparst',
+    closing: 'Jetzt verfügbar',
+  },
 
   hero: {
     eyebrow: 'Electric Hookah · Plug & Play',
@@ -347,6 +402,18 @@ const premium: AudienceContent = {
   id: 2,
   label: 'Premium Lifestyle',
 
+  nav: {
+    hero: 'Perfected',
+    product: 'Technologie',
+    components: 'Aufbau & Material',
+    howItWorks: 'Ablauf',
+    appControl: 'App-Steuerung',
+    performance: 'Performance',
+    experience: 'Das Erlebnis',
+    benefits: 'Zahlen & Fakten',
+    closing: 'Jetzt verfügbar',
+  },
+
   hero: {
     eyebrow: 'Electric Hookah · Designed',
     headline: ['Shisha.', 'Perfected.'],
@@ -572,6 +639,18 @@ const premium: AudienceContent = {
 const expert: AudienceContent = {
   id: 3,
   label: 'Shisha-Experte',
+
+  nav: {
+    hero: 'Mastered',
+    product: 'Technologie',
+    components: 'Komponenten im Detail',
+    howItWorks: 'Anwendung',
+    appControl: 'Steuerung',
+    performance: 'Performance',
+    experience: 'Das Erlebnis',
+    benefits: 'Daten & Vergleich',
+    closing: 'Für Kenner',
+  },
 
   hero: {
     eyebrow: 'Pro-Setup · Elektrische Heiztechnologie',
