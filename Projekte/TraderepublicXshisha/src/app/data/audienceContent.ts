@@ -23,7 +23,7 @@ export interface AudienceContent {
   id: AudienceId;
   label: string;
 
-  /** Sidebar / mobile nav — aligned with section eyebrows & headlines */
+  /** Sidebar / mobile nav — derived from section eyebrows via withNav() */
   nav: {
     hero: string;
     product: string;
@@ -104,7 +104,6 @@ export interface AudienceContent {
   componentBreakdown: {
     eyebrow: string;
     headline: string;
-    navHint: string;
     items: Array<{ name: string; description: string; detail: string }>;
   };
 
@@ -142,6 +141,26 @@ function modalSpecs(subs: readonly [string, string, string, string, string, stri
   return MODAL_SPEC_VALUES.map((s, i) => ({ ...s, sub: subs[i] }));
 }
 
+type AudienceContentInput = Omit<AudienceContent, 'nav'>;
+
+/** Nav labels always mirror section eyebrows — single source of truth */
+function withNav(content: AudienceContentInput): AudienceContent {
+  return {
+    ...content,
+    nav: {
+      hero: content.hero.eyebrow,
+      product: content.productOverview.eyebrow,
+      components: content.componentBreakdown.eyebrow,
+      howItWorks: content.howItWorks.eyebrow,
+      appControl: content.appControl.eyebrow,
+      performance: content.smokePerformance.eyebrow,
+      experience: content.experience.eyebrow,
+      benefits: content.benefits.eyebrow,
+      closing: content.closing.eyebrow,
+    },
+  };
+}
+
 export function getNavSections(nav: AudienceContent['nav']): NavSection[] {
   return [
     { id: 'hero', label: nav.hero },
@@ -160,21 +179,9 @@ export function getNavSections(nav: AudienceContent['nav']): NavSection[] {
    1 — STREET CULTURE · Luciano · 18–25
    Ton: direkt, locker, klar – kein aufgesetzter Slang
 ───────────────────────────────────────────────────────────── */
-const street: AudienceContent = {
+const street = withNav({
   id: 1,
   label: 'Street Culture',
-
-  nav: {
-    hero: 'No Stress',
-    product: 'Wie es funktioniert',
-    components: 'Was drin steckt',
-    howItWorks: "So läuft's",
-    appControl: 'App',
-    performance: 'Performance',
-    experience: 'Das Gefühl',
-    benefits: 'Was du sparst',
-    closing: 'Jetzt verfügbar',
-  },
 
   hero: {
     eyebrow: 'Electric Hookah · Plug & Play',
@@ -335,7 +342,6 @@ const street: AudienceContent = {
   componentBreakdown: {
     eyebrow: 'Was drin steckt',
     headline: 'Alles im Überblick',
-    navHint: 'Tippe auf eine Komponente — Kurzinfo und Details zu allen 9 Teilen.',
     items: [
       { name: 'Pod', description: 'Geschmack wechseln — ohne Tabak und ohne Stress.', detail: 'Pod rein, fertig. Kein klebriger Aufbau, kein Reinigen zwischen den Sessions.' },
       { name: 'Durchzugmodul', description: 'Sorgt für einen gleichmäßigen, angenehmen Zug.', detail: 'Kein Ziehen wie bei einer kaputten Shisha — der Luftstrom bleibt stabil.' },
@@ -392,27 +398,15 @@ const street: AudienceContent = {
     imageSrc: 'Still_Trade_Republic_Luciano02.png',
     videoSrc: 'Luciano.mp4',
   },
-};
+});
 
 /* ─────────────────────────────────────────────────────────────
    2 — PREMIUM LIFESTYLE · Brad Pitt · 35–50
    Ton: ruhig, selbstsicher, kein Marketing-Speak
 ───────────────────────────────────────────────────────────── */
-const premium: AudienceContent = {
+const premium = withNav({
   id: 2,
   label: 'Premium Lifestyle',
-
-  nav: {
-    hero: 'Perfected',
-    product: 'Technologie',
-    components: 'Aufbau & Material',
-    howItWorks: 'Ablauf',
-    appControl: 'App-Steuerung',
-    performance: 'Performance',
-    experience: 'Das Erlebnis',
-    benefits: 'Zahlen & Fakten',
-    closing: 'Jetzt verfügbar',
-  },
 
   hero: {
     eyebrow: 'Electric Hookah · Designed',
@@ -573,7 +567,6 @@ const premium: AudienceContent = {
   componentBreakdown: {
     eyebrow: 'Aufbau & Material',
     headline: 'Komponenten im Detail',
-    navHint: 'Kurzbeschreibung und Detailtext zu allen 9 Komponenten.',
     items: [
       { name: 'Pod', description: 'Modulares Aroma-System für schnellen Geschmackwechsel.', detail: 'Vorkonfektionierte Pods ohne Tabakaufbau — gleichbleibende Qualität, null Aufwand.' },
       { name: 'Durchzugmodul', description: 'Steuert den Luftfluss gleichmäßig durch das System.', detail: 'Abgestimmter Airflow für ruhiges, vorhersehbares Zugverhalten über die gesamte Session.' },
@@ -630,27 +623,15 @@ const premium: AudienceContent = {
     imageSrc: 'Brad_Pitt_Trade_Republic.png',
     videoSrc: 'Brad_pitt.mp4',
   },
-};
+});
 
 /* ─────────────────────────────────────────────────────────────
    3 — SHISHA-EXPERTE · Connoisseur · 25–40
    Ton: sachkundig, direkt – spricht den Kenner als Gleichgesinnte an
 ───────────────────────────────────────────────────────────── */
-const expert: AudienceContent = {
+const expert = withNav({
   id: 3,
   label: 'Shisha-Experte',
-
-  nav: {
-    hero: 'Mastered',
-    product: 'Technologie',
-    components: 'Komponenten im Detail',
-    howItWorks: 'Anwendung',
-    appControl: 'Steuerung',
-    performance: 'Performance',
-    experience: 'Das Erlebnis',
-    benefits: 'Daten & Vergleich',
-    closing: 'Für Kenner',
-  },
 
   hero: {
     eyebrow: 'Pro-Setup · Elektrische Heiztechnologie',
@@ -811,7 +792,6 @@ const expert: AudienceContent = {
   componentBreakdown: {
     eyebrow: 'Komponenten im Detail',
     headline: 'Technischer Aufbau',
-    navHint: 'Kurzbeschreibung und Detailtext zu allen 9 Komponenten — für reproduzierbare Sessions.',
     items: [
       { name: 'Pod', description: 'Vorkonfektioniertes Pod-System mit kalibriertem Flavor-Profil.', detail: 'Geschmacksneutraler Aufbau ohne Tabak — gleichbleibende Verdampfung ohne manuelles Packing.' },
       { name: 'Durchzugmodul', description: 'Steuert den Luftfluss gleichmäßig durch das System.', detail: 'Optimierter Airflow für konstanten Zugwiderstand und reproduzierbares Rauchverhalten.' },
@@ -867,7 +847,7 @@ const expert: AudienceContent = {
     role: 'Shisha-Experte · Verified Review',
     imageSrc: undefined,
   },
-};
+});
 
 /* ─────────────────────────────────────────────────────────────
    Export

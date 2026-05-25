@@ -214,8 +214,6 @@ export function ComponentBreakdown() {
               </motion.div>
             ))}
           </div>
-
-          <p className="text-center text-xs tracking-wider text-white/20">{componentBreakdown.navHint}</p>
         </div>
       </section>
 
@@ -284,8 +282,6 @@ export function ComponentBreakdown() {
                   />
                 ))}
               </div>
-
-              <p className="mt-5 text-xs tracking-wider text-white/20">{componentBreakdown.navHint}</p>
             </div>
 
             {/* ── Right: Shisha image with annotation dots ── */}
