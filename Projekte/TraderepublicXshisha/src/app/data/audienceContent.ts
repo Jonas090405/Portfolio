@@ -480,7 +480,7 @@ const premium: AudienceContent = {
   },
 
   influencer: {
-    quote: 'Precision matters. In everything I do.',
+    quote: 'Quality matters. In everything I do.',
     name: 'Brad Pitt',
     role: 'Actor · Entrepreneur',
     imageSrc: 'Brad_Pitt_Trade_Republic.png',
