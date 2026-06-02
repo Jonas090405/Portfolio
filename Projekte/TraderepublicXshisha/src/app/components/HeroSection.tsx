@@ -14,10 +14,10 @@ export function HeroSection() {
 
   return (
     <section className="min-h-dvh flex items-center justify-center px-4 sm:px-6 lg:px-10 xl:px-20 relative overflow-hidden pt-12 pb-16">
-      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 xl:grid-cols-2 gap-12 xl:gap-20 items-center">
 
         {/* Left: Text */}
-        <div className="space-y-8 order-2 lg:order-1">
+        <div className="space-y-8 order-2 xl:order-1">
           <div className="space-y-3">
             <AnimatePresence mode="wait">
               <motion.span
@@ -95,7 +95,7 @@ export function HeroSection() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="flex justify-center order-1 lg:order-2"
+          className="flex justify-center order-1 xl:order-2"
         >
           <img
             src={hookahImage}

@@ -127,7 +127,7 @@
    * same horizontal rhythm (px-10 xl:px-20). Mobile/tablet: comfortable vertical rhythm.
    */
   .section-page {
-    @apply relative w-full px-4 pt-20 pb-20 sm:px-6 sm:pt-24 sm:pb-24 lg:min-h-dvh lg:px-10 lg:pt-14 lg:pb-12 xl:px-20;
+    @apply relative w-full px-4 pt-20 pb-20 sm:px-6 sm:pt-16 sm:pb-16 xl:min-h-dvh xl:px-10 xl:pt-14 xl:pb-12 2xl:px-20;
   }
 }
 

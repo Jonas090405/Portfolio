@@ -144,7 +144,7 @@ export function ComponentBreakdown() {
       {/* ─────────────────────────────────────────
           MOBILE  — klassisches Accordion
       ───────────────────────────────────────── */}
-      <section ref={mobileRef} className="section-page lg:hidden">
+      <section ref={mobileRef} className="section-page xl:hidden">
         <div className="max-w-7xl mx-auto w-full space-y-10">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -224,7 +224,7 @@ export function ComponentBreakdown() {
       ───────────────────────────────────────── */}
       <div
         ref={containerRef}
-        className="hidden lg:block relative"
+        className="hidden xl:block relative"
         style={{ height: `${components.length * 50 + 50}vh` }}
       >
         <div className="sticky top-0 h-dvh min-h-0 overflow-hidden flex flex-col bg-black">

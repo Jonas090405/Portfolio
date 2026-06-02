@@ -43,7 +43,7 @@ export function ScrollProgress() {
   // Reveal navigation when pointer is near the left-center sidebar area (desktop only)
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < 1280) {
         if (isHoverZoneActive) setIsHoverZoneActive(false);
         return;
       }
@@ -133,7 +133,7 @@ export function ScrollProgress() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -10 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed left-2 top-1/2 -translate-y-1/2 z-50 hidden lg:flex items-center gap-1.5 rounded-full border border-white/10 bg-[#161616]/85 px-2 py-1.5 shadow-xl"
+          className="fixed left-2 top-1/2 -translate-y-1/2 z-50 hidden xl:flex items-center gap-1.5 rounded-full border border-white/10 bg-[#161616]/85 px-2 py-1.5 shadow-xl"
           onMouseEnter={() => setIsHoverZoneActive(true)}
           onClick={() => {
             setIsHoverZoneActive(true);
@@ -160,7 +160,7 @@ export function ScrollProgress() {
         <>
           {/* ── Hover zone (desktop only) ── */}
           <div
-            className="fixed left-0 top-1/2 -translate-y-1/2 w-16 h-80 z-40 hidden lg:block"
+            className="fixed left-0 top-1/2 -translate-y-1/2 w-16 h-80 z-40 hidden xl:block"
             onMouseEnter={() => setIsHoverZoneActive(true)}
             onMouseLeave={() => setIsHoverZoneActive(false)}
           />
@@ -171,7 +171,7 @@ export function ScrollProgress() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed left-5 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-0.5"
+            className="fixed left-5 top-1/2 -translate-y-1/2 z-50 hidden xl:flex flex-col gap-0.5"
             onMouseEnter={() => setIsHoverZoneActive(true)}
             onMouseLeave={() => {
               setHovered(null);
@@ -231,7 +231,7 @@ export function ScrollProgress() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 18 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed bottom-6 left-4 z-50 lg:hidden"
+        className="fixed bottom-6 left-4 z-50 xl:hidden"
       >
         <AnimatePresence>
           {isMobileOpen && (

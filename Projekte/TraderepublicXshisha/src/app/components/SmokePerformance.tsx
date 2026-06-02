@@ -99,7 +99,7 @@ export function SmokePerformance() {
         </AnimatePresence>
 
         {/* Chart + Stats */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-6 lg:gap-8 items-stretch">
+        <div className="grid grid-cols-1 xl:grid-cols-[1fr_260px] gap-6 xl:gap-8 items-stretch">
 
           {/* Chart card */}
           <motion.div
@@ -174,14 +174,14 @@ export function SmokePerformance() {
           </motion.div>
 
           {/* Stats sidebar */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 lg:grid-rows-5 gap-3 lg:gap-4 h-full">
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-1 xl:grid-rows-5 gap-3 xl:gap-4 h-full">
             {STATS.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 12 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.3 + i * 0.09 }}
-                className="bg-black/50 backdrop-blur-md border border-white/[0.08] rounded-2xl px-4 py-3.5 lg:px-5 lg:py-3 h-full flex flex-col lg:flex-row lg:items-center gap-1 lg:gap-3"
+                className="bg-black/50 backdrop-blur-md border border-white/[0.08] rounded-2xl px-4 py-3.5 xl:px-5 xl:py-3 h-full flex flex-col xl:flex-row xl:items-center gap-1 xl:gap-3"
               >
                 <div className="flex-1 min-w-0">
                   <div className="text-white/40 text-sm sm:text-xs">{stat.label}</div>
@@ -203,7 +203,7 @@ export function SmokePerformance() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3"
+            className="grid grid-cols-2 xl:grid-cols-4 gap-2 sm:gap-3"
           >
             {smokePerformance.bottomPills.map((pill) => (
               <span

@@ -42,13 +42,13 @@ export function AppControlSection() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-8 sm:gap-7 lg:gap-10 items-start lg:items-center">
-          {/* Mobile mockup */}
+        <div className="grid grid-cols-1 xl:grid-cols-[1fr_1.1fr] gap-8 sm:gap-7 xl:gap-10 items-start xl:items-center">
+          {/* Mobile/Tablet mockup */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.08 }}
-            className="order-1 lg:hidden flex items-center justify-center mb-20"
+            className="order-1 xl:hidden flex items-center justify-center mb-20"
           >
             <img
               src={appMockupMobile}
@@ -63,24 +63,24 @@ export function AppControlSection() {
             initial={{ opacity: 0, y: 18 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="order-2 hidden lg:flex p-2 sm:p-4 lg:p-6 items-center justify-center lg:justify-end overflow-hidden"
+            className="order-2 hidden xl:flex p-2 sm:p-4 xl:p-6 items-center justify-center xl:justify-end overflow-hidden"
           >
             <div className="relative w-full flex items-center justify-center">
               <div className="absolute inset-x-10 bottom-8 h-16 bg-[#1DB954]/15 blur-2xl rounded-full pointer-events-none" />
-              <div className="relative w-full max-w-[300px] sm:max-w-[380px] md:max-w-[430px] lg:max-w-[520px] lg:translate-x-8 xl:translate-x-20">
+              <div className="relative w-full max-w-[300px] sm:max-w-[380px] md:max-w-[430px] xl:max-w-[520px] xl:translate-x-8 2xl:translate-x-20">
                 <img
                   src={appMockup}
                   alt="App-Mockup mit Hand und iPhone"
                   className="relative z-10 w-full h-auto object-contain drop-shadow-[0_24px_50px_rgba(0,0,0,0.55)]"
                   loading="lazy"
                 />
-                <div className="absolute -left-24 sm:-left-32 lg:-left-40 xl:-left-52 right-0 bottom-0 h-24 bg-gradient-to-t from-black via-black/75 to-transparent z-20 pointer-events-none" />
+                <div className="absolute -left-24 sm:-left-32 xl:-left-40 2xl:-left-52 right-0 bottom-0 h-24 bg-gradient-to-t from-black via-black/75 to-transparent z-20 pointer-events-none" />
               </div>
             </div>
           </motion.div>
 
           {/* Controls grid */}
-          <div className="order-2 lg:order-1 grid grid-cols-2 gap-4 sm:gap-7 content-start max-w-4xl">
+          <div className="order-2 xl:order-1 grid grid-cols-2 gap-4 sm:gap-7 content-start max-w-4xl">
             {appControl.controls.map((item, index) => {
               const Icon = CONTROL_ICONS[index];
               return (
