@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useParams, useNavigate, useLocation } from 'react-router';
 import { HeroSection } from './components/HeroSection';
 import { InfluencerSection } from './components/InfluencerSection';
 import { ProductOverview } from './components/ProductOverview';
@@ -15,20 +16,52 @@ import { AudienceContext } from './context/AudienceContext';
 import type { AudienceId } from './context/AudienceContext';
 import { audienceContent } from './data/audienceContent';
 
+const SLUG_TO_ID: Record<string, AudienceId> = {
+  street:  1,
+  premium: 2,
+  experte: 3,
+};
+
+const ID_TO_SLUG: Record<AudienceId, string> = {
+  1: 'street',
+  2: 'premium',
+  3: 'experte',
+};
+
 export default function App() {
-  const [audience, setAudience] = useState<AudienceId>(1);
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const audienceFromSlug = SLUG_TO_ID[slug ?? ''] ?? 1;
+  const [audience, setAudience] = useState<AudienceId>(audienceFromSlug);
   const [toastVisible, setToastVisible] = useState(false);
   const [toastTimer, setToastTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+
+  /* Sync audience state when URL changes (back/forward navigation) */
+  useEffect(() => {
+    const currentSlug = location.pathname.replace('/', '');
+    const id = SLUG_TO_ID[currentSlug];
+    if (id && id !== audience) {
+      setAudience(id);
+    }
+  }, [location.pathname]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  /* Scroll to top when audience / route changes */
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [audience]);
 
   const switchAudience = useCallback(
     (id: AudienceId) => {
       setAudience(id);
+      navigate(`/${ID_TO_SLUG[id]}`);
       setToastVisible(true);
       if (toastTimer) clearTimeout(toastTimer);
       const t = setTimeout(() => setToastVisible(false), 3000);
       setToastTimer(t);
     },
-    [toastTimer],
+    [navigate, toastTimer],
   );
 
   useEffect(() => {
@@ -89,8 +122,8 @@ export default function App() {
               <span className="text-xs text-white/60 font-medium tracking-wide">
                 {current.label}
               </span>
-              <span className="text-xs font-semibold ml-1 text-[#00ff88]">
-                [{audience}]
+              <span className="text-xs font-mono text-white/30 ml-1">
+                /{ID_TO_SLUG[audience]}
               </span>
             </div>
           </motion.div>

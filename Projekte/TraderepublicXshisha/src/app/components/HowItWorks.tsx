@@ -27,7 +27,7 @@ export function HowItWorks() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="text-white/40 tracking-widest uppercase text-xs">
+            <span className="text-white/40 tracking-widest uppercase text-sm sm:text-xs">
               {howItWorks.eyebrow}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
@@ -60,13 +60,13 @@ export function HowItWorks() {
                   </div>
 
                   <div className="space-y-2">
-                    <h3 className="text-white">{step.title}</h3>
-                    <p className="text-white/45 text-sm leading-relaxed">{step.description}</p>
+                    <h3 className="text-white text-lg sm:text-base">{step.title}</h3>
+                    <p className="text-white/45 text-base sm:text-sm leading-relaxed">{step.description}</p>
                   </div>
 
                   <div className="pt-2 border-t border-white/8">
                     <div className="text-[#00ff88] text-lg font-medium">{step.metric}</div>
-                    <div className="text-white/35 text-xs mt-0.5">{step.metricLabel}</div>
+                    <div className="text-white/35 text-sm sm:text-xs mt-0.5">{step.metricLabel}</div>
                   </div>
                 </motion.div>
               );

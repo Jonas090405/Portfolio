@@ -30,25 +30,25 @@ export function AppControlSection() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl"
           >
-            <span className="text-white/40 tracking-widest uppercase text-xs">
+            <span className="text-white/40 tracking-widest uppercase text-sm sm:text-xs">
               {appControl.eyebrow}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
               {appControl.headline}
             </h2>
-            <p className="text-white/50 text-sm sm:text-base mt-4 leading-relaxed">
+            <p className="text-white/50 text-base sm:text-base mt-4 leading-relaxed">
               {appControl.description}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-6 sm:gap-7 lg:gap-10 items-start lg:items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-8 sm:gap-7 lg:gap-10 items-start lg:items-center">
           {/* Mobile mockup */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.08 }}
-            className="order-1 lg:hidden flex items-center justify-center"
+            className="order-1 lg:hidden flex items-center justify-center mb-20"
           >
             <img
               src={appMockupMobile}
@@ -94,8 +94,8 @@ export function AppControlSection() {
                   <div className="w-12 h-12 rounded-full bg-white mx-auto flex items-center justify-center mb-3">
                     <Icon className="w-5 h-5 text-black/85" strokeWidth={2.1} />
                   </div>
-                  <h3 className="text-white text-sm sm:text-xl font-medium leading-tight">{item.title}</h3>
-                  <p className="text-white/45 text-xs sm:text-sm leading-relaxed mt-2 max-w-[28ch] mx-auto">{item.subtext}</p>
+                  <h3 className="text-white text-base sm:text-xl font-medium leading-tight">{item.title}</h3>
+                  <p className="text-white/45 text-sm sm:text-sm leading-relaxed mt-2 max-w-[28ch] mx-auto">{item.subtext}</p>
                 </motion.article>
               );
             })}

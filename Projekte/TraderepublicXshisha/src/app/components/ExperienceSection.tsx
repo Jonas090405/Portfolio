@@ -28,13 +28,13 @@ export function ExperienceSection() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl"
           >
-            <span className="text-white/40 tracking-widest uppercase text-xs">
+            <span className="text-white/40 tracking-widest uppercase text-sm sm:text-xs">
               {experience.eyebrow}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
               {experience.headline}
             </h2>
-            <p className="text-white/50 text-sm sm:text-base mt-4 leading-relaxed">
+            <p className="text-white/50 text-base sm:text-base mt-4 leading-relaxed">
               {experience.description}
             </p>
           </motion.div>
@@ -63,11 +63,11 @@ export function ExperienceSection() {
                         <h3 className="text-base sm:text-lg text-white font-medium leading-tight">
                           {item.title}
                         </h3>
-                        <span className="text-[10px] tracking-wider uppercase text-white/40 border border-white/15 rounded-full px-2 py-0.5 shrink-0">
+                        <span className="text-xs sm:text-[10px] tracking-wider uppercase text-white/40 border border-white/15 rounded-full px-2 py-0.5 shrink-0">
                           {item.tag}
                         </span>
                       </div>
-                      <p className="text-white/48 text-sm leading-relaxed">{item.detail}</p>
+                      <p className="text-white/48 text-base sm:text-sm leading-relaxed">{item.detail}</p>
                     </div>
                   </div>
                 </motion.article>

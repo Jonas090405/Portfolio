@@ -66,7 +66,7 @@ export function BenefitsGrid() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="text-white/40 tracking-widest uppercase text-xs">
+            <span className="text-white/40 tracking-widest uppercase text-sm sm:text-xs">
               {benefits.eyebrow}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
@@ -87,13 +87,13 @@ export function BenefitsGrid() {
                 transition={{ duration: 0.5, delay: index * 0.08 }}
                 className="bg-[#161616] rounded-3xl p-4 sm:p-5 lg:p-6 space-y-2 sm:space-y-3 hover:bg-[#1e1e1e] transition-colors cursor-default"
               >
-                <div className="text-white/50 text-sm">{benefit.title}</div>
+                <div className="text-white/50 text-base sm:text-sm">{benefit.title}</div>
                 {benefit.metric && (
                   <div className="text-2xl sm:text-3xl lg:text-4xl font-medium text-[#00ff88]">
                     {benefit.metric}
                   </div>
                 )}
-                <p className="text-white/45 text-xs sm:text-sm leading-relaxed">
+                <p className="text-white/45 text-sm sm:text-sm leading-relaxed">
                   {benefit.description}
                 </p>
               </motion.div>
@@ -111,7 +111,7 @@ export function BenefitsGrid() {
         >
           <div className="flex flex-col gap-3 sm:gap-4">
             <div className="space-y-1">
-              <div className="text-white/45 text-xs tracking-wider uppercase">Kostenvergleich</div>
+              <div className="text-white/45 text-sm sm:text-xs tracking-wider uppercase">Kostenvergleich</div>
               <div className="text-2xl sm:text-3xl lg:text-4xl font-medium text-white">
                 Traditionell vs. Elektrisch
               </div>

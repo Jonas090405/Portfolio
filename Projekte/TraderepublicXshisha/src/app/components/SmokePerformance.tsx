@@ -86,13 +86,13 @@ export function SmokePerformance() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="text-white/40 tracking-widest uppercase text-xs">
+            <span className="text-white/40 tracking-widest uppercase text-sm sm:text-xs">
               {smokePerformance.eyebrow}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-2">
               {smokePerformance.headline}
             </h2>
-            <p className="text-white/40 mt-3 max-w-lg text-sm leading-relaxed">
+            <p className="text-white/40 mt-3 max-w-lg text-base sm:text-sm leading-relaxed">
               {smokePerformance.description}
             </p>
           </motion.div>
@@ -112,11 +112,11 @@ export function SmokePerformance() {
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 mb-5 sm:mb-6">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-[2px] rounded-full bg-[#1DB954]" />
-                <span className="text-white/50 text-xs">TR Shisha</span>
+                <span className="text-white/50 text-sm sm:text-xs">TR Shisha</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-[2px] rounded-full bg-white/30" />
-                <span className="text-white/50 text-xs">Herkömmliche Shisha</span>
+                <span className="text-white/50 text-sm sm:text-xs">Herkömmliche Shisha</span>
               </div>
               <div className="ml-auto hidden sm:block">
                 <AnimatePresence mode="wait">
@@ -168,7 +168,7 @@ export function SmokePerformance() {
               ) : <div className="w-full h-full" />}
             </div>
 
-            <p className="text-white/20 text-xs mt-4 text-center">
+            <p className="text-white/20 text-sm sm:text-xs mt-4 text-center">
               Dampfintensität in % · Sessiondauer in Minuten
             </p>
           </motion.div>
@@ -184,8 +184,8 @@ export function SmokePerformance() {
                 className="bg-black/50 backdrop-blur-md border border-white/[0.08] rounded-2xl px-4 py-3.5 lg:px-5 lg:py-3 h-full flex flex-col lg:flex-row lg:items-center gap-1 lg:gap-3"
               >
                 <div className="flex-1 min-w-0">
-                  <div className="text-white/40 text-xs">{stat.label}</div>
-                  <div className="text-white/30 text-[11px] mt-0.5 leading-snug">{stat.sub}</div>
+                  <div className="text-white/40 text-sm sm:text-xs">{stat.label}</div>
+                  <div className="text-white/30 text-xs sm:text-[11px] mt-0.5 leading-snug">{stat.sub}</div>
                 </div>
                 <div className="text-[#1DB954] text-xl lg:text-lg font-medium shrink-0 mt-1 lg:mt-0">
                   {stat.value}
@@ -208,7 +208,7 @@ export function SmokePerformance() {
             {smokePerformance.bottomPills.map((pill) => (
               <span
                 key={pill}
-                className="bg-black/40 backdrop-blur-sm border border-white/[0.10] text-white/50 text-xs px-3 sm:px-4 py-2 rounded-full text-center"
+                className="bg-black/40 backdrop-blur-sm border border-white/[0.10] text-white/50 text-sm sm:text-xs px-3 sm:px-4 py-2 rounded-full text-center"
               >
                 {pill}
               </span>

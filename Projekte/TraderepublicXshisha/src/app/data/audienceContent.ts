@@ -843,9 +843,9 @@ const expert = withNav({
 
   influencer: {
     quote: 'Fünf Jahre Shisha. Ich habe alles ausprobiert. Das hier ist technisch auf einem anderen Level.',
-    name: 'Community Verified',
-    role: 'Shisha-Experte · Verified Review',
-    imageSrc: undefined,
+    name: 'Serkan',
+    role: 'Shisha-Experte · Certified Review',
+    imageSrc: 'ced7eebb-0f9a-49c6-b1f5-9b3109f1c118.png',
   },
 });
 

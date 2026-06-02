@@ -28,7 +28,7 @@ export function ProductOverview() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl space-y-4"
           >
-            <span className="text-white/40 tracking-widest uppercase text-xs">
+            <span className="text-white/40 tracking-widest uppercase text-sm sm:text-xs">
               {productOverview.eyebrow}
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium">
@@ -61,7 +61,7 @@ export function ProductOverview() {
                     </div>
                   </div>
                   <div className="text-3xl sm:text-4xl font-medium text-white">{feature.value}</div>
-                  <div className="text-white/40 text-sm">{feature.sub}</div>
+                  <div className="text-white/40 text-base sm:text-sm">{feature.sub}</div>
                 </motion.div>
               );
             })}
@@ -80,8 +80,8 @@ export function ProductOverview() {
           >
             {productOverview.bottomRow.map((item) => (
               <div key={item.label} className="space-y-1">
-                <div className="text-white text-sm">{item.label}</div>
-                <div className="text-white/45 text-sm">{item.desc}</div>
+                <div className="text-white text-base sm:text-sm">{item.label}</div>
+                <div className="text-white/45 text-base sm:text-sm">{item.desc}</div>
               </div>
             ))}
           </motion.div>
