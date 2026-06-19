@@ -69,23 +69,7 @@ export function ScrollProgress() {
         ticking.current = false;
         const scrollY = window.scrollY;
 
-        // Visibility
-        if (scrollY > 80) {
-          setIsVisible(true);
-          if (hideTimer.current) clearTimeout(hideTimer.current);
-          hideTimer.current = setTimeout(() => {
-            if (!isMobileOpenRef.current && !isHoverZoneActive) setIsVisible(false);
-          }, 2000);
-        } else {
-          if (!isHoverZoneActive) setIsVisible(false);
-        }
-
-        // On mobile, collapse the expanded sheet when the user scrolls.
-        if (window.innerWidth < 1024 && isMobileOpenRef.current) {
-          setIsMobileOpen(false);
-        }
-
-        // Compute continuous fractional index
+        // Compute continuous fractional index first so we know the active section
         const offsets = sections.map(s => {
           const el = document.getElementById(s.id);
           if (!el) return 0;
@@ -109,6 +93,34 @@ export function ScrollProgress() {
         rawProgress.set(fractional);
         const newIndex = Math.min(sections.length - 1, Math.floor(fractional + 0.0001));
         setActiveIndex(newIndex);
+
+        // Suppress scroll-triggered visibility inside the ComponentBreakdown section
+        // (scroll there is captured by the step animation, not real page navigation)
+        const inComponentBreakdown = sections[newIndex]?.id === 'components';
+
+        // Visibility
+        if (scrollY > 80) {
+          if (inComponentBreakdown) {
+            // Hide the nav when inside the component-breakdown section unless hovered
+            if (!isHoverZoneActive) {
+              if (hideTimer.current) clearTimeout(hideTimer.current);
+              setIsVisible(false);
+            }
+          } else {
+            setIsVisible(true);
+            if (hideTimer.current) clearTimeout(hideTimer.current);
+            hideTimer.current = setTimeout(() => {
+              if (!isMobileOpenRef.current && !isHoverZoneActive) setIsVisible(false);
+            }, 2000);
+          }
+        } else {
+          if (!isHoverZoneActive) setIsVisible(false);
+        }
+
+        // On mobile, collapse the expanded sheet when the user scrolls.
+        if (window.innerWidth < 1024 && isMobileOpenRef.current) {
+          setIsMobileOpen(false);
+        }
       });
     };
 
