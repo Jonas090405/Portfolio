@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import { motion } from 'motion/react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { CountUp } from './CountUp';
 
 const values = [
   {
@@ -22,11 +23,17 @@ const values = [
   },
 ];
 
-const stats = [
-  { value: '2018', label: 'Gegründet' },
-  { value: '1.200+', label: 'Projekte' },
-  { value: '18 Std.', label: 'Pro Felge' },
-  { value: '100 %', label: 'Handarbeit' },
+const stats: {
+  to: number;
+  from?: number;
+  suffix?: string;
+  formatDE?: boolean;
+  label: string;
+}[] = [
+  { from: 2010, to: 2018,  label: 'Gegründet' },
+  { to: 1200,  suffix: '+', formatDE: true, label: 'Projekte' },
+  { to: 18,    suffix: ' Std.', label: 'Pro Felge' },
+  { to: 100,   suffix: ' %', label: 'Handarbeit' },
 ];
 
 export function AboutSection() {
@@ -143,21 +150,32 @@ export function AboutSection() {
             className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8"
             style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
           >
-            {stats.map(s => (
-              <div key={s.label} className="flex flex-col gap-1">
-                <span
+            {stats.map((s, i) => (
+              <motion.div
+                key={s.label}
+                className="flex flex-col gap-1"
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.45, delay: i * 0.08 }}
+              >
+                <CountUp
+                  to={s.to}
+                  from={s.from ?? 0}
+                  suffix={s.suffix}
+                  formatDE={s.formatDE}
+                  duration={1100}
+                  delay={i * 80}
                   className="text-white"
                   style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', fontWeight: 700, lineHeight: 1 }}
-                >
-                  {s.value}
-                </span>
+                />
                 <span
                   className="text-white/30 uppercase tracking-widest"
                   style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em', fontSize: '0.7rem' }}
                 >
                   {s.label}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>

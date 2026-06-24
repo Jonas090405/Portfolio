@@ -8,6 +8,7 @@ import { ColorFinishesSection } from '../components/ColorFinishesSection';
 import { PersonalizationSection } from '../components/PersonalizationSection';
 import { AboutSection } from '../components/AboutSection';
 import { FooterSection } from '../components/FooterSection';
+import { CountUp } from '../components/CountUp';
 
 const NAV_SECTIONS = [
   { id: 'modelle', label: 'Modelle' },
@@ -24,65 +25,107 @@ export function LandingPage() {
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // ─── Canvas particles ────────────────────────────────────────────────────────
+  // ─── Forge spark canvas ──────────────────────────────────────────────────────
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    let w = window.innerWidth;
+    let h = window.innerHeight;
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
     };
     resize();
     window.addEventListener('resize', resize);
 
-    const particles: { x: number; y: number; vx: number; vy: number; size: number; opacity: number }[] = [];
-    for (let i = 0; i < 55; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 1.5 + 0.5,
-        opacity: Math.random() * 0.25 + 0.05,
-      });
-    }
+    type Spark = {
+      x: number; y: number;
+      px: number; py: number;
+      vx: number; vy: number;
+      size: number;
+      life: number;
+      maxLife: number;
+      hue: number;
+    };
+
+    const makeSpark = (stagger = false): Spark => {
+      const maxLife = 110 + Math.random() * 150;
+      return {
+        x: w * (0.08 + Math.random() * 0.84),
+        y: h * (0.15 + Math.random() * 0.78),
+        px: 0, py: 0,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: -(0.22 + Math.random() * 0.7),
+        size: 0.7 + Math.random() * 2.1,
+        life: stagger ? Math.random() * maxLife : 0,
+        maxLife,
+        hue: 12 + Math.random() * 33,
+      };
+    };
+
+    const SPARK_COUNT = 40;
+    const sparks: Spark[] = Array.from({ length: SPARK_COUNT }, () => makeSpark(true));
 
     let animId: number;
     const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.x += p.vx;
+      ctx.clearRect(0, 0, w, h);
+
+      for (const p of sparks) {
+        p.px = p.x;
+        p.py = p.y;
+        p.life++;
+        p.x += p.vx + Math.sin(p.life * 0.038) * 0.18;
         p.y += p.vy;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200,200,200,${p.opacity})`;
-        ctx.fill();
-      });
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(180,180,180,${(1 - dist / 120) * 0.06})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
+        p.vy -= 0.0028;
+        p.vx *= 0.9995;
+
+        if (p.life > p.maxLife) {
+          Object.assign(p, makeSpark());
+          continue;
         }
+
+        const t = p.life / p.maxLife;
+        const alpha = Math.min(t * 9, 1) * (1 - t * t) * 0.78;
+        if (alpha < 0.015) continue;
+
+        // Short trail in the direction of travel
+        const trailDx = p.x - p.px;
+        const trailDy = p.y - p.py;
+        if (Math.abs(trailDx) + Math.abs(trailDy) > 0.3) {
+          ctx.beginPath();
+          ctx.moveTo(p.px - trailDx * 2.5, p.py - trailDy * 2.5);
+          ctx.lineTo(p.x, p.y);
+          ctx.strokeStyle = `hsla(${p.hue + 15}, 100%, 72%, ${alpha * 0.6})`;
+          ctx.lineWidth = p.size * 0.5;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        }
+
+        // Soft outer glow
+        const r = p.size * 4.5;
+        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
+        glow.addColorStop(0,   `hsla(${p.hue + 22}, 100%, 85%, ${alpha * 0.65})`);
+        glow.addColorStop(0.4, `hsla(${p.hue + 8},  95%, 55%, ${alpha * 0.25})`);
+        glow.addColorStop(1,   `hsla(${p.hue},       90%, 35%, 0)`);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+
+        // Hot white-yellow core
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 0.6, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(52, 100%, 96%, ${alpha * 0.92})`;
+        ctx.fill();
       }
+
       animId = requestAnimationFrame(draw);
     };
     draw();
+
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('resize', resize);
@@ -348,42 +391,46 @@ export function LandingPage() {
               transition={{ duration: 0.7, delay: 1.1 }}
             >
               {[
-                { value: '3', label: 'Designs' },
-                { value: '4', label: 'Oberflächen' },
-                { value: '16', label: 'Farben' },
-                { value: '∞', label: 'Kombinationen' },
-              ].map(stat => (
+                { to: 3,  label: 'Designs' },
+                { to: 4,  label: 'Oberflächen' },
+                { to: 16, label: 'Farben' },
+              ].map((stat, i) => (
                 <div key={stat.label} className="flex flex-col gap-1">
-                  <span className="text-white"
-                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 700, lineHeight: 1 }}>
-                    {stat.value}
-                  </span>
+                  <CountUp
+                    to={stat.to}
+                    duration={750}
+                    delay={1100 + i * 60}
+                    className="text-white"
+                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 700, lineHeight: 1 }}
+                  />
                   <span className="text-white/55 tracking-widest uppercase"
                     style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em', fontSize: '0.72rem' }}>
                     {stat.label}
                   </span>
                 </div>
               ))}
+
+              {/* ∞ — scale-in instead of count-up */}
+              <div className="flex flex-col gap-1">
+                <motion.span
+                  className="text-white"
+                  style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 700, lineHeight: 1 }}
+                  initial={{ opacity: 0, scale: 0.4 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 1.4, ease: [0.34, 1.56, 0.64, 1] }}
+                >
+                  ∞
+                </motion.span>
+                <span className="text-white/55 tracking-widest uppercase"
+                  style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.12em', fontSize: '0.72rem' }}>
+                  Kombinationen
+                </span>
+              </div>
             </motion.div>
           </div>
 
           {/* Right: Wheel image */}
           <div className="relative flex items-center justify-center lg:h-screen px-4 py-10 lg:py-0">
-            <div className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse 60% 60% at 55% 50%, rgba(220,33,60,0.06) 0%, transparent 70%)' }}
-            />
-            {/* Rotating ring */}
-            <motion.div
-              className="absolute"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-              style={{ width: 'min(960px, 98vw)', height: 'min(960px, 98vw)' }}
-            >
-              <svg viewBox="0 0 560 560" className="w-full h-full">
-                <circle cx="280" cy="280" r="270" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="1" strokeDasharray="8 24" />
-                <circle cx="280" cy="280" r="258" fill="none" stroke="rgba(220,33,60,0.1)" strokeWidth="0.5" strokeDasharray="2 18" />
-              </svg>
-            </motion.div>
             {/* Wheel */}
             <motion.div
               initial={{ opacity: 0, scale: 0.88, rotate: 8 }}
@@ -397,10 +444,6 @@ export function LandingPage() {
                 alt="Premium forged wheel"
                 className="w-full h-full object-contain"
                 style={{ filter: 'brightness(1.0) contrast(1.05)', mixBlendMode: 'multiply' }}
-              />
-              {/* Floor shadow */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
-                style={{ width: '60%', height: '16px', background: 'radial-gradient(ellipse, rgba(255,255,255,0.07) 0%, transparent 70%)', filter: 'blur(8px)' }}
               />
             </motion.div>
           </div>

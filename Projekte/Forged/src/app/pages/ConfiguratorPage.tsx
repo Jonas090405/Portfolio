@@ -78,6 +78,106 @@ export function ConfiguratorPage() {
 
   // Always start at the top of the page when entering the configurator
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  // ─── Subtle forge sparks in the center stage ──────────────────────────────
+  useEffect(() => {
+    const canvas = sparkCanvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let w = canvas.offsetWidth;
+    let h = canvas.offsetHeight;
+    const resize = () => {
+      w = canvas.width = canvas.offsetWidth;
+      h = canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
+
+    type Spark = {
+      x: number; y: number;
+      px: number; py: number;
+      vx: number; vy: number;
+      size: number;
+      life: number; maxLife: number;
+      hue: number;
+    };
+
+    const makeSpark = (stagger = false): Spark => {
+      const maxLife = 90 + Math.random() * 130;
+      return {
+        x: w * (0.1 + Math.random() * 0.8),
+        y: h * (0.25 + Math.random() * 0.7),
+        px: 0, py: 0,
+        vx: (Math.random() - 0.5) * 0.45,
+        vy: -(0.14 + Math.random() * 0.48),
+        size: 0.4 + Math.random() * 1.5,
+        life: stagger ? Math.random() * maxLife : 0,
+        maxLife,
+        hue: 12 + Math.random() * 33,
+      };
+    };
+
+    const SPARK_COUNT = 22;
+    const sparks: Spark[] = Array.from({ length: SPARK_COUNT }, () => makeSpark(true));
+
+    let animId: number;
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+
+      for (const p of sparks) {
+        p.px = p.x; p.py = p.y;
+        p.life++;
+        p.x += p.vx + Math.sin(p.life * 0.041) * 0.14;
+        p.y += p.vy;
+        p.vy -= 0.002;
+        p.vx *= 0.9996;
+
+        if (p.life > p.maxLife) { Object.assign(p, makeSpark()); continue; }
+
+        const t = p.life / p.maxLife;
+        const alpha = Math.min(t * 9, 1) * (1 - t * t) * 0.42;
+        if (alpha < 0.012) continue;
+
+        // Trail
+        const trailDx = p.x - p.px;
+        const trailDy = p.y - p.py;
+        if (Math.abs(trailDx) + Math.abs(trailDy) > 0.3) {
+          ctx.beginPath();
+          ctx.moveTo(p.px - trailDx * 2.5, p.py - trailDy * 2.5);
+          ctx.lineTo(p.x, p.y);
+          ctx.strokeStyle = `hsla(${p.hue + 15}, 100%, 72%, ${alpha * 0.55})`;
+          ctx.lineWidth = p.size * 0.45;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        }
+
+        // Glow
+        const r = p.size * 3.5;
+        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
+        glow.addColorStop(0,   `hsla(${p.hue + 22}, 100%, 85%, ${alpha * 0.6})`);
+        glow.addColorStop(0.4, `hsla(${p.hue + 8},  95%, 55%, ${alpha * 0.22})`);
+        glow.addColorStop(1,   `hsla(${p.hue},       90%, 35%, 0)`);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+
+        // Core
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 0.55, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(52, 100%, 96%, ${alpha * 0.88})`;
+        ctx.fill();
+      }
+
+      animId = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => { cancelAnimationFrame(animId); ro.disconnect(); };
+  }, []);
   const [customColor, setCustomColor] = useState(config.capColor);
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [mobileTab, setMobileTab] = useState<'design' | 'options'>('design');
@@ -85,6 +185,7 @@ export function ConfiguratorPage() {
   const finishRef = useRef<HTMLDivElement>(null);
   const capRef = useRef<HTMLDivElement>(null);
   const designRef = useRef<HTMLDivElement>(null);
+  const sparkCanvasRef = useRef<HTMLCanvasElement>(null);
 
   const update = (partial: Partial<WheelConfig>) => {
     setConfig(prev => ({ ...prev, ...partial }));
@@ -110,11 +211,11 @@ export function ConfiguratorPage() {
   const selectedDesign = wheelDesigns.find(d => d.id === config.designId);
 
   return (
-    <div className="min-h-screen w-full flex flex-col" style={{ background: '#080808' }}>
+    <div className="h-screen w-full flex flex-col overflow-hidden" style={{ background: '#080808' }}>
       {/* Nav bar */}
       <motion.div
         className="flex items-center justify-between px-6 md:px-10 py-5 border-b"
-        style={{ borderColor: 'rgba(255,255,255,0.06)' }}
+        style={{ borderColor: 'rgba(255,255,255,0.14)' }}
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -180,7 +281,7 @@ export function ConfiguratorPage() {
       </motion.div>
 
       {/* Mobile tab switcher */}
-      <div className="md:hidden flex border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+      <div className="md:hidden flex border-b" style={{ borderColor: 'rgba(255,255,255,0.14)' }}>
         {(['design', 'options'] as const).map(tab => (
           <button
             key={tab}
@@ -203,8 +304,8 @@ export function ConfiguratorPage() {
 
         {/* Left panel — Design selector */}
         <motion.div
-          className={`md:w-56 lg:w-72 border-r overflow-y-auto flex-shrink-0 ${mobileTab === 'design' ? 'block' : 'hidden'} md:block`}
-          style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(0,0,0,0.3)' }}
+          className={`md:w-56 lg:w-72 border-r overflow-y-auto overscroll-contain flex-shrink-0 ${mobileTab === 'design' ? 'block' : 'hidden'} md:block`}
+          style={{ borderColor: 'rgba(255,255,255,0.14)', background: 'rgba(0,0,0,0.3)' }}
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -307,12 +408,15 @@ export function ConfiguratorPage() {
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              backgroundImage: 'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)',
+              backgroundImage: 'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
               backgroundSize: '60px 60px',
             }}
           />
 
-          {/* Center glow */}
+          {/* Forge sparks */}
+          <canvas ref={sparkCanvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
+
+          {/* Center glow — sits on top of sparks to keep wheel readable */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -330,8 +434,8 @@ export function ConfiguratorPage() {
 
         {/* Right panel — Configuration options */}
         <motion.div
-          className={`md:w-64 lg:w-80 border-l overflow-y-auto flex-shrink-0 ${mobileTab === 'options' ? 'block' : 'hidden'} md:block`}
-          style={{ borderColor: 'rgba(255,255,255,0.06)', background: 'rgba(0,0,0,0.3)' }}
+          className={`md:w-64 lg:w-80 border-l overflow-y-auto overscroll-contain flex-shrink-0 ${mobileTab === 'options' ? 'block' : 'hidden'} md:block`}
+          style={{ borderColor: 'rgba(255,255,255,0.14)', background: 'rgba(0,0,0,0.3)' }}
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.15 }}
