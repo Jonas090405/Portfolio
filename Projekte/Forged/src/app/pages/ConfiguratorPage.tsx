@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router';
 import { motion, AnimatePresence } from 'motion/react';
 import { WheelPreview } from '../components/WheelPreview';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../components/ui/tooltip';
 import wheel1Img from 'figma:asset/8ca5e4ae60b9bcd3aa445793c4ce3d717e8eecc4.png';
 import wheel2Img from 'figma:asset/53050a87cc813c0e5002ad63c20fae5cc58a7a54.png';
 import wheel3Img from 'figma:asset/8714368a00845f423eaf512444b5c30bf00920e8.png';
@@ -51,7 +52,34 @@ const finishPreviewColors: Record<Finish, string> = {
   matte: 'linear-gradient(135deg, #707070 0%, #505050 100%)',
 };
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
+function InfoTooltip({ text }: { text: string }) {
+  return (
+    <Tooltip delayDuration={80}>
+      <TooltipTrigger asChild>
+        <button
+          type="button"
+          aria-label="Mehr Informationen"
+          className="flex items-center justify-center text-white/30 hover:text-red-500 transition-colors shrink-0 -my-1 p-1"
+        >
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.2" />
+            <path d="M8 7.2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <circle cx="8" cy="4.6" r="0.95" fill="currentColor" />
+          </svg>
+        </button>
+      </TooltipTrigger>
+      <TooltipContent
+        side="top"
+        className="max-w-[230px] bg-[#16110f] text-white/80 border border-white/12 text-xs font-normal leading-relaxed shadow-xl"
+        style={{ fontFamily: 'var(--font-body)', letterSpacing: '0.01em' }}
+      >
+        {text}
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
+function SectionLabel({ children, info }: { children: React.ReactNode; info?: string }) {
   return (
     <div className="flex items-center gap-3 mb-4">
       <div className="w-4 h-px bg-red-600" />
@@ -61,6 +89,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
       >
         {children}
       </span>
+      {info && <InfoTooltip text={info} />}
     </div>
   );
 }
@@ -315,7 +344,7 @@ export function ConfiguratorPage() {
             <WheelPreview config={{ ...config, capDesign: 'standard' }} onZoneClick={handleZoneClick} />
           </div>
           <div className="p-4 lg:p-6" ref={designRef}>
-            <SectionLabel>Felgendesign</SectionLabel>
+            <SectionLabel info="Das Speichendesign prägt den Charakter der Felge – sportlich-aggressiv, klassisch oder progressiv. Es beeinflusst Optik, Gewicht und die Sicht auf die Bremsanlage.">Felgendesign</SectionLabel>
 
             <div className="grid grid-cols-2 gap-3">
               {wheelDesigns.map(design => (
@@ -377,7 +406,7 @@ export function ConfiguratorPage() {
 
             {/* Size selector */}
             <div className="mt-8">
-              <SectionLabel>Felgengröße</SectionLabel>
+              <SectionLabel info="Der Felgendurchmesser in Zoll. Größere Felgen wirken sportlicher und füllen den Radkasten aus, kleinere lassen mehr Reifenflanke für besseren Fahrkomfort.">Felgengröße</SectionLabel>
               <div className="flex gap-2 flex-wrap">
                 {sizes.map(sz => (
                   <motion.button
@@ -448,7 +477,7 @@ export function ConfiguratorPage() {
 
             {/* Finish */}
             <div ref={finishRef}>
-              <SectionLabel>Oberfläche</SectionLabel>
+              <SectionLabel info="Die Oberflächenveredelung – von spiegelndem Hochglanz bis mattem Graphit. Sie bestimmt Reflexion, Tiefenwirkung und den Pflegeaufwand der Felge.">Oberfläche</SectionLabel>
               <div className="grid grid-cols-2 gap-2">
                 {finishes.map(f => (
                   <motion.button
@@ -498,7 +527,7 @@ export function ConfiguratorPage() {
 
             {/* Center Cap Color */}
             <div ref={capRef}>
-              <SectionLabel>Nabendeckel Farbe</SectionLabel>
+              <SectionLabel info="Die Farbe des zentralen Nabendeckels setzt einen gezielten Akzent in der Felgenmitte – ideal abgestimmt auf Lackierung oder Bremssättel.">Nabendeckel Farbe</SectionLabel>
 
               {/* Preset swatches grid */}
               <div className="grid grid-cols-5 gap-2">
@@ -665,7 +694,7 @@ export function ConfiguratorPage() {
 
             {/* Engraving */}
             <div>
-              <SectionLabel>Gravur</SectionLabel>
+              <SectionLabel info="Ein individueller Schriftzug, der bogenförmig in die innere Felge graviert wird – für ein unverwechselbares, persönliches Detail.">Gravur</SectionLabel>
               <div className="relative">
                 <input
                   type="text"
@@ -711,7 +740,7 @@ export function ConfiguratorPage() {
 
             {/* Specs summary */}
             <div className="border border-white/6 p-4" style={{ background: 'rgba(255,255,255,0.02)' }}>
-              <SectionLabel>Konfigurationsübersicht</SectionLabel>
+              <SectionLabel info="Eine Zusammenfassung deiner aktuellen Auswahl auf einen Blick – die Grundlage für dein individuelles Angebot.">Konfigurationsübersicht</SectionLabel>
               <div className="space-y-2.5">
                 {[
                   { label: 'Design', value: selectedDesign?.name },
