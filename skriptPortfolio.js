@@ -705,6 +705,20 @@ document.addEventListener('DOMContentLoaded', function () {
     let isDragging = false;
     let startTime = 0;
     let swipeDirection = null;
+    let dragBaseOffset = 0;
+    let rafId = null;
+
+    // Layout nur einmal pro Geste messen statt bei jedem touchmove
+    // (offsetWidth/getComputedStyle erzwingen sonst pro Frame ein Reflow)
+    function measureOffset(index) {
+        const cardWidth = projectCards[0].offsetWidth;
+        const styles = getComputedStyle(carouselWrapper);
+        const gap = parseFloat(styles.gap) || 40;
+        const containerWidth = carouselWrapper.parentElement.offsetWidth;
+        const wrapperWidth = parseFloat(styles.width);
+        const centerOffset = (containerWidth - cardWidth) / 2 - (containerWidth - wrapperWidth) / 2;
+        return centerOffset - index * (cardWidth + gap);
+    }
 
     // Only run carousel on mobile/tablet
     function isCarouselMode() {
@@ -748,19 +762,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!isCarouselMode()) return;
 
         currentIndex = Math.max(0, Math.min(index, projectCards.length - 1));
-        const cardWidth = projectCards[0].offsetWidth;
-        const gap = window.innerWidth <= 600 ? 30 : 40;
-        const containerWidth = carouselWrapper.parentElement.offsetWidth;
-        const wrapperWidth = parseFloat(getComputedStyle(carouselWrapper).width);
-
-        // Calculate centering offset
-        const centerOffset = (containerWidth - cardWidth) / 2 - (containerWidth - wrapperWidth) / 2;
-
-        // Calculate slide position
-        const slideOffset = currentIndex * (cardWidth + gap);
-        const offset = centerOffset - slideOffset;
-
-        carouselWrapper.style.transform = `translateX(${offset}px)`;
+        carouselWrapper.style.transform = `translateX(${measureOffset(currentIndex)}px)`;
         updateIndicators();
     }
 
@@ -793,6 +795,7 @@ document.addEventListener('DOMContentLoaded', function () {
         currentX = startX;
         currentY = startY;
         swipeDirection = null; // Reset swipe direction
+        dragBaseOffset = measureOffset(currentIndex);
         carouselWrapper.style.transition = 'none';
     }
 
@@ -817,18 +820,17 @@ document.addEventListener('DOMContentLoaded', function () {
             if (e.cancelable) {
                 e.preventDefault();
             }
-            const cardWidth = projectCards[0].offsetWidth;
-            const gap = window.innerWidth <= 600 ? 30 : 40;
-            const containerWidth = carouselWrapper.parentElement.offsetWidth;
-            const wrapperWidth = parseFloat(getComputedStyle(carouselWrapper).width);
-            const centerOffset = (containerWidth - cardWidth) / 2 - (containerWidth - wrapperWidth) / 2;
-            const slideOffset = currentIndex * (cardWidth + gap);
-            const offset = centerOffset - slideOffset + diffX;
-
-            carouselWrapper.style.transform = `translateX(${offset}px)`;
+            // Transform-Update auf den nächsten Frame bündeln (max. 1 Update pro Frame)
+            if (rafId === null) {
+                rafId = requestAnimationFrame(() => {
+                    rafId = null;
+                    carouselWrapper.style.transform = `translateX(${dragBaseOffset + (currentX - startX)}px)`;
+                });
+            }
         } else if (swipeDirection === 'vertical') {
             // Allow vertical scrolling by not preventing default and stopping carousel interaction
             isDragging = false;
+            carouselWrapper.style.transition = '';
         }
     }
 
@@ -838,7 +840,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         isDragging = false;
 
-        // Apply smooth transition
+        // Ausstehendes Frame-Update verwerfen, damit es die Endposition nicht überschreibt
+        if (rafId !== null) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+
         // Apply smooth transition
         carouselWrapper.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
 
