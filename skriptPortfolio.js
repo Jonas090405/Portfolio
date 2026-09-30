@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const navSlider = document.querySelector('.nav-slider');
     const sections = [
         { id: 'about-section', element: document.querySelector('#about-section') },
-        { id: 'skill-section', element: document.querySelector('#skill-section') },
         { id: 'project-section', element: document.querySelector('#project-section') },
         { id: 'education-section', element: document.querySelector('#education-section') },
         { id: 'at-symbol', element: document.querySelector('#at-symbol')?.closest('footer') }
@@ -324,166 +323,10 @@ Ich bin offen, motiviert und teamfähig und freue mich darauf, mich neuen Heraus
 */
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    const progressBars = document.querySelectorAll('progress');
-    const skillTitles = document.querySelectorAll('.skill-container h3');
-    const skillLabels = document.querySelectorAll('.skill-container ul li span');
-
-    // Setze initial alle Elemente auf sichtbar, die im Viewport sind
-    setTimeout(() => {
-        skillTitles.forEach(title => {
-            if (isElementInViewport(title, 300)) {
-                title.classList.add('text-visible');
-            }
-        });
-
-        skillLabels.forEach(label => {
-            if (isElementInViewport(label, 300)) {
-                label.classList.add('text-visible');
-            }
-        });
-
-        progressBars.forEach(bar => {
-            if (isElementInViewport(bar, 300)) {
-                bar.classList.add('progress-visible');
-            }
-        });
-    }, 0);
-
-    // Intersection Observer Setup für Progressbars
-    const progressObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Wenn die Progressbar sichtbar wird, fügen wir die Klasse hinzu
-                entry.target.classList.add('progress-visible');
-                // Beobachtung beenden, damit es nicht immer wieder ausgelöst wird
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.5  // Beobachtet die Progressbar, wenn sie zu mindestens 50% sichtbar ist
-    });
-
-    // Intersection Observer Setup für Texte (h3 und span)
-    const textObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Verzögerung für gestaffelten Effekt bei span-Elementen
-                const delay = entry.target.tagName === 'SPAN' ?
-                    Array.from(entry.target.parentElement.parentElement.children).indexOf(entry.target.parentElement) * 100 : 0;
-
-                setTimeout(() => {
-                    entry.target.classList.add('text-visible');
-                }, delay);
-
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.3  // Beobachtet Texte, wenn sie zu mindestens 30% sichtbar sind
-    });
-
-    // Beobachten aller Progressbars
-    progressBars.forEach(bar => {
-        progressObserver.observe(bar);
-    });
-
-    // Beobachten aller Skill-Titel (h3)
-    skillTitles.forEach(title => {
-        textObserver.observe(title);
-    });
-
-    // Beobachten aller Skill-Labels (span)
-    skillLabels.forEach(label => {
-        textObserver.observe(label);
-    });
-
-    // Zusätzliche Prüfung nach Browser Scroll Restore
-    // Browser scrollt manchmal zur letzten Position nach dem Laden
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-
-    // Mehrere Prüfungen um sicherzustellen, dass Elemente nach Scroll sichtbar werden
-    const recheckVisibility = () => {
-        skillTitles.forEach(title => {
-            if (!title.classList.contains('text-visible') && isElementInViewport(title, 300)) {
-                title.classList.add('text-visible');
-            }
-        });
-
-        skillLabels.forEach(label => {
-            if (!label.classList.contains('text-visible') && isElementInViewport(label, 300)) {
-                label.classList.add('text-visible');
-            }
-        });
-
-        progressBars.forEach(bar => {
-            if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 300)) {
-                bar.classList.add('progress-visible');
-            }
-        });
-    };
-
-    // Prüfe nach Scroll-Events
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(recheckVisibility, 100);
-    }, { once: true, passive: true });
-
-    // Prüfe auch nach kurzer Verzögerung (für Browser Scroll Restore)
-    setTimeout(recheckVisibility, 100);
-    setTimeout(recheckVisibility, 300);
-    setTimeout(recheckVisibility, 500);
-
-    // Fallback: Überprüfe nach dem Laden, ob bereits sichtbare Elemente die Klasse haben
-    window.addEventListener('load', () => {
-        // Sofortige erste Prüfung
-        setTimeout(() => {
-            skillTitles.forEach(title => {
-                if (!title.classList.contains('text-visible') && isElementInViewport(title, 200)) {
-                    title.classList.add('text-visible');
-                }
-            });
-
-            skillLabels.forEach((label, index) => {
-                if (!label.classList.contains('text-visible') && isElementInViewport(label, 200)) {
-                    setTimeout(() => {
-                        label.classList.add('text-visible');
-                    }, index * 50);
-                }
-            });
-
-            progressBars.forEach(bar => {
-                if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 200)) {
-                    bar.classList.add('progress-visible');
-                }
-            });
-        }, 50);
-
-        // Zweite Prüfung nach etwas mehr Zeit für sichere Initialisierung
-        setTimeout(() => {
-            skillTitles.forEach(title => {
-                if (!title.classList.contains('text-visible') && isElementInViewport(title, 300)) {
-                    title.classList.add('text-visible');
-                }
-            });
-
-            skillLabels.forEach((label, index) => {
-                if (!label.classList.contains('text-visible') && isElementInViewport(label, 300)) {
-                    label.classList.add('text-visible');
-                }
-            });
-
-            progressBars.forEach(bar => {
-                if (!bar.classList.contains('progress-visible') && isElementInViewport(bar, 300)) {
-                    bar.classList.add('progress-visible');
-                }
-            });
-        }, 500);
-    });
-});
+// Browser-Scroll-Restore deaktivieren, damit die Seite oben startet
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
 
 
 
@@ -498,7 +341,6 @@ function handleScroll() {
     const timelineItems = document.querySelectorAll('.timeline-item');
     const timelineTitles = document.querySelectorAll('.timeline-title');
     const bentoCards = document.querySelectorAll('.bento-card');
-    const skillContainers = document.querySelectorAll('.skill-container');
 
     // Überprüfen, ob die Timeline-Elemente im Viewport sind und die Klasse hinzufügen
     timelineItems.forEach(item => {
@@ -518,13 +360,6 @@ function handleScroll() {
     bentoCards.forEach(card => {
         if (isElementInViewport(card) && !card.classList.contains('card-visible')) {
             card.classList.add('card-visible');
-        }
-    });
-
-    // Überprüfen, ob die Skill-Container im Viewport sind und die Klasse hinzufügen
-    skillContainers.forEach(container => {
-        if (isElementInViewport(container) && !container.classList.contains('card-visible')) {
-            container.classList.add('card-visible');
         }
     });
 }
@@ -551,76 +386,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-
-
-// Wähle alle Skill-Karten aus - nur für Desktop
-const skillCards = document.querySelectorAll('.skill-container');
-
-// WeakMap zum Tracken der Timeouts für jede Karte
-const cardTimeouts = new WeakMap();
-
-skillCards.forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        // Update spotlight position
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-
-        // Only apply 3D effect on desktop
-        if (window.innerWidth <= 1302) return;
-
-        // Normalisierte Position (0 bis 1)
-        const centerX = x / rect.width - 0.5;  // -0.5 bis 0.5
-        const centerY = y / rect.height - 0.5; // -0.5 bis 0.5
-
-        // Berechnung der Rotationswerte mit korrekter Achsen-Zuordnung
-        // Y-Position beeinflusst X-Achsen-Rotation (Neigung nach vorne/hinten)
-        // X-Position beeinflusst Y-Achsen-Rotation (Neigung nach links/rechts)
-        const rotateX = -centerY * 20; // Invertiert: oben = nach hinten, unten = nach vorne
-        const rotateY = centerX * 20;  // links = nach links, rechts = nach rechts
-
-        // Anwenden der Transformation mit Perspektive
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-
-    // Zurücksetzen des Effekts, wenn die Maus die Karte verlässt
-    card.addEventListener('mouseleave', () => {
-        if (window.innerWidth <= 1302) return;
-
-        // Clear any existing timeout for this card
-        const existingTimeout = cardTimeouts.get(card);
-        if (existingTimeout) {
-            clearTimeout(existingTimeout);
-        }
-
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-        card.style.transition = 'transform 0.5s ease';
-
-        // Store the new timeout
-        const timeoutId = setTimeout(() => {
-            card.style.transition = '';
-            cardTimeouts.delete(card);
-        }, 500);
-        cardTimeouts.set(card, timeoutId);
-    });
-
-    // Smooth transition beim Bewegen
-    card.addEventListener('mouseenter', () => {
-        if (window.innerWidth <= 1302) return;
-
-        // Clear any pending timeout when entering
-        const existingTimeout = cardTimeouts.get(card);
-        if (existingTimeout) {
-            clearTimeout(existingTimeout);
-            cardTimeouts.delete(card);
-        }
-
-        card.style.transition = 'transform 0.1s ease-out';
-    });
-});
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -656,32 +421,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    const skillCards = document.querySelectorAll('.skill-container');
     const projectCards = document.querySelectorAll('.bento-card');
 
-    // Setup skill cards accordion behavior
-    skillCards.forEach(card => {
-        card.addEventListener('click', function () {
-            if (window.innerWidth > 1302) return; // Desktop: no accordion
-
-            this.classList.toggle('card-active');
-
-            // Mobile (<=768px): only one card open at a time
-            // Tablet (769-1302px): multiple cards can be open
-            if (window.innerWidth <= 768) {
-                skillCards.forEach(other => {
-                    if (other !== this) {
-                        other.classList.remove('card-active');
-                    }
-                });
-            }
-        });
-    });
-
     window.addEventListener('resize', () => {
-        if (window.innerWidth > 1302) {
-            skillCards.forEach(card => card.classList.remove('card-active'));
-        }
         if (window.innerWidth > 1302) {
             projectCards.forEach(card => card.classList.remove('card-active'));
         }

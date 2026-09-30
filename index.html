@@ -4,12 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jonas Gissler</title>
+  <title>Jonas Gissler – UX/UI Designer & Webdesigner | Portfolio</title>
+  <meta name="description"
+    content="Portfolio von Jonas Gissler: UX/UI Design, Webentwicklung und Medienprojekte. Zertifizierter UX/UI-Designer aus Triberg im Schwarzwald und Mitgründer von G&amp;A Webdesign.">
+  <meta name="author" content="Jonas Gissler">
+  <meta name="theme-color" content="#0d1115">
+  <link rel="canonical" href="https://portfolio.ga-webdesign.de/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Inter:wght@300..700&display=swap">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <script defer src="skriptPortfolio.js"></script>
   <link rel="icon" type="image/jpeg" href="Profilbild.jpg?v=2">
+</head>
+
+<body>
   <header>
     <nav>
       <!-- Desktop Pill Navigation -->
@@ -18,10 +30,6 @@
           <li><a href="#about-section">
               <span class="material-symbols-rounded">person</span>
               <span class="nav-text">About</span>
-            </a></li>
-          <li><a href="#skill-section">
-              <span class="material-symbols-rounded">stars</span>
-              <span class="nav-text">Skills</span>
             </a></li>
           <li><a href="#project-section">
               <span class="material-symbols-rounded">work</span>
@@ -52,22 +60,20 @@
     <div class="mobile-menu-overlay">
       <ul class="mobile-nav">
         <li><a href="#about-section">About</a></li>
-        <li><a href="#skill-section">Skills</a></li>
         <li><a href="#project-section">Projekte</a></li>
         <li><a href="#education-section">Karriereweg</a></li>
         <li><a href="#at-symbol">Kontakt</a></li>
       </ul>
     </div>
   </header>
-</head>
 
-<body>
   <header id="about-section">
     <div class="container">
       <div class="title-container">
         <div class="title-text">
+          <p class="hero-eyebrow">UX/UI Design · Webdesign · Medienkonzeption</p>
           <div class="name-socials-container">
-            <h1 id="name">Jonas Gissler</h1>
+            <h1 id="name">Jonas <span class="name-accent">Gissler</span></h1>
             <div class="social-links">
               <a href="https://www.linkedin.com/in/jonas-gissler-37b1482b0/" target="_blank" class="social-icon"
                 aria-label="LinkedIn" title="Besuche mein LinkedIn-Profil">
@@ -87,312 +93,32 @@
               </a>
             </div>
           </div>
-          <h2>Student B.A. Medienkonzeption im 6 Semester mit Schwerpunkt auf<br>human centered Design</h2>
+          <p class="hero-role">Student B.A. Medienkonzeption im 6. Semester mit Schwerpunkt auf human centered Design</p>
         </div>
         <div class="image-container">
           <img src="Profilbild.webp" fetchpriority="high" alt="Profilbild von Jonas Gissler">
           <div class="speech-bubble">Hey!</div>
         </div>
       </div>
-      <br>
-      <p>Ich bin Jonas Gissler, 21 Jahre alt und komme aus Triberg im Schwarzwald. Neben meinem Medienkonzeption-Studium
+      <p class="hero-lead">Ich bin Jonas Gissler, 21 Jahre alt und komme aus Triberg im Schwarzwald. Neben meinem Medienkonzeption-Studium
         an der Hochschule Furtwangen arbeite ich als zertifizierter UX/UI-Designer und gestalte nutzerzentrierte,
         funktionale und
         ästhetische digitale Produkte. Zudem baue ich mit meinem Unternehmen <a href="https://ga-webdesign.de"
           target="_blank" class="text-link">G&A Webdesign</a> Websites für Kunden.</p>
-      <a href="#project-section" class="read-more">Portfolio</a>
+      <a href="#project-section" class="read-more">Projekte ansehen<svg class="btn-arrow" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 7h10v10" />
+          <path d="M7 17 17 7" />
+        </svg></a>
     </div>
   </header>
-  <section id="skill-section">
-    <h2 class="section-heading">Skills</h2>
-    <div class="wrapper">
-      <div class="skill-container">
-        <h3>UI Design<span class="skill-subtitle">Interface Design und Ästhetik</span></h3>
-        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg" overflow="visible">
-          <!-- Background circles -->
-          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-
-          <!-- Axis lines -->
-          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-
-          <!-- Data polygon with inner glow -->
-          <defs>
-            <filter id="innerGlow1" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
-              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
-              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
-              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
-              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
-            </filter>
-          </defs>
-
-          <polygon points="100,24 176,100 100,140 36,100" fill="url(#fillGradient1)" stroke="#4dbef3" stroke-width="2"
-            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow1)" />
-
-          <defs>
-            <radialGradient id="fillGradient1" cx="50%" cy="50%">
-              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
-              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
-              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
-            </radialGradient>
-          </defs>
-
-          <!-- Labels -->
-          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Prototyping</text>
-          <text x="196" y="100" text-anchor="start" fill="var(--secondary-text-color)" font-size="13" font-weight="500">
-            <tspan x="196" dy="0">Design-</tspan>
-            <tspan x="196" dy="15">systeme</tspan>
-          </text>
-          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">
-            <tspan x="100" dy="0">Responsive</tspan>
-            <tspan x="100" dy="15">Design</tspan>
-          </text>
-          <text x="4" y="100" text-anchor="end" fill="var(--secondary-text-color)" font-size="13" font-weight="500">
-            <tspan x="4" dy="0">Visual</tspan>
-            <tspan x="4" dy="15">Design</tspan>
-          </text>
-        </svg>
-      </div>
-      <div class="skill-container">
-        <h3>UX Design<span class="skill-subtitle">Nutzererfahrung & User Research</span></h3>
-        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg" overflow="visible">
-          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-
-          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-
-          <defs>
-            <filter id="innerGlow2" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
-              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
-              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
-              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
-              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
-            </filter>
-            <radialGradient id="fillGradient2" cx="50%" cy="50%">
-              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
-              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
-              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
-            </radialGradient>
-          </defs>
-
-          <polygon points="100,40 155,100 100,172 44,100" fill="url(#fillGradient2)" stroke="#4dbef3" stroke-width="2"
-            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow2)" />
-
-          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Research</text>
-          <text x="196" y="104" text-anchor="start" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Evaluation</text>
-          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">
-            <tspan x="100" dy="0">Interaction</tspan>
-            <tspan x="100" dy="15">Design</tspan>
-          </text>
-          <text x="4" y="104" text-anchor="end" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">UX-Testing</text>
-        </svg>
-      </div>
-      <div class="skill-container">
-        <h3>Medienerstellung<span class="skill-subtitle">Erstellung verschiedener Medien</span></h3>
-        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg" overflow="visible">
-          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-
-          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-
-          <defs>
-            <filter id="innerGlow3" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
-              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
-              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
-              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
-              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
-            </filter>
-            <radialGradient id="fillGradient3" cx="50%" cy="50%">
-              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
-              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
-              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
-            </radialGradient>
-          </defs>
-
-          <polygon points="100,52 160,100 100,116 88,100" fill="url(#fillGradient3)" stroke="#4dbef3" stroke-width="2"
-            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow3)" />
-
-          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Audio</text>
-          <text x="196" y="104" text-anchor="start" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Video</text>
-          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Animation</text>
-          <text x="4" y="104" text-anchor="end" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">3D</text>
-        </svg>
-      </div>
-
-      <div class="skill-container">
-        <h3>Soft Skills<span class="skill-subtitle">Persönliche und soziale Fähigkeiten</span></h3>
-        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg" overflow="visible">
-          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-
-          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-
-          <defs>
-            <filter id="innerGlow4" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
-              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
-              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
-              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
-              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
-            </filter>
-            <radialGradient id="fillGradient4" cx="50%" cy="50%">
-              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
-              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
-              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
-            </radialGradient>
-          </defs>
-
-          <polygon points="100,20 172,100 100,172 28,100" fill="url(#fillGradient4)" stroke="#4dbef3" stroke-width="2"
-            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow4)" />
-
-          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Teamwork</text>
-          <text x="196" y="104" text-anchor="start" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Kreativität</text>
-          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Präsentieren</text>
-          <text x="4" y="100" text-anchor="end" fill="var(--secondary-text-color)" font-size="13" font-weight="500">
-            <tspan x="4" dy="0">PM</tspan>
-          </text>
-        </svg>
-      </div>
-
-      <div class="skill-container">
-        <h3>Sprachen<span class="skill-subtitle">Sprachkenntnisse & Kommunikation</span></h3>
-        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg" overflow="visible">
-          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-
-          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-
-          <defs>
-            <filter id="innerGlow5" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
-              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
-              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
-              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
-              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
-            </filter>
-            <radialGradient id="fillGradient5" cx="50%" cy="50%">
-              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
-              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
-              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
-            </radialGradient>
-          </defs>
-
-          <polygon points="100,20 168,100 100,108 76,100" fill="url(#fillGradient5)" stroke="#4dbef3" stroke-width="2"
-            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow5)" />
-
-          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Deutsch</text>
-          <text x="196" y="104" text-anchor="start" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Englisch</text>
-          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Spanisch</text>
-          <text x="4" y="104" text-anchor="end" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Französisch</text>
-        </svg>
-      </div>
-
-      <div class="skill-container">
-        <h3>Weiteres<span class="skill-subtitle">Weitere Fähigkeiten</span></h3>
-        <svg class="spider-chart" viewBox="-15 -15 230 230" xmlns="http://www.w3.org/2000/svg" overflow="visible">
-          <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-          <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-
-          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="180" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="100" y2="180" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-          <line x1="100" y1="100" x2="20" y2="100" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-
-          <defs>
-            <filter id="innerGlow6" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur" />
-              <feOffset in="blur" dx="0" dy="0" result="offsetBlur" />
-              <feFlood flood-color="#4dbef3" flood-opacity="0.35" result="color" />
-              <feComposite in="color" in2="offsetBlur" operator="in" result="innerGlow" />
-              <feComposite in="SourceGraphic" in2="innerGlow" operator="over" />
-            </filter>
-            <radialGradient id="fillGradient6" cx="50%" cy="50%">
-              <stop offset="0%" style="stop-color:#4dbef3;stop-opacity:0.15" />
-              <stop offset="70%" style="stop-color:#006999;stop-opacity:0.06" />
-              <stop offset="100%" style="stop-color:#006999;stop-opacity:0.02" />
-            </radialGradient>
-          </defs>
-
-          <polygon points="100,44 168,100 100,164 28,100" fill="url(#fillGradient6)" stroke="#4dbef3" stroke-width="2"
-            stroke-linejoin="miter" stroke-linecap="butt" filter="url(#innerGlow6)" />
-
-          <text x="100" y="8" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Storytelling</text>
-          <text x="196" y="104" text-anchor="start" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Marketing</text>
-          <text x="100" y="206" text-anchor="middle" fill="var(--secondary-text-color)" font-size="13"
-            font-weight="500">Nutzungskontextanalyse</text>
-          <text x="4" y="100" text-anchor="end" fill="var(--secondary-text-color)" font-size="13" font-weight="500">
-            <tspan x="4" dy="0">Corporate</tspan>
-            <tspan x="4" dy="15">Design</tspan>
-          </text>
-
-          <defs>
-            <radialGradient id="edgeGradient6" cx="100" cy="100" r="80" gradientUnits="userSpaceOnUse">
-              <stop offset="60%" style="stop-color:#006999;stop-opacity:0" />
-              <stop offset="85%" style="stop-color:#4dbef3;stop-opacity:0.3" />
-              <stop offset="95%" style="stop-color:#4dbef3;stop-opacity:0.6" />
-              <stop offset="100%" style="stop-color:#4dbef3;stop-opacity:0.8" />
-              </linearGradient>
-          </defs>
-        </svg>
-      </div>
-    </div>
-
-    </div>
-
-
-  </section>
   <!-- Software Skills Badge Slider Section -->
   <section id="tools-section">
-    <h2 class="section-heading">Softwarekenntnisse</h2>
+    <div class="section-heading">
+      <p class="section-eyebrow">Softwarekenntnisse</p>
+      <h2 class="section-title">Werkzeuge, mit denen ich arbeite.</h2>
+    </div>
     <!-- Row 1: Scrolls Left to Right -->
     <div class="badge-row badge-row-1">
       <div class="badge-track">
@@ -802,7 +528,10 @@
     </div>
   </section>
   <section id="project-section">
-    <h2 class="section-heading">Projekte</h2> <!-- Überschrift für die Sektion -->
+    <div class="section-heading">
+      <p class="section-eyebrow">Projekte</p>
+      <h2 class="section-title">Projekte aus Studium und Praxis.</h2>
+    </div>
 
     <!-- Carousel Controls (nur mobile/tablet) -->
     <div class="carousel-controls">
@@ -1131,7 +860,10 @@
 
 
   <section id="education-section">
-    <h2 class="section-heading">Karriereweg</h2>
+    <div class="section-heading">
+      <p class="section-eyebrow">Karriereweg</p>
+      <h2 class="section-title">Erfahrung und Ausbildung.</h2>
+    </div>
 
     <!-- Tab Navigation -->
     <div class="tab-navigation">
@@ -1206,7 +938,7 @@
               <h3>Bachelorstudium</h3>
             </div>
             <div class="timeline-body">
-              <p>B.A Medienkonzeption an der Hochschule Furtwangen im 6 Semester</p>
+              <p>B.A. Medienkonzeption an der Hochschule Furtwangen im 6. Semester</p>
               <p><strong>Schwerpunkt</strong> Human centered Design</p>
               <p><strong>Zeitraum</strong> Oktober 2023 - heute</p>
             </div>
@@ -1348,6 +1080,8 @@
           <p><strong>Aufgaben</strong> Konzeption, Design Entwicklung und Hosting von Unternehmenswebseiten für verschiedene Kunden.</p>
           <p><strong>Zeitraum</strong> Mai 2026 - heute</p>
         </div>
+      </div>
+    </div>
       </div>
     </div>
 
